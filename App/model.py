@@ -36,25 +36,6 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 los mismos.
 """
 
-index_by_id = {
-    'video_id': 0,
-    'trending date': 1,
-    'title': 2,
-    'channel_title': 3,
-    'category_id': 4,
-    'publish_time': 5,
-    'views': 6,
-    'likes': 7,
-    'dislikes': 8,
-    'comment_count': 9,
-    'thumbnail_link': 10,
-    'comments_disabled': 11,
-    'ratings_disabled': 12,
-    'video_error_or_removed': 13,
-    'description': 14,
-    'country': 15
-}
-
 # Construccion de modelos
 def create_videos(filepath: str):
     """
@@ -91,7 +72,9 @@ def add_video(videos, line):
     categories = lt.newList(datastructure='ARRAY_LIST')
     tags = lt.newList()
     for element in line.items():
-        if element[0] != 'tags':
+        if element[0] in ['likes','dislikes','views','comment_count']:
+            lt.addLast(categories, int(element[1]))
+        elif element[0] != 'tags':
             lt.addLast(categories, element[1])
         else:
             tagl = element[1].replace('"', '').split('|')
@@ -119,7 +102,7 @@ def element_videos(videos, i, j):
         return 'error'
 
 
-def parameter_minimum(videos, index_order, index_parameter, parameter):
+def parameter_minimum(videos, index_order, index_parameter, parameter, floor, ceiling):
     """
     Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
     Args:
@@ -130,8 +113,10 @@ def parameter_minimum(videos, index_order, index_parameter, parameter):
     Returns:
     Index of the minimum element (in the index_order) which contains a certain parameter.
     """
-    f = -1
+    f = floor - 1
     c = len(index_order) - 1
+    if ceiling is not None:
+        c = ceiling
     m = (c + f) // 2 + (c + f) % 2
     while f != c:
         if element_videos(videos, index_order[m], index_parameter) >= parameter:
@@ -142,7 +127,7 @@ def parameter_minimum(videos, index_order, index_parameter, parameter):
     return f + 1
 
 
-def parameter_maximum(videos, index_order, index_parameter, parameter):
+def parameter_maximum(videos, index_order, index_parameter, parameter, floor, ceiling):
     """
     Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
     Args:
@@ -153,8 +138,10 @@ def parameter_maximum(videos, index_order, index_parameter, parameter):
     Returns:
     Index of the maximum element (in the index_order) which contains a certain parameter.
     """
-    f = 0
+    f = floor
     c = len(index_order)
+    if ceiling is not None:
+        c = ceiling + 1
     m = (c + f) // 2
     while f != c:
         if element_videos(videos, index_order[m], index_parameter) <= parameter:
@@ -165,19 +152,23 @@ def parameter_maximum(videos, index_order, index_parameter, parameter):
     return c - 1
 
 
-def range_by_parameter(videos, index_order, index_parameter, parameter):
+def range_by_parameter(videos, order, parameters):
     """
-    Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
+    Note that the function can be used to find how many elements share a number of characteristics.
     Args:
         videos: arraylist of videos
-        index_order: custom index_order of videos
-        index_parameter: index of parameter to be evaluated
-        parameter: parameter
+        order: custom index_order of videos
+        parameters: parameters in the same order of the parameters_ids of order
     Returns:
     Index of the minimum element (in the index_order) which contains a certain parameter.
     """
-    f = parameter_minimum(videos, index_order, index_parameter, parameter)
-    c = parameter_maximum(videos, index_order, index_parameter, parameter)
+    floor = 0
+    ceiling = None
+    for parameter, index_parameter in zip(parameters, order['parameters']):
+        f = parameter_minimum(videos, order['indexes'], index_parameter, parameter, floor, ceiling)
+        c = parameter_maximum(videos, order['indexes'], index_parameter, parameter, floor, ceiling)
+        floor = f
+        ceiling = c
     return f, c
 
 
@@ -193,7 +184,7 @@ def base_sort_function(videos, i, parameter_indexes):
     Args:
         videos: arraylist of videos
         i: index of the video
-        parameter_indexes: tuple of indexes of parameters
+        parameter_indexes: list of indexes of parameters
     Returns:
     A tuple with the values that correspond to the parameter_indexes in the index i of videos.
     """
@@ -214,16 +205,31 @@ def create_index_order(videos, order_indexes):
     indexes = [i for i in range(0, len(videos['elements']))]
     sort_key = lambda a: base_sort_function(videos, a, order_indexes)
     indexes.sort(key=sort_key)
-    return indexes
+    order = {
+        'indexes': indexes,
+        'parameters': order_indexes
+    }
+    return order
 
 #usage example
-"""
-import time
-print("Loading vidios", time.asctime(time.gmtime()))
-vidios = create_videos(cf.data_dir+'videos-all.csv')
-print("Creating order", time.asctime(time.gmtime()))
-order = create_index_order(vidios, [15,4,6])
-print("Finding range", time.asctime(time.gmtime()))
-print(range_by_parameter(vidios, order, 15, 'canada'))
-print("Finish", time.asctime(time.gmtime()))
-"""
+if __name__ == '__main__':
+    import time
+    print("Loading vidios", time.asctime(time.gmtime()))
+    vidios = create_videos(cf.data_dir+'videos-all.csv')
+    print("Videos loaded! Size: ", lt.size(vidios), "\n")
+
+    print("Creating order", time.asctime(time.gmtime()), "\n")
+    order = create_index_order(vidios, [15,4,6])
+    
+    print("Finding range for country Canada category_id 10", time.asctime(time.gmtime()),"\n")
+    floor, ceiling = range_by_parameter(vidios, order, ['canada', '10'])
+    selection = list(reversed(order['indexes'][floor:(ceiling+1)]))
+    n = 10
+    print("The "+str(n)+" most viewed videos of Canada in category_id 10 are")
+    for x in selection[:n]:
+        name = element_videos(vidios, x, 2)
+        views = element_videos(vidios, x, 6)
+        country = element_videos(vidios, x, 15)
+        category = element_videos(vidios, x, 4)
+        print("    ",name, ":", views, country, category)
+    print("Finish", time.asctime(time.gmtime()))

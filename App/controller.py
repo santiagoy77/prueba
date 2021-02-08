@@ -29,6 +29,25 @@ import csv
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
+index_by_id = {
+    'video_id': 0,
+    'trending date': 1,
+    'title': 2,
+    'channel_title': 3,
+    'category_id': 4,
+    'publish_time': 5,
+    'views': 6,
+    'likes': 7,
+    'dislikes': 8,
+    'comment_count': 9,
+    'thumbnail_link': 10,
+    'comments_disabled': 11,
+    'ratings_disabled': 12,
+    'video_error_or_removed': 13,
+    'description': 14,
+    'country': 15
+}
+
 # Inicialización del Catálogo de libros
 
 # Funciones para la carga de datos
