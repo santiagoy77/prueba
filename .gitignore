@@ -140,3 +140,6 @@ dmypy.json
 !Data/GoodReads/book_reviews.csv
 
 .vim
+
+#IntelliJ
+.idea
