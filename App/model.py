@@ -36,26 +36,85 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 los mismos.
 """
 
+index_by_id = {
+    'video_id': 0,
+    'trending date': 1,
+    'title': 2,
+    'channel_title': 3,
+    'category_id': 4,
+    'publish_time': 5,
+    'views': 6,
+    'likes': 7,
+    'dislikes': 8,
+    'comment_count': 9,
+    'thumbnail_link': 10,
+    'comments_disabled': 11,
+    'ratings_disabled': 12,
+    'video_error_or_removed': 13,
+    'description': 14,
+    'country': 15
+}
+
 
 # Construccion de modelos
-def addVideos(filename: str):
+def create_videos(filepath: str):
     """
-    Crea un arraylist de referencias por vídeo a:
-        arraylist con video_id,trending_date,title,channel_title,category_id,publish_time,views,likes,dislikes,comment_count,
-            thumbnail_link,comments_disabled,ratings_disabled,video_error_or_removed,description,country
-        linkedlist de tags
+    Args:
+        filepath: path to the file to be read from
+    Returns:
+        Arraylist that represents videos with a tuple of:
+            arraylist with video_id,trending_date,title,channel_title,category_id,publish_time,views,likes,dislikes,comment_count,
+                thumbnail_link,comments_disabled,ratings_disabled,video_error_or_removed,description,country
+            linkedlist with tags
     """
     videos = lt.newList(datastructure='ARRAY_LIST')
-    if filename is not None:
-        input_file = csv.DictReader(open(filename, encoding="utf-8"),
+    if filepath is not None:
+        input_file = csv.DictReader(open(filepath, encoding="utf-8"),
                                     delimiter=',')
         for line in input_file:
-            addVideo(videos, line)
+            add_video(videos, line)
     return videos
 
 
+def base_sort_function(videos, i, parameter_indexes):
+    """
+    Auxiliary function to createIndexOrder.
+    Args:
+        videos: arraylist of videos
+        i: index of the video
+        parameter_indexes: tuple of indexes of parameters
+    Returns:
+    A tuple with the values that correspond to the parameter_indexes in the index i of videos.
+    """
+    return tuple([videos['elements'][i][0]['elements'][x] for x in parameter_indexes if x < 16])
+
+
+def create_index_order(videos, order_indexes):
+    """
+    'Tags' parameter not supported.
+    Args:
+        videos: arraylist of videos
+        order_indexes: list of indexes of parameters
+    Returns:
+    A list of indexes that indicate an order of videos based on the referenced parameters.
+    """
+    indexes = [i for i in range(0, len(videos['elements']))]
+    sort_key = lambda a: base_sort_function(videos, a, order_indexes)
+    indexes.sort(key=sort_key)
+    return indexes
+
+
 # Funciones para agregar informacion al catalogo
-def addVideo(videos, line):
+def add_video(videos, line):
+    """
+    Auxiliary function to create_videos which adds to videos an arraylist with most parameters and a linked list
+    with the information of the tags of the videos.
+    Args:
+        videos: arraylist of videos
+        line: OrderedDict with information of the videos
+    Returns:
+        None
+    """
     categories = lt.newList(datastructure='ARRAY_LIST')
     tags = lt.newList()
     for element in line.items():
@@ -66,6 +125,7 @@ def addVideo(videos, line):
             for tag in tagl:
                 lt.addLast(tags, tag)
     lt.addLast(videos, (categories, tags))
+
 # Funciones para creacion de datos
 
 # Funciones de consulta
