@@ -55,10 +55,10 @@ index_by_id = {
     'country': 15
 }
 
-
 # Construccion de modelos
 def create_videos(filepath: str):
     """
+    Complexity time O(nt), space O(nt), where n stands for number of videos and t stands for tags in the videos.
     Args:
         filepath: path to the file to be read from
     Returns:
@@ -76,39 +76,12 @@ def create_videos(filepath: str):
     return videos
 
 
-def base_sort_function(videos, i, parameter_indexes):
-    """
-    Auxiliary function to createIndexOrder.
-    Args:
-        videos: arraylist of videos
-        i: index of the video
-        parameter_indexes: tuple of indexes of parameters
-    Returns:
-    A tuple with the values that correspond to the parameter_indexes in the index i of videos.
-    """
-    return tuple([videos['elements'][i][0]['elements'][x] for x in parameter_indexes if x < 16])
-
-
-def create_index_order(videos, order_indexes):
-    """
-    'Tags' parameter not supported.
-    Args:
-        videos: arraylist of videos
-        order_indexes: list of indexes of parameters
-    Returns:
-    A list of indexes that indicate an order of videos based on the referenced parameters.
-    """
-    indexes = [i for i in range(0, len(videos['elements']))]
-    sort_key = lambda a: base_sort_function(videos, a, order_indexes)
-    indexes.sort(key=sort_key)
-    return indexes
-
-
 # Funciones para agregar informacion al catalogo
 def add_video(videos, line):
     """
     Auxiliary function to create_videos which adds to videos an arraylist with most parameters and a linked list
-    with the information of the tags of the videos.
+    with the information of the tags of the videos. Complexity time O(t), space O(t) where t stands for tags in the
+    videos.
     Args:
         videos: arraylist of videos
         line: OrderedDict with information of the videos
@@ -128,8 +101,129 @@ def add_video(videos, line):
 
 # Funciones para creacion de datos
 
+
 # Funciones de consulta
+def element_videos(videos, i, j):
+    """
+    Complexity time O(1), space O(1).
+    Args:
+        videos:
+        i: index of the video
+        j: index of the parameter
+    Returns:
+    Parameter of the video.
+    """
+    if j < 16:
+        return videos['elements'][i][0]['elements'][j]
+    else:
+        return 'error'
+
+
+def parameter_minimum(videos, index_order, index_parameter, parameter):
+    """
+    Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
+    Args:
+        videos: arraylist of videos
+        index_order: custom index_order of videos
+        index_parameter: index of parameter to be evaluated
+        parameter: search parameter
+    Returns:
+    Index of the minimum element (in the index_order) which contains a certain parameter.
+    """
+    f = -1
+    c = len(index_order) - 1
+    m = (c + f) // 2 + (c + f) % 2
+    while f != c:
+        if element_videos(videos, index_order[m], index_parameter) >= parameter:
+            c = m - 1
+        else:
+            f = m
+        m = (c + f) // 2 + (c + f) % 2
+    return f + 1
+
+
+def parameter_maximum(videos, index_order, index_parameter, parameter):
+    """
+    Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
+    Args:
+        videos: arraylist of videos
+        index_order: custom index_order of videos
+        index_parameter: index of parameter to be evaluated
+        parameter: search parameter
+    Returns:
+    Index of the maximum element (in the index_order) which contains a certain parameter.
+    """
+    f = 0
+    c = len(index_order)
+    m = (c + f) // 2
+    while f != c:
+        if element_videos(videos, index_order[m], index_parameter) <= parameter:
+            f= m + 1
+        else:
+            c = m
+        m = (c + f) // 2
+    return c - 1
+
+
+def range_by_parameter(videos, index_order, index_parameter, parameter):
+    """
+    Works correctly only if index_parameter is equal to the first index parameter with which index_order was made.
+    Args:
+        videos: arraylist of videos
+        index_order: custom index_order of videos
+        index_parameter: index of parameter to be evaluated
+        parameter: parameter
+    Returns:
+    Index of the minimum element (in the index_order) which contains a certain parameter.
+    """
+    f = parameter_minimum(videos, index_order, index_parameter, parameter)
+    c = parameter_maximum(videos, index_order, index_parameter, parameter)
+    return f, c
+
+
+def has_tag(videos, i, tag):
+    return lt.isPresent(videos['elements'][i][1], tag)
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def base_sort_function(videos, i, parameter_indexes):
+    """
+    Auxiliary function to createIndexOrder. Complexity time O(p), space O(p), where p stands for number of parameters,
+    (p <= 16).
+    Args:
+        videos: arraylist of videos
+        i: index of the video
+        parameter_indexes: tuple of indexes of parameters
+    Returns:
+    A tuple with the values that correspond to the parameter_indexes in the index i of videos.
+    """
+    return tuple([element_videos(videos, i, x) for x in parameter_indexes if x < 16])
+
 
 # Funciones de ordenamiento
+def create_index_order(videos, order_indexes):
+    """
+    'Tags' parameter not supported. Complexity time O(nlog(n)p), space O(np), where n stands for number of videos and
+    p stands for number of parameters (p <= 16).
+    Args:
+        videos: arraylist of videos
+        order_indexes: list of indexes of parameters
+    Returns:
+    A list of indexes that indicate an order of videos based on the referenced parameters.
+    """
+    indexes = [i for i in range(0, len(videos['elements']))]
+    sort_key = lambda a: base_sort_function(videos, a, order_indexes)
+    indexes.sort(key=sort_key)
+    return indexes
+
+#usage example
+"""
+import time
+print("Loading vidios", time.asctime(time.gmtime()))
+vidios = create_videos(cf.data_dir+'videos-all.csv')
+print("Creating order", time.asctime(time.gmtime()))
+order = create_index_order(vidios, [15,4,6])
+print("Finding range", time.asctime(time.gmtime()))
+print(range_by_parameter(vidios, order, 15, 'canada'))
+print("Finish", time.asctime(time.gmtime()))
+"""
