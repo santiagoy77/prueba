@@ -1,4 +1,14 @@
-#ISIS1225 - Librerias de soporte
+# Reto 1 - Youtube Social Analysis
+
+## Nombres
+
+Req.2 - Valentina Calderon, 202020771, vcalderonm@uniandes.edu.co
+
+Req.3 -  Maria Castro, 202020850, m.castroi@uniandes.edu.co 
+
+
+
+# ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
 
