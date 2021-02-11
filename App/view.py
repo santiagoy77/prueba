@@ -25,7 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
-
+import time
 
 """
 La vista se encarga de la interacción con el usuario
@@ -48,7 +48,10 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        t1 = time.process_time_ns()
         print("Cargando información de los archivos ....")
+        t2 = time.process_time_ns()
+        print ("Tiempo de ejecucion: {:.2f} nano seconds.".format(t2-t1))
 
     elif int(inputs[0]) == 2:
         pass
