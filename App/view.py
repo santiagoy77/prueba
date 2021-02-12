@@ -37,8 +37,11 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
-
+    print("2- Req2")
+    print("3- Req3")
+    print("4- Req4")
+    print("0- Salir")
+    
 catalog = None
 
 """
