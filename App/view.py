@@ -34,12 +34,26 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Consultar los Top x video")
+    print("3- Consultar videos por autor")
+    print("4- videos por género")
+    print("0- Salir")
 
-catalog = None
+def initCatalog():
+    """
+    Inicializa el catalogo de videos
+    """
+    return controller.initCatalog()
+
+def loadData(catalog):
+    """
+    Carga los videos en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 """
 Menu principal
