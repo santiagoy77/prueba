@@ -38,9 +38,10 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Consultar los Top x video")
-    print("3- Consultar videos por youtuber")
-    print("4- videos por género")
+    print("2- Consultar buenos vídeos por categoría y por país")
+    print("3- Consultar videos tendencia por país")
+    print("4- videos por género/categoría")
+    print("5 Buscar los vídeos con más likes")
     print("0- Salir")
 
 
@@ -74,6 +75,8 @@ while True:
     elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 4:
+        pass
+    elif int(inputs[0]) == 5:
         pass
     else:
         sys.exit(0)
