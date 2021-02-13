@@ -38,26 +38,23 @@ def initCatalog():
 def loadData(catalog):
     loadVideos(catalog)
     loadCategories(catalog)
-    print(catalog["category-id"])
+    # print(catalog["category-id"])
 
 
 def loadVideos(catalog):
     videosFiles = cf.data_dir + "Videos/videos-small.csv"
     input_file = csv.DictReader(open(videosFiles, encoding="utf-8"))
     for video in input_file:
-        model.addvideo(catalog, video)
+        model.addVideo(catalog, video)
 
 
 def loadCategories(catalog):
     categoriesFiles = cf.data_dir + "Videos/category-id.csv"
-    input_file = csv.DictReader(open(categoriesFiles, encoding="utf-8"))
+    input_file = csv.DictReader(
+        open(categoriesFiles, encoding="utf-8"), delimiter='\t')
     for category in input_file:
-        print(category)
-        model.addcategory(catalog, category)
+        model.addCategory(catalog, category)
 
-
-c = initCatalog()
-loadData(c)
 
 # Inicialización del Catálogo de libros
 
