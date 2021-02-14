@@ -76,7 +76,24 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
-        print(lt.firstElement(catalog['videos']))
+        dict_video = lt.firstElement(catalog['videos'])
+
+        titulo = dict_video['title']
+        channel_title = dict_video['channel_title']
+        trending_date =  dict_video['trending_date']
+        country = dict_video['country']
+        views = dict_video['views']
+        likes = dict_video['likes']
+        dislikes = dict_video['dislikes']
+        
+        print("Titulo: " +titulo+ 
+              "Channel_title: " +channel_title+
+              " Trending_date: " +trending_date+ 
+              " Country: " + country + 
+              " Views: " + views+ 
+              " Likes: " + likes+ 
+              " Dislikes: " +dislikes)
+        
 
     elif int(inputs[0]) == 2:
         pass
