@@ -76,24 +76,30 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
-        dict_video = lt.firstElement(catalog['videos'])
 
+        print('Primer video:')
+        dict_video = lt.firstElement(catalog['videos'])
         titulo = dict_video['title']
         channel_title = dict_video['channel_title']
-        trending_date =  dict_video['trending_date']
+        trending_date = dict_video['trending_date']
         country = dict_video['country']
         views = dict_video['views']
         likes = dict_video['likes']
         dislikes = dict_video['dislikes']
-        
-        print("Titulo: " +titulo+ 
-              "Channel_title: " +channel_title+
-              " Trending_date: " +trending_date+ 
-              " Country: " + country + 
-              " Views: " + views+ 
-              " Likes: " + likes+ 
-              " Dislikes: " +dislikes)
-        
+
+        print("Titulo: " + titulo +
+              " \tChannel_title: " + channel_title +
+              " \tTrending_date: " + trending_date +
+              " \tCountry: " + country +
+              " \tViews: " + views +
+              "\tLikes: " + likes +
+              "\tDislikes: " + dislikes)
+
+        category_ids = catalog['category-id']
+        print('\nCategorías cargadas (Id y nombre)')
+        for id_name in category_ids['elements']:
+            print('Id #:', id_name['id'], '\tName:', id_name['name'])
+        print('\n')
 
     elif int(inputs[0]) == 2:
         pass
