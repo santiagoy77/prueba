@@ -35,11 +35,14 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 '''
 
 
+# Construccion de modelos
 def newCatalog():
     catalog = {'videos': None, 'category-id': None}
     catalog['videos'] = lt.newList(datastructure='SINGLE_LINKED')
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
+
+# Funciones para agregar informacion al catalogo
 
 
 def addVideo(catalog, video):
@@ -56,11 +59,6 @@ def newCategory(id, name):
     category['id'] = int(id)
     category['name'] = name
     return category
-
-
-# Construccion de modelos
-
-# Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
 

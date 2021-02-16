@@ -59,10 +59,6 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 
-def printVideoData(video):
-    pass
-
-
 catalog = None
 
 """
