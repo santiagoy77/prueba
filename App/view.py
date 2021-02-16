@@ -44,6 +44,13 @@ def printMenu():
 
 catalog = None
 
+def initCatalog ():
+    return controller.initCatalog()
+
+def loadData(catalog):
+    controller.loadData(catalog)
+
+
 """
 Menu principal
 """
@@ -51,14 +58,25 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        t1 = time.process_time_ns()
         print("Cargando información de los archivos ....")
+        t1 = time.process_time_ns()
+        catalog = initCatalog()
+        loadData(catalog)
         t2 = time.process_time_ns()
         print ("Tiempo de ejecucion: {:.2f} nano seconds.".format(t2-t1))
+        print('Videos cargados exitósamente: ' + str(lt.size(catalog['video'])))
+        print('Categorias cargadas exitósamente: ' + str(lt.size(catalog['category'])))
 
     elif int(inputs[0]) == 2:
         pass
 
+    elif int (inputs[0]) == 3:
+        pass
+
+    elif int (inputs[0]) == 4:
+        pass
+    
     else:
         sys.exit(0)
 sys.exit(0)
+
