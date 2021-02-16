@@ -33,6 +33,9 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Funciones para la carga de datos
 
+def initCatalog():
+    return model.newCatalog()
+
 def loadData(catalog):
     loadVideos(catalog)
     loadCategories(catalog)
