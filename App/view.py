@@ -54,10 +54,15 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         t1 = time.process_time_ns()
+
+        catalogo = controller.initcatalog()
+        controller.cargar_datos(catalogo)
         print("Cargando información de los archivos ....")
         t2 = time.process_time_ns()
 
         print("Tiempo tomado: " + str(t2-t1))
+
+        print("Se cargaron 100 datos")
 
     elif int(inputs[0]) == 2:
         pass
