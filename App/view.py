@@ -25,6 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+import time 
 
 
 """
@@ -37,7 +38,7 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Requirimiento 1")
 
 catalog = None
 
@@ -51,7 +52,12 @@ while True:
         print("Cargando información de los archivos ....")
 
     elif int(inputs[0]) == 2:
-        pass
+        t1 = time.process_time()
+        print("Requerimiento 1")
+        t2 = time.process_time()
+        tf =round(t1-t2,2)
+        tiempo = "El tiempo de procesamiento es{0}".format(tiempo)
+        print(tiempo)
 
     else:
         sys.exit(0)
