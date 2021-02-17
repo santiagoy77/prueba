@@ -58,8 +58,8 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
-
-"""
+catalog = None
+"""1
 Menu principal
 """
 while True:
@@ -69,7 +69,7 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        print("Videos cargados:" + str(lt.size(catalog[])))
+        print("Videos cargados:" + str(lt.size(catalog["videos"])))
     elif int(inputs[0]) == 2:
         pass
     elif int(inputs[0]) == 3:
