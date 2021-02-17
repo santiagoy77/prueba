@@ -35,11 +35,70 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 los mismos.
 """
 
-# Construccion de modelos
 
-# Funciones para agregar informacion al catalogo
+def newCatalog():
+    catalog = {'videos': None,
+               'country': None,
+               'category': None,
+               'tags': None}
 
-# Funciones para creacion de datos
+    catalog['videos'] = lt.newList()
+    catalog['country'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=None)
+    catalog['category'] = lt.newList('SINGLE_LINKED',
+                                 cmpfunction=None)
+    catalog['tags'] = lt.newList('SINGLE_LINKED')
+
+def addVideo(catalog, video):
+    lt.addLast(catalog['videos'], video)
+    countries = video['country'].split(",")
+    for country in countries:
+        addVideoCountry(catalog, country.strip(), video)
+
+def addVideoCountry(catalog, countryname, video):
+    countries = catalog['country']
+    poscountry = lt.isPresent(countries, countryname)
+    if poscountry > 0:
+        country = lt.getElement(countries, poscountry)
+    else:
+        country = newCountry(countryname)
+        lt.addLast(countries, country)
+    lt.addLast(country['videos'], video)
+
+def newCountry(name):
+    country = {'country': "", "videos": None,  "trending": 0}
+    country['country'] = name
+    country['videos'] = lt.newList('ARRAY_LIST')
+    return country
+
+def addVideoCategory(catalog, categoryname, video):
+    categories = catalog['category']
+    poscategory = lt.isPresent(categories, countryname)
+    if poscategory > 0:
+        category = lt.getElement(categories, poscategory)
+    else:
+        category = newCategory(categoryname)
+        lt.addLast(categories, category)
+    lt.addLast(category['videos'], video)
+
+def newCategory(name):
+    category = {'category': "", "videos": None,  "trending": 0}
+    category['category'] = name
+    category['videos'] = lt.newList('ARRAY_LIST')
+    return category
+
+
+
+def addTag(catalog, tag):
+    t = newTag(tag['idname'])
+    lt.addLast(catalog['tags'], t)
+
+def newTag(idname):
+    tag = {'idname': ''}
+    tag['idname'] = idname
+    return tag
+
+# Funciones para creacion dzae datos
 
 # Funciones de consulta
 
