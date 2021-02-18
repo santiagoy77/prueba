@@ -31,15 +31,53 @@ from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
+Se define la estructura de un catálogo de videos. El catálogo
+tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
 
 # Construccion de modelos
 
+
+def newCatalog():
+    """
+    Inicializa el catálogo de videos. Crea una lista vacia para guardar
+    todos los videos, y otra para sus categorías.
+    """
+    catalog = {'videos': None,
+               'categories': None}
+
+    catalog['videos'] = lt.newList()
+    catalog['categories'] = lt.newList('SINGLE-LINKED')
+
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
+
+def addVideo(catalog, video):
+    # Se adiciona el video a la lista de videos
+    lt.addLast(catalog['videos'], video)
+
+
+def addCategory(catalog, category):
+    """
+    Adiciona una categoría a la lista de categorías
+    """
+    c = newCategory(category['name'], category['category_id'])
+    lt.addLast(catalog['categories'], c)
+
 # Funciones para creacion de datos
+
+
+def newCategory(name, category_id):
+    """
+    Esta estructura almancena las categorías de los videos.
+    """
+    category = {'name': '', 'category_id': ''}
+    category['name'] = name
+    category['category_id'] = category_id
+    return category
 
 # Funciones de consulta
 
