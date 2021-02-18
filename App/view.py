@@ -37,7 +37,32 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Buenos videos por categoría y país")
+    print("3- Encontrar video tendencia por país")
+    print("4- Buscar videos con más likes")
+
+
+def loadinformation():
+    """
+    Carga la info"""
+    return controller.loadinformation("videosall.csv")
+
+def GoodVideosByCategoryAndConuntry():
+    """
+    busca videos por categoria y país"""
+    return controller.GoodVideosByCategoryAndConuntry("videosall.csv")
+
+def FindTrendVideoByCountry():
+    """
+    busca video tendencia por país"""
+    return controller.FindTrendVideoByCountry("videosall.csv")
+
+def MostLikedVideos():
+    """
+    videos con mas likes"""
+    return controller.MostLikedVideos("videosall.csv")
+
+
 
 catalog = None
 
@@ -51,7 +76,7 @@ while True:
         print("Cargando información de los archivos ....")
 
     elif int(inputs[0]) == 2:
-        pass
+        print()
 
     else:
         sys.exit(0)
