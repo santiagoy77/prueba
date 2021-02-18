@@ -45,6 +45,44 @@ def printMenu():
     
 catalog = None
 
+# trabajando
+def initCatalog():
+    """
+    Inicializa el catalogo de videos
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
+
+
+def printAuthorData(author):
+    if author:
+        print('Autor encontrado: ' + author['name'])
+        print('Promedio: ' + str(author['average_rating']))
+        print('Total de libros: ' + str(lt.size(author['books'])))
+        for book in lt.iterator(author['books']):
+            print('Titulo: ' + book['title'] + '  ISBN: ' + book['isbn'])
+    else:
+        print('No se encontro el autor')
+
+
+def printBestBooks(books):
+    size = lt.size(books)
+    if size:
+        print(' Estos son los mejores libros: ')
+        for book in lt.iterator(books):
+            print('Titulo: ' + book['title'] + '  ISBN: ' +
+                  book['isbn'] + ' Rating: ' + book['average_rating'])
+    else:
+        print('No se encontraron libros')
+
+catalog = None
+
 """
 Menu principal
 """
@@ -53,10 +91,22 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog = initCatalog()
+        loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        print ("Encontrar buenos videos por categoría y país")
+
+    elif int(inputs[0]) == 3:
+        print ("Encontrar video tendencia por categoría")
+
+    elif int(inputs[0]) == 4:
+        print('Encontrar videos tendencias por pais')
+    
+    elif int(inputs[0]) == 5:
+        print('Buscar los videos con mas likes')
 
     else:
-        sys.exit(0)
+        sys.exit(0)1
+        
 sys.exit(0)
