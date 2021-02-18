@@ -20,26 +20,44 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.model import addcategory
 import config as cf
 import model
 import csv
-
+from DISClib.ADT import list as lt
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
-def initcatalog():
-    return model.initcatalog()
-
-def cargar_datos(catalogo):
-    booksfile = cf.data_dir + "Data/videos-small.csv"
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addBook(catalogo, book)
+def initCatalog():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    catalog = model.newCatalog()
+    return catalog
 
 # Funciones para la carga de datos
+def loadData(catalog):
+    print("Comienza proceso de carga de videos")
+    loadvideos(catalog)
+    print("videos cargados")
+    print('videos cargados: ' + str(lt.size(catalog['videos'])))
+    loadcategorys(catalog)
+
+
+def loadvideos(catalog):
+    videosfile = cf.data_dir + "videos-small.csv"
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    for video in input_file:
+        model.addvideo(catalog,video)
+
+def loadcategorys(catalog):
+    categorysfile = cf.data_dir + "category-id.csv"
+    input_file = csv.DictReader(open(categorysfile, encoding='utf-8'))
+    for cat in input_file:
+        model.addcategory(catalog, cat)
 
 # Funciones de ordenamiento
 

@@ -34,15 +34,42 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def initcatalog():
-    return {"videos":lt.newList('ARRAY_LIST')}
+
 
 # Construccion de modelos
+def newCatalog():
+    """
+    Inicializa el catálogo de libros. Crea una lista vacia para guardar
+    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'category-id': None,
+               'videos': None}
 
+    catalog['videos'] = lt.newList()
+    catalog['category-id'] = lt.newList()
+
+
+    return catalog
 # Funciones para agregar informacion al catalogo
+def addvideo(catalog, video):
+    lt.addLast(catalog["videos"], video)
+    #categorys = video["categorys"].split(",")
+    #for category in categorys:
+    #    addvideocategory(catalog, author.strip(), video)
+
+def addcategory(catalog, cat):
+    print(cat)
+    
+    c = newcat(cat["cat_name"], cat["cat_id"])
+    lt.addLast(catalog["category-id"], c)
 
 # Funciones para creacion de datos
-
+def newcat(name, id):
+    cat = {"name":"", "id":""}
+    cat["cat_name"] = name
+    cat["cat_id"] = id
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
