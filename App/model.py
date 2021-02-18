@@ -38,27 +38,32 @@ los mismos.
 # Construccion de modelos
 def newCatalog():
     """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    Inicializa el catálogo de videos. Crea una lista vacia para guardar
+    todos los videos, adicionalmente, crea una lista vacia para los autores,
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'categorys': None
+               'categories': None}
 
-    catalog['videos'] = lt.newList()
-    catalog['authors'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=compareauthors)
-    catalog['tags'] = lt.newList('SINGLE_LINKED',
-                                 cmpfunction=comparetagnames)
-    catalog['book_tags'] = lt.newList('SINGLE_LINKED')
-
+    catalog['videos']=lt.newlist
+    catalog['categories'] = lt.newList()
     return catalog
 
+
 # Funciones para agregar informacion al catalogo
+def addVideo(catalog, video)
+    lt.addLast(catalog['videos'], video)
+
+def addCategory(catalog, category)
+    t = newCategory(category['category_id'], category['video_id'])
+    lt.addLast(catalog['categories'], t)
+
 
 # Funciones para creacion de datos
-
+def newCategory(category_id,video_id):
+    category = {'category_id': category_id, 'video_id': video_id}
+    return category
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista

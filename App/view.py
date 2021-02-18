@@ -55,7 +55,7 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
-
+ 
 catalog = None
 
 """
