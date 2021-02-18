@@ -76,7 +76,8 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        print("El total de videos cargados es: " + str(lt.size(catalog['videos'])))
+        print("El total de videos cargados es: "
+              + str(lt.size(catalog['videos'])))
         print("La información principal del primer video cargado es: ")
         print("La lista de las categorías cargadas es: ")
 

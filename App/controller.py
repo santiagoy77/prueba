@@ -62,7 +62,8 @@ def loadVideos(catalog):
 
 def loadCategories(catalog):
     """
-    Carga todas las categorias del archivo y los agrega a la lista de categorias
+    Carga todas las categorias del archivo y los agrega a la lista de
+    categorias
     """
     categoriesfile = cf.data_dir + 'category-id.csv'
     input_file = csv.DictReader(open(categoriesfile, encoding='utf-8'))
