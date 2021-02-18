@@ -59,7 +59,9 @@ def addvideo(catalog, video):
 
 
 def addcategory(catalog, cat):
-    c = newcat(cat["cat_name"], cat["cat_id"])
+    print(cat)
+    
+    c = newcat(cat["name"], cat["id"])
     lt.addLast(catalog["category-id"], c)
 
 
