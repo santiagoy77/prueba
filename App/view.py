@@ -33,6 +33,12 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+def inicializarCatalogo():
+    return controller.inicializarCatalogo()
+
+def cargarDatosCatalogo(catalogo):
+    controller.cargarDatosCatalogo(catalogo)
+
 
 def printMenu():
     print("Bienvenido")
@@ -52,6 +58,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog = inicializarCatalogo()
+        cargarDatosCatalogo(catalog)
+        print('Numero de videos ' + str(lt.size(catalog['books'])))
+        print('Numero de canales ' + str(lt.size(catalog['authors'])))
+        print('Numero de Tags ' + str(lt.size(catalog['tags'])))
 
     elif int(inputs[0]) == 2:
         pass

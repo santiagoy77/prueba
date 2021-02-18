@@ -24,14 +24,52 @@ import config as cf
 import model
 import csv
 
+# Inicialización del Catálogo de videos
+def inicializarCatalogo():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    catalog = model.newCatalog()
+    return catalog
+
+def cargarDatosCatalogo(catalogo):
+    def loadData(catalog):
+    """
+    Carga los datos de los archivos y cargar los datos en la
+    estructura de datos
+    """
+    loadVideos(catalog)
+    loadCategories(catalog)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
-
 # Funciones para la carga de datos
+
+
+def loadVideos(catalog):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    videosfile = cf.data_dir + 'videos/videos-large.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for video in input_file:
+        model.addVideo(catalog, video)
+
+
+def loadCategories(catalog):
+    """
+    Carga todos los tags del archivo y los agrega a la lista de tags
+    """
+    tagsfile = cf.data_dir + 'videos/categories-id.csv'
+    input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
+    for category in input_file:
+        model.addTag(catalog, category)
+
+
 
 # Funciones de ordenamiento
 
