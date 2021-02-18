@@ -38,8 +38,12 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Requirimiento 1")
-
+    print("2- Cargar Videos con mas tendencia en un pais segun su categoría")    
+    print("3- Cargar Video con mas trading segun su país")
+    print("4- Cargar Video con mas trading segun su categoría")
+    print("5- Cargar Video con mas likes segun Tags")
+    print("0- Salir")
+    
 catalog = None
 
 """
@@ -49,16 +53,37 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        t1=time.process_time()
+        print("Cargando información del catalogo ....")
+        t2=time.process_time()
+        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
     elif int(inputs[0]) == 2:
-        t1 = time.process_time()
-        print("Requerimiento 1")
-        t2 = time.process_time()
-        tf =round(t1-t2,2)
-        tiempo = "El tiempo de procesamiento es{0}".format(tiempo)
-        print(tiempo)
+        t1=time.process_time()
+        print("Cargando Videos con mas tendencia en un pais segun su categoría....")
+        t2=time.process_time()
+        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
+    elif int(inputs[0]) == 3:
+        t1=time.process_time()
+        print("Cargando Video con mas trading segun su país ....")
+        t2=time.process_time()
+        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
+
+    elif int(inputs[0]) == 4:
+        t1=time.process_time()
+        print("Cargando Video con mas trading segun su categoría ....")
+        t2=time.process_time()
+        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
+
+    elif int(inputs[0]) == 5:
+        t1=time.process_time()
+        print("Cargando Video con mas likes segun Tags ....")
+        t2=time.process_time()
+        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
+    
     else:
         sys.exit(0)
+    
+   
 sys.exit(0)
