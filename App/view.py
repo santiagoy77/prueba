@@ -44,7 +44,7 @@ def printMenu():
 
 def initCatalog():
     """
-    Inicializa el catalogo de libros
+    Inicializa el catalogo de videos
     """
     return controller.initCatalog()
 
@@ -53,7 +53,6 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
-
 
 
 catalog = None
