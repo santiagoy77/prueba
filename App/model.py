@@ -83,7 +83,15 @@ def add_video(videos, line):
     lt.addLast(videos, (categories, tags))
 
 # Funciones para creacion de datos
-
+def lista_tags(filepath,type="ARRAY_LIST"):
+    tags=lt.newList(type)
+    data= open(filepath)
+    data.readline()
+    linea= data.readline().replace("\n","").split("\t")
+    while len(linea)>1:
+        lt.addLast(tags,linea)
+        linea=data.readline().replace("\n","").split("\t")
+    return tags
 
 # Funciones de consulta
 def element_videos(videos, i, j):

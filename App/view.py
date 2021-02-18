@@ -37,10 +37,24 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Encontrar buenos videos por categoría y país (Grupal)")
+    print("3- Encontrar video tendencia por país ")
+    print("4- Encontrar video tendencia por categoría")
+    print("5- Buscar los videos con más Likes")
+    print("0- Salir")
+
+def initCatalog():
+    """
+    Inicializa el catalogo de videos
+    """
+    return controller.initCreate_videos()
+
+def initTags():
+    tags=controller.initLista_tags()
+    for a in tags["elements"]:
+        print (a[0],"  ",a[1])
 
 catalog = None
-
 """
 Menu principal
 """
@@ -48,9 +62,30 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
-
+        print("\nCargando información de los archivos ....")
+        catalog= initCatalog()
+        dir=catalog["elements"][0][0]["elements"]
+        print("Se han cargado " , lt.size(catalog), "registros de videos")
+        print("\nPrimer video: ",dir[2])
+        print("Canal: ", dir[3])
+        print("Fecha de tendencia: ",dir[1])
+        print("País: ",dir[-1])
+        print("vistas: ",dir[6])
+        print("Likes: ",dir[7])
+        print("Dislikes: ",dir[8],"\n")
+        print("Id  Nombre")
+        initTags()
+        
     elif int(inputs[0]) == 2:
+        pass
+
+    elif int(inputs[0]) == 3:
+        pass
+
+    elif int(inputs[0]) == 4:
+        pass
+
+    elif int(inputs[0]) == 5:
         pass
 
     else:
