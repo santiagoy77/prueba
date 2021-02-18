@@ -68,12 +68,11 @@ while True:
     if int(inputs[0]) == 1:
         catalog = initCatalog()
         loadData(catalog)
-
-
-
+        
 
         print("Cargando información de los archivos ....")
-
+        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        print('Libros cargados: ' + str(lt.size(catalog['category-id'])))
     elif int(inputs[0]) == 2:
         pass
 

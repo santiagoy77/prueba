@@ -49,13 +49,13 @@ def loadData(catalog):
 
 def loadvideos(catalog):
     videosfile = cf.data_dir + "videos-small.csv"
-    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'), delimiter = "\t")
     for video in input_file:
         model.addvideo(catalog,video)
 
 def loadcategorys(catalog):
     categorysfile = cf.data_dir + "category-id.csv"
-    input_file = csv.DictReader(open(categorysfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(categorysfile, encoding='utf-8'), delimiter = "\t")
     for cat in input_file:
         model.addcategory(catalog, cat)
 
