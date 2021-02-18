@@ -66,7 +66,7 @@ def loadCategories(catalog):
         model.addCategory(catalog, category)
         
 # Funciones de ordenamiento
-def sortVideoscatalog):
+def sortVideoscatalog():
     """
     Ordena los videos
     """
