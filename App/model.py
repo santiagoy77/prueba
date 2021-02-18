@@ -52,24 +52,24 @@ def newCatalog():
 
 
     return catalog
+
 # Funciones para agregar informacion al catalogo
 def addvideo(catalog, video):
     lt.addLast(catalog["videos"], video)
-    #categorys = video["categorys"].split(",")
-    #for category in categorys:
-    #    addvideocategory(catalog, author.strip(), video)
+
 
 def addcategory(catalog, cat):
-    print(cat)
-    
     c = newcat(cat["cat_name"], cat["cat_id"])
     lt.addLast(catalog["category-id"], c)
+
 
 # Funciones para creacion de datos
 def newcat(name, id):
     cat = {"name":"", "id":""}
     cat["cat_name"] = name
     cat["cat_id"] = id
+
+
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista

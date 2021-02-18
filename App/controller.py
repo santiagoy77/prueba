@@ -43,7 +43,6 @@ def loadData(catalog):
     print("Comienza proceso de carga de videos")
     loadvideos(catalog)
     print("videos cargados")
-    print('videos cargados: ' + str(lt.size(catalog['videos'])))
     loadcategorys(catalog)
 
 
