@@ -56,16 +56,18 @@ def newCatalog():
 def addVideo(catalog, video):
     # Se adiciona el libro a la lista de videos
     lt.addLast(catalog['videos'], video)
-    # Se obtienen los autores del libro
-    authors = book['authors'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
-    for author in authors:
-        addBookAuthor(catalog, author.strip(), book)
+    
+def addCategory(catalog, category):
+    # Se adiciona el libro a la lista de videos
+    lt.addLast(catalog['categories'], category)
+
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-
+def compareviews(video1, video2):
+    return (float(video1['views']) > float(video2['views']))
 # Funciones de ordenamiento
+def sortBooks(catalog):
+    sa.sort(catalog['videos'], compareviews)
