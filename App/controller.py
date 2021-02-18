@@ -46,7 +46,7 @@ def loadData(catalog):
     loadVideos(catalog)
     loadCategory(catalog)
 
-def loadBooks(catalog):
+def loadVideos(catalog):
     """
     Carga los videos del archivo. 
     """
