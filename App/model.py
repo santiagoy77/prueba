@@ -38,7 +38,8 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 # Construccion de modelos
 def newCatalog():
     catalog = {'videos': None, 'category-id': None}
-    catalog['videos'] = lt.newList(datastructure='SINGLE_LINKED')
+    catalog['videos'] = lt.newList(
+        datastructure='SINGLE_LINKED', cmpfunction=compareIds)
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
 
@@ -60,6 +61,9 @@ def newCategory(id, name):
     category['name'] = name
     return category
 
+
+def compareIds(id1, id2):
+    pass
 # Funciones para creacion de datos
 
 # Funciones de consulta
