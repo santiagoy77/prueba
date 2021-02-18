@@ -44,7 +44,13 @@ def printMenu():
     print("5- Cargar Video con mas likes segun Tags")
     print("0- Salir")
     
-catalog = None
+def initCatalog():
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    controller.loadData(catalog)
+
 
 """
 Menu principal
@@ -55,6 +61,11 @@ while True:
     if int(inputs[0]) == 1:
         t1=time.process_time()
         print("Cargando información del catalogo ....")
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        print('Paises cargados: ' + str(lt.size(catalog['country'])))
+        print('Categorias cargadas: ' + str(lt.size(catalog['category'])))
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
