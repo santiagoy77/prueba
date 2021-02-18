@@ -48,9 +48,7 @@ def newCatalog():
 
     catalog['videos'] = lt.newList()
     catalog['categories'] = lt.newList()
-
-    catalog['videos']=lt.newlist
-    catalog['categories'] = lt.newList()
+    
     return catalog
 
 
