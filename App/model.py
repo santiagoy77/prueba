@@ -44,19 +44,24 @@ def newCatalog():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'categorys': None
+               'categories': None
 
     catalog['videos'] = lt.newList()
-    catalog['authors'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=compareauthors)
-    catalog['tags'] = lt.newList('SINGLE_LINKED',
-                                 cmpfunction=comparetagnames)
-    catalog['book_tags'] = lt.newList('SINGLE_LINKED')
+    catalog['categories'] = lt.newList()
 
     return catalog
 
 # Funciones para agregar informacion al catalogo
 
+def addVideo(catalog, video):
+    # Se adiciona el libro a la lista de videos
+    lt.addLast(catalog['videos'], video)
+    # Se obtienen los autores del libro
+    authors = book['authors'].split(",")
+    # Cada autor, se crea en la lista de libros del catalogo, y se
+    # crea un libro en la lista de dicho autor (apuntador al libro)
+    for author in authors:
+        addBookAuthor(catalog, author.strip(), book)
 # Funciones para creacion de datos
 
 # Funciones de consulta
