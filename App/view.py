@@ -68,7 +68,16 @@ while True:
         print('Categorias cargadas exitósamente: ' + str(lt.size(catalog['category'])))
 
     elif int(inputs[0]) == 2:
-        pass
+        print("Cuál estructura de datos quiere utilizar?")
+        print("1- ArrayList")
+        print("2- Single Linked")
+        estructuraDeDatos=int(input("Ingrese su selección\t"))
+        numeroElementos= int(input("¿Cuantos elementos quiere comparar?\t"))
+        print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
+        print("1- Selection")
+        print("2- Insertion")
+        print("3- Shell")
+        algoritmo=int(input("Ingrese su selección\t"))
 
     elif int (inputs[0]) == 3:
         pass
