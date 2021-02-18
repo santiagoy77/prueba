@@ -48,6 +48,7 @@ def newCatalog():
     catalog['category'] = lt.newList('SINGLE_LINKED',
                                  cmpfunction=None)
     catalog['tags'] = lt.newList('SINGLE_LINKED')
+    return catalog
 
 def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
