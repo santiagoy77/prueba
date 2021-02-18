@@ -38,10 +38,10 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Requerimiento 1")
-    print("3- Requerimiento 2")
-    print("4- Requerimiento 3")
-    print("5- Requerimiento 4")
+    print("2- Videos con más views para una categoría y pais")
+    print("3- Video con más dias de trending en un país")
+    print("4- Video con más dias de trending para una categoría")
+    print("5- Videos con más likes para un tag")
 
 
 catalog = None
@@ -53,16 +53,9 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        t1 = time.process_time_ns()
-
-        catalogo = controller.initcatalog()
+        catalogo = controller.initCatalog()
         controller.cargar_datos(catalogo)
         print("Cargando información de los archivos ....")
-        t2 = time.process_time_ns()
-
-        print("Tiempo tomado: " + str(t2-t1))
-
-        print("Se cargaron 100 datos")
 
     elif int(inputs[0]) == 2:
         pass
