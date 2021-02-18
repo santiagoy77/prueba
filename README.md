@@ -1,3 +1,10 @@
+# Integrantes
+
+* Juan Felipe Serrano - j.serrano@uniandes.edu.co - 201921654
+* Cristian Camilo Cortes - cc.cortesm1@uniandes.edu.co - 202011908
+
+--------------------------------------
+
 #ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
