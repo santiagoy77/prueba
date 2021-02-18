@@ -45,7 +45,8 @@ def loadData(catalog):
     """
     loadVideos(catalog)
     loadCategory(catalog)
-
+    sortVideos
+    
 def loadVideos(catalog):
     """
     Carga los videos del archivo. 
