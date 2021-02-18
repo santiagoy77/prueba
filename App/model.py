@@ -44,7 +44,10 @@ def newCatalog():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'categories': None}
+               'categories': None
+
+    catalog['videos'] = lt.newList()
+    catalog['categories'] = lt.newList()
 
     catalog['videos']=lt.newlist
     catalog['categories'] = lt.newList()
