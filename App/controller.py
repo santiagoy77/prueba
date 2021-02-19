@@ -66,3 +66,9 @@ def loadVideo(catalog):
 
 def sortvideos(catalog, size):
     return model.sortvideos(catalog, size)
+
+def sortlista(catalog, tipo):
+    if tipo == 1 :
+        return model.sortvideosselection(catalog, model.cmpVideosByViews)
+    else :
+        pass

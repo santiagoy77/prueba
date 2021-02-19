@@ -108,3 +108,20 @@ def sortvideos(catalog, size):
 def cmpVideosByViews(video1, video2):
     return (float(video1['views']) < float(video2['views']))
 
+
+
+
+def sortvideosselection(lst, cmpfunction):
+    size = lt.size(lst)
+    pos1 = 1
+    while pos1 < size:
+        minimum = pos1    # minimun tiene el menor elemento
+        pos2 = pos1 + 1
+        while (pos2 <= size):
+            if (cmpfunction(lt.getElement(lst, pos2),
+               (lt.getElement(lst, minimum)))):
+                minimum = pos2  # minimum = posición elemento más pequeño
+            pos2 += 1
+        lt.exchange(lst, pos1, minimum)  # elemento más pequeño -> elem pos1
+        pos1 += 1
+    return lst

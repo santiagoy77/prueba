@@ -69,7 +69,8 @@ def printResults(ord_videos, sample=10):
             print("Titulo: " +video["channel_title"])
             i +=1
 
-
+def sortlista(catalog, tipo):
+    return controller.sortlista(catalog, tipo)
 
 catalog = None
 """1
@@ -93,7 +94,20 @@ while True:
         print("Videos cargados:" + str(lt.size(catalog["videos"])))
 
     elif int(inputs[0]) == 2:
-        pass
+        opcion= int(input("Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell  : "))
+        if opcion == 2:
+            tipo = "insertionsort"
+            
+        elif opcion ==1:
+            tipo ="selectionsort"
+        else:
+            tipo = "shellsort"
+        lista = initCatalog("ARRAY_LIST") 
+        catalog = sortlista(lista, tipo)
+        
+        print("videos cargados sort :" +str(lt.size(catalog)))
+          
+
     elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 4:
