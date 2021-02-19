@@ -26,6 +26,7 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
@@ -38,7 +39,7 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog():
+def newCatalog(tipo):
     """
     Inicializa el catálogo de videos. Crea una lista vacia para guardar
     todos los videos, adicionalmente, crea una lista vacia para los autores,
@@ -50,7 +51,8 @@ def newCatalog():
                }
 
     catalog['videos'] = lt.newList()
-    catalog['channel_title'] = lt.newList('ARRAYLIST')
+    catalog['channel_title'] = lt.newList(tipo,
+                                            cmpfunction=cmpVideosByViews)
   
 
     return catalog
@@ -93,7 +95,16 @@ def newAuthor(name):
 
 
 
+def sortvideos(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
 
 
-
+def cmpVideosByViews(video1, video2):
+    return (float(video1['views']) < float(video2['views']))
 

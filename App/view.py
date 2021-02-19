@@ -45,11 +45,11 @@ def printMenu():
     print("0- Salir")
 
 
-def initCatalog():
+def initCatalog(tipo):
     """
     Inicializa el catalogo de videos
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipo)
 
 
 def loadData(catalog):
@@ -57,6 +57,19 @@ def loadData(catalog):
     Carga los videos en la estructura de datos
     """
     controller.loadData(catalog)
+
+
+def printResults(ord_videos, sample=10):
+    size = lt.size(ord_videos)
+    if size > sample:
+        print("Los primeros ", sample, " videos ordenados son:")
+        i=0
+        while i <= sample:
+            video = lt.getElement(ord_videos,i)
+            print("Titulo: " +video["channel_title"])
+            i +=1
+
+
 
 catalog = None
 """1
@@ -67,9 +80,18 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        opcion= int(input("Elija 1 si quiere Array_list, o opcion 2 Linked_list: "))
+        if opcion == 1:
+            tipo = "ARRAY_LIST"
+            catalog= initCatalog(tipo)
+        else:
+            tipo = "LINKED_LIST"
+            catalog= initCatalog(tipo)
+
+        catalog = initCatalog(tipo)
         loadData(catalog)
         print("Videos cargados:" + str(lt.size(catalog["videos"])))
+
     elif int(inputs[0]) == 2:
         pass
     elif int(inputs[0]) == 3:
@@ -77,7 +99,11 @@ while True:
     elif int(inputs[0]) == 4:
         pass
     elif int(inputs[0]) == 5:
-        pass
+        size = input("Indique tamaño de la muestra: ")
+        result = controller.sortvideos(catalog, int(size))
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        printResults(result[1])
     else:
         sys.exit(0)
 sys.exit(0)
