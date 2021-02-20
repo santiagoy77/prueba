@@ -45,11 +45,11 @@ def printMenu():
     print("0- Salir")
 
 
-def initCatalog():
+def initCatalog(tipo_de_dato):
     """
     Inicializa el catalogo de videos
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipo_de_dato)
 
 
 def loadData(catalog):
@@ -69,7 +69,13 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        tipo_de_dato= int(input("¿Qué tipo de estructura de datos quiere usar?\n 1.Array List\n 2.Single Linked))
+        if tipo_de_dato == 1: 
+            tipo_de_dato = 'ARRAY_LIST'
+        elif tipo_de_dato == 2: 
+            tipo_de_dato = 'SINGLE_LINKED" 
+
+        catalog = initCatalog(tipo_de_dato)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
 
@@ -98,6 +104,17 @@ while True:
         print('\n')
 
     elif int(inputs[0]) == 2:
+        size = int(input("Indique el tamaño de la muestra"))
+        if size < lt.size(catalog): 
+            print("¿Qué tipo de ordenamiento quiere?\n1.Selection Sort \n2.Insertion Sort \n3.Shell")
+            sort_type = int(input())
+
+
+            number = input("Buscando los top?: ")
+            country = input("¿De qué país quiere consultar los top x videos? ")
+            category = input("¿De qué categoria quiere consultar los videos? ")
+            result = controller.sortViews(catalog,size,sort_type)
+
         pass
 
     else:

@@ -36,10 +36,10 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 
 
 # Construccion de modelos
-def newCatalog():
+def newCatalog(tipo_de_dato):
     catalog = {'videos': None, 'category-id': None}
     catalog['videos'] = lt.newList(
-        datastructure='SINGLE_LINKED', cmpfunction=compareIds)
+        datastructure=tipo_de_dato
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
 
@@ -69,7 +69,18 @@ def compVideosByViews(video1, video2):
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views'
     """
-    pass
+    views1 = video1["views"]
+    views2 = video2["views"]
+
+    return views1 < views2 
+    
+def orderedList(catalog,country,category): 
+    videoList = catalogo["videos"]
+    sublist = lt.newList(datastructure=)
+
+
+
+
 
 
 # Funciones para creacion de datos
