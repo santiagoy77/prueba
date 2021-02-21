@@ -106,7 +106,7 @@ while True:
 
     elif int(inputs[0]) == 2:
         size = int(input("Indique el tamaño de la muestra: "))
-        if size < lt.size(catalog['videos']):
+        if size <= lt.size(catalog['videos']):
             print(
                 "¿Qué tipo de ordenamiento quiere?\n1.Selection Sort \n2.Insertion Sort \n3.Shell Sort\n")
             sort_type = int(input())
@@ -114,10 +114,12 @@ while True:
             #number = input("Buscando los top?: ")
             #country = input("¿De qué país quiere consultar los top x videos? ")
             #category = input("¿De qué categoria quiere consultar los videos?")
+
             result = controller.sortViews(catalog, size, sort_type)
             print("Para la muestra de", size,
                   "elementos, el tiempo (mseg) es: ", str(result[0]))
-
+        else:
+            print('La muestra que desea es mayor a la cantidad de datos almacenadas')
     else:
         sys.exit(0)
 sys.exit(0)
