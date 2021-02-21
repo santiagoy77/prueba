@@ -111,9 +111,9 @@ while True:
                 "¿Qué tipo de ordenamiento quiere?\n1.Selection Sort \n2.Insertion Sort \n3.Shell Sort\n")
             sort_type = int(input())
 
-            #number = input("Buscando los top?: ")
-            #country = input("¿De qué país quiere consultar los top x videos? ")
-            #category = input("¿De qué categoria quiere consultar los videos?")
+            # number = input("Buscando los top?: ")
+            # country = input("¿De qué país quiere consultar los top x videos? ")
+            # category = input("¿De qué categoria quiere consultar los videos?")
 
             result = controller.sortViews(catalog, size, sort_type)
             print("Para la muestra de", size,
