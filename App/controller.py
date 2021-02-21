@@ -58,7 +58,14 @@ def loadCategories(catalog):
     for category in input_file:
         model.addCategory(catalog, category)
 
-def sortVideos(catalog,size,sort_type,number,country,category) 
+
+def sortViews(catalog, size, sort_type):
+    if sort_type == 1:
+        return model.sortVideosSelection(catalog, size)
+    if sort_type == 2:
+        return model.sortVideosInsertion(catalog, size)
+    if sort_type == 3:
+        return model.sortVideosShell(catalog, size)
 
 
 # Funciones de ordenamiento

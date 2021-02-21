@@ -69,11 +69,12 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        tipo_de_dato= int(input("¿Qué tipo de estructura de datos quiere usar?\n 1.Array List\n 2.Single Linked))
-        if tipo_de_dato == 1: 
+        tipo_de_dato = int(input(
+            "¿Qué tipo de estructura de datos quiere usar?\n 1.Array List\n 2.Single Linked\n"))
+        if tipo_de_dato == 1:
             tipo_de_dato = 'ARRAY_LIST'
-        elif tipo_de_dato == 2: 
-            tipo_de_dato = 'SINGLE_LINKED" 
+        elif tipo_de_dato == 2:
+            tipo_de_dato = 'SINGLE_LINKED'
 
         catalog = initCatalog(tipo_de_dato)
         loadData(catalog)
@@ -104,18 +105,18 @@ while True:
         print('\n')
 
     elif int(inputs[0]) == 2:
-        size = int(input("Indique el tamaño de la muestra"))
-        if size < lt.size(catalog): 
-            print("¿Qué tipo de ordenamiento quiere?\n1.Selection Sort \n2.Insertion Sort \n3.Shell")
+        size = int(input("Indique el tamaño de la muestra: "))
+        if size < lt.size(catalog['videos']):
+            print(
+                "¿Qué tipo de ordenamiento quiere?\n1.Selection Sort \n2.Insertion Sort \n3.Shell Sort\n")
             sort_type = int(input())
 
-
-            number = input("Buscando los top?: ")
-            country = input("¿De qué país quiere consultar los top x videos? ")
-            category = input("¿De qué categoria quiere consultar los videos? ")
-            result = controller.sortViews(catalog,size,sort_type)
-
-        pass
+            #number = input("Buscando los top?: ")
+            #country = input("¿De qué país quiere consultar los top x videos? ")
+            #category = input("¿De qué categoria quiere consultar los videos?")
+            result = controller.sortViews(catalog, size, sort_type)
+            print("Para la muestra de", size,
+                  "elementos, el tiempo (mseg) es: ", str(result[0]))
 
     else:
         sys.exit(0)

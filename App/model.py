@@ -26,8 +26,11 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as sel
+from DISClib.Algorithms.Sorting import insertionsort as ins
 assert cf
 
 '''
@@ -39,7 +42,7 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 def newCatalog(tipo_de_dato):
     catalog = {'videos': None, 'category-id': None}
     catalog['videos'] = lt.newList(
-        datastructure=tipo_de_dato
+        datastructure=tipo_de_dato)
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
 
@@ -64,23 +67,49 @@ def newCategory(id, name):
 
 def compVideosByViews(video1, video2):
     """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2 
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
     Args:
-        video1: informacion del primer video que incluye su valor 'views' 
+        video1: informacion del primer video que incluye su valor 'views'
         video2: informacion del segundo video que incluye su valor 'views'
     """
     views1 = video1["views"]
     views2 = video2["views"]
 
-    return views1 < views2 
-    
-def orderedList(catalog,country,category): 
-    videoList = catalogo["videos"]
-    sublist = lt.newList(datastructure=)
+    return views1 < views2
 
 
+def sortVideosSelection(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sel.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
 
 
+def sortVideosInsertion(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = ins.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+
+def sortVideosShell(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+# def orderedList(catalog,country,category):
+#     videoList = catalogo["videos"]
+#     sublist = lt.newList(datastructure=)
 
 
 # Funciones para creacion de datos
