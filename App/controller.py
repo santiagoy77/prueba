@@ -61,7 +61,7 @@ def loadCategories(catalog):
     Carga los videos del archivo. 
     """
     categoryfile = cf.data_dir + 'videos/category-id.csv'
-    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter='\t')
     for category in input_file:
         model.addCategory(catalog, category)
         

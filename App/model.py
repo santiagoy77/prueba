@@ -59,13 +59,13 @@ def addVideo(catalog, video):
 # Funciones para creacion de datos
 
 def addCategory(catalog, category):
-    t = newCategory(category['category_id'], category['video_id'])
+    t = newCategory(category['id'], category['name'])
     lt.addLast(catalog['categories'], t)
 
 
 # Funciones para creacion de datos
-def newCategory(category_id,video_id):
-    category = {'category_id': category_id, 'video_id': video_id}
+def newCategory(category_id,name):
+    category = {'id': category_id, 'name': name}
     return category
 # Funciones de consulta
 
@@ -73,5 +73,6 @@ def newCategory(category_id,video_id):
 def compareviews(video1, video2):
     return (float(video1['views']) > float(video2['views']))
 # Funciones de ordenamiento
+
 def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
