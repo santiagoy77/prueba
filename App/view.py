@@ -87,30 +87,39 @@ while True:
         print('Categorias cargadas exitósamente: ' + str(lt.size(catalog['category'])))
 
     elif inputs == 2:
-        numeroElementos= int(input("¿Cuantos elementos quiere comparar?:\t"))
-        if numeroElementos>lt.size(catalog['video']):
-            print("Está tratando de comparar más elementos de los que cuenta el catálogo de videos. El máximo de videos que se pueden comprar son: ",lt.size(catalog['video']))
+        if len(catalog)==0:
+            print("No se han cargado datos al catálogo, por favor realize la opción 1 antes de proseguir.")
         else:
-            verifica=True
-            while verifica:
-                print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
-                print("1- Selection")
-                print("2- Insertion")
-                print("3- Shell")
-                algoritmo=int(input("Ingrese su selección:\t"))
-                if algoritmo>=1 or algoritmo<=3:
-                    verifica=False
-                else:
-                    print("Opción invalida, elija una opción válida")
-            tiempo,listaOrdenada = controller.VideosByViews(catalog,numeroElementos, algoritmo)
-            printResultVideosByViews(listaOrdenada)
-            print("El tiempo de ejecución del ordenamiento es: ",tiempo)
+            numeroElementos= int(input("¿Cuantos elementos quiere comparar?:\t"))
+            if numeroElementos>lt.size(catalog['video']):
+                print("Está tratando de comparar más elementos de los que cuenta el catálogo de videos. El máximo de videos que se pueden comprar son: ",lt.size(catalog['video']))
+            else:
+                verifica=True
+                while verifica:
+                    print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
+                    print("1- Selection")
+                    print("2- Insertion")
+                    print("3- Shell")
+                    algoritmo=int(input("Ingrese su selección:\t"))
+                    if algoritmo>=1 or algoritmo<=3:
+                        verifica=False
+                    else:
+                        print("Opción invalida, elija una opción válida")
+                tiempo,listaOrdenada = controller.VideosByViews(catalog,numeroElementos, algoritmo)
+                printResultVideosByViews(listaOrdenada)
+                print("El tiempo de ejecución del ordenamiento es: ",tiempo)
 
     elif inputs == 3:
-        pass
+        if len(catalog)==0:
+            print("No se han cargado datos al catálogo, por favor realize la opción 1 antes de proseguir.")
+        else:
+            pass
 
     elif inputs == 4:
-        pass
+        if len(catalog)==0:
+            print("No se han cargado datos al catálogo, por favor realize la opción 1 antes de proseguir.")
+        else:
+            pass
 
     else:
         sys.exit(0)
