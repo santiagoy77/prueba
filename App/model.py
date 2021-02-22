@@ -26,8 +26,11 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import shellsort as She
+from DISClib.Algorithms.Sorting import selectionsort as Sel
+from DISClib.Algorithms.Sorting import insertionsort as Inser
 assert cf
 
 """
@@ -37,9 +40,14 @@ los mismos.
 
 # Construccion de modelos
 
-def newCatalog():
+def newCatalog(estructuraDeDatos):
+    tipoED=''
+    if estructuraDeDatos==1:
+        tipoED='ARRAY_LIST'
+    else:
+        tipoED='SINGLE_LINKED'
     catalog = {'video': None, 'category': None}
-    catalog['video'] = lt.newList()
+    catalog['video'] = lt.newList(tipoED)
     catalog['category'] = lt.newList('ARRAY_LIST')#, cmpfunction=compareCategories
     return catalog
 
@@ -66,6 +74,24 @@ def newCategory(id, name):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+def VideosByViews(catalog, numElementos, TipoAlgortimo):
+    sub_list = lt.subList(catalog['video'], 0, numElementos)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list=-1
+    if TipoAlgortimo==1:
+        sorted_list = Sel.sort(sub_list, cmpVideosByViews)
+    elif TipoAlgortimo==2:
+        sorted_list = Inser.sort(sub_list, cmpVideosByViews)
+    else:
+        sorted_list = She.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+def cmpVideosByViews(video1, video2):
+    return (float(video1['views']) < float(video2['views']))
 
 
 

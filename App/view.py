@@ -42,13 +42,22 @@ def printMenu():
     print("4- Requerimiento 3")
     print("5- Requerimiento 4")
 
-catalog = None
+catalog = {}
 
-def initCatalog ():
-    return controller.initCatalog()
+def initCatalog (estructuraDeDatos):
+    return controller.initCatalog(estructuraDeDatos)
 
 def loadData(catalog):
     controller.loadData(catalog)
+
+def printResultVideosByViews(listaOrdenada):
+    size = lt.size(listaOrdenada)
+    print("Los primeros ", size, " videos ordenados por visitas son:")
+    i=1
+    while i<= size:
+        video = lt.getElement(listaOrdenada,i)
+        print('Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
+        i+=1
 
 
 """
@@ -56,33 +65,51 @@ Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    inputs = int(input('Seleccione una opción para continuar\n'))
+    if inputs == 1:
+        verifica=True
+        while verifica:
+            print("Cuál estructura de datos quiere utilizar?")
+            print("1- ArrayList")
+            print("2- Single Linked")
+            estructuraDeDatos=int(input("Ingrese su selección:\t"))
+            if estructuraDeDatos==1 or estructuraDeDatos==2:
+                verifica=False
+            else:
+                print("Opción invalida, elija una opción válida")
         print("Cargando información de los archivos ....")
         t1 = time.process_time_ns()
-        catalog = initCatalog()
+        catalog = initCatalog(estructuraDeDatos)
         loadData(catalog)
         t2 = time.process_time_ns()
         print ("Tiempo de ejecucion: {:.2f} nano seconds.".format(t2-t1))
         print('Videos cargados exitósamente: ' + str(lt.size(catalog['video'])))
         print('Categorias cargadas exitósamente: ' + str(lt.size(catalog['category'])))
 
-    elif int(inputs[0]) == 2:
-        print("Cuál estructura de datos quiere utilizar?")
-        print("1- ArrayList")
-        print("2- Single Linked")
-        estructuraDeDatos=int(input("Ingrese su selección\t"))
-        numeroElementos= int(input("¿Cuantos elementos quiere comparar?\t"))
-        print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
-        print("1- Selection")
-        print("2- Insertion")
-        print("3- Shell")
-        algoritmo=int(input("Ingrese su selección\t"))
+    elif inputs == 2:
+        numeroElementos= int(input("¿Cuantos elementos quiere comparar?:\t"))
+        if numeroElementos>lt.size(catalog['video']):
+            print("Está tratando de comparar más elementos de los que cuenta el catálogo de videos. El máximo de videos que se pueden comprar son: ",lt.size(catalog['video']))
+        else:
+            verifica=True
+            while verifica:
+                print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
+                print("1- Selection")
+                print("2- Insertion")
+                print("3- Shell")
+                algoritmo=int(input("Ingrese su selección:\t"))
+                if algoritmo>=1 or algoritmo<=3:
+                    verifica=False
+                else:
+                    print("Opción invalida, elija una opción válida")
+            tiempo,listaOrdenada = controller.VideosByViews(catalog,numeroElementos, algoritmo)
+            printResultVideosByViews(listaOrdenada)
+            print("El tiempo de ejecución del ordenamiento es: ",tiempo)
 
-    elif int (inputs[0]) == 3:
+    elif inputs == 3:
         pass
 
-    elif int (inputs[0]) == 4:
+    elif inputs == 4:
         pass
 
     else:
