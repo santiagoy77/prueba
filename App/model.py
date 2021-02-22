@@ -44,25 +44,21 @@ def newCatalog():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'categories': None
-
-    catalog['videos'] = lt.newList()
+               'categories': None}
+    catalog['videos']= lt.newList()
     catalog['categories'] = lt.newList()
     
     return catalog
 
 
 # Funciones para agregar informacion al catalogo
-def addVideo(catalog, video)
+def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
     
-def addCategory(catalog, category):
-    # Se adiciona el libro a la lista de videos
-    lt.addLast(catalog['categories'], category)
 
 # Funciones para creacion de datos
 
-def addCategory(catalog, category)
+def addCategory(catalog, category):
     t = newCategory(category['category_id'], category['video_id'])
     lt.addLast(catalog['categories'], t)
 
