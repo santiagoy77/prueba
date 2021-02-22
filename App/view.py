@@ -43,11 +43,17 @@ def printMenu():
     print("6- Buscar los videos con más likes")
     print("0- Salir")
 
-def initCatalog():
+def initCatalogArray():
     """
     Inicializa el catalogo de videos
     """
-    return controller.initCatalog()
+    return controller.initCatalogArray()
+
+def initCatalogSingleLinked():
+    """
+    Inicializa el catalogo de videos
+    """
+    return controller.initCatalogSingleLinked()
 
 def loadData(catalog):
     """
@@ -55,7 +61,8 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
- 
+
+
 catalog = None
 
 """
@@ -65,10 +72,20 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        print('Tipos de estructuras de datos disponibles:\n1. Lista encadenada\n2. Arreglo')
+        dataType = input('Seleccione el tipo de estructura de datos con el que desea cargar la información\n')
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
-        loadData(catalog)
-        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        if dataType == 1:
+            catalog = initCatalogSingleLinked()
+            loadData(catalog)
+            print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        elif dataType == 2:
+            catalog = initCatalogArray()
+            loadData(catalog)
+            print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        else:
+            print('Ingrese una opcion valida')
+        
 
     elif int(inputs[0]) == 2:
         pass

@@ -36,7 +36,7 @@ los mismos.
 """
 
 # Construccion de modelos
-def newCatalog():
+def newCatalogArray():
     """
     Inicializa el catálogo de videos. Crea una lista vacia para guardar
     todos los videos, adicionalmente, crea una lista vacia para los autores,
@@ -45,11 +45,24 @@ def newCatalog():
     """
     catalog = {'videos': None,
                'categories': None}
-    catalog['videos']= lt.newList()
-    catalog['categories'] = lt.newList()
+    catalog['videos']= lt.newList(datastructure='ARRAY_LIST')
+    catalog['categories'] = lt.newList(datastructure='ARRAY_LIST')
     
     return catalog
 
+def newCatalogSingleLinked():
+    """
+    Inicializa el catálogo de videos. Crea una lista vacia para guardar
+    todos los videos, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'videos': None,
+               'categories': None}
+    catalog['videos']= lt.newList(datastructure='SINGLE_LINKED')
+    catalog['categories'] = lt.newList(datastructure='SINGLE_LINKED')
+    
+    return catalog
 
 # Funciones para agregar informacion al catalogo
 def addVideo(catalog, video):
