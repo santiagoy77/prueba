@@ -73,5 +73,5 @@ def newCategory(category_id,video_id):
 def compareviews(video1, video2):
     return (float(video1['views']) > float(video2['views']))
 # Funciones de ordenamiento
-def sortBooks(catalog):
+def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
