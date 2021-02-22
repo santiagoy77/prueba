@@ -73,7 +73,7 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print('Tipos de estructuras de datos disponibles:\n1. Lista encadenada\n2. Arreglo')
-        dataType = input('Seleccione el tipo de estructura de datos con el que desea cargar la información\n')
+        dataType = int(input('Seleccione el tipo de estructura de datos con el que desea cargar la información\n'))
         print("Cargando información de los archivos ....")
         if dataType == 1:
             catalog = initCatalogSingleLinked()

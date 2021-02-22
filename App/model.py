@@ -36,7 +36,7 @@ los mismos.
 """
 
 # Construccion de modelos
-def newCatalogArray():
+def createCatalogArray():
     """
     Inicializa el catálogo de videos. Crea una lista vacia para guardar
     todos los videos, adicionalmente, crea una lista vacia para los autores,
@@ -50,7 +50,7 @@ def newCatalogArray():
     
     return catalog
 
-def newCatalogSingleLinked():
+def createCatalogSingleLinked():
     """
     Inicializa el catálogo de videos. Crea una lista vacia para guardar
     todos los videos, adicionalmente, crea una lista vacia para los autores,
@@ -61,7 +61,6 @@ def newCatalogSingleLinked():
                'categories': None}
     catalog['videos']= lt.newList(datastructure='SINGLE_LINKED')
     catalog['categories'] = lt.newList(datastructure='SINGLE_LINKED')
-    
     return catalog
 
 # Funciones para agregar informacion al catalogo

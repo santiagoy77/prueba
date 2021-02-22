@@ -34,14 +34,14 @@ def initCatalogArray():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalogArray()
+    catalog = model.createCatalogArray()
     return catalog
 
 def initCatalogSingleLinked():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalogSingleLinked()
+    catalog = model.createCatalogSingleLinked()
     return catalog
 
 # Funciones para la carga de datos
