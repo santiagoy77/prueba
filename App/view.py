@@ -56,7 +56,7 @@ def printResultVideosByViews(listaOrdenada):
     i=1
     while i<= size:
         video = lt.getElement(listaOrdenada,i)
-        print('Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
+        print(i+'- Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
         i+=1
 
 
