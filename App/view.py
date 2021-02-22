@@ -37,6 +37,7 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
+    print("2- Ordenar el catálogo con un algoritmo iterativo")
     print("2- Encontrar buenos videos por categoría y país")
     print("4- Encontrar video tendencia por país ")
     print("5- Encontrar video tendencia por categoría")
@@ -60,7 +61,6 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
-
 
 
 catalog = None
@@ -88,7 +88,24 @@ while True:
         
 
     elif int(inputs[0]) == 2:
-        pass
+        print('Los tipos de algorritmos de ordenamiento disponibles son los siguientes:\n1. Selection Sort\n2. Insertion Sort\n3. Shell Sort')
+        algorithm = int(input('Sleccione el tipo de algoritmo que desea utilizar para ordenar los datos:\n'))
+        print('Ordenando los datos...')
+        if algorithm == 1:
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.selectionSortVideoscatalog(catalog, int(size))
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        elif algorithm ==2:
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.insertionSortVideoscatalog(catalog, int(size))
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        elif algorithm ==3:
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.shellSortVideoscatalog(catalog, int(size))
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        else:
+            print('Ingrese una opcion valida')
+        
 
     else:
         sys.exit(0)

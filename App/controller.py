@@ -52,7 +52,7 @@ def loadData(catalog):
     """
     loadVideos(catalog)
     loadCategories(catalog)
-    sortVideoscatalog(catalog)
+'''cambio de lugar para el sort'''
 
 def loadVideos(catalog):
     """
@@ -73,10 +73,23 @@ def loadCategories(catalog):
         model.addCategory(catalog, category)
         
 # Funciones de ordenamiento
-def sortVideoscatalog(catalog):
+
+def selectionSortVideoscatalog(catalog, size):
     """
-    Ordena los videos
+    Ordena los videos por selection sort
     """
-    model.sortVideos(catalog)
+    return model.selectionSortVideos(catalog, size)
+
+def insertionSortVideoscatalog(catalog, size):
+    """
+    Ordena los videos por insertion sort
+    """
+    return model.selectionSortVideos(catalog, size)
+
+def shellSortVideoscatalog(catalog,size):
+    """
+    Ordena los videos por shell sort
+    """
+    return model.shellSortVideos(catalog,size)
 
 # Funciones de consulta sobre el catálogo
