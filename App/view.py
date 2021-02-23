@@ -59,7 +59,7 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
-
+"""
 def printAuthorData(author):
     if author:
         print('Autor encontrado: ' + author['name'])
@@ -82,6 +82,7 @@ def printBestBooks(books):
         print('No se encontraron libros')
 
 catalog = None
+"""
 
 """
 Menu principal
