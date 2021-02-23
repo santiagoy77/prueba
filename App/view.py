@@ -38,7 +38,7 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Ordenar el catálogo con un algoritmo iterativo")
-    print("2- Encontrar buenos videos por categoría y país")
+    print("3- Encontrar buenos videos por categoría y país")
     print("4- Encontrar video tendencia por país ")
     print("5- Encontrar video tendencia por categoría")
     print("6- Buscar los videos con más likes")
