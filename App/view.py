@@ -48,14 +48,14 @@ catalog = None
 
 def initCatalog():
     """
-    Inicializa el catalogo de libros
+    Inicializa el catalogo de videos
     """
     return controller.initCatalog()
 
 
 def loadData(catalog):
     """
-    Carga los libros en la estructura de datos
+    Carga los videos en la estructura de datos
     """
     controller.loadData(catalog)
 
@@ -66,12 +66,11 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-
-        print("Cargando información de los archivos ....")
-        print("Videos cargados: " + str(lt.size(catalog["videos"])))
-        print("Categorías cargadas: " str(lt.size(catalog["category-id"])))
+        print("No. Videos cargados: " + str(lt.size(catalog["videos"])))
+        print("No. Categorías cargadas: " + str(lt.size(catalog["category-id"])))
 
     elif int(inputs[0]) == 2:
         pass

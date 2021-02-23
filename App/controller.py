@@ -40,9 +40,9 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadData(catalog):
-    print("Comienza proceso de carga de videos")
+    print("Comienza proceso de carga de videos...")
     loadvideos(catalog)
-    print("videos cargados")
+    print("Videos cargados.")
     loadcategorys(catalog)
 
 

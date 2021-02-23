@@ -39,8 +39,8 @@ los mismos.
 # Construccion de modelos
 def newCatalog():
     """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    Inicializa el catálogo de videos. Crea una lista vacia para guardar
+    todos los videos, adicionalmente, crea una lista vacia para los autores,
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
@@ -67,9 +67,10 @@ def addcategory(catalog, cat):
 
 # Funciones para creacion de datos
 def newcat(name, id):
-    cat = {"name":"", "id":""}
+    cat = {"cat_name": "", "cat_id":""}
     cat["cat_name"] = name
     cat["cat_id"] = id
+    return cat
 
 
 # Funciones de consulta
