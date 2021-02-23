@@ -48,7 +48,7 @@ def newCatalog():
                'channel_title': None
                }
 
-    catalog['videos'] = lt.newList()
+    catalog['title'] = lt.newList()
     catalog['channel_title'] = lt.newList('SINGLE_LINKED',
                                     cmpfunction=comparechannel)
 
@@ -74,7 +74,7 @@ def addChannelTitle(catalog, channel_title, video):
     """
     channel = catalog['channel_title']
     poschannel = lt.isPresent(channel, channel_title)
-    if posauthor > 0:
+    if poschannel > 0:
         author = lt.getElement(channel, poschannel)
     else:
         author = newAuthor(channel_title)

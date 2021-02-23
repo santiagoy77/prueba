@@ -51,10 +51,10 @@ def loadBooks(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = cf.data_dir + 'GoodReads/books.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addBook(catalog, book)
+    videosfile = cf.data_dir + 'videos-small.csv'
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    for video in input_file:
+        model.addBook(catalog, video)
 
 # Funciones para la carga de datos
 

@@ -93,6 +93,9 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
+        print('Videos cargados: ' + str(lt.size(catalog['title'])))
+        print('Canales cargados: ' + str(lt.size(catalog['channel_title'])))
+        
 
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
@@ -107,6 +110,6 @@ while True:
         print('Buscar los videos con mas likes')
 
     else:
-        sys.exit(0)1
+        sys.exit(0)
         
 sys.exit(0)
