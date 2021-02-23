@@ -37,8 +37,63 @@ los mismos.
 
 # Construccion de modelos
 
+def newCatalog():
+    """
+    inicializa el catalogo de video y su informacion
+    """
+    catalog = {'videos': None,
+               'categorias': None,
+               'pais':None,
+               'tag':None}
+    
+    catalog['videos'] = lt.newList()
+    catalog['categorias'] = lt.newList()
+    catalog['pais'] = lt.newList()
+    catalog['tag'] =lt.newList()
+
+    
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
+def addvideo(catalog, video):
+    # se adiciona el video a la lista de videos 
+    # video es un dicc
+    lt.addLast(catalog['videos'], video)
+    #sacamos las categorias de el dic videos
+    categories = video['category_id'].split(',')
+    # cada categoria se crea como una lista de 
+    # y se. 
+    for category in categories:
+        addCategory(catalog, category.strip(), video)
+        
+
+def addCategory(catalog, category_name, video):
+    catcategoria = catalog['categorias']
+    poscategoria = lt.isPresent(catcategoria, category_name)
+    if poscategoria >0:
+        categoria = lt.getElement(catcategoria, poscategoria)
+    else:
+        categoria = newcategoria(category_name)
+        lt.addLast(catcategoria, categoria)
+    lt.addLast(categoria['videos'], video)
+        
+        
+        
+def newcategoria(category_name):
+    categoria = {'categoria': "", "videos": None}
+    categoria['categoria'] = category_name
+    categoria['videos'] = lt.newList('ARRAY_LIST')
+    return categoria
+        
+    
+    
+    
+    
+    
+    
+    
+    
 # Funciones para creacion de datos
 
 # Funciones de consulta
