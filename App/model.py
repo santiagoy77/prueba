@@ -44,11 +44,11 @@ def newCatalog():
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
-    catalog = {'category-id': None,
-               'videos': None}
+    catalog = {'videos': None,
+               'categories': None}
 
     catalog['videos'] = lt.newList()
-    catalog['category-id'] = lt.newList()
+    catalog['categories'] = lt.newList("ARRAY_LIST", cmpfunction=comparecat)
 
 
     return catalog
@@ -58,23 +58,28 @@ def addvideo(catalog, video):
     lt.addLast(catalog["videos"], video)
 
 
-def addcategory(catalog, cat):
-    print(cat)
-    
-    c = newcat(cat["name"], cat["id"])
-    lt.addLast(catalog["category-id"], c)
+def addcategory(catalog, cat):  
+    poscat = lt.isPresent(catalog["categories"], cat["id"])
+
+    if poscat == 0:
+        c = newcategory(cat["name"].strip(), cat["id"])
+        lt.addLast(catalog["categories"], c)
 
 
 # Funciones para creacion de datos
-def newcat(name, id):
-    cat = {"cat_name": "", "cat_id":""}
-    cat["cat_name"] = name
-    cat["cat_id"] = id
+def newcategory(name, id):
+    cat = {"id": "", "name":""}
+    cat["id"] = id
+    cat["name"] = name
     return cat
 
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def comparecat(cat1, cat):
+    if (cat1 in cat['id']):
+        return 0
+    return -1
 
 # Funciones de ordenamiento

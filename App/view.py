@@ -36,7 +36,7 @@ operación solicitada
 """
 
 def printMenu():
-    print("Bienvenido")
+    print("\nBienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Videos con más views para una categoría y pais")
     print("3- Video con más dias de trending en un país")
@@ -47,16 +47,10 @@ def printMenu():
 catalog = None
 
 def initCatalog():
-    """
-    Inicializa el catalogo de videos
-    """
     return controller.initCatalog()
 
 
 def loadData(catalog):
-    """
-    Carga los videos en la estructura de datos
-    """
     controller.loadData(catalog)
 
 """
@@ -70,7 +64,17 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print("No. Videos cargados: " + str(lt.size(catalog["videos"])))
-        print("No. Categorías cargadas: " + str(lt.size(catalog["category-id"])))
+        print("No. Categorías cargadas: " + str(lt.size(catalog["categories"])))
+
+        print("\nPRIMER VIDEO CARGADO:")
+        firstVideo = lt.getElement(catalog["videos"], 0)
+        print("Titulo: " + firstVideo["title"] + ", Canal: " + firstVideo["channel_title"] +
+                ", Dia de tendencia: " + firstVideo["trending_date"] + ", Pais: " + firstVideo["country"] + 
+                ", Vistas: " + firstVideo["views"] + ", Likes: " + firstVideo["likes"] + ", Dislikes: " + firstVideo["dislikes"])
+            
+        print("\nCATEGORIAS CARGADAS:")
+        for n in range(1,lt.size(catalog["categories"])+1):
+            print(lt.getElement(catalog["categories"], n))
 
     elif int(inputs[0]) == 2:
         pass
