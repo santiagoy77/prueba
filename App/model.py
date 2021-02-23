@@ -47,7 +47,7 @@ def newCatalog():
                'tag':None}
     
     catalog['videos'] = lt.newList()
-    catalog['categorias'] = lt.newList()
+    catalog['categorias'] = lt.newList('ARRAY_LIST',cmpfunction=comparecategory)
     catalog['pais'] = lt.newList()
     catalog['tag'] =lt.newList()
 
@@ -57,41 +57,30 @@ def newCatalog():
 # Funciones para agregar informacion al catalogo
 
 def addvideo(catalog, video):
-    # se adiciona el video a la lista de videos 
-    # video es un dicc
+    
     lt.addLast(catalog['videos'], video)
-    #sacamos las categorias de el dic videos
-    categories = video['category_id'].split(',')
-    # cada categoria se crea como una lista de 
-    # y se. 
-    for category in categories:
-        addCategory(catalog, category.strip(), video)
-        
+    categorias = video['category_id']
+    categorias =str(categorias)
+    newcategory(catalog, categorias.strip(), video)
 
-def addCategory(catalog, category_name, video):
-    catcategoria = catalog['categorias']
-    poscategoria = lt.isPresent(catcategoria, category_name)
+def newcategory(catalog, categorynumber, video):
+    
+    categorias= catalog['categorias']
+    poscategoria = lt.isPresent(categorias, categorynumber)
     if poscategoria >0:
-        categoria = lt.getElement(catcategoria, poscategoria)
+        category = lt.getElement(categorias, poscategoria)
     else:
-        categoria = newcategoria(category_name)
-        lt.addLast(catcategoria, categoria)
-    lt.addLast(categoria['videos'], video)
-        
-        
-        
-def newcategoria(category_name):
-    categoria = {'categoria': "", "videos": None}
-    categoria['categoria'] = category_name
-    categoria['videos'] = lt.newList('ARRAY_LIST')
-    return categoria
-        
+        category = addnewcategory(categorynumber)
+        lt.addLast(categorias, category)
+    lt.addLast(category['videos'], video)
     
+def addnewcategory(categorynumber):
+    category = {'number_category': "", "videos": None}
+    category['number_category'] = categorynumber
+    category['videos'] = lt.newList('ARRAY_LIST')
+    return category
     
-    
-    
-    
-    
+
     
     
 # Funciones para creacion de datos
@@ -99,5 +88,11 @@ def newcategoria(category_name):
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def comparecategory(categorynumber, category):
+    if (categorynumber.lower() == category['number_category'].lower()):
+        return 0
+    return -1
+
+
 
 # Funciones de ordenamiento

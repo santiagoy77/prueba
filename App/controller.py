@@ -44,7 +44,7 @@ def loadData(catalog):
     carga los datos de los archivos en la estructura de datos
     """
     loadVideos(catalog)
-    loadCategory(catalog)
+
     
 
 def loadVideos(catalog):
@@ -53,12 +53,7 @@ def loadVideos(catalog):
     for video in input_file:
         model.addvideo(catalog, video) 
         
-            
-def loadCategory(catalog):
-    categoryfile = cf.data_dir + 'Kaggle/category-id.csv'
-    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'))
-    for category in input_file:
-        model.addcategory(catalog, category)
+
         
 
    

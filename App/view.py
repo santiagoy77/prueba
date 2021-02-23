@@ -68,8 +68,9 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
+        print('Libros cargados: ' + str(lt.size(catalog['videos'])))
+        print('categorias cargadas: ' + str(lt.size(catalog['categorias'])))
         print(catalog['categorias'])
-        
 
     elif int(inputs[0]) == 2:
         pass
