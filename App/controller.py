@@ -37,6 +37,7 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Funciones de consulta sobre el catálogo
 
+
 def initCatalog(tipo):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
@@ -44,14 +45,14 @@ def initCatalog(tipo):
     catalog = model.newCatalog(tipo)
     return catalog
 
+
 def loadData(catalog):
     """
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
     loadVideo(catalog)
-    
-    
+
 
 def loadVideo(catalog):
     """
@@ -64,11 +65,10 @@ def loadVideo(catalog):
     for videos in input_file:
         model.addVideo(catalog, videos)
 
+
 def sortvideos(catalog, size):
     return model.sortvideos(catalog, size)
 
-def sortlista(catalog, tipo):
-    if tipo == 1 :
-        return model.sortvideosselection(catalog, model.cmpVideosByViews)
-    else :
-        pass
+
+def sort_type(catalog, size, type):
+    return model.sort_type(catalog, size, type)

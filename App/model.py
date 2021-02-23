@@ -29,6 +29,8 @@ import config as cf
 import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as it
+from DISClib.Algorithms.Sorting import selectionsort as sr
 assert cf
 
 """
@@ -52,8 +54,7 @@ def newCatalog(tipo):
 
     catalog['videos'] = lt.newList()
     catalog['channel_title'] = lt.newList(tipo,
-                                            cmpfunction=cmpVideosByViews)
-  
+                                          cmpfunction=cmpVideosByViews)
 
     return catalog
 
@@ -64,7 +65,6 @@ def addVideo(catalog, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(catalog['videos'], video)
     # Se obtiene el autor del video
-    
 
 
 def addVideoYoutuber(catalog, authorname, videos):
@@ -82,7 +82,6 @@ def addVideoYoutuber(catalog, authorname, videos):
     lt.addLast(channel_titlee['videos'], videos)
 
 
-
 def newAuthor(name):
     """
     Crea una nueva estructura para modelar los videos de
@@ -93,6 +92,13 @@ def newAuthor(name):
     channel_titlee['videos'] = lt.newList('ARRAY_LIST')
     return channel_titlee
 
+# Funciones de comparación
+
+
+def cmpVideosByViews(video1, video2):
+    return (float(video1['views']) < float(video2['views']))
+
+# Funciones para sort
 
 
 def sortvideos(catalog, size):
@@ -105,23 +111,17 @@ def sortvideos(catalog, size):
     return elapsed_time_mseg, sorted_list
 
 
-def cmpVideosByViews(video1, video2):
-    return (float(video1['views']) < float(video2['views']))
+def sort_type(catalog, size, type):
 
-
-
-
-def sortvideosselection(lst, cmpfunction):
-    size = lt.size(lst)
-    pos1 = 1
-    while pos1 < size:
-        minimum = pos1    # minimun tiene el menor elemento
-        pos2 = pos1 + 1
-        while (pos2 <= size):
-            if (cmpfunction(lt.getElement(lst, pos2),
-               (lt.getElement(lst, minimum)))):
-                minimum = pos2  # minimum = posición elemento más pequeño
-            pos2 += 1
-        lt.exchange(lst, pos1, minimum)  # elemento más pequeño -> elem pos1
-        pos1 += 1
-    return lst
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    if type == "insertionsort":
+        sorted_list = it.sort(sub_list, cmpVideosByViews)
+    elif type == "selectionsort":
+        sorted_list = sr.sort(sub_list, cmpVideosByViews)
+    else:
+        sorted_list = sa.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list

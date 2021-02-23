@@ -63,14 +63,16 @@ def printResults(ord_videos, sample=10):
     size = lt.size(ord_videos)
     if size > sample:
         print("Los primeros ", sample, " videos ordenados son:")
-        i=0
+        i = 0
         while i <= sample:
-            video = lt.getElement(ord_videos,i)
-            print("Titulo: " +video["channel_title"])
-            i +=1
+            video = lt.getElement(ord_videos, i)
+            print("Titulo: " + video["channel_title"])
+            i += 1
+
 
 def sortlista(catalog, tipo):
     return controller.sortlista(catalog, tipo)
+
 
 catalog = None
 """1
@@ -81,32 +83,40 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        opcion= int(input("Elija 1 si quiere Array_list, o opcion 2 Linked_list: "))
+        opcion = int(
+            input("Elija 1 si quiere Array_list, o opcion 2 Linked_list: "))
         if opcion == 1:
             tipo = "ARRAY_LIST"
-            catalog= initCatalog(tipo)
+            catalog = initCatalog(tipo)
         else:
             tipo = "LINKED_LIST"
-            catalog= initCatalog(tipo)
+            catalog = initCatalog(tipo)
 
         catalog = initCatalog(tipo)
         loadData(catalog)
         print("Videos cargados:" + str(lt.size(catalog["videos"])))
 
     elif int(inputs[0]) == 2:
-        opcion= int(input("Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell  : "))
-        if opcion == 2:
+        tipo = "ARRAY_LIST"
+        catalog = initCatalog(tipo)
+        loadData(catalog)
+
+        opcion = int(input(
+            "Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell  : "))
+        size_lt = int(input("Indique el número de datos: "))
+
+        if int(opcion) == 2:
             tipo = "insertionsort"
-            
-        elif opcion ==1:
-            tipo ="selectionsort"
+            answer = controller.sort_type(catalog, size_lt, tipo)
+        elif int(opcion) == 1:
+            tipo = "selectionsort"
+            answer = controller.sort_type(catalog, size_lt, tipo)
         else:
             tipo = "shellsort"
-        lista = initCatalog("ARRAY_LIST") 
-        catalog = sortlista(lista, tipo)
-        
-        print("videos cargados sort :" +str(lt.size(catalog)))
-          
+            answer = controller.sort_type(catalog, size_lt, tipo)
+
+        print("videos cargados sort :" + str(len(answer[1])))
+        print("Tiempo transcurrido: ", answer[0])
 
     elif int(inputs[0]) == 3:
         pass
