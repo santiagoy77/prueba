@@ -37,7 +37,7 @@ los mismos.
 
 # Construccion de modelos
 
-def newCatalog():
+def newCatalogSingle():
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
@@ -50,6 +50,23 @@ def newCatalog():
 
     catalog['title'] = lt.newList()
     catalog['channel_title'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=comparechannel)
+
+    return catalog
+
+def newCatalogArray():
+    """
+    Inicializa el catálogo de libros. Crea una lista vacia para guardar
+    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'title': None,
+               'channel_title': None
+               }
+
+    catalog['title'] = lt.newList()
+    catalog['channel_title'] = lt.newList('ARRAY_LIST',
                                     cmpfunction=comparechannel)
 
     return catalog

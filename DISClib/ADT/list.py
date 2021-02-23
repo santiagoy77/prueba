@@ -37,7 +37,7 @@ assert config
 """
 
 
-def newList(datastructure='SINGLE_LINKED',
+def newList(datastructure=None,
             cmpfunction=None,
             key=None,
             filename=None,
