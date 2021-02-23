@@ -1,4 +1,6 @@
-﻿"""
+﻿#channel_title = information_videos
+#
+"""
  * Copyright 2020, Departamento de sistemas y Computación,
  * Universidad de Los Andes
  *
@@ -37,6 +39,7 @@ los mismos.
 
 # Construccion de modelos
 
+
 def newCatalogSingle():
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
@@ -45,12 +48,12 @@ def newCatalogSingle():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'title': None,
-               'channel_title': None
+               'information_videos': None
                }
 
     catalog['title'] = lt.newList()
-    catalog['channel_title'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=comparechannel)
+    catalog['information_videos'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=cmpVideosByViews)
 
     return catalog
 
@@ -62,63 +65,77 @@ def newCatalogArray():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'title': None,
-               'channel_title': None
+               'information_videos': None
                }
 
     catalog['title'] = lt.newList()
-    catalog['channel_title'] = lt.newList('ARRAY_LIST',
-                                    cmpfunction=comparechannel)
+    catalog['information_videos'] = lt.newList('ARRAY_LIST',
+                                    cmpfunction=cmpVideosByViews)
 
     return catalog
 
 # Funciones para agregar informacion al catalogo
 
-def addBook(catalog, videos):
-    # Se adiciona el libro a la lista de libros
+def addVideo(catalog, videos):
+
     lt.addLast(catalog['title'], videos)
-    # Se obtienen los autores del libro
-    authors = videos['channel_title'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
-    for video in videos:
-        addChannelTitle(catalog, video.strip(), videos)
+ 
+    infoVideos = videos['information_videos'].split(",")
+
+    for video in infoVideos:
+        addInfoVideos(catalog, video.strip(), videos)
 
 
-def addChannelTitle(catalog, channel_title, video):
+def addInfoVideos(catalog, information_videos, video):
     """
     Adiciona un autor a lista de autores, la cual guarda referencias
     a los libros de dicho autor
     """
-    channel = catalog['channel_title']
-    poschannel = lt.isPresent(channel, channel_title)
-    if poschannel > 0:
-        author = lt.getElement(channel, poschannel)
+    info = catalog['information_videos']
+    posinfo = lt.isPresent(info, information_videos)
+    if posinfo > 0:
+        video = lt.getElement(info, posinfo)
     else:
-        author = newAuthor(channel_title)
-        lt.addLast(channel, author)
-    lt.addLast(author['videos'], video)
+        video = newVideo(information_videos)
+        lt.addLast(info, video)
+    lt.addLast(info['views'], video)
 
 
 # Funciones para creacion de datos
 
 
-def newAuthor(name):
+def newVideo(name):
     """
     Crea una nueva estructura para modelar los libros de
     un autor y su promedio de ratings
     """
-    author = {'name': "", "videos": None,  "likes": 0}
-    author['name'] = name
-    author['videos'] = lt.newList('ARRAY_LIST')
+    video = {'name': "", "views": 0}
+    video['name'] = name
     return author
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
+
+
+
+def cmpVideosByViews(video1, video2): 
+    """ Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2 
+    Args: 
+        video1: informacion del primer video que incluye su valor 'views' 
+        video2: informacion del segundo video que incluye su valor 'views' """
+    return video1['views'] < video2['views']
+
+
 def comparechannel(authorname1, author):
     if (authorname1.lower() in author['name'].lower()):
         return 0
     return -1
 
+
+
 # Funciones de ordenamiento
+
+def sortVideos(catalog):
+    sa.sort(catalog['title'], cmpVideosByViews)

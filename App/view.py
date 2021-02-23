@@ -97,7 +97,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        tipo_lista = int(input("Elija el tipo de lista que quiere crear: Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED: "))
+        tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
         catalog = initCatalog(tipo_lista)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
@@ -106,6 +106,9 @@ while True:
             loadData(catalog)
             print('Videos cargados: ' + str(lt.size(catalog['title'])))
             print('Canales cargados: ' + str(lt.size(catalog['channel_title'])))
+            for keys in catalog['channel_title']:
+                print(keys)
+
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
 
