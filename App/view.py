@@ -91,12 +91,11 @@ while True:
     if int(inputs[0]) == 1:
         tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
         catalog = controller.initCatalog(tipo_lista)
-        print("cargando los archivos... Esto puede tardar un poco")
         loadData(catalog)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
         else:
-            print("Cargando información de los archivos...")
+            print("Cargando información de los archivos... Esto puede tardar un poco.")
             print('Videos cargados: ' + str(lt.size(catalog['title'])))
 
     elif int(inputs[0]) == 2:
@@ -108,7 +107,7 @@ while True:
             print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
             orden = int(input("Presione 1 para escoger Shellsort, 2 para Selectionsort o 3 para Insertionsort: "))
             (a,b) = controller.sortVideos(catalog,size,orden)
-            print("el tiempo que ha tardado el proceso es:",a,"segundos")
+            print("el tiempo que ha tardado el proceso es:",a,"milisegundos")
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 
