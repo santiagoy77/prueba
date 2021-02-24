@@ -111,11 +111,11 @@ def askForDataSize(catalog):
         return data_size
 
 
-def firstReq(catalog, n_videos, data_size, algorithm):
+def firstReq(catalog, data_size, algorithm):
     """
     Solicita al controller la información del requerimiento 1
     """
-    return controller.firstReq(catalog, n_videos, data_size, algorithm)
+    return controller.firstReq(catalog, data_size, algorithm)
 
 
 catalog = None
@@ -140,11 +140,11 @@ while True:
         printCategoriesList(catalog)
 
     elif int(inputs[0]) == 2:
-        n_videos = int(input("Consultando los Top ? : "))
+        #n_videos = int(input("Consultando los Top ? : "))
         data_size = askForDataSize(catalog)
         printAlgorithmMenu()
         algorithm = int(input("Su selección (0, 1 o 2) es: "))
-        result = firstReq(catalog, n_videos, data_size, algorithm)
+        result = firstReq(catalog, data_size, algorithm)
         for video in lt.iterator(result[0]):
             printVideoInfo(video)
         print("El tiempo de ejecución fue de: " + str(result[1]))

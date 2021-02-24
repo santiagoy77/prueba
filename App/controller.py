@@ -68,5 +68,5 @@ def loadCategories(catalog):
 # Funciones de consulta sobre el catálogo
 
 
-def firstReq(catalog, n_videos, data_size, algorithm):
-    return model.firstReq(catalog, n_videos, data_size, algorithm)
+def firstReq(catalog, data_size, algorithm):
+    return model.firstReq(catalog, data_size, algorithm)

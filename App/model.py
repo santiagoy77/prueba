@@ -86,7 +86,7 @@ def cmpVideosByViews(video1, video2):
     return (video1["views"] < video2["views"])
 
 
-def firstReq(catalog, n_videos, data_size, algorithm):
+def firstReq(catalog, data_size, algorithm):
     "Completa el requerimiento 1"
     data_sublist = lt.subList(catalog["videos"], 1, data_size)
     data_sublist = data_sublist.copy()
