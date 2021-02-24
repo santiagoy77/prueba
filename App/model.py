@@ -87,7 +87,7 @@ def cmpVideosByViews(video1, video2):
 
 
 def firstReq(catalog, data_size, algorithm):
-    "Completa el requerimiento 1"
+    "Completa el requerimiento #1"
     data_sublist = lt.subList(catalog["videos"], 1, data_size)
     data_sublist = data_sublist.copy()
     if algorithm == 0:
@@ -105,3 +105,4 @@ def firstReq(catalog, data_size, algorithm):
     elapsed_time_mseg = (stop_time - start_time)*1000
     #sorted_top_n = lt.subList(sorted_list, 1, n_videos)
     return [sorted_list, elapsed_time_mseg]
+
