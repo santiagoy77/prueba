@@ -25,15 +25,15 @@ import model
 import csv
 
 # Inicialización del Catálogo de videos
-def inicializarCatalogo():
+def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
     catalog = model.newCatalog()
     return catalog
 
-def cargarDatosCatalogo(catalogo):
-    def loadData(catalog):
+def loadData(catalog):
+    
     """
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos

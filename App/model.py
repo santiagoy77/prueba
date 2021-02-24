@@ -62,7 +62,7 @@ def addBook(catalog, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(catalog['videoTittle'], video)
     # Se obtiene el nombre del canal autor del video
-    name = book['channelName']
+    name = video['channelName']
     # crea un libro en la lista de dicho canal
     addChannelName(catalog, author, name, video)
 
@@ -133,5 +133,13 @@ def newBookTag(tag_id, book_id):
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def comparechannelname(authorname1, author):
+    if (authorname1.lower() in author['name'].lower()):
+        return 0
+    return -1
+
+def comparecategory(video1, video2):
+    pass
 
 # Funciones de ordenamiento
