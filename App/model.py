@@ -103,6 +103,5 @@ def firstReq(catalog, n_videos, data_size, algorithm):
         sorted_list = shell.sort(data_sublist, cmpVideosByViews)
         stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    #lt.removeFirst(data_sublist)
     sorted_top_n = lt.subList(sorted_list, 1, n_videos)
     return [sorted_top_n, elapsed_time_mseg]
