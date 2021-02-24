@@ -43,28 +43,28 @@ def newCatalog():
     """
     catalog = {'videos': None,
                'categorias': None,
-               'pais':None,
+               'paises':None,
                'tag':None}
     
     catalog['videos'] = lt.newList()
-    catalog['categorias'] = lt.newList('ARRAY_LIST',cmpfunction=comparecategory)
-    catalog['pais'] = lt.newList()
+    catalog['categorias'] = lt.newList('ARRAY_LIST', cmpfunction = comparecategory)
+    catalog['paises'] = lt.newList('ARRAY_LIST', cmpfunction = comparecountry)
     catalog['tag'] =lt.newList()
 
     
     return catalog
 
 # Funciones para agregar informacion al catalogo
-
 def addvideo(catalog, video):
-    
     lt.addLast(catalog['videos'], video)
-    categorias = video['category_id']
+    categorias = video['category_id'] 
     categorias =str(categorias)
+    paises = video['country']
+    newcountry(catalog, paises.strip(), video)
     newcategory(catalog, categorias.strip(), video)
 
+
 def newcategory(catalog, categorynumber, video):
-    
     categorias= catalog['categorias']
     poscategoria = lt.isPresent(categorias, categorynumber)
     if poscategoria >0:
@@ -74,22 +74,43 @@ def newcategory(catalog, categorynumber, video):
         lt.addLast(categorias, category)
     lt.addLast(category['videos'], video)
     
+    
+def newcountry(catalog, countryname, country):
+    paises = catalog['paises']
+    pospaises = lt.isPresent(paises, countryname)
+    if pospaises > 0:
+        country = lt.getElement(paises, pospaises)
+    else:
+        country = addnewcountry(countryname)
+        lt.addLast(paises, country)
+    lt.addLast(country['videos'], country)
+      
+    
 def addnewcategory(categorynumber):
     category = {'number_category': "", "videos": None}
     category['number_category'] = categorynumber
     category['videos'] = lt.newList('ARRAY_LIST')
     return category
-    
 
-    
-    
+
+def addnewcountry(countryname):
+    country = {'name_country': "", "videos": None}
+    country['name_country'] = countryname
+    country['videos'] = lt.newList('ARRAY_LIST')
+    return country
+          
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-def comparecategory(categorynumber, category):
-    if (categorynumber.lower() == category['number_category'].lower()):
+def comparecategory(categorynumber1, category):
+    if (categorynumber1.lower() == category['number_category'].lower()):
+        return 0
+    return -1
+
+def comparecountry(countryname1, country):
+    if (countryname1.lower() == country['name_country'].lower()):
         return 0
     return -1
 

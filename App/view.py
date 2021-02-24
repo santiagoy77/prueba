@@ -70,7 +70,9 @@ while True:
         loadData(catalog)
         print('Libros cargados: ' + str(lt.size(catalog['videos'])))
         print('categorias cargadas: ' + str(lt.size(catalog['categorias'])))
-        print(catalog['categorias'])
+        print('categorias cargadas: ' + str(lt.size(catalog['paises'])))
+        
+
 
     elif int(inputs[0]) == 2:
         pass
