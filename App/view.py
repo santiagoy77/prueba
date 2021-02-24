@@ -115,7 +115,7 @@ while True:
             tipo = "shellsort"
             answer = controller.sort_type(catalog, size_lt, tipo)
 
-        print("videos cargados sort :" + str(size_lt))
+        print("videos cargados sort :" + str(size_lt), " ms")
         print("Tiempo transcurrido: ", answer[0])
 
     elif int(inputs[0]) == 3:
