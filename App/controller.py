@@ -39,6 +39,7 @@ def initCatalog():
 
 
 # Funciones para la carga de datos
+
 def loadData(catalog):
     """
     carga los datos de los archivos en la estructura de datos
@@ -51,12 +52,6 @@ def loadVideos(catalog):
     for video in input_file:
         model.addvideo(catalog, video) 
 
-
-
-        
-
-   
-    
 
 # Funciones de ordenamiento
 

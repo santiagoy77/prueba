@@ -45,15 +45,9 @@ def printMenu():
 
 
 def initCatalog():
-    """
-    inica el catalogo
-    """
     return controller.initCatalog()
 
 def loadData(catalog):
-    """
-    carga los datos en la estructura de datos
-    """
     controller.loadData(catalog)
 
 catalog = None
@@ -69,10 +63,8 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print('Libros cargados: ' + str(lt.size(catalog['videos'])))
-        print('categorias cargadas: ' + str(lt.size(catalog['categorias'])))
-        print('categorias cargadas: ' + str(lt.size(catalog['paises'])))
-        
-
+        print('videos cargados por categorias: ' + str(lt.size(catalog['categorias'])))
+        print('videos cargados por paises: ' + str(lt.size(catalog['paises'])))
 
     elif int(inputs[0]) == 2:
         pass

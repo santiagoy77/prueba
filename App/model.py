@@ -37,6 +37,7 @@ los mismos.
 
 # Construccion de modelos
 
+
 def newCatalog():
     """
     inicializa el catalogo de video y su informacion
@@ -47,14 +48,17 @@ def newCatalog():
                'tag':None}
     
     catalog['videos'] = lt.newList()
-    catalog['categorias'] = lt.newList('ARRAY_LIST', cmpfunction = comparecategory)
-    catalog['paises'] = lt.newList('ARRAY_LIST', cmpfunction = comparecountry)
+    catalog['categorias'] = lt.newList('ARRAY_LIST', 
+                                       cmpfunction = comparecategory)
+    catalog['paises'] = lt.newList('ARRAY_LIST', 
+                                   cmpfunction = comparecountry)
     catalog['tag'] =lt.newList()
 
-    
     return catalog
 
+
 # Funciones para agregar informacion al catalogo
+
 def addvideo(catalog, video):
     lt.addLast(catalog['videos'], video)
     categorias = video['category_id'] 
@@ -75,7 +79,7 @@ def newcategory(catalog, categorynumber, video):
     lt.addLast(category['videos'], video)
     
     
-def newcountry(catalog, countryname, country):
+def newcountry(catalog, countryname, video):
     paises = catalog['paises']
     pospaises = lt.isPresent(paises, countryname)
     if pospaises > 0:
@@ -83,9 +87,12 @@ def newcountry(catalog, countryname, country):
     else:
         country = addnewcountry(countryname)
         lt.addLast(paises, country)
-    lt.addLast(country['videos'], country)
+    lt.addLast(country['videos'], video)
       
-    
+
+
+# Funciones para creacion de datos
+
 def addnewcategory(categorynumber):
     category = {'number_category': "", "videos": None}
     category['number_category'] = categorynumber
@@ -98,22 +105,22 @@ def addnewcountry(countryname):
     country['name_country'] = countryname
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
-          
-# Funciones para creacion de datos
+
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
 def comparecategory(categorynumber1, category):
     if (categorynumber1.lower() == category['number_category'].lower()):
         return 0
     return -1
 
+
 def comparecountry(countryname1, country):
     if (countryname1.lower() == country['name_country'].lower()):
         return 0
     return -1
-
 
 
 # Funciones de ordenamiento
