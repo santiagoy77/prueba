@@ -38,30 +38,84 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Consultar n videos más vistos en un país, por categoría")
-    print("3- Consultar video que fue más días trending en un país")
-    print("4- Consultar video que fue más días trending por categoría")
+    print("2- Consultar n videos con más views en un país, por categoría")
+    print("3- Consultar video que más días ha sido trending en un país")
+    print("4- Consultar video que más dias ha sido trending, por categoría")
     print("5- Consultar n videos con más likes en un país, por tag")
-    print("6- Salir")
+    print("0- Salir")
 
 
-def initCatalog():
+def initCatalog(chosenType):
     """
-    Inicializa el catalogo de videos
+    Inicializa el catálogo de videos
     """
-    return controller.initCatalog()
+    return controller.initCatalog(chosenType)
 
 
 def loadData(catalog):
     """
-    Carga la información de videos en la estructura de datos
+    Carga los videos en la estructura de datos
     """
     controller.loadData(catalog)
 
 
-def printCategories(catalog):
-    "Imprime en pantalla la lista de categorias"
-    pass
+def printVideoInfo(video):
+    """
+    Imprime la información principal de un video
+    """
+    print("Título: " + video["title"])
+    print("Canal: " + video["channel_title"])
+    print("Fecha en que fue trending: " + video["trending_date"])
+    print("País: " + video["country"])
+    print("Cantidad de vistas: " + video["views"])
+    print("Cantidad de Likes: " + video["likes"])
+    print("Cantidad de Dislikes: " + video["dislikes"])
+
+
+def printCategoriesList(catalog):
+    "Imprime la lista de categorías"
+    for category in lt.iterator(catalog['categories']):
+        idpluscategory = category["id\tname"].split("\t ")
+        print(idpluscategory[0], idpluscategory[1])
+
+
+def printListMenu():
+    """
+    Imprime el menú para escoger en qué tipo de representación
+    de lista se guardará el catálogo
+    """
+    print("Seleccione un tipo de lista para guardar el catálogo de videos:")
+    print("0- ARRAY_LIST")
+    print("1- LINKED_LIST")
+
+
+def printAlgorithmMenu():
+    """
+    Imprime el menú para escoger el tipo de algoritmo de ordenamiento iterativo
+    """
+    print("Seleccione un tipo de algoritmo de ordenamiento iterativo:")
+    print("0- selection")
+    print("1- insertion")
+    print("2- shell")
+
+
+def askForDataSize(catalog):
+    """
+    Pregunta al usuario el tamaño de la muestra a comparar y valida la cantidad
+    """
+    data_size = int(input("Tamaño de muestra de: "))
+    if data_size > int(lt.size(catalog['videos'])):
+        print("Error: valor excede tamaño de los datos cargados.")
+        askForDataSize()
+    else:
+        return data_size
+
+
+def firstReq(catalog, n_videos, data_size, algorithm):
+    """
+    Solicita al controller la información del requerimiento 1
+    """
+    return controller.firstReq(catalog, n_videos, data_size, algorithm)
 
 
 catalog = None
@@ -73,17 +127,27 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        printListMenu()
+        chosenType = int(input("Su selección (0 o 1) es: "))
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        catalog = initCatalog(chosenType)
         loadData(catalog)
-        print("El total de videos cargados es: "
-              + str(lt.size(catalog['videos'])))
-        print("La información principal del primer video cargado es: ")
-        print("La lista de las categorías cargadas es: ")
+        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        print("Información sobre el primer video cargado:\n")
+        video = lt.firstElement(catalog["videos"])
+        printVideoInfo(video)
+        print("Las categorías cargadas y sus id son:")
+        printCategoriesList(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
-
+        n_videos = int(input("Consultando los Top ? : "))
+        data_size = askForDataSize(catalog)
+        printAlgorithmMenu()
+        algorithm = int(input("Su selección (0, 1 o 2) es: "))
+        result = firstReq(catalog, n_videos, data_size, algorithm)
+        for video in lt.iterator(result[0]):
+            printVideoInfo(video)
+        print("El tiempo de ejecución fue de: " + str(result[1]))
     else:
         sys.exit(0)
 sys.exit(0)

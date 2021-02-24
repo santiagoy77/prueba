@@ -27,9 +27,10 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-
-# from DISClib.Algorithms.Sorting import shellsort as sa
-
+from DISClib.Algorithms.Sorting import shellsort as shell
+from DISClib.Algorithms.Sorting import selectionsort as sel
+from DISClib.Algorithms.Sorting import insertionsort as ins
+import time
 assert cf
 
 """
@@ -41,18 +42,17 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog():
-    """
-    Inicializa el catálogo de videos. Crea una lista vacia para guardar
-    todos los videos, y otra para sus categorías.
-    """
-    catalog = {'videos': None,
-               'categories': None}
+def newCatalog(chosenType):
 
-    catalog['videos'] = lt.newList()
-    catalog['categories'] = lt.newList('SINGLE-LINKED')
+    typeofList = "ARRAY_LIST"
+    if chosenType == 1:
+        typeofList = "LINKED_LIST"
+    catalog = {"videos": None, "categories": None}
+    catalog["videos"] = lt.newList(typeofList)
+    catalog["categories"] = lt.newList()
 
     return catalog
+
 
 # Funciones para agregar informacion al catalogo
 
@@ -63,26 +63,46 @@ def addVideo(catalog, video):
 
 
 def addCategory(catalog, category):
-    """
-    Adiciona una categoría a la lista de categorías
-    """
-    c = newCategory(category['name'], category['category_id'])
-    lt.addLast(catalog['categories'], c)
+    # Se adiciona la categoria a la lista de categorias
+    lt.addLast(catalog['categories'], category)
 
 # Funciones para creacion de datos
-
-
-def newCategory(name, category_id):
-    """
-    Esta estructura almancena las categorías de los videos.
-    """
-    category = {'name': '', 'category_id': ''}
-    category['name'] = name
-    category['category_id'] = category_id
-    return category
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que
+    los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'views'
+    video2: informacion del segundo video que incluye su valor 'views'
+    """
+    return (video1["views"] < video2["views"])
+
+
+def firstReq(catalog, n_videos, data_size, algorithm):
+    "Completa el requerimiento 1"
+    data_sublist = lt.subList(catalog["videos"], 1, data_size)
+    data_sublist = data_sublist.copy()
+    if algorithm == 0:
+        start_time = time.process_time()
+        sorted_list = sel.sort(data_sublist, cmpVideosByViews)
+        stop_time = time.process_time()
+    elif algorithm == 1:
+        start_time = time.process_time()
+        sorted_list = ins.sort(data_sublist, cmpVideosByViews)
+        stop_time = time.process_time()
+    elif algorithm == 2:
+        start_time = time.process_time()
+        sorted_list = shell.sort(data_sublist, cmpVideosByViews)
+        stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    #lt.removeFirst(data_sublist)
+    sorted_top_n = lt.subList(sorted_list, 1, n_videos)
+    return [sorted_top_n, elapsed_time_mseg]
