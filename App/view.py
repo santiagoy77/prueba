@@ -91,11 +91,11 @@ while True:
     if int(inputs[0]) == 1:
         tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
         catalog = controller.initCatalog(tipo_lista)
+        print("Cargando información de los archivos... Esto puede tardar un poco.")
         loadData(catalog)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
         else:
-            print("Cargando información de los archivos... Esto puede tardar un poco.")
             print('Videos cargados: ' + str(lt.size(catalog['title'])))
 
     elif int(inputs[0]) == 2:
