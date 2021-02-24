@@ -56,8 +56,7 @@ def newCatalog(tipo_lista):
 
     catalog['title'] = lt.newList(tipo)
     catalog['categories'] = lt.newList(tipo)
-    print("carga completada")
-    print("catalog model:",catalog)
+    
     return catalog
 
 

@@ -36,7 +36,6 @@ def initCatalog(tipo_lista):
     Llama la funcion de inicializacion del catalogo del modelo.
     """
     catalog = model.newCatalog(tipo_lista)
-    print("catalog controller",catalog)
     return catalog
 
     
@@ -53,7 +52,7 @@ def loadBooks(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videosfile = cf.data_dir + 'videos-small.csv'
+    videosfile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
