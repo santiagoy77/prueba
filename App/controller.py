@@ -31,7 +31,7 @@ def initCatalog():
 
 def loadData(catalog):
     loadVideos(catalog)
-    loadTags(catalog)
+#    loadTags(catalog)
 
 
 def loadVideos(catalog):
@@ -40,11 +40,11 @@ def loadVideos(catalog):
     for video in input_file:
         model.addVideo(catalog, video)
 
-def loadTags(catalog):
-    tagsfile = cf.data_dir + 'Videos/category-id.csv'
-    input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
-    for tag in input_file:
-        model.addTag(catalog, tag)
+#def loadTags(catalog):
+#   tagsfile = cf.data_dir + 'Videos/category-id.csv'
+#    input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
+#    for tag in input_file:
+#        model.addTag(catalog, tag)
 
 
 

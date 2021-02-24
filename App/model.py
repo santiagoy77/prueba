@@ -53,8 +53,8 @@ def newCatalog():
 def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
     countries = video['country'].split(",")
-    for country in countries:
-        addVideoCountry(catalog, country.strip(), video)
+#for country in countries:
+#        addVideoCountry(catalog, country.strip(), video)
 
 def addVideoCountry(catalog, countryname, video):
     countries = catalog['country']
@@ -90,9 +90,9 @@ def newCategory(name):
 
 
 
-def addTag(catalog, tag):
-    t = newTag(tag['idname'])
-    lt.addLast(catalog['tags'], t)
+#def addTag(catalog, tag):
+#    t = newTag(tag['id'])
+#    lt.addLast(catalog['tags'], t)
 
 def newTag(idname):
     tag = {'idname': ''}
