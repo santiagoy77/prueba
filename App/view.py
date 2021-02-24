@@ -115,7 +115,7 @@ while True:
             tipo = "shellsort"
             answer = controller.sort_type(catalog, size_lt, tipo)
 
-        print("videos cargados sort :" + str(len(answer[1])))
+        print("videos cargados sort :" + str(size_lt)
         print("Tiempo transcurrido: ", answer[0])
 
     elif int(inputs[0]) == 3:
@@ -123,8 +123,8 @@ while True:
     elif int(inputs[0]) == 4:
         pass
     elif int(inputs[0]) == 5:
-        size = input("Indique tamaño de la muestra: ")
-        result = controller.sortvideos(catalog, int(size))
+        size=input("Indique tamaño de la muestra: ")
+        result=controller.sortvideos(catalog, int(size))
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         printResults(result[1])
