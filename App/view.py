@@ -108,7 +108,7 @@ while True:
             print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
             orden = int(input("Presione 1 para escoger Shellsort, 2 para Selectionsort o 3 para Insertionsort: "))
             (a,b) = controller.sortVideos(catalog,size,orden)
-            print("la lista ordenada es",b,"y el tiempo que ha tardado el proceso es:",a,"segundos")
+            print("el tiempo que ha tardado el proceso es:",a,"segundos")
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 
