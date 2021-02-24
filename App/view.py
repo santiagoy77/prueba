@@ -21,6 +21,7 @@
  """
 
 import config as cf
+import time
 import sys
 import controller
 from DISClib.ADT import list as lt
@@ -107,8 +108,8 @@ while True:
         else:
             print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
             orden = int(input("Presione 1 para escoger Shellsort, 2 para Selectionsort o 3 para Insertionsort: "))
-            a = controller.sortVideos(catalog,size,orden)
-            print(a)
+            (a,b) = controller.sortVideos(catalog,size,orden)
+            print("El tiempo que ha tardado el proceso es:",a,"segundos, y la lista ordenada es",b)
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 
