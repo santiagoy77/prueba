@@ -54,6 +54,19 @@ def initTags():
     for a in tags["elements"]:
         print (a[0],"  ",a[1])
 
+def printMostViewed(ord_videos, sample= 10):
+    size = lt.size(ord_videos)
+    if size <= sample:
+        sample = size
+    print('\n\n\n Videos más vistos: ')
+    print("trending date","title", "channel", "publish time", "views", "likes", "dislikes", sep="   ")
+    i = 1
+    while sample >= i:
+        dir=ord_videos["elements"][-i][0]["elements"]
+        print(dir[1],dir[2], dir[3], dir[5], dir[6], dir[7], dir[8], sep="   ")
+        i+=1
+    
+
 catalog = None
 """
 Menu principal
@@ -77,8 +90,20 @@ while True:
         initTags()
         
     elif int(inputs[0]) == 2:
-        pass
-
+        size = int(input("Introduzca el tamaño de la muestra que quiere ordenar: "))
+        print("1. ShellSort\n2.InsertionSort\n3.SelectionSort")
+        algorithm = int(input("Introduzca el índice del algoritmo que quiere usar: "))
+        if (algorithm == 1):
+            algorithm = 'shell'
+        elif(algorithm == 2):
+            algorithm = 'insertion'
+        else:
+            algorithm = 'selection'
+        sample = int(input("Introduzca el número de vídeos que quiere listar: "))
+        result = controller.order_by_Views(catalog, size, algorithm)
+        print("El tiempo de ordenamiento fue de",result[0],"ms.")
+        printMostViewed(result[1], sample=sample)
+        input("Presione cualquier tecla para continuar.")
     elif int(inputs[0]) == 3:
         pass
 

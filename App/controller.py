@@ -63,5 +63,6 @@ def initLista_tags():
     tags=model.lista_tags("Data/category-id.csv")
     return tags
 # Funciones de ordenamiento
-
+def order_by_Views(videos, size, algorithm = 'shell'):
+    return model.inefficient_ordering(videos, size, algorithm)
 # Funciones de consulta sobre el catálogo
