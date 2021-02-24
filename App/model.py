@@ -26,8 +26,11 @@
 
 import config as cf
 import csv
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as se
+from DISClib.Algorithms.Sorting import insertionsort as ie
 
 assert cf
 
@@ -83,7 +86,15 @@ def add_video(videos, line):
     lt.addLast(videos, (categories, tags))
 
 # Funciones para creacion de datos
-
+def lista_tags(filepath,type="ARRAY_LIST"):
+    tags=lt.newList(type)
+    data= open(filepath)
+    data.readline()
+    linea= data.readline().replace("\n","").split("\t")
+    while len(linea)>1:
+        lt.addLast(tags,linea)
+        linea=data.readline().replace("\n","").split("\t")
+    return tags
 
 # Funciones de consulta
 def element_videos(videos, i, j):
@@ -191,6 +202,16 @@ def base_sort_function(videos, i, parameter_indexes):
     return tuple([element_videos(videos, i, x) for x in parameter_indexes if x < 16])
 
 
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero si los views de video1 son menores que los del video 2
+    Args:
+        video1: informacion del primer video que incluye su valor views
+        video2: informacion del primer video que incluye su valor views
+    """
+    return (video1[0]['elements'][6] < video2[0]['elements'][6])
+
+
 # Funciones de ordenamiento
 def create_index_order(videos, order_indexes):
     """
@@ -210,6 +231,24 @@ def create_index_order(videos, order_indexes):
         'parameters': order_indexes
     }
     return order
+
+
+def inefficient_ordering(videos, size, algorithm = 'shell'):
+    if(size > lt.size(videos)):
+        size = lt.size(videos)
+    temp_list = lt.subList(videos, 0, size)
+    temp_list = temp_list.copy()
+    start_time = time.process_time()
+    if (algorithm == 'shell'):
+        temp_list = sa.sort(temp_list, cmpVideosByViews)
+    elif(algorithm == 'insertion'):
+        temp_list = ie.sort(temp_list, cmpVideosByViews)
+    else:
+        temp_list = se.sort(temp_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, temp_list
+
 
 #usage example
 if __name__ == '__main__':

@@ -52,6 +52,17 @@ index_by_id = {
 
 # Funciones para la carga de datos
 
-# Funciones de ordenamiento
+def initCreate_videos():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    videos = model.create_videos(filepath="Data/videos-small.csv")
+    return videos
 
+def initLista_tags():
+    tags=model.lista_tags("Data/category-id.csv")
+    return tags
+# Funciones de ordenamiento
+def order_by_Views(videos, size, algorithm = 'shell'):
+    return model.inefficient_ordering(videos, size, algorithm)
 # Funciones de consulta sobre el catálogo
