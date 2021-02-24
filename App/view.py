@@ -105,8 +105,10 @@ while True:
         if size > lt.size(catalog['title']):
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
-            esto = controller.sortVideos(catalog,size)
-            print(esto)
+            print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
+            orden = int(input("Presione 1 para escoger Shellsort, 2 para Selectionsort o 3 para Insertionsort: "))
+            a = controller.sortVideos(catalog,size,orden)
+            print(a)
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 

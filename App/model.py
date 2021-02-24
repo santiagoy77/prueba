@@ -30,6 +30,8 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as ss
+from DISClib.Algorithms.Sorting import insertionsort as ins
 assert cf
 
 """
@@ -90,8 +92,18 @@ def cmpVideosByViews(video1, video2):
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog,size):
+def sortVideos(catalog,size,orden):
     nueva = lt.subList(catalog["title"],0,size)
     copia_lista = nueva.copy()
-    return sa.sort(copia_lista, cmpVideosByViews)
+    if orden == 1:
+        return sa.sort(copia_lista, cmpVideosByViews)
+    elif orden == 2:
+        return ss.sort(copia_lista, cmpVideosByViews)
+    elif orden == 3:
+        return ins.sort(copia_lista, cmpVideosByViews)
+    else:
+        return "Ha seleccionado una opcion invalida"
+
+
+    
 
