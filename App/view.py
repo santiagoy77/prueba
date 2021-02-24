@@ -45,17 +45,7 @@ def printMenu():
     
 catalog = None
 
-# trabajando
-def initCatalog(tipo_lista):
-    """
-    Inicializa el catalogo de videos
-    """
-    if tipo_lista == 1:
-        return controller.initCatalogArray()
-    elif tipo_lista == 2:
-        return controller.initCatalogSingle()
-    else:
-        return None
+
     
 
 
@@ -64,6 +54,7 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
+
 
 """
 def printAuthorData(author):
@@ -98,20 +89,24 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
-        catalog = initCatalog(tipo_lista)
+        catalog = controller.initCatalog(tipo_lista)
+        loadData(catalog)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
         else:
             print("Cargando información de los archivos...")
-            loadData(catalog)
             print('Videos cargados: ' + str(lt.size(catalog['title'])))
-            print('Canales cargados: ' + str(lt.size(catalog['channel_title'])))
-            for keys in catalog['channel_title']:
-                print(keys)
+
+            
 
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
-
+        size = int(input("¿De que tamaño quiere la lista?: "))
+        if size > lt.size(catalog['title']):
+            print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
+        else:
+            esto = controller.sortVideos(catalog,size)
+            print(esto)
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 

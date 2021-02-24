@@ -31,19 +31,14 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de videos
 
-def initCatalogArray():
+def initCatalog(tipo_lista):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalogArray()
+    catalog = model.newCatalog(tipo_lista)
+    print("catalog controller",catalog)
     return catalog
 
-def initCatalogSingle():
-    """
-    Llama la funcion de inicializacion del catalogo del modelo.
-    """
-    catalog = model.newCatalogSingle()
-    return catalog
     
 def loadData(catalog):
     """
@@ -51,7 +46,6 @@ def loadData(catalog):
     estructura de datos
     """
     loadBooks(catalog)
-    sortVideos(catalog)
 
 def loadBooks(catalog):
     """
@@ -68,10 +62,11 @@ def loadBooks(catalog):
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog):
+def sortVideos(catalog,size):
     """
     Ordena los libros por average_rating
     """
-    model.sortVideos(catalog)
+    return model.sortVideos(catalog,size)
+    
 
 # Funciones de consulta sobre el catálogo

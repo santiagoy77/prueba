@@ -40,68 +40,28 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalogSingle():
-    """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
-    """
+def newCatalog(tipo_lista):
+    tipo = ""
+    if tipo_lista == 1:
+        tipo = "ARRAY_LIST"
+        print("array_list")
+    elif tipo_lista == 2:
+        tipo = "SINGLE_LINKED"
+        print("single_linked")
     catalog = {'title': None,
-               'information_videos': None
-               }
+               'categories': None}
 
-    catalog['title'] = lt.newList()
-    catalog['information_videos'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=cmpVideosByViews)
-
+    catalog['title'] = lt.newList(tipo)
+    catalog['categories'] = lt.newList(tipo)
+    print("carga completada")
+    print("catalog model:",catalog)
     return catalog
 
-def newCatalogArray():
-    """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
-    """
-    catalog = {'title': None,
-               'information_videos': None
-               }
-
-    catalog['title'] = lt.newList()
-    catalog['information_videos'] = lt.newList('ARRAY_LIST',
-                                    cmpfunction=cmpVideosByViews)
-
-    return catalog
 
 # Funciones para agregar informacion al catalogo
 
 def addVideo(catalog, videos):
-
     lt.addLast(catalog['title'], videos)
- 
-    infoVideos = videos['information_videos'].split(",")
-
-    for video in infoVideos:
-        addInfoVideos(catalog, video.strip(), videos)
-
-
-def addInfoVideos(catalog, information_videos, video):
-    """
-    Adiciona un autor a lista de autores, la cual guarda referencias
-    a los libros de dicho autor
-    """
-    info = catalog['information_videos']
-    posinfo = lt.isPresent(info, information_videos)
-    if posinfo > 0:
-        video = lt.getElement(info, posinfo)
-    else:
-        video = newVideo(information_videos)
-        lt.addLast(info, video)
-    lt.addLast(info['views'], video)
-
-
-# Funciones para creacion de datos
 
 
 def newVideo(name):
@@ -109,9 +69,10 @@ def newVideo(name):
     Crea una nueva estructura para modelar los libros de
     un autor y su promedio de ratings
     """
-    video = {'name': "", "views": 0}
+    video = {'name': "", 'views': None}
     video['name'] = name
-    return author
+    video['views'] = lt.newList('ARRAY_LIST')
+    return video
 
 # Funciones de consulta
 
@@ -125,17 +86,12 @@ def cmpVideosByViews(video1, video2):
     Args: 
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views' """
-    return video1['views'] < video2['views']
-
-
-def comparechannel(authorname1, author):
-    if (authorname1.lower() in author['name'].lower()):
-        return 0
-    return -1
-
-
+    return (float(video1['views']) < float(video2['views']))
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog):
-    sa.sort(catalog['title'], cmpVideosByViews)
+def sortVideos(catalog,size):
+    nueva = lt.subList(catalog["title"],0,size)
+    copia_lista = nueva.copy()
+    return sa.sort(copia_lista, cmpVideosByViews)
+
