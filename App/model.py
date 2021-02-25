@@ -41,65 +41,27 @@ def newCatalog():
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
-    catalog = {'videoTittle': None,
-               'channelName': None,
-               'categorynum': None,
-               'VideoLink': None}
+    catalog = {'videos': None,
+               'categories': None,}
 
-    catalog['videoTittle'] = lt.newList()
-    catalog['channelName'] = lt.newList('ARRAY_LIST',
-                                    cmpfunction=comparechannelname)
-    catalog['Categorynum'] = lt.newList('SINGLE_LINKED',
-                                 cmpfunction=comparecategory)
-    catalog['VideoLink'] = lt.newList('SINGLE_LINKED')
-
+    catalog['videos'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+    catalog['categories'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+    
     return catalog
 
 
 # Funciones para agregar informacion al catalogo
 
-def addBook(catalog, video):
-    # Se adiciona el video a la lista de videos
-    lt.addLast(catalog['videoTittle'], video)
-    # Se obtiene el nombre del canal autor del video
-    name = video['channelName']
-    # crea un libro en la lista de dicho canal
-    addChannelName(catalog, author, name, video)
+def addVideo(catalog, video):
+    'The video is added to the video list'
+    lt.addLast(catalog['videos'], video)
 
-
-def addChannelChannel(catalog, name, video):
-    """
-    Adiciona un autor a lista de autores, la cual guarda referencias
-    a los libros de dicho autor
-    """
-    channels = catalog['channelname']
-    poschannel = lt.isPresent(channels, name)
-    if posauthor > 0:
-        channel = lt.getElement(channels, poschannel)
-    else:
-        channel = newChannel(channelname)
-        lt.addLast(channels, channel)
-    lt.addLast(channel['books'], book)
-
-
-def addCategoryNum(catalog, tag):
-    """
-    Adiciona un tag a la lista de tags
-    """
-    t = newTag(tag['tag_name'], tag['tag_id'])
-    lt.addLast(catalog['tags'], t)
-
-
-def addVideoLink(catalog, booktag):
-    """
-    Adiciona un tag a la lista de tags
-    """
-    t = newBookTag(booktag['tag_id'], booktag['goodreads_book_id'])
-    lt.addLast(catalog['book_tags'], t)
-
+def addCategory(catalog, category):
+    'The category is added to the category list'
+    lt.addLast(catalog['categories'], category)
 
 # Funciones para creacion de datos
-
+'''
 def newChannel(name):
     """
     Crea una nueva estructura para modelar los libros de
@@ -109,31 +71,12 @@ def newChannel(name):
     author['name'] = name
     author['books'] = lt.newList('ARRAY_LIST')
     return author
-
-
-def newTag(name, id):
-    """
-    Esta estructura almancena los tags utilizados para marcar libros.
-    """
-    tag = {'name': '', 'tag_id': ''}
-    tag['name'] = name
-    tag['tag_id'] = id
-    return tag
-
-
-def newBookTag(tag_id, book_id):
-    """
-    Esta estructura crea una relación entre un tag y
-    los libros que han sido marcados con dicho tag.
-    """
-    booktag = {'tag_id': tag_id, 'book_id': book_id}
-    return booktag
-
+'''
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-
+'''
 def comparechannelname(authorname1, author):
     if (authorname1.lower() in author['name'].lower()):
         return 0
@@ -141,5 +84,5 @@ def comparechannelname(authorname1, author):
 
 def comparecategory(video1, video2):
     pass
-
+'''
 # Funciones de ordenamiento

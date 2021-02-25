@@ -26,7 +26,6 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
-
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -35,16 +34,16 @@ operación solicitada
 """
 
 def printMenu():
-    print("Bienvenido")
-    print("1- Cargar información en el catalogo")
-    print("2- Consultar buenos videos por categoria y pais")
-    print('3- Consultar video tendencia por pais')
-    print('4- Consultar video tendencia por categoria')
-    print('5- Consultar videos con mas likes')
+    print("Bienvenido: ")
+    print("1- Cargar información en el catalogo.")
+    print("2- Consultar buenos videos por categoria y pais.")
+    print('3- Consultar video tendencia por pais.')
+    print('4- Consultar video tendencia por categoria.')
+    print('5- Consultar videos con mas likes.\n')
 
 def initCatalog():
     'The catalog is initialized'
-    return controller.initcatalog()
+    return controller.initCatalog()
 
 def loadData(catalog):
     'Load the videos into the data structure'
@@ -52,19 +51,18 @@ def loadData(catalog):
 
 catalog = None
 
-"""
-Menu principal
-"""
+'Menu principal'
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar: ')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos...")
+        print("Cargando información de los archivos...\n")
         catalog = initCatalog()
         loadData(catalog)
-        print('Videos cargados: ' + str(lt.size(catalog['books'])))
-        print('Canales cargados:  ' + str(lt.size(catalog['authors'])))
-        print('Tags cargados: ' + str(lt.size(catalog['tags'])))
+        print('Videos cargados: ' + str(lt.size(catalog['videos'])))
+        print('Categorias cargados: ' + str(lt.size(catalog['categories'])))
+        #print(type(catalog['videos']),'\n')
 
     elif int(inputs[0]) == 2:
         pass
