@@ -38,7 +38,25 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog():
+def newCatalogARRAY():
+    """
+    inicializa el catalogo de video y su informacion
+    """
+    catalog = {'videos': None,
+               'categorias': None,
+               'paises':None,
+               'tag':None}
+    
+    catalog['videos'] = lt.newList('ARRAY_LSIT', cmpfunction = funcompare) 
+    catalog['categorias'] = lt.newList('ARRAY_LIST', 
+                                       cmpfunction = comparecategory)
+    catalog['paises'] = lt.newList('ARRAY_LIST', 
+                                   cmpfunction = comparecountry)
+    catalog['tag'] =lt.newList()
+
+    return catalog
+
+def newCatalogLINKED():
     """
     inicializa el catalogo de video y su informacion
     """
@@ -48,9 +66,9 @@ def newCatalog():
                'tag':None}
     
     catalog['videos'] = lt.newList()
-    catalog['categorias'] = lt.newList('ARRAY_LIST', 
+    catalog['categorias'] = lt.newList('SINGLE_LINKED', 
                                        cmpfunction = comparecategory)
-    catalog['paises'] = lt.newList('ARRAY_LIST', 
+    catalog['paises'] = lt.newList('SINGLE_LINKED', 
                                    cmpfunction = comparecountry)
     catalog['tag'] =lt.newList()
 
@@ -122,5 +140,34 @@ def comparecountry(countryname1, country):
         return 0
     return -1
 
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'views'
+    video2: informacion del segundo video que incluye su valor 'views'
+    """
+    if video1['views'] < video2['views']:
+        return True
+    else:
+        return False
+    
+def funcompare(video1,video2):
+    if video1['video_id'] > video2['video_id']:
+        return 1
+    if video1['video_id'] < video2['video_id']:
+        return -1
+    else:
+        return 0
+
 
 # Funciones de ordenamiento
+def sortvideos(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+     

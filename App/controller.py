@@ -30,11 +30,15 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
-def initCatalog():
+def initCatalogARRAY():
     """
     llamada la funcion de Inicialización del catalogo
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalogARRAY()
+    return catalog
+
+def initCatalogLINKED():
+    catalog = model.newCatalogLINKED()
     return catalog
 
 
@@ -47,12 +51,13 @@ def loadData(catalog):
     loadVideos(catalog)
 
 def loadVideos(catalog):
-    videosfile = cf.data_dir + 'Kaggle/videos-large.csv'
+    videosfile = cf.data_dir + 'Kaggle/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addvideo(catalog, video) 
 
-
 # Funciones de ordenamiento
+def sortvideos(catalog, size):
+    return model.sortvideos(catalog, size)
 
 # Funciones de consulta sobre el catálogo
