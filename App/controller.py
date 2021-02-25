@@ -25,11 +25,11 @@ import model
 import csv
 
 # Inicialización del Catálogo de videos
-def initCatalog():
+def initCatalog(listType):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalog(listType)
     return catalog
 
 def loadData(catalog):

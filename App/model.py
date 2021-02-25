@@ -34,7 +34,7 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def newCatalog():
+def newCatalog(listType):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
@@ -44,8 +44,8 @@ def newCatalog():
     catalog = {'videos': None,
                'categories': None,}
 
-    catalog['videos'] = lt.newList('ARRAY_LIST', cmpfunction=None)
-    catalog['categories'] = lt.newList('ARRAY_LIST', cmpfunction=None)
+    catalog['videos'] = lt.newList(listType, cmpfunction=cmpVideosByViews)
+    catalog['categories'] = lt.newList(listType, cmpfunction=None)
     
     return catalog
 
@@ -76,6 +76,17 @@ def newChannel(name):
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'views'
+    video2: informacion del segundo video que incluye su valor 'views'
+    """
+    return (float(video1['views']) < float(video2['views']))
+
+
 '''
 def comparechannelname(authorname1, author):
     if (authorname1.lower() in author['name'].lower()):

@@ -34,16 +34,23 @@ operación solicitada
 """
 
 def printMenu():
-    print("Bienvenido: ")
-    print("1- Cargar información en el catalogo.")
-    print("2- Consultar buenos videos por categoria y pais.")
-    print('3- Consultar video tendencia por pais.')
-    print('4- Consultar video tendencia por categoria.')
-    print('5- Consultar videos con mas likes.\n')
+    print("\nBienvenido: ")
+    print('1- Seleccion de el tipo de lista para cargar los datos.')
+    print("2- Cargar información en el catalogo.")
+    print("3- Consultar buenos videos por categoria y pais.")
+    print('4- Consultar video tendencia por pais.')
+    print('5- Consultar video tendencia por categoria.')
+    print('6- Consultar videos con mas likes.')
+    print("0- Salir\n")
 
-def initCatalog():
+def printListOptions():
+    print('Ingrese el numero correspondiente al tipo de lista que desee: ')
+    print(' 1. ARRAY_LIST.')
+    print(' 2. LINKED LIST.')
+
+def initCatalog(listType):
     'The catalog is initialized'
-    return controller.initCatalog()
+    return controller.initCatalog(listType)
 
 def loadData(catalog):
     'Load the videos into the data structure'
@@ -51,20 +58,41 @@ def loadData(catalog):
 
 catalog = None
 
+listType = None
+
 'Menu principal'
 
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar: ')
+
     if int(inputs[0]) == 1:
+        listSelection = False
+        while listSelection == False:
+            printListOptions()
+            listTypeSelection = input('Opción seleccionada: ')
+            if int(listTypeSelection[0]) == 1:
+                listType = 'ARRAY_LIST'
+                print('\nSeleciono ARRAY_LIST')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                listSelection = True
+            elif int(listTypeSelection[0]) == 2:
+                listType = 'SINGLE_LINKED'
+                print('\nSeleciono lINKED_LIST')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                listSelection = True
+            else:
+                input('\nSeleccion Erronea! Oprima ENTER para continuar...')
+
+    elif int(inputs[0]) == 2:
         print("Cargando información de los archivos...\n")
-        catalog = initCatalog()
+        catalog = initCatalog(listType)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Categorias cargados: ' + str(lt.size(catalog['categories'])))
-        #print(type(catalog['videos']),'\n')
+        #print(type(catalog['videos']['elements']),'\n')
 
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 3:
         pass
 
     else:
