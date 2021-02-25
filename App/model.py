@@ -27,7 +27,10 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import shellsort as she
+from DISClib.Algorithms.Sorting import selectionsort as sel
+from DISClib.Algorithms.Sorting import insertionsort as ins
+
 assert cf
 
 """
@@ -36,18 +39,19 @@ los mismos.
 """
 
 
-def newCatalog():
+def newCatalog(list_type):
     catalog = {'videos': None,
                'country': None,
                'category': None,
                'tags': None}
 
-    catalog['videos'] = lt.newList()
-    catalog['country'] = lt.newList('SINGLE_LINKED',
+    catalog['videos'] = lt.newList(list_type,
+                                   cmpfunction=compVideosByViews)
+    catalog['country'] = lt.newList(list_type,
                                     cmpfunction=None)
-    catalog['category'] = lt.newList('SINGLE_LINKED',
+    catalog['category'] = lt.newList(list_type,
                                  cmpfunction=None)
-    catalog['tags'] = lt.newList('SINGLE_LINKED')
+    catalog['tags'] = lt.newList(list_type)
     return catalog
 
 def addVideo(catalog, video):
@@ -99,10 +103,45 @@ def newTag(idname):
     tag['idname'] = idname
     return tag
 
+def newSList(lst, pos, numelem):
+    return lt.subList(lst, pos, numelem)
+
+
+
+
 # Funciones para creacion dzae datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-
+def compVideosByViews(video1,video2):
+    if int(video1["views"]) < int(video2["views"]):
+        return True
+    else: 
+        return False 
 # Funciones de ordenamiento
+
+def sort(lst, fun):
+    if fun == "selectionsort":
+        return selesort(lst)
+    elif fun == "insertionsort":
+        return insersort(lst)
+    elif fun == "shellsort":
+        return shesort(lst)
+    else:
+        print("Funcion de ordenamiento no existe.")
+
+def selesort(lst):
+    return sel.sort(lst, lst["cmpfunction"])
+
+def insersort(lst):
+    return ins.sort(lst, lst["cmpfunction"])
+
+def shesort(lst):
+    return she.sort(lst, lst["cmpfunction"])
+
+
+
+
+
+

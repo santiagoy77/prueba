@@ -38,18 +38,21 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Cargar Videos con mas tendencia en un pais segun su categoría")    
+    print("2- Cargar Videos con mas views")    
     print("3- Cargar Video con mas trading segun su país")
     print("4- Cargar Video con mas trading segun su categoría")
     print("5- Cargar Video con mas likes segun Tags")
     print("0- Salir")
     
-def initCatalog():
-    return controller.initCatalog()
+def initCatalog(list_type):
+    return controller.initCatalog(list_type)
 
 
 def loadData(catalog):
     controller.loadData(catalog)
+ 
+def sortVideos(catalog,list_num,list_alg):
+    return controller.sortVideos(catalog,list_num,list_alg)
 
 
 """
@@ -61,7 +64,8 @@ while True:
     if int(inputs[0]) == 1:
         t1=time.process_time()
         print("Cargando información del catalogo ....")
-        catalog = initCatalog()
+        list_type = input("Ingrese el tipo de lista que desea usar:\n")
+        catalog = initCatalog(list_type,)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['country'])))
@@ -71,7 +75,10 @@ while True:
 
     elif int(inputs[0]) == 2:
         t1=time.process_time()
-        print("Cargando Videos con mas tendencia en un pais segun su categoría....")
+        list_num = input("Ingrese la cantidad de datos que desa ver:\n")
+        list_alg = input("Ingrese el algoritmo de ordenamiento que desa usar:\n")
+        sv = sortVideos(catalog,list_num,list_alg)
+        print("Cargando Videos con mas vistas....")
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
