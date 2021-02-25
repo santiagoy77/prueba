@@ -91,4 +91,16 @@ def shellSortVideoscatalog(catalog,size):
     """
     return model.shellSortVideos(catalog,size)
 
+def mergeSortVideoscatalog(catalog,size):
+    """
+    Ordena los videos por shell sort
+    """
+    return model.mergeSortVideos(catalog,size)
+
+def quickSortVideoscatalog(catalog,size):
+    """
+    Ordena los videos por shell sort
+    """
+    return model.quickSortVideos(catalog,size)
+
 # Funciones de consulta sobre el catálogo

@@ -88,7 +88,7 @@ while True:
         
 
     elif int(inputs[0]) == 2:
-        print('Los tipos de algorritmos de ordenamiento disponibles son los siguientes:\n1. Selection Sort\n2. Insertion Sort\n3. Shell Sort')
+        print('Los tipos de algorritmos de ordenamiento disponibles son los siguientes:\n1. Selection Sort\n2. Insertion Sort\n3. Shell Sort\n4 Merge Sort\n5 Quick Sort')
         algorithm = int(input('Sleccione el tipo de algoritmo que desea utilizar para ordenar los datos:\n'))
         print('Ordenando los datos...')
         if algorithm == 1:
@@ -102,6 +102,14 @@ while True:
         elif algorithm ==3:
             size = input("Indique tamaño de la muestra: ")
             result = controller.shellSortVideoscatalog(catalog, int(size))
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        elif algorithm ==4:
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.mergeSortVideoscatalog(catalog, int(size))
+            print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        elif algorithm ==5:
+            size = input("Indique tamaño de la muestra: ")
+            result = controller.quickSortVideoscatalog(catalog, int(size))
             print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
         else:
             print('Ingrese una opcion valida')
