@@ -31,6 +31,9 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as shes
 from DISClib.Algorithms.Sorting import insertionsort as inss
 from DISClib.Algorithms.Sorting import selectionsort as sels
+from DISClib.Algorithms.Sorting import mergesort as merge
+from DISClib.Algorithms.Sorting import quicksort as quick
+
 
 assert cf
 
@@ -90,12 +93,18 @@ def newCategory(category_id,name):
 
 def cmpVideosByViews(video1, video2):
     """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Devuelve verdadero (1) si los 'views' de video1 son menores que los del video2
     Args:
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
     """
-    return (float(video1['views']) > float(video2['views']))
+    
+    if (float(video1['views']) > float(video2['views'])):
+        return 1
+    elif (float(video1['views']) < float(video2['views'])):
+        return -1
+    else:
+        return 0
 
 # Funciones de ordenamiento
 
@@ -119,6 +128,22 @@ def shellSortVideos(catalog,size):
     sub_list = lt.subList(catalog['videos'],0,size)
     start_time = time.process_time()
     sorted_list = shes.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+def mergeSortVideos(catalog,size):
+    sub_list = lt.subList(catalog['videos'],0,size)
+    start_time = time.process_time()
+    sorted_list = merge.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+def quickSortVideos(catalog,size):
+    sub_list = lt.subList(catalog['videos'],0,size)
+    start_time = time.process_time()
+    sorted_list = quick.sort(sub_list, cmpVideosByViews)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
