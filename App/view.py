@@ -26,7 +26,8 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
-
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -88,7 +89,7 @@ while True:
         
 
     elif int(inputs[0]) == 2:
-        print('Los tipos de algorritmos de ordenamiento disponibles son los siguientes:\n1. Selection Sort\n2. Insertion Sort\n3. Shell Sort\n4 Merge Sort\n5 Quick Sort')
+        print('Los tipos de algorritmos de ordenamiento disponibles son los siguientes:\n1. Selection Sort\n2. Insertion Sort\n3. Shell Sort\n4. Merge Sort\n5. Quick Sort')
         algorithm = int(input('Sleccione el tipo de algoritmo que desea utilizar para ordenar los datos:\n'))
         print('Ordenando los datos...')
         if algorithm == 1:
