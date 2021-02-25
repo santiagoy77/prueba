@@ -101,8 +101,10 @@ while True:
                     print("1- Selection")
                     print("2- Insertion")
                     print("3- Shell")
+                    print("4- Merge")
+                    print("5- Quick")
                     algoritmo=int(input("Ingrese su selección:\t"))
-                    if algoritmo>=1 or algoritmo<=3:
+                    if algoritmo>=1 or algoritmo<=5:
                         verifica=False
                     else:
                         print("Opción invalida, elija una opción válida")
