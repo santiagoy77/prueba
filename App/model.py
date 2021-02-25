@@ -93,18 +93,17 @@ def newCategory(category_id,name):
 
 def cmpVideosByViews(video1, video2):
     """
-    Devuelve verdadero (1) si los 'views' de video1 son menores que los del video2
     Args:
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
+    Tiene que devolver 1 /0 /-1
     """
-    
-    if (float(video1['views']) > float(video2['views'])):
+    if video1['views'] > video2['views']:
         return 1
-    elif (float(video1['views']) < float(video2['views'])):
+    elif video1['views'] < video2['views']:
         return -1
-    else:
-        return 0
+    return 0
+    
 
 # Funciones de ordenamiento
 

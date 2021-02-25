@@ -57,7 +57,7 @@ def loadVideos(catalog):
     """
     Carga los videos del archivo. 
     """
-    videosfile = cf.data_dir + 'videos/videos-large.csv'
+    videosfile =  'Reto1-G01T\Data\\videos\\videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -66,7 +66,7 @@ def loadCategories(catalog):
     """
     Carga los videos del archivo. 
     """
-    categoryfile = cf.data_dir + 'videos/category-id.csv'
+    categoryfile = "Reto1-G01T\Data\\videos\category-id.csv"
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter='\t')
     for category in input_file:
         model.addCategory(catalog, category)
