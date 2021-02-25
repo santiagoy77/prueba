@@ -78,11 +78,12 @@ while True:
             else:
                 print("Opción invalida, elija una opción válida")
         print("Cargando información de los archivos ....")
-        t1 = time.process_time_ns()
+        t1 = time.process_time()
         catalog = initCatalog(estructuraDeDatos)
         loadData(catalog)
-        t2 = time.process_time_ns()
-        print ("Tiempo de ejecucion: {:.2f} nano seconds.".format(t2-t1))
+        t2 = time.process_time()
+        time_mseg = (t2 - t1)*1000
+        print ("Tiempo de ejecucion: ",time_mseg," milisegundos.")
         print('Videos cargados exitósamente: ' + str(lt.size(catalog['video'])))
         print('Categorias cargadas exitósamente: ' + str(lt.size(catalog['category'])))
 
@@ -113,7 +114,11 @@ while True:
         if len(catalog)==0:
             print("No se han cargado datos al catálogo, por favor realize la opción 1 antes de proseguir.")
         else:
-            pass
+            i=1
+            while i<= 11:
+                video = lt.getElement(catalog['video'],i)
+                print(i,'- Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
+                i+=1
 
     elif inputs == 4:
         if len(catalog)==0:

@@ -47,7 +47,7 @@ def newCatalog(estructuraDeDatos):
     else:
         tipoED='SINGLE_LINKED'
     catalog = {'video': None, 'category': None}
-    catalog['video'] = lt.newList(tipoED)
+    catalog['video'] = lt.newList(tipoED,cmpfunction=cmpVideosByViews)
     catalog['category'] = lt.newList('ARRAY_LIST')#, cmpfunction=compareCategories
     return catalog
 
@@ -91,7 +91,7 @@ def VideosByViews(catalog, numElementos, TipoAlgortimo):
     return elapsed_time_mseg, sorted_list
 
 def cmpVideosByViews(video1, video2):
-    return (float(video1['views']) < float(video2['views']))
+    return (float(video1['views']) > float(video2['views']))
 
 
 
