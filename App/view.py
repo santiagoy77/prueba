@@ -36,7 +36,7 @@ operación solicitada
 
 
 def printMenu():
-    print("Bienvenido")
+    print("\nBienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Consultar n videos con más views en un país, por categoría")
     print("3- Consultar video que más días ha sido trending en un país")
@@ -84,7 +84,7 @@ def printListMenu():
     Imprime el menú para escoger en qué tipo de representación
     de lista se guardará el catálogo
     """
-    print("Seleccione un tipo de lista para guardar el catálogo de videos:")
+    print("\nSeleccione un tipo de lista para guardar el catálogo de videos:")
     print("0- ARRAY_LIST")
     print("1- LINKED_LIST")
 
@@ -103,7 +103,7 @@ def askForDataSize(catalog):
     """
     Pregunta al usuario el tamaño de la muestra a comparar y valida la cantidad
     """
-    data_size = int(input("Tamaño de muestra de: "))
+    data_size = int(input("\nTamaño de muestra de: "))
     if data_size > int(lt.size(catalog['videos'])):
         print("Error: valor excede tamaño de los datos cargados.")
         askForDataSize()
@@ -125,7 +125,7 @@ Menu principal
 """
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
+    inputs = input('Seleccione una opción para continuar: ')
     if int(inputs[0]) == 1:
         printListMenu()
         chosenType = int(input("Su selección (0 o 1) es: "))
@@ -140,7 +140,7 @@ while True:
         printCategoriesList(catalog)
 
     elif int(inputs[0]) == 2:
-        #n_videos = int(input("Consultando los Top ? : "))
+        # n_videos = int(input("Consultando los Top ? : "))
         data_size = askForDataSize(catalog)
         printAlgorithmMenu()
         algorithm = int(input("Su selección (0, 1 o 2) es: "))
