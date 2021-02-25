@@ -16,4 +16,8 @@ Este directorio contiene todo el código de base que se entrega para el funciona
 -Test
 Este directorio contiene las pruebas realizadas a los TADs, Estructuras de Datos y Algoritmos.
 
-- Req 2, 3: María Paula Alméciga Moreno, 202023369, m.almeciga@uniandes.edu.co
+
+Integrantes:
+
+- María Paula Alméciga Moreno Correo: m.almeciga@uniandes.edu.co Código: 202023369
+- Andrés Felipe Vargas Cuadros Correo: af.vargasc1@uniandes.edu.co Código: 202013817
