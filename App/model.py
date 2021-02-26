@@ -31,6 +31,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import insertionsort as it
 from DISClib.Algorithms.Sorting import selectionsort as sr
+from DISClib.Algorithms.Sorting import quicksort as qt
+from DISClib.Algorithms.Sorting import mergesort as mt
 assert cf
 
 """
@@ -120,6 +122,10 @@ def sort_type(catalog, size, type):
         sorted_list = it.sort(sub_list, cmpVideosByViews)
     elif type == "selectionsort":
         sorted_list = sr.sort(sub_list, cmpVideosByViews)
+    elif type == "mergesort":
+        sorted_list = mt.sort(sub_list, cmpVideosByViews)
+    elif type == "quicksort":
+        sorted_list = qt.sort(sub_list, cmpVideosByViews)
     else:
         sorted_list = sa.sort(sub_list, cmpVideosByViews)
     stop_time = time.process_time()

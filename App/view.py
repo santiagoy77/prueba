@@ -26,6 +26,8 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 """
 La vista se encarga de la interacción con el usuario
@@ -102,7 +104,7 @@ while True:
         loadData(catalog)
 
         opcion = int(input(
-            "Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell  : "))
+            "Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell \n 4.mergesort \n 5. quicksort : "))
         size_lt = int(input("Indique el número de datos: "))
 
         if int(opcion) == 2:
@@ -110,6 +112,12 @@ while True:
             answer = controller.sort_type(catalog, size_lt, tipo)
         elif int(opcion) == 1:
             tipo = "selectionsort"
+            answer = controller.sort_type(catalog, size_lt, tipo)
+        elif int(opcion) == 4:
+            tipo = "mergesort"
+            answer = controller.sort_type(catalog, size_lt, tipo)
+        elif int(opcion) == 5:
+            tipo = "quicksort"
             answer = controller.sort_type(catalog, size_lt, tipo)
         else:
             tipo = "shellsort"
