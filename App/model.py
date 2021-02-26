@@ -51,12 +51,12 @@ def newCatalog(tipo):
     generos y videos. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'channel_title': None,
+               'category': None,
                }
 
-    catalog['videos'] = lt.newList()
-    catalog['channel_title'] = lt.newList(tipo,
-                                          cmpfunction=cmpVideosByViews)
+    catalog['videos'] = lt.newList(tipo)
+    catalog['category'] = lt.newList(tipo,
+                                     cmpfunction=cmpVideosById)
 
     return catalog
 
@@ -99,6 +99,18 @@ def newAuthor(name):
 
 def cmpVideosByViews(video1, video2):
     return (float(video1['views']) < float(video2['views']))
+
+
+def cmpVideosById(video_1, video_2):
+    if video_1 < video_2:
+        return -1
+    elif video_1 == video_2:
+        return 0
+    else:
+        return 1
+
+
+#category_id, videos_id
 
 # Funciones para sort
 
