@@ -23,6 +23,7 @@
 import config as cf
 import sys
 import controller
+import threading
 from DISClib.ADT import list as lt
 assert cf
 
@@ -33,6 +34,8 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+
+debug = True
 
 def printMenu():
     print("Bienvenido")
@@ -65,7 +68,21 @@ def printMostViewed(ord_videos, sample= 10):
         dir=ord_videos["elements"][-i][0]["elements"]
         print(dir[1],dir[2], dir[3], dir[5], dir[6], dir[7], dir[8], sep="   ")
         i+=1
-    
+
+def doSortingTests(catalog):
+    flag = [True, True]
+    x = threading.Thread(target=controller.doSortingTests, args=(catalog, flag))
+    x.start()
+    while flag[0]:
+        change = int(input("0. Remain doing tests\n1. Stop when average has been computed\n2. Stop as soon as possible\n"))
+        if (change == 1):
+            flag[0] = False
+        elif (change == 2):
+            flag[0] = False
+            flag[1] = False
+    print("Wait for the testing to end.")
+    x.join()
+    print("Testing ended!")
 
 catalog = None
 """
@@ -91,18 +108,27 @@ while True:
         
     elif int(inputs[0]) == 2:
         size = int(input("Introduzca el tamaño de la muestra que quiere ordenar: "))
-        print("1. ShellSort\n2.InsertionSort\n3.SelectionSort")
+        if debug:
+            print("0. Serial experiments Sort")
+        print("1. ShellSort\n2.InsertionSort\n3.SelectionSort\n4.QuickSort\n5.MergeSort")
         algorithm = int(input("Introduzca el índice del algoritmo que quiere usar: "))
-        if (algorithm == 1):
-            algorithm = 'shell'
-        elif(algorithm == 2):
-            algorithm = 'insertion'
+        if (debug and (algorithm == 0)):
+            doSortingTests(catalog)
         else:
-            algorithm = 'selection'
-        sample = int(input("Introduzca el número de vídeos que quiere listar: "))
-        result = controller.order_by_Views(catalog, size, algorithm)
-        print("El tiempo de ordenamiento fue de",result[0],"ms.")
-        printMostViewed(result[1], sample=sample)
+            if(algorithm == 1):
+                algorithm = 'shell'
+            elif(algorithm == 2):
+                algorithm = 'insertion'
+            elif(algorithm == 3):
+                algorithm = 'selection'
+            elif(algorithm == 4):
+                algorithm = 'quick'
+            else:
+                algorithm = 'merge'
+            sample = int(input("Introduzca el número de vídeos que quiere listar: "))
+            result = controller.order_by_Views(catalog, size, algorithm)
+            print("El tiempo de ordenamiento fue de",result[0],"ms.")
+            printMostViewed(result[1], sample=sample)
         input("Presione cualquier tecla para continuar.")
     elif int(inputs[0]) == 3:
         pass

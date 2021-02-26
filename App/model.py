@@ -31,6 +31,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import insertionsort as ie
+from DISClib.Algorithms.Sorting import quicksort as qk
+from DISClib.Algorithms.Sorting import mergesort as mr
 
 assert cf
 
@@ -243,8 +245,12 @@ def inefficient_ordering(videos, size, algorithm = 'shell'):
         temp_list = sa.sort(temp_list, cmpVideosByViews)
     elif(algorithm == 'insertion'):
         temp_list = ie.sort(temp_list, cmpVideosByViews)
-    else:
+    elif(algorithm == 'selection'):
         temp_list = se.sort(temp_list, cmpVideosByViews)
+    elif(algorithm == 'quick'):
+        temp_list = qk.sort(temp_list, cmpVideosByViews)
+    else:
+        temp_list = mr.sort(temp_list, cmpVideosByViews)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, temp_list

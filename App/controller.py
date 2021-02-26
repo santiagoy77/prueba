@@ -65,4 +65,57 @@ def initLista_tags():
 # Funciones de ordenamiento
 def order_by_Views(videos, size, algorithm = 'shell'):
     return model.inefficient_ordering(videos, size, algorithm)
+
+def doSortingTests(videos, flag):
+    algorithms = ['shell', 'insertion', 'selection', 'quick', 'merge']
+    sizes = [(2**x)*1000 for x in range(0,10)]
+    matrix = [[0.0]*5 for x in range(0,10)]
+    i = 0
+    j = 0
+    with open('Data/tests.csv', 'r') as testsfile:
+        content = testsfile.readline()
+        content = testsfile.readline()
+        while content:
+            content = content.replace('\n','')
+            content = content.split(sep=',')
+            for n in content:
+                if n:
+                    matrix[i][j] = float(n)
+                    j += 1
+            if (j == 5):
+                i+= 1
+                j = 0
+            content = testsfile.readline()
+        testsfile.close()
+    while flag[0] and i < 10:
+        while flag[0] and j < 5:
+            k = 0
+            time = 0
+            while k < 3 and flag[1]:
+                result = model.inefficient_ordering(videos, sizes[i], algorithms[j])
+                time += result[0] / 3
+                k += 1
+            if k == 3:
+                matrix[i][j] = time
+                print("Algorithm",algorithms[j],"size",sizes[i],"executd in average time", round(time,2), "ms")
+                j += 1
+        j = 0
+        i += 1
+    with open('Data/tests.csv', 'w') as testsfile:
+        result = 'shell,insertion,selection,quick,merge\n'
+        i = 0
+        j = 0
+        while i < 10:
+            while j < 4 and matrix[i][j]:
+                result += str(round(matrix[i][j], 2))+','
+                j += 1
+            if not matrix[i][j]:
+                break
+            result += str(round(matrix[i][j], 2)) + '\n'
+            j = 0
+            i += 1
+        testsfile.write(result)
+        testsfile.close()
+
+
 # Funciones de consulta sobre el catálogo
