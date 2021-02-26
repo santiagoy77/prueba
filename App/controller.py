@@ -66,6 +66,13 @@ def loadVideo(catalog):
         model.addVideo(catalog, videos)
 
 
+def loadVideo_ID(catalog):
+    """
+    Carga el video id del archivo. Para cada video se toma su id. 
+    """
+    return None
+
+
 def sortvideos(catalog, size):
     return model.sortvideos(catalog, size)
 
