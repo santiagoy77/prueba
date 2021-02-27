@@ -27,6 +27,9 @@ from DISClib.ADT import list as lt
 assert cf
 import time
 
+#default_limit = 1000
+#sys.setrecursionlimit(default_limit*10)
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -50,15 +53,15 @@ def initCatalog (estructuraDeDatos):
 def loadData(catalog):
     controller.loadData(catalog)
 
-def printResultVideosByViews(listaOrdenada):
+def printResultVideosByViews(listaOrdenada, sample=10):
     size = lt.size(listaOrdenada)
-    print("Los primeros ", size, " videos ordenados por visitas son:")
-    i=1
-    while i<= size:
-        video = lt.getElement(listaOrdenada,i)
-        print(i,'- Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
-        i+=1
-
+    if size > sample:
+        print("Los primeros ", size, " videos ordenados por visitas son:")        
+        i=1
+        while i<= sample:
+            video = lt.getElement(listaOrdenada,i)
+            print(i,'- Titulo: '+ video['title'] + '. Visitas del Video: ' + video['views'] + '. Nombre del Canal: ' + video['channel_title']+'.')
+            i+=1
 
 """
 Menu principal

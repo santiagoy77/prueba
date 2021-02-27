@@ -31,6 +31,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as She
 from DISClib.Algorithms.Sorting import selectionsort as Sel
 from DISClib.Algorithms.Sorting import insertionsort as Inser
+from DISClib.Algorithms.Sorting import mergesort as Merge
+from DISClib.Algorithms.Sorting import quicksort as Quick
 assert cf
 
 """
@@ -84,14 +86,18 @@ def VideosByViews(catalog, numElementos, TipoAlgortimo):
         sorted_list = Sel.sort(sub_list, cmpVideosByViews)
     elif TipoAlgortimo==2:
         sorted_list = Inser.sort(sub_list, cmpVideosByViews)
-    else:
+    elif TipoAlgortimo==3:
         sorted_list = She.sort(sub_list, cmpVideosByViews)
+    elif TipoAlgortimo==4:
+        sorted_list = Merge.sort(sub_list, cmpVideosByViews)
+    else:
+        sorted_list = Quick.sort(sub_list, cmpVideosByViews)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
 def cmpVideosByViews(video1, video2):
-    return (float(video1['views']) > float(video2['views']))
+    return (float(video1['views']) < float(video2['views']))
 
 
 
