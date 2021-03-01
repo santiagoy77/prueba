@@ -35,8 +35,8 @@ operación solicitada
 
 def printMenu():
     print("\nBienvenido: ")
-    print('1- Seleccion de el tipo de lista para cargar los datos.')
-    print("2- Cargar información en el catalogo.")
+    print("1- Cargar información en el catalogo.")
+    print('2- Ordenar los videos por views')
     print("3- Consultar buenos videos por categoria y pais.")
     print('4- Consultar video tendencia por pais.')
     print('5- Consultar video tendencia por categoria.')
@@ -44,10 +44,26 @@ def printMenu():
     print("0- Salir\n")
 
 def printListOptions():
-    print('Ingrese el numero correspondiente al tipo de lista que desee: ')
+    print('Ingrese el numero del tipo de lista que desee: ')
     print(' 1. ARRAY_LIST.')
     print(' 2. LINKED LIST.')
 
+def printSortMethods():
+    print('Ingrese el numero del tipo de ordenamiento que desee: ')
+    print(' 1. SELECTION_SORT.')
+    print(' 2. INSERTION_SORT.')
+    print(' 3. SHELL_SORT.')
+
+def printResults(ord_videos, sample=10):
+    size = lt.size(ord_videos)
+    if size > sample:
+        print("Los primeros ", sample, " videos ordenados son:")
+        i=0
+        while i <= sample:
+            video = lt.getElement(ord_videos, i)
+            print('Titulo: ' + video['title'] + ' Fecha de Tendencia: ' + video['trending_date'] + ' Vistas: ' + video['views'])
+            i+=1
+    
 def initCatalog(listType):
     'The catalog is initialized'
     return controller.initCatalog(listType)
@@ -78,22 +94,44 @@ while True:
                 listSelection = True
             elif int(listTypeSelection[0]) == 2:
                 listType = 'SINGLE_LINKED'
-                print('\nSeleciono lINKED_LIST')
+                print('\nSeleciono LINKED_LIST')
                 input('Seleccion exitosa! Oprima ENTER para continuar...')
                 listSelection = True
             else:
                 input('\nSeleccion Erronea! Oprima ENTER para continuar...')
-
-    elif int(inputs[0]) == 2:
         print("Cargando información de los archivos...\n")
         catalog = initCatalog(listType)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Categorias cargados: ' + str(lt.size(catalog['categories'])))
-        #print(type(catalog['videos']['elements']),'\n')
+        #print(print(catalog['videos']['elements']),'\n')
 
-    elif int(inputs[0]) == 3:
-        pass
+    elif int(inputs[0]) == 2:
+        size = input("Indique tamaño de la muestra: ")
+        sortSelection = False
+        while sortSelection == False:
+            printSortMethods()
+            sortTypeSelection = input('Opción seleccionada: ')
+            if int(sortTypeSelection[0]) == 1:
+                sortType = 'sls'
+                print('\nSeleciono SELECTION_SORT')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                sortSelection = True
+            elif int(sortTypeSelection[0]) == 2:
+                sortType = 'ins'
+                print('\nSeleciono INSERTION_SORT')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                sortSelection = True
+            elif int(sortTypeSelection[0]) == 3:
+                sortType = 'shl'
+                print('\nSeleciono SHELL_SORT')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                sortSelection = True
+            else:
+                input('\nSeleccion Erronea! Oprima ENTER para continuar...')
+        result = controller.sortVideos(catalog, int(size), sortType)
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        printResults(result[1])
 
     else:
         sys.exit(0)

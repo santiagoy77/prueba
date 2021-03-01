@@ -70,7 +70,10 @@ def loadCategories(catalog):
         model.addCategory(catalog, category)
 
 
+# Funciones de consulta sobre el catálogo
 
 # Funciones de ordenamiento
 
-# Funciones de consulta sobre el catálogo
+def sortVideos(catalog, size, method):
+    'Sort videos by views'
+    return model.sortVideos(catalog, size, method)

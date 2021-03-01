@@ -26,20 +26,18 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as sls
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import shellsort as shl
 assert cf
 
-"""
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
-"""
+
 def newCatalog(listType):
     """
-    Inicializa el catálogo de libros. Crea una lista vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
+    The catalog starts where two empty lists are created, one for the videos and the other for the categories.
+    Return the catalog
     """
     catalog = {'videos': None,
                'categories': None,}
@@ -61,39 +59,34 @@ def addCategory(catalog, category):
     lt.addLast(catalog['categories'], category)
 
 # Funciones para creacion de datos
-'''
-def newChannel(name):
-    """
-    Crea una nueva estructura para modelar los libros de
-    un autor y su promedio de ratings
-    """
-    author = {'name': "", "books": None,  "average_rating": 0}
-    author['name'] = name
-    author['books'] = lt.newList('ARRAY_LIST')
-    return author
-'''
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmpVideosByViews(video1, video2):
-    """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
-    Args:
-    video1: informacion del primer video que incluye su valor 'views'
-    video2: informacion del segundo video que incluye su valor 'views'
-    """
+    'Return True if vid1 < vid2'
     return (float(video1['views']) < float(video2['views']))
 
 
-'''
-def comparechannelname(authorname1, author):
-    if (authorname1.lower() in author['name'].lower()):
-        return 0
-    return -1
-
-def comparecategory(video1, video2):
-    pass
-'''
 # Funciones de ordenamiento
+
+def selectSortMethod(method):
+    if method == 'sls':
+        sortType = sls
+    elif method == 'ins':
+        sortType = ins
+    elif method ==  'shl':
+        sortType = shl
+    return sortType
+
+def sortVideos(catalog, size, method):
+    sortmet = selectSortMethod(method)
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sortmet.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
