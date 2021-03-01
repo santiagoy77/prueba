@@ -117,7 +117,7 @@ while True:
             print("Presione 5 para escoger Merge Sort")
             orden = int(input())
             (a,b) = controller.sortVideos(catalog,size,orden)
-            print("el tiempo que ha tardado el proceso es:",a,"milisegundos")
+            print("El tiempo que ha tardado el proceso es:",a,"milisegundos.")
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 
