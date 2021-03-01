@@ -63,7 +63,7 @@ def printResults(ord_videos, sample=10):
     size = lt.size(ord_videos)
     if size > sample:
         print("Los primeros ", sample, " videos ordenados son:")
-        i=0
+        i=1
         while i <= sample:
             video = lt.getElement(ord_videos, i)
             print('Titulo: ' + video['title'] + ' Fecha de Tendencia: ' + video['trending_date'] + ' Vistas: ' + video['views'])
