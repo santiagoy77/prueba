@@ -31,6 +31,9 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import selectionsort as sls
 from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import shellsort as shl
+from DISClib.Algorithms.Sorting import mergesort as mgs
+from DISClib.Algorithms.Sorting import quicksort as qks
+
 assert cf
 
 
@@ -78,6 +81,10 @@ def selectSortMethod(method):
         sortType = ins
     elif method ==  'shl':
         sortType = shl
+    elif method == 'mgs':
+        sortType = mgs
+    elif method == 'qks':
+        sortType = qks
     return sortType
 
 def sortVideos(catalog, size, method):

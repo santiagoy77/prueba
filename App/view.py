@@ -26,6 +26,9 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10) 
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -35,7 +38,7 @@ operación solicitada
 
 def printMenu():
     print("\nBienvenido: ")
-    print("1- Cargar información en el catalogo.")
+    print("1- Cargar informacion en el catalogo.")
     print('2- Ordenar los videos por views')
     print("3- Consultar buenos videos por categoria y pais.")
     print('4- Consultar video tendencia por pais.')
@@ -53,6 +56,8 @@ def printSortMethods():
     print(' 1. SELECTION_SORT.')
     print(' 2. INSERTION_SORT.')
     print(' 3. SHELL_SORT.')
+    print(' 4. MERGE_SORT')
+    print(' 5. QUICK_SORT')
 
 def printResults(ord_videos, sample=10):
     size = lt.size(ord_videos)
@@ -80,7 +85,7 @@ listType = None
 
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar: ')
+    inputs = input('Seleccione una opcion para continuar: ')
 
     if int(inputs[0]) == 1:
         listSelection = False
@@ -125,6 +130,16 @@ while True:
             elif int(sortTypeSelection[0]) == 3:
                 sortType = 'shl'
                 print('\nSeleciono SHELL_SORT')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                sortSelection = True
+            elif int(sortTypeSelection[0]) == 4:
+                sortType = 'mgs'
+                print('\nSeleciono MERGE_SORT')
+                input('Seleccion exitosa! Oprima ENTER para continuar...')
+                sortSelection = True
+            elif int(sortTypeSelection[0]) == 5:
+                sortType = 'qks'
+                print('\nSeleciono QUICK_SORT')
                 input('Seleccion exitosa! Oprima ENTER para continuar...')
                 sortSelection = True
             else:
