@@ -87,6 +87,8 @@ while True:
     printMenu()
     inputs = input('Seleccione una opcion para continuar: ')
 
+    # Option 1 Starts Here
+
     if int(inputs[0]) == 1:
         listSelection = False
         while listSelection == False:
@@ -110,6 +112,10 @@ while True:
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Categorias cargados: ' + str(lt.size(catalog['categories'])))
         #print(print(catalog['videos']['elements']),'\n')
+    
+    #Option 1 Ends Here
+    #------------------------
+    #Option 2 Starts Here
 
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
@@ -144,9 +150,17 @@ while True:
                 sortSelection = True
             else:
                 input('\nSeleccion Erronea! Oprima ENTER para continuar...')
+
         result = controller.sortVideos(catalog, int(size), sortType)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
         printResults(result[1])
+
+    #Options 2 Ends Here
+    #------------------------
+    #Options 3 Starts Here
+    
+    elif int(inputs[0]) == 3:
+        pass
 
     else:
         sys.exit(0)
