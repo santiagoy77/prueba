@@ -24,8 +24,13 @@ import config as cf
 import time
 import sys
 import controller
+
+
 from DISClib.ADT import list as lt
 assert cf
+
+default_limit = 1000 
+sys.setrecursionlimit(default_limit*10)
 
 
 """
@@ -105,7 +110,12 @@ while True:
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
             print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
-            orden = int(input("Presione 1 para escoger Shellsort, 2 para Selectionsort o 3 para Insertionsort: "))
+            print("Presione 1 para escoger Shell Sort")
+            print("Presione 2 para escoger Selection Sort")
+            print("Presione 3 para escoger Insertion Sort")
+            print("Presione 4 para escoger Quick Sort")
+            print("Presione 5 para escoger Merge Sort")
+            orden = int(input())
             (a,b) = controller.sortVideos(catalog,size,orden)
             print("el tiempo que ha tardado el proceso es:",a,"milisegundos")
     elif int(inputs[0]) == 3:
@@ -121,3 +131,4 @@ while True:
         sys.exit(0)
         
 sys.exit(0)
+

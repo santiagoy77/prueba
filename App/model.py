@@ -33,6 +33,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import quicksort as qs
+from DISClib.Algorithms.Sorting import mergesort as mgs
 assert cf
 
 """
@@ -96,26 +98,23 @@ def sortVideos(catalog,size,orden):
     nueva = lt.subList(catalog["title"],0,size)
     copia_lista = nueva.copy()
     start_time = time.process_time()
+    list_orden = orden
     if orden == 1:
         list_orden = sa.sort(copia_lista, cmpVideosByViews)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        resul = (elapsed_time_mseg, list_orden)
-        return resul
     elif orden == 2:
         list_orden = ss.sort(copia_lista, cmpVideosByViews)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        resul = (elapsed_time_mseg, list_orden)
-        return resul
     elif orden == 3:
         list_orden = ins.sort(copia_lista, cmpVideosByViews)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        resul = (elapsed_time_mseg, list_orden)
-        return resul
+    elif orden == 4:
+        list_orden = qs.sort(copia_lista, cmpVideosByViews)
+    elif orden == 5:
+        list_orden = mgs.sort(copia_lista, cmpVideosByViews)
     else:
         return "Ha seleccionado una opcion invalida"
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    resul = (elapsed_time_mseg, list_orden)
+    return resul
 
 
     
