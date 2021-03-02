@@ -75,6 +75,7 @@ def getId(category_ids, category_name):
 def topVidByCategory(catalog, category_id):
     #vids_category = auxList(catalog, 'category-id', category_id)
     vids_category = sortCategory(catalog)
+    vids_category = auxList(vids_category, 'category_id', category_id)
     vids_category = sortDays(vids_category)
     return model.topVidByCategory(vids_category)
 

@@ -31,6 +31,7 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as sel
 from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as mer
 assert cf
 
 '''
@@ -127,7 +128,18 @@ def cmpByDays(video1, video2):
 
 
 def sortCategory(catalog):
-    cat_sort =
+    cat_sort = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+    cat_sort = mer.sort(cat_sort, cmpCategories)
+    return cat_sort
+
+
+def cmpCategories(video1, video2):
+    if video1['category_id'] < video2['category_id']:
+        return -1
+    elif video1['category_id'] > video2['category_id']:
+        return 1
+    else:
+        return 0
 # def orderedList(catalog,country,category):
 #     videoList = catalogo["videos"]
 #     sublist = lt.newList(datastructure=)

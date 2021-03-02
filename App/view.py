@@ -125,11 +125,13 @@ while True:
 
     elif int(inputs[0]) == 4:
         category_name = input(
-            "Categoria a consultar el video trending x má dias: ")
+            "Categoria a consultar el video trending x más dias: ")
         category_ids = catalog['category-id']
         category_id = controller.getId(category_ids, category_name)
-        top_video = controller.topVidByCategory(catalog, category_id)
-
+        if category_id is not None:
+            top_video = controller.topVidByCategory(catalog, category_id)
+        else:
+            print('Categoria no válida')
     else:
         sys.exit(0)
 sys.exit(0)
