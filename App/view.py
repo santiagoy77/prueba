@@ -122,11 +122,13 @@ while True:
             print('La muestra que desea es mayor a la cantidad de datos almacenadas')
     elif int(inputs[0]) == 3:
         pass
+
     elif int(inputs[0]) == 4:
         category_name = input(
-            "De que categoria desea consultar el video trending por mas dias")
+            "Categoria a consultar el video trending x má dias: ")
         category_ids = catalog['category-id']
-        category_id = controller.getId(category_id, category_name)
+        category_id = controller.getId(category_ids, category_name)
+        top_video = controller.topVidByCategory(catalog, category_id)
 
     else:
         sys.exit(0)

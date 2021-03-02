@@ -68,10 +68,27 @@ def sortViews(catalog, size, sort_type):
         return model.sortVideosShell(catalog, size)
 
 
-def getId(category_id, category_name):
+def getId(category_ids, category_name):
+    return model.getId(category_ids, category_name)
 
-    return model.getId(category_id, category_name)
 
+def topVidByCategory(catalog, category_id):
+    #vids_category = auxList(catalog, 'category-id', category_id)
+    vids_category = sortCategory(catalog)
+    vids_category = sortDays(vids_category)
+    return model.topVidByCategory(vids_category)
+
+
+def auxList(catalog, data_type, list_of):
+    return model.auxList(catalog, data_type, list_of)
+
+
+def sortDays(catalog):
+    return model.sortDays(catalog)
+
+
+def sortCategory(catalog):
+    return model.sortCategory(catalog)
 
 # Funciones de ordenamiento
 

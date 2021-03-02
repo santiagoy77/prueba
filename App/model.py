@@ -61,7 +61,7 @@ def addCategory(catalog, category):
 def newCategory(id, name):
     category = {'id': '', 'name': ''}
     category['id'] = int(id)
-    category['name'] = name
+    category['name'] = name.strip()
     return category
 
 
@@ -108,11 +108,26 @@ def sortVideosShell(catalog, size):
     return elapsed_time_mseg, sorted_list
 
 
-def getId(category_id, category_name):
-    for item in range(lt.size(category_id)):
-        if lt.getElement(item)['id'] == category_name:
-            return item
+def getId(category_ids, category_name):
+    for item in lt.iterator(category_ids):
+        if item['name'] == category_name:
+            return item['id']
 
+
+def auxList(catalog, data_type, list_of):
+    pass
+
+
+def sortDays(catalog):
+    pass
+
+
+def cmpByDays(video1, video2):
+    pass
+
+
+def sortCategory(catalog):
+    cat_sort =
 # def orderedList(catalog,country,category):
 #     videoList = catalogo["videos"]
 #     sublist = lt.newList(datastructure=)
