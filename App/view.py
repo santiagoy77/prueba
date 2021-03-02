@@ -120,6 +120,14 @@ while True:
                   "elementos, el tiempo (mseg) es: ", str(result[0]))
         else:
             print('La muestra que desea es mayor a la cantidad de datos almacenadas')
+    elif int(inputs[0]) == 3:
+        pass
+    elif int(inputs[0]) == 4:
+        category_name = input(
+            "De que categoria desea consultar el video trending por mas dias")
+        category_ids = catalog['category-id']
+        category_id = controller.getId(category_id, category_name)
+
     else:
         sys.exit(0)
 sys.exit(0)

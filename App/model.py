@@ -107,6 +107,12 @@ def sortVideosShell(catalog, size):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
+
+def getId(category_id, category_name):
+    for item in range(lt.size(category_id)):
+        if lt.getElement(item)['id'] == category_name:
+            return item
+
 # def orderedList(catalog,country,category):
 #     videoList = catalogo["videos"]
 #     sublist = lt.newList(datastructure=)

@@ -68,6 +68,11 @@ def sortViews(catalog, size, sort_type):
         return model.sortVideosShell(catalog, size)
 
 
+def getId(category_id, category_name):
+
+    return model.getId(category_id, category_name)
+
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
