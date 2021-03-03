@@ -1,4 +1,4 @@
-﻿"""
+"""
  * Copyright 2020, Departamento de sistemas y Computación, Universidad
  * de Los Andes
  *
@@ -43,11 +43,11 @@ def printMenu():
     print("5- REQ. 4: Buscar los videos con más likes")
     
 
-def initCatalog():
+def initCatalog(tipo):
     """
     Inicializa el catalogo de videos
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipo)
 
 
 def loadData(catalog):
@@ -65,12 +65,18 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        tipo = input("seleccione el tipo de estrcutura de datos escribiendo textualmente: ARRAY_LIST o SINGLE_LINKED: ")
+        catalog = initCatalog(tipo)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categorias'])))
     elif int(inputs[0]) == 2:
-        pass
+        size = input("Tamaño límite de videos a listar:")
+        tipo = input(" Seleccione el tipo de algoritmo de ordenamiento"+
+            "iterativo escribiendo textualmente alguna de estas opciones:"+
+            "Insertion, Selection, Shell, Merge, Quick: ")
+        print(controller.sortVideos(catalog, int(size), tipo))
+        
     elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 4:
