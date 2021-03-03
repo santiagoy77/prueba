@@ -49,7 +49,7 @@ def newCatalog(tipo_de_dato):
     catalog['videos'] = lt.newList(datastructure=tipo_de_dato)
     catalog['by_countries'] = lt.newList(datastructure='ARRAY_LIST')
     catalog['by_categories'] = lt.newList(
-        datastructure='ARRAY_LIST', cmpfunction=cmpCategories())
+        datastructure='ARRAY_LIST', cmpfunction=cmpCategories)
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
 
@@ -58,15 +58,15 @@ def newCatalog(tipo_de_dato):
 
 def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
-    country = video['country'], strip()
-    category = video['category_id']
+    country = video['country'].strip()
+    category = int(video['category_id'].strip())
 
     addVideoCountry(catalog, country, video)
-    addVideoCategory(catalog, category, vidoe)
+    addVideoCategory(catalog, category, video)
 
 
 def addCategory(catalog, category):
-    c = newCategory(category['id'], category['name'])
+    c = newCategoryId(category['id'], category['name'])
     lt.addLast(catalog['category-id'], c)
 
 
@@ -75,23 +75,23 @@ def addVideoCountry(catalog, country, video):
 
 
 def addVideoCategory(catalog, category_id, video):
-    categories = catalog['categories']
-    posCategory = lt.isPresent(catalog, category_id)
+    categories = catalog['by_categories']
+    posCategory = lt.isPresent(categories, category_id)
 
     if posCategory > 0:  # La categoria ya ha sido creada dentro de la lista
-        category = lt.getElement(catalog, posCategory)
+        category = lt.getElement(categories, posCategory)
     else:  # Debemos crear una nueva categoria
         category = newCategory(category_id)
-        lt.addLast(catalog(categories, category))
+        lt.addLast(categories, category)
 
     lt.addLast(category['videos'], video)
 
 
 def newCategory(category_id):
-    category_list = {'name': "", "videos": None}
-    category_list['name'] = category_id
-    category_list['videos'] = lt.newList('ARRAY_LIST')
-    return category_list
+    category_dict = {'id': 0, "videos": None}
+    category_dict['id'] = category_id
+    category_dict['videos'] = lt.newList('ARRAY_LIST')
+    return category_dict
 
 
 def newCategoryId(id, name):
@@ -102,6 +102,14 @@ def newCategoryId(id, name):
     category['id'] = int(id)
     category['name'] = name.strip()
     return category
+
+
+def getCategory(catalog, category_id):
+    pos_id = lt.isPresent(catalog['by_categories'], category_id)
+    if pos_id > 0:
+        category_list = lt.getElement(catalog['by_categories'], pos_id)
+        return category_list
+    return None
 
 
 def compVideosByViews(video1, video2):
@@ -153,20 +161,8 @@ def getId(category_ids, category_name):
             return item['id']
 
 
-def auxList(catalog, data_type, list_of):
-    pass
-
-
-def sortDays(catalog):
-    pass
-
-
-def cmpByDays(video1, video2):
-    pass
-
-
-def sortCategory(catalog):
-    cat_sort = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+def sortCategory(category_list):
+    cat_sort = category_list.copy()
     cat_sort = mer.sort(cat_sort, cmpCategories)
     return cat_sort
 
@@ -175,14 +171,57 @@ def cmpCategoriesSort(video1, video2):
     return video1['category_id'] < video2['category_id']
 
 
-def cmpCategories(video1, video2):
-    if video1['category_id'] < video2['category_id']:
+def cmpCategories(category_id, category):
+    if category_id < category['id']:
         return -1
-    elif video1['category_id'] > video2['category_id']:
+    elif category_id > category['id']:
         return 1
     else:
         return 0
 
+
+def sortVideoId(category_list):
+    vid_id_sort = category_list.copy()
+    vid_id_sort = mer.sort(vid_id_sort, cmpVideoIdSort)
+    return vid_id_sort
+
+
+def findTopVideo(category_list):
+    pos = 1
+    top_video = lt.firstElement(category_list)
+    top_reps = 0
+    reps_per_video = []
+    while pos < lt.size(category_list) - 1:
+        current_elem = lt.getElement(category_list, pos)
+        next_elem = lt.getElement(category_list, pos + 1)
+
+        current_reps = 1
+
+        if current_elem['video_id'] == next_elem['video_id']:
+            current_reps += 1
+        else:
+            reps_per_video.append(
+                {'video': current_elem, 'reps': current_reps})
+
+        pos += 1
+    for item in reps_per_video:
+        if item['reps'] > top_reps:
+            top_reps = item['reps']
+            top_video = item['video']
+
+    return top_video, top_reps
+
+    # while loop
+    # previous element stored
+    # if the ids are equal add to the video count
+    # else
+    #   if number of repetitions of prev element < new number of rps
+    #   stiore nre elemetn as top
+    pass
+
+
+def cmpVideoIdSort(video1, video2):
+    return video1['video_id'] < video2['video_id']
 # def orderedList(catalog,country,category):
 #     videoList = catalogo["videos"]
 #     sublist = lt.newList(datastructure=)
