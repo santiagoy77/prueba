@@ -41,9 +41,15 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 
 # Construccion de modelos
 def newCatalog(tipo_de_dato):
-    catalog = {'videos': None, 'category-id': None}
-    catalog['videos'] = lt.newList(
-        datastructure=tipo_de_dato)
+    catalog = {'videos': None,
+               'by_countries': None,
+               'by_categories': None,
+               'category-id': None}
+
+    catalog['videos'] = lt.newList(datastructure=tipo_de_dato)
+    catalog['by_countries'] = lt.newList(datastructure='ARRAY_LIST')
+    catalog['by_categories'] = lt.newList(
+        datastructure='ARRAY_LIST', cmpfunction=cmpCategories())
     catalog['category-id'] = lt.newList(datastructure='ARRAY_LIST')
     return catalog
 
@@ -52,6 +58,11 @@ def newCatalog(tipo_de_dato):
 
 def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
+    country = video['country'], strip()
+    category = video['category_id']
+
+    addVideoCountry(catalog, country, video)
+    addVideoCategory(catalog, category, vidoe)
 
 
 def addCategory(catalog, category):
@@ -59,7 +70,34 @@ def addCategory(catalog, category):
     lt.addLast(catalog['category-id'], c)
 
 
-def newCategory(id, name):
+def addVideoCountry(catalog, country, video):
+    pass
+
+
+def addVideoCategory(catalog, category_id, video):
+    categories = catalog['categories']
+    posCategory = lt.isPresent(catalog, category_id)
+
+    if posCategory > 0:  # La categoria ya ha sido creada dentro de la lista
+        category = lt.getElement(catalog, posCategory)
+    else:  # Debemos crear una nueva categoria
+        category = newCategory(category_id)
+        lt.addLast(catalog(categories, category))
+
+    lt.addLast(category['videos'], video)
+
+
+def newCategory(category_id):
+    category_list = {'name': "", "videos": None}
+    category_list['name'] = category_id
+    category_list['videos'] = lt.newList('ARRAY_LIST')
+    return category_list
+
+
+def newCategoryId(id, name):
+    """
+        Crea un diccionario en el que guarda el nombre de la categoria y su id correpondiente
+    """
     category = {'id': '', 'name': ''}
     category['id'] = int(id)
     category['name'] = name.strip()
@@ -133,6 +171,10 @@ def sortCategory(catalog):
     return cat_sort
 
 
+def cmpCategoriesSort(video1, video2):
+    return video1['category_id'] < video2['category_id']
+
+
 def cmpCategories(video1, video2):
     if video1['category_id'] < video2['category_id']:
         return -1
@@ -140,6 +182,7 @@ def cmpCategories(video1, video2):
         return 1
     else:
         return 0
+
 # def orderedList(catalog,country,category):
 #     videoList = catalogo["videos"]
 #     sublist = lt.newList(datastructure=)

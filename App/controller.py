@@ -40,18 +40,28 @@ def initCatalog(tipo_de_dato):
 
 def loadData(catalog):
     loadVideos(catalog)
-    loadCategories(catalog)
+    # loadCountries(catalog)
+    # loadCategories(catalog)
+    loadCategoryIds(catalog)
     # print(catalog["category-id"])
 
 
 def loadVideos(catalog):
-    videosFiles = cf.data_dir + "Videos/videos-large.csv"
+    videosFiles = cf.data_dir + "Videos/videos-small.csv"
     input_file = csv.DictReader(open(videosFiles, encoding="utf-8"))
     for video in input_file:
         model.addVideo(catalog, video)
 
 
-def loadCategories(catalog):
+# def loadCountries(catalog):
+#     pass
+
+
+# def loadCategories(catalog):
+#     pass
+
+
+def loadCategoryIds(catalog):
     categoriesFiles = cf.data_dir + "Videos/category-id.csv"
     input_file = csv.DictReader(
         open(categoriesFiles, encoding="utf-8"), delimiter='\t')
@@ -75,8 +85,8 @@ def getId(category_ids, category_name):
 def topVidByCategory(catalog, category_id):
     #vids_category = auxList(catalog, 'category-id', category_id)
     vids_category = sortCategory(catalog)
-    vids_category = auxList(vids_category, 'category_id', category_id)
-    vids_category = sortDays(vids_category)
+    #vids_category = auxList(vids_category, 'category_id', category_id)
+    #vids_category = sortDays(vids_category)
     return model.topVidByCategory(vids_category)
 
 
