@@ -71,6 +71,7 @@ while True:
         print('Paises cargados: ' + str(lt.size(catalog['country'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['category'])))
         t2=time.process_time()
+        
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
     elif int(inputs[0]) == 2:
@@ -80,7 +81,8 @@ while True:
         sv = sortVideos(catalog,list_num,list_alg)
         print("Cargando Videos con mas vistas....")
         t2=time.process_time()
-        print('El tiempo de procesamiento es: {}.'.format(t2-t1))
+        tf=round(((t2-t1)*1000),2)
+        print('El tiempo de procesamiento es: {}.'.format(tf))
 
     elif int(inputs[0]) == 3:
         t1=time.process_time()

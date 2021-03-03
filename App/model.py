@@ -30,6 +30,9 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as she
 from DISClib.Algorithms.Sorting import selectionsort as sel
 from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as mer
+from DISClib.Algorithms.Sorting import quicksort as qui
+
 
 assert cf
 
@@ -128,6 +131,10 @@ def sort(lst, fun):
         return insersort(lst)
     elif fun == "shellsort":
         return shesort(lst)
+    elif fun == "mergesort":
+        return mergesort(lst)
+    elif fun == "quicksort":
+        return quicksort(lst)
     else:
         print("Funcion de ordenamiento no existe.")
 
@@ -140,6 +147,11 @@ def insersort(lst):
 def shesort(lst):
     return she.sort(lst, lst["cmpfunction"])
 
+def quicksort(lst):
+    return qui.sort(lst, lst["cmpfunction"])
+
+def mergesort(lst):
+    return mer.sort(lst, lst["cmpfunction"])
 
 
 
