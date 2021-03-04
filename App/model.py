@@ -91,7 +91,7 @@ def cmpVideosbyViews(video1,video2):
 # Funciones de ordenamiento
 
 def sortVideos(catalog, size, tipo):
-    sub_list = lt.subList(catalog["videos"], 1, tipo)
+    sub_list = lt.subList(catalog["videos"],1,size)
     sub_list = sub_list.copy()
 
     if tipo == "Insertion":

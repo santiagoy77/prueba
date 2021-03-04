@@ -57,6 +57,20 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def printResults(lista,tamaño):
+    size = lt.size(lista)
+    if size >= tamaño:
+        print("Los primeros ", tamaño, " videos ordenados son:")
+        i=0
+        while i <= tamaño:
+            video = lt.getElement(lista,i)
+            print(' Nombre: ' + video['title'] + ' Canal: ' +
+                  video['channel_title'] + ' ID Categoria: ' + video['category_id'] + "Pais: "+ video["country"])
+            i+=1
+
+
+
+
 """
 Menu principal
 """
@@ -75,7 +89,8 @@ while True:
         tipo = input(" Seleccione el tipo de algoritmo de ordenamiento"+
             "iterativo escribiendo textualmente alguna de estas opciones:"+
             "Insertion, Selection, Shell, Merge, Quick: ")
-        print(controller.sortVideos(catalog, int(size), tipo))
+        printResults(controller.sortVideos(catalog,int(size),tipo)[1], int(size))
+        print(controller.sortVideos(catalog,int(size),tipo)[0])
         
     elif int(inputs[0]) == 3:
         pass
