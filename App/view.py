@@ -104,7 +104,7 @@ while True:
         loadData(catalog)
 
         opcion = int(input(
-            "Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3.shell \n 4.mergesort \n 5. quicksort : "))
+            "Elija el tipo de ordenamiento que quiere \n 1. selection \n 2. insertion \n 3. shell \n 4. mergesort \n 5. quicksort "))
         size_lt = int(input("Indique el número de datos: "))
 
         if int(opcion) == 2:
