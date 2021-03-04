@@ -27,9 +27,9 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-# from DISClib.Algorithms.Sorting import shellsort as shell
-# from DISClib.Algorithms.Sorting import selectionsort as sel
-# from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import shellsort as shell
+from DISClib.Algorithms.Sorting import selectionsort as sel
+from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Sorting import quicksort as qck
 import time
@@ -92,7 +92,7 @@ def firstReq(catalog, data_size, algorithm):
     "Completa el requerimiento #1"
     data_sublist = lt.subList(catalog["videos"], 1, data_size)
     data_sublist = data_sublist.copy()
-    """
+    
     if algorithm == 0:
         start_time = time.process_time()
         sorted_list = sel.sort(data_sublist, cmpVideosByViews)
@@ -113,7 +113,7 @@ def firstReq(catalog, data_size, algorithm):
     elif algorithm == 1:
         start_time = time.process_time()
         sorted_list = qck.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()
+        stop_time = time.process_time()"""
 
     elapsed_time_mseg = (stop_time - start_time)*1000
     # sorted_top_n = lt.subList(sorted_list, 1, n_videos)

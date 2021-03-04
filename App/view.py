@@ -23,6 +23,9 @@
 import config as cf
 import sys
 import controller
+import sys
+sys.path.append("C:/Users/maria/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/site-packages")
+import openpyxl
 from DISClib.ADT import list as lt
 assert cf
 
@@ -121,10 +124,10 @@ def firstReq(catalog, data_size, algorithm):
 
 
 catalog = None
+"""
+"""
+# Menu principal
 
-"""
-Menu principal
-"""
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
