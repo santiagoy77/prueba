@@ -31,7 +31,9 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 
 # Inicialización del Catálogo de libros
+
 def initCatalog(tipo_de_dato):
+    # TODO: dejar solo 'ARRAY_LIST'
     catalog = model.newCatalog(tipo_de_dato)
     return catalog
 
@@ -40,25 +42,14 @@ def initCatalog(tipo_de_dato):
 
 def loadData(catalog):
     loadVideos(catalog)
-    # loadCountries(catalog)
-    # loadCategories(catalog)
     loadCategoryIds(catalog)
-    # print(catalog["category-id"])
 
 
 def loadVideos(catalog):
-    videosFiles = cf.data_dir + "Videos/videos-small.csv"
+    videosFiles = cf.data_dir + "Videos/videos-large.csv"
     input_file = csv.DictReader(open(videosFiles, encoding="utf-8"))
     for video in input_file:
         model.addVideo(catalog, video)
-
-
-# def loadCountries(catalog):
-#     pass
-
-
-# def loadCategories(catalog):
-#     pass
 
 
 def loadCategoryIds(catalog):
@@ -69,7 +60,14 @@ def loadCategoryIds(catalog):
         model.addCategory(catalog, category)
 
 
+# Funciones de ordenamiento
+
+def sortVideoId(category_list):
+    return model.sortVideoId(category_list)
+
+
 def sortViews(catalog, size, sort_type):
+    # TODO: dejar solo mergesort
     if sort_type == 1:
         return model.sortVideosSelection(catalog, size)
     if sort_type == 2:
@@ -78,35 +76,18 @@ def sortViews(catalog, size, sort_type):
         return model.sortVideosShell(catalog, size)
 
 
+# Funciones de consulta sobre el catálogo
+
 def getId(category_ids, category_name):
     return model.getId(category_ids, category_name)
 
 
 def topVidByCategory(catalog, category_id):
-
     category_list = model.getCategory(catalog, category_id)
     sorted_cat_lst = sortVideoId(category_list['videos'])
     top_vid = findTopVideo(sorted_cat_lst)
-    # vids_category = sortByCategory(catalog['by_categories'][category_id])
-    # vids_category = sortDays(vids_category)
     return top_vid
 
 
 def findTopVideo(category_list):
     return model.findTopVideo(category_list)
-
-
-def sortVideoId(category_list):
-    return model.sortVideoId(category_list)
-
-
-def sortDays(catalog):
-    return model.sortDays(catalog)
-
-
-def sortByCategory(category_lst):
-    return model.sortCategory(category_lst)
-
-# Funciones de ordenamiento
-
-# Funciones de consulta sobre el catálogo

@@ -87,6 +87,7 @@ def addVideoCategory(catalog, category_id, video):
     lt.addLast(category['videos'], video)
 
 
+# Funciones para creacion de datos
 def newCategory(category_id):
     category_dict = {'id': 0, "videos": None}
     category_dict['id'] = category_id
@@ -103,6 +104,8 @@ def newCategoryId(id, name):
     category['name'] = name.strip()
     return category
 
+# Funciones de consulta
+
 
 def getCategory(catalog, category_id):
     pos_id = lt.isPresent(catalog['by_categories'], category_id)
@@ -111,6 +114,10 @@ def getCategory(catalog, category_id):
         return category_list
     return None
 
+def getId(category_ids, category_name):
+    for item in lt.iterator(category_ids):
+        if item['name'] == category_name:
+            return item['id']
 
 def compVideosByViews(video1, video2):
     """
@@ -155,10 +162,7 @@ def sortVideosShell(catalog, size):
     return elapsed_time_mseg, sorted_list
 
 
-def getId(category_ids, category_name):
-    for item in lt.iterator(category_ids):
-        if item['name'] == category_name:
-            return item['id']
+
 
 
 def sortCategory(category_list):
@@ -167,17 +171,7 @@ def sortCategory(category_list):
     return cat_sort
 
 
-def cmpCategoriesSort(video1, video2):
-    return video1['category_id'] < video2['category_id']
 
-
-def cmpCategories(category_id, category):
-    if category_id < category['id']:
-        return -1
-    elif category_id > category['id']:
-        return 1
-    else:
-        return 0
 
 
 def sortVideoId(category_list):
@@ -188,22 +182,23 @@ def sortVideoId(category_list):
 
 def findTopVideo(category_list):
     pos = 1
-    top_video = lt.firstElement(category_list)
-    top_reps = 0
     reps_per_video = []
+    current_reps = 1
     while pos < lt.size(category_list) - 1:
         current_elem = lt.getElement(category_list, pos)
         next_elem = lt.getElement(category_list, pos + 1)
 
-        current_reps = 1
-
-        if current_elem['video_id'] == next_elem['video_id']:
+        if current_elem['title'] == next_elem['title']:
             current_reps += 1
         else:
             reps_per_video.append(
                 {'video': current_elem, 'reps': current_reps})
+            current_reps = 1
 
         pos += 1
+
+    top_video = []
+    top_reps = 0
     for item in reps_per_video:
         if item['reps'] > top_reps:
             top_reps = item['reps']
@@ -211,26 +206,22 @@ def findTopVideo(category_list):
 
     return top_video, top_reps
 
-    # while loop
-    # previous element stored
-    # if the ids are equal add to the video count
-    # else
-    #   if number of repetitions of prev element < new number of rps
-    #   stiore nre elemetn as top
-    pass
 
+# Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmpVideoIdSort(video1, video2):
     return video1['video_id'] < video2['video_id']
-# def orderedList(catalog,country,category):
-#     videoList = catalogo["videos"]
-#     sublist = lt.newList(datastructure=)
 
 
-# Funciones para creacion de datos
+def cmpCategories(category_id, category):
+    if category_id < category['id']:
+        return -1
+    elif category_id > category['id']:
+        return 1
+    else:
+        return 0
 
-# Funciones de consulta
-
-# Funciones utilizadas para comparar elementos dentro de una lista
+def cmpCategoriesSort(video1, video2):
+    return video1['category_id'] < video2['category_id']
 
 # Funciones de ordenamiento

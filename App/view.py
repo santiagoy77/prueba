@@ -130,6 +130,12 @@ while True:
         category_id = controller.getId(category_ids, category_name)
         if category_id is not None:
             top_video = controller.topVidByCategory(catalog, category_id)
+            video = top_video[0]
+            trend_days = top_video[1]
+            print('El video más trending de', category_name, 'fue:')
+            print('Título:', video['title'], ' Canal: ', video['channel_title'],
+                  '  Category Id', video['category_id'])
+            print('Días trending: ', trend_days)
         else:
             print('Categoria no válida')
     else:
