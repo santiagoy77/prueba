@@ -114,70 +114,11 @@ def getCategory(catalog, category_id):
         return category_list
     return None
 
+
 def getId(category_ids, category_name):
     for item in lt.iterator(category_ids):
         if item['name'] == category_name:
             return item['id']
-
-def compVideosByViews(video1, video2):
-    """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
-    Args:
-        video1: informacion del primer video que incluye su valor 'views'
-        video2: informacion del segundo video que incluye su valor 'views'
-    """
-    views1 = video1["views"]
-    views2 = video2["views"]
-
-    return views1 < views2
-
-
-def sortVideosSelection(catalog, size):
-    sub_list = lt.subList(catalog['videos'], 0, size)
-    sub_list = sub_list.copy()
-    start_time = time.process_time()
-    sorted_list = sel.sort(sub_list, compVideosByViews)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg, sorted_list
-
-
-def sortVideosInsertion(catalog, size):
-    sub_list = lt.subList(catalog['videos'], 0, size)
-    sub_list = sub_list.copy()
-    start_time = time.process_time()
-    sorted_list = ins.sort(sub_list, compVideosByViews)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg, sorted_list
-
-
-def sortVideosShell(catalog, size):
-    sub_list = lt.subList(catalog['videos'], 0, size)
-    sub_list = sub_list.copy()
-    start_time = time.process_time()
-    sorted_list = sa.sort(sub_list, compVideosByViews)
-    stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg, sorted_list
-
-
-
-
-
-def sortCategory(category_list):
-    cat_sort = category_list.copy()
-    cat_sort = mer.sort(cat_sort, cmpCategories)
-    return cat_sort
-
-
-
-
-
-def sortVideoId(category_list):
-    vid_id_sort = category_list.copy()
-    vid_id_sort = mer.sort(vid_id_sort, cmpVideoIdSort)
-    return vid_id_sort
 
 
 def findTopVideo(category_list):
@@ -221,7 +162,64 @@ def cmpCategories(category_id, category):
     else:
         return 0
 
+
 def cmpCategoriesSort(video1, video2):
     return video1['category_id'] < video2['category_id']
 
+
+def compVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Args:
+        video1: informacion del primer video que incluye su valor 'views'
+        video2: informacion del segundo video que incluye su valor 'views'
+    """
+    views1 = video1["views"]
+    views2 = video2["views"]
+
+    return views1 < views2
+
+
+
 # Funciones de ordenamiento
+
+def sortVideoId(category_list):
+    vid_id_sort = category_list.copy()
+    vid_id_sort = mer.sort(vid_id_sort, cmpVideoIdSort)
+    return vid_id_sort
+
+
+def sortVideosSelection(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sel.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+
+def sortVideosInsertion(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = ins.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+
+def sortVideosShell(catalog, size):
+    sub_list = lt.subList(catalog['videos'], 0, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, compVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+
+def sortCategory(category_list):
+    cat_sort = category_list.copy()
+    cat_sort = mer.sort(cat_sort, cmpCategories)
+    return cat_sort
