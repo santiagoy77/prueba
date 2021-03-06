@@ -47,8 +47,8 @@ def printMenu():
 
 catalog = {}
 
-def initCatalog (estructuraDeDatos):
-    return controller.initCatalog(estructuraDeDatos)
+def initCatalog ():
+    return controller.initCatalog()
 
 def loadData(catalog):
     controller.loadData(catalog)
@@ -70,19 +70,9 @@ while True:
     printMenu()
     inputs = int(input('Seleccione una opción para continuar\n'))
     if inputs == 1:
-        verifica=True
-        while verifica:
-            print("Cuál estructura de datos quiere utilizar?")
-            print("1- ArrayList")
-            print("2- Single Linked")
-            estructuraDeDatos=int(input("Ingrese su selección:\t"))
-            if estructuraDeDatos==1 or estructuraDeDatos==2:
-                verifica=False
-            else:
-                print("Opción invalida, elija una opción válida")
         print("Cargando información de los archivos ....")
         t1 = time.process_time()
-        catalog = initCatalog(estructuraDeDatos)
+        catalog = initCatalog()
         loadData(catalog)
         t2 = time.process_time()
         time_mseg = (t2 - t1)*1000
@@ -98,20 +88,7 @@ while True:
             if numeroElementos>lt.size(catalog['video']):
                 print("Está tratando de comparar más elementos de los que cuenta el catálogo de videos. El máximo de videos que se pueden comprar son: ",lt.size(catalog['video']))
             else:
-                verifica=True
-                while verifica:
-                    print("¿Qué tipo de algoritmo de ordenamiento desea utilizar?")
-                    print("1- Selection")
-                    print("2- Insertion")
-                    print("3- Shell")
-                    print("4- Merge")
-                    print("5- Quick")
-                    algoritmo=int(input("Ingrese su selección:\t"))
-                    if algoritmo>=1 or algoritmo<=5:
-                        verifica=False
-                    else:
-                        print("Opción invalida, elija una opción válida")
-                tiempo,listaOrdenada = controller.VideosByViews(catalog,numeroElementos, algoritmo)
+                tiempo,listaOrdenada = controller.VideosByViews(catalog,numeroElementos)
                 printResultVideosByViews(listaOrdenada)
                 print("El tiempo de ejecución del ordenamiento es: ",tiempo)
 
@@ -134,5 +111,3 @@ while True:
     else:
         sys.exit(0)
 sys.exit(0)
-
-#corrijo

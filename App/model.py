@@ -42,14 +42,9 @@ los mismos.
 
 # Construccion de modelos
 
-def newCatalog(estructuraDeDatos):
-    tipoED=''
-    if estructuraDeDatos==1:
-        tipoED='ARRAY_LIST'
-    else:
-        tipoED='SINGLE_LINKED'
+def newCatalog():
     catalog = {'video': None, 'category': None}
-    catalog['video'] = lt.newList(tipoED,cmpfunction=cmpVideosByViews)
+    catalog['video'] = lt.newList('ARRAY_LIST',cmpfunction=cmpVideosByViews)
     catalog['category'] = lt.newList('ARRAY_LIST')#, cmpfunction=compareCategories
     return catalog
 
@@ -77,21 +72,11 @@ def newCategory(id, name):
 
 # Funciones de ordenamiento
 
-def VideosByViews(catalog, numElementos, TipoAlgortimo):
+def VideosByViews(catalog, numElementos):
     sub_list = lt.subList(catalog['video'], 0, numElementos)
     sub_list = sub_list.copy()
     start_time = time.process_time()
-    sorted_list=-1
-    if TipoAlgortimo==1:
-        sorted_list = Sel.sort(sub_list, cmpVideosByViews)
-    elif TipoAlgortimo==2:
-        sorted_list = Inser.sort(sub_list, cmpVideosByViews)
-    elif TipoAlgortimo==3:
-        sorted_list = She.sort(sub_list, cmpVideosByViews)
-    elif TipoAlgortimo==4:
-        sorted_list = Merge.sort(sub_list, cmpVideosByViews)
-    else:
-        sorted_list = Quick.sort(sub_list, cmpVideosByViews)
+    sorted_list = Merge.sort(sub_list, cmpVideosByViews)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
