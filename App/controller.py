@@ -32,9 +32,9 @@ El controlador se encarga de mediar entre la vista y el modelo.
 # Inicialización del Catálogo de libros
 
 
-def initCatalog(chosenType):
+def initCatalog():
 
-    catalog = model.newCatalog(chosenType)
+    catalog = model.newCatalog()
     return catalog
 
 # Funciones para la carga de datos
@@ -50,8 +50,7 @@ def loadData(catalog):
 
 def loadVideos(catalog):
 
-    #videosfile = cf.data_dir + 'videos-large.csv'
-    videosfile = "D:/Uniandes/Clases/Semestre 2 2021 I/EDA/Lab/Reto1-G10/Data/videos-large.csv"
+    videosfile = (cf.data_dir + 'videos-small.csv').replace("\\","/")
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -68,6 +67,14 @@ def loadCategories(catalog):
 
 # Funciones de consulta sobre el catálogo
 
+def findCategoryId(catalog, category):
+    for cat in catalog["categories"]["elements"]:
+        if category in cat['id\tname']:
+            contents = cat['id\tname'].split("\t")
+            category_id = contents[0]
+    return category_id
 
-def firstReq(catalog, data_size, algorithm):
-    return model.firstReq(catalog, data_size, algorithm)
+
+def firstReq(catalog, data_size, country, category):
+    idcat = findCategoryId(catalog, category)
+    return model.firstReq(catalog, data_size, country, idcat)

@@ -27,10 +27,6 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as shell
-from DISClib.Algorithms.Sorting import selectionsort as sel
-from DISClib.Algorithms.Sorting import insertionsort as ins
-from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Sorting import quicksort as qck
 import time
 assert cf
@@ -44,14 +40,12 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog(chosenType):
+def newCatalog():
 
     typeofList = "ARRAY_LIST"
-    if chosenType == 1:
-        typeofList = "LINKED_LIST"
     catalog = {"videos": None, "categories": None}
     catalog["videos"] = lt.newList(typeofList)
-    catalog["categories"] = lt.newList()
+    catalog["categories"] = lt.newList(typeofList)
 
     return catalog
 
@@ -88,33 +82,51 @@ def cmpVideosByViews(video1, video2):
     return (video1["views"] < video2["views"])
 
 
-def firstReq(catalog, data_size, algorithm):
+def firstReq(catalog, data_size, country, category):
     "Completa el requerimiento #1"
-    data_sublist = lt.subList(catalog["videos"], 1, data_size)
-    data_sublist = data_sublist.copy()
-    
-    if algorithm == 0:
-        start_time = time.process_time()
-        sorted_list = sel.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()
-    elif algorithm == 1:
-        start_time = time.process_time()
-        sorted_list = ins.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()
-    elif algorithm == 2:
-        start_time = time.process_time()
-        sorted_list = shell.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()
-    """
-    if algorithm == 0:
-        start_time = time.process_time()
-        sorted_list = mer.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()
-    elif algorithm == 1:
-        start_time = time.process_time()
-        sorted_list = qck.sort(data_sublist, cmpVideosByViews)
-        stop_time = time.process_time()"""
+    filtered = catalog.copy()
 
-    elapsed_time_mseg = (stop_time - start_time)*1000
-    # sorted_top_n = lt.subList(sorted_list, 1, n_videos)
-    return [sorted_list, elapsed_time_mseg]
+    """
+    i = 1
+    
+    for video in lista["videos"]["elements"]:
+        lt.deleteElement(lista["videos"], 1)
+        i += 1
+    print(lista)"""
+    
+    """
+    for video in filtered["videos"]["elements"]:
+        if video["country"] != country:
+            lt.deleteElement(filtered["videos"], i)
+        else:
+            i += 1"""
+    
+    i = 1
+    t = lt.size(filtered["videos"])
+    """
+    for i in range(1, t+1):
+        elem = lt.getElement(lista, i)
+        if elem["country"] != "USA":
+            lt.deleteElement(lista, i)
+            t -= 1
+            i -= 1"""
+    while i <= t:
+        elem = lt.getElement(filtered["videos"], i)
+        if elem["country"] != country or elem["category_id"] != category:
+            lt.deleteElement(filtered["videos"], i)
+            t -= 1
+            i -= 1
+        i += 1
+
+        
+            
+    """
+    for i in range(1, lt.size(catalog['videos'])):
+        print(i, elem["country"])"""
+        
+    
+    data_sublist = lt.subList(filtered["videos"], 1, data_size)
+    data_sublist = data_sublist.copy()
+    sorted_list = qck.sort(data_sublist, cmpVideosByViews)
+    return sorted_list
+    
