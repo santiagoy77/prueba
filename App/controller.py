@@ -56,6 +56,10 @@ def loadBooks(catalog):
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
+    catfile = cf.data_dir + 'category-id.csv'
+    input_cat_file = csv.DictReader(open(categoryfile, encoding="utf-8"),  delimiter='\t')
+    for cat in input_cat_file:
+        model.addCat(catalog, cat)
 
 # Funciones para la carga de datos
 

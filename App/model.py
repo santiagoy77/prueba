@@ -67,6 +67,8 @@ def newCatalog(tipo_lista):
 def addVideo(catalog, videos):
     lt.addLast(catalog['title'], videos)
 
+def addCat(catalog, cat)
+    lt.addLast(catalog["categories"],cat)
 
 def newVideo(name):
     """
