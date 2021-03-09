@@ -85,46 +85,16 @@ def cmpVideosByViews(video1, video2):
 def firstReq(catalog, data_size, country, category):
     "Completa el requerimiento #1"
     filtered = catalog.copy()
-
-    """
-    i = 1
-    
-    for video in lista["videos"]["elements"]:
-        lt.deleteElement(lista["videos"], 1)
-        i += 1
-    print(lista)"""
-    
-    """
-    for video in filtered["videos"]["elements"]:
-        if video["country"] != country:
-            lt.deleteElement(filtered["videos"], i)
-        else:
-            i += 1"""
-    
     i = 1
     t = lt.size(filtered["videos"])
-    """
-    for i in range(1, t+1):
-        elem = lt.getElement(lista, i)
-        if elem["country"] != "USA":
-            lt.deleteElement(lista, i)
-            t -= 1
-            i -= 1"""
     while i <= t:
         elem = lt.getElement(filtered["videos"], i)
-        if elem["country"] != country or elem["category_id"] != category:
+        if (elem["country"].lower()) != (country.lower()) or elem["category_id"] != category:
             lt.deleteElement(filtered["videos"], i)
             t -= 1
             i -= 1
         i += 1
 
-        
-            
-    """
-    for i in range(1, lt.size(catalog['videos'])):
-        print(i, elem["country"])"""
-        
-    
     data_sublist = lt.subList(filtered["videos"], 1, data_size)
     data_sublist = data_sublist.copy()
     sorted_list = qck.sort(data_sublist, cmpVideosByViews)

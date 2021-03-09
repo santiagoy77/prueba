@@ -69,7 +69,7 @@ def loadCategories(catalog):
 
 def findCategoryId(catalog, category):
     for cat in catalog["categories"]["elements"]:
-        if category in cat['id\tname']:
+        if (category.title()) in cat['id\tname']:
             contents = cat['id\tname'].split("\t")
             category_id = contents[0]
     return category_id

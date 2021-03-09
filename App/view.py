@@ -74,6 +74,20 @@ def printVideoInfo(video):
     print("Cantidad de Dislikes: " + video["dislikes"])
 
 
+def printVideoInfo1(video):
+    """
+    Imprime la información principal de un video
+    """
+    print("------------------------------------------------------")
+    print("Título: " + video["title"])
+    print("Canal: " + video["channel_title"])
+    print("Fecha en que fue trending: " + video["trending_date"])
+    print("Fecha de publicación: " + video["publish_time"])
+    print("Cantidad de vistas: " + video["views"])
+    print("Cantidad de Likes: " + video["likes"])
+    print("Cantidad de Dislikes: " + video["dislikes"])
+
+
 def printCategoriesList(catalog):
     "Imprime la lista de categorías"
     for category in lt.iterator(catalog['categories']):
@@ -125,7 +139,7 @@ while True:
         category = input("Indique la categoría: ")
         result = firstReq(catalog, data_size, country, category)
         for video in result["elements"]:
-            printVideoInfo(video)
+            printVideoInfo1(video)
         
     else:
         sys.exit(0)
