@@ -61,14 +61,28 @@ def loadBooks(catalog):
     for cat in input_cat_file:
         model.addCat(catalog, cat)
 
-catalog = initCatalog(1)
+
 def newCategory(catalog):
     loadBooks(catalog)
     dc = model.newCategory(catalog)
     return dc
-categorias = newCategory(catalog)
 
-# Funciones para la carga de datos
+#catalog = initCatalog(1)
+#print(newCategory(catalog))
+
+
+
+def newVideo(catalog):
+    loadBooks(catalog)
+    dv = model.newVideo(catalog)
+    return dv
+
+
+def firstVideo(catalog):
+    Pvideo = model.first(newVideo(catalog))
+    return Pvideo
+
+#print(firstVideo(catalog))
 
 # Funciones de ordenamiento
 
@@ -79,4 +93,3 @@ def sortVideos(catalog,size,orden):
     return model.sortVideos(catalog,size,orden)
     
 
-# Funciones de consulta sobre el catálogo

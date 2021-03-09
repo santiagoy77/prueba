@@ -51,10 +51,10 @@ def newCatalog(tipo_lista):
         tipo = "ARRAY_LIST"
     elif tipo_lista == 2:
         tipo = "SINGLE_LINKED"
-    catalog = {'title': None,
+    catalog = {'ListCompleteVidAll': None,
                'categories': None}
 
-    catalog['title'] = lt.newList(tipo)
+    catalog['ListCompleteVidAll'] = lt.newList(tipo)
     catalog['categories'] = lt.newList(tipo)
     
     return catalog
@@ -63,32 +63,43 @@ def newCatalog(tipo_lista):
 # Funciones para agregar informacion al catalogo
 
 def addVideo(catalog, videos):
-    lt.addLast(catalog['title'], videos)
+    lt.addLast(catalog['ListCompleteVidAll'], videos)
+
+
 
 def addCat(catalog, cat):
-    element = lt.addLast(catalog["categories"],cat)
-    if element not in cat:
-        pass
-    else:
-        lt.addLast(catalog["categories"],cat)
+    lt.addLast(catalog["categories"],cat)
 
 
-def newVideo(name):
+
+def newVideo(catalog):
     """
     Crea una nueva estructura para modelar los libros de
     un autor y su promedio de ratings
     """
-    video = {'name': "", 'views': None}
-    video['name'] = name
-    video['views'] = lt.newList('ARRAY_LIST')
-    return video
+    lvid = lt.newList(datastructure="ARRAY_LIST")
+    for vid in catalog["ListCompleteVidAll"]["elements"]:
+        video = {'title': vid['title'], 
+        "channel_title": vid['channel_title'], 
+        "trending_date": vid['trending_date'], 
+        "country": vid['country'], 
+        'views': vid['views'], 
+        "likes": vid['likes'], 
+        "dislikes": vid['dislikes'], 
+        "category_id": vid['category_id'], 
+        "publish_time": vid["publish_time"], 
+        "tags": vid['tags']} 
+
+        lt.addLast(lvid, video)
+    return lvid
+
+
+
 
 def newCategory(catalog):
     lc = lt.newList(datastructure="ARRAY_LIST")
     for numbs in catalog["categories"]["elements"]:
-        cat = {"Category number": "", "categoria" : None}
-        cat["Category number"] = numbs["id"]
-        cat["categoria"] =  numbs["name"]
+        cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
         lt.addLast(lc,cat)
     return lc
 
@@ -114,7 +125,7 @@ def cmpVideosByViews(video1, video2):
 # Funciones de ordenamiento
 
 def sortVideos(catalog,size,orden):
-    nueva = lt.subList(catalog["title"],0,size)
+    nueva = lt.subList(catalog["ListCompleteVidAll"],0,size)
     copia_lista = nueva.copy()
     start_time = time.process_time()
     list_orden = orden

@@ -61,6 +61,15 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def printFirstVideo(catalog):
+    pvid = controller.firstVideo(catalog)
+    infoprim = {"Title": pvid['title'], "channel_title": pvid['channel_title'], 
+    "trending_date": pvid['trending_date'], 
+    "country": pvid['country'], 
+    "views": pvid['views'], 
+    "likes": pvid['likes'], 
+    "dislikes": pvid['dislikes']}
+    return infoprim
 
 """
 def printAuthorData(author):
@@ -96,18 +105,22 @@ while True:
     if int(inputs[0]) == 1:
         tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
         catalog = controller.initCatalog(tipo_lista)
+        category = controller.newCategory(catalog)
+        pvideo = printFirstVideo(catalog)
         print("Cargando información de los archivos... Esto puede tardar un poco.")
         loadData(catalog)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
         else:
-            print('Videos cargados: ' + str(lt.size(catalog['title'])))
+            print('Videos cargados: ' + str(lt.size(catalog['ListCompleteVidAll'])))
+            print("Información del Primer video: ", pvideo)
+            print(category)
             
 
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
         size = int(input("¿De que tamaño quiere la lista?: "))
-        if size > lt.size(catalog['title']):
+        if size > lt.size(catalog['ListCompleteVidAll']):
             print("El numero de muestra seleccionado, excede el tamaño de la cantidad total de elementos que hay")
         else:
             print("Elija el tipo de algoritmo de ordenamiento iterativo con el cual desea ordenar el catalogo de videos por vistas...")
