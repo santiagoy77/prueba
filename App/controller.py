@@ -66,7 +66,9 @@ def newCategory(catalog):
     loadBooks(catalog)
     dc = model.newCategory(catalog)
     return dc
-print(newCategory(catalog))
+categorias = newCategory(catalog)
+
+
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento

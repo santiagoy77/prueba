@@ -66,11 +66,13 @@ def addVideo(catalog, videos):
     lt.addLast(catalog['title'], videos)
 
 def addCat(catalog, cat):
-    element = lt.addLast(catalog["categories"],cat)
+    element = lt.addLast(catalog["categories"]["elements"],cat)
     if element not in cat:
         pass
     else:
         lt.addLast(catalog["categories"],cat)
+
+
 
 def newVideo(name):
     """
@@ -85,10 +87,13 @@ def newVideo(name):
 def newCategory(catalog):
     lc = lt.newList(datastructure="ARRAY_LIST")
     for numbs in catalog["categories"]["elements"]:
-        cat = {"Category number": "", "categoria" : None}
-        cat["Category number"] = numbs["id"]
-        cat["categoria"] =  numbs["name"]
-        lt.addLast(lc,cat)
+        if numbs["id"] in lc:
+            pass
+        else:
+            cat = {"Category number": "", "categoria" : None}
+            cat["Category number"] = numbs["id"]
+            cat["categoria"] =  numbs["name"]
+            lt.addLast(lc,cat)
     return lc
 
 def first(lst):
