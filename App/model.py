@@ -27,6 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT import map as mp
 from DISClib.Algorithms.Sorting import shellsort as she
 from DISClib.Algorithms.Sorting import selectionsort as sel
 from DISClib.Algorithms.Sorting import insertionsort as ins
@@ -50,34 +51,37 @@ def newCatalog(list_type):
 
     catalog['videos'] = lt.newList(list_type,
                                    cmpfunction=compVideosByViews)
-    catalog['country'] = lt.newList(list_type,
-                                    cmpfunction=None)
-    catalog['category'] = lt.newList(list_type,
-                                 cmpfunction=None)
-    catalog['tags'] = lt.newList(list_type)
+    catalog['country'] = mp.newMap(numelements=17,
+                                prime=109345121,
+                                maptype='CHAINING',
+                                loadfactor=0.5,
+                                comparefunction=None)
+    catalog['category'] = mp.newMap(numelements=17,
+                                prime=109345121,
+                                maptype='CHAINING',
+                                loadfactor=0.5,
+                                comparefunction=None)
+    catalog['tags'] = mp.newMap(numelements=17,
+                                prime=109345121,
+                                maptype='CHAINING',
+                                loadfactor=0.5,
+                                comparefunction=None)
     return catalog
 
 def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
-    countries = video['country'].split(",")
-#for country in countries:
-#        addVideoCountry(catalog, country.strip(), video)
 
-def addVideoCountry(catalog, countryname, video):
+def addVideoCountry(catalog, video):
+    countryname = video["country"]
     countries = catalog['country']
-    poscountry = lt.isPresent(countries, countryname)
-    if poscountry > 0:
-        country = lt.getElement(countries, poscountry)
+    if mp.contains(countries,countryname):
+        l = mp.get(countries,countryname)["value"]
+        l.append(video["video_id"])
+        mp.put(countries,countryname,l)
     else:
-        country = newCountry(countryname)
-        lt.addLast(countries, country)
-    lt.addLast(country['videos'], video)
-
-def newCountry(name):
-    country = {'country': "", "videos": None,  "trending": 0}
-    country['country'] = name
-    country['videos'] = lt.newList('ARRAY_LIST')
-    return country
+        l=[video["video_id"]]
+        mp.put(countries,countryname,l)
+        
 
 def addVideoCategory(catalog, categoryname, video):
     categories = catalog['category']

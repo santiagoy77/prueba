@@ -35,10 +35,12 @@ def loadData(catalog):
 
 
 def loadVideos(catalog):
-    videosfile = cf.data_dir + 'Videos/videos-large.csv'
+    videosfile = cf.data_dir + 'Videos/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
+        model.addVideoCountry(catalog,video)
+
 
 def sortVideos(catalog,list_num, list_alg):
     lst = model.newSList(catalog["videos"],0,int(list_num)-1)
