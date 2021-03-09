@@ -88,6 +88,17 @@ def printVideoInfo1(video):
     print("Cantidad de Dislikes: " + video["dislikes"])
 
 
+def printVideoInfo3(info):
+    """
+    Imprime la información principal de un video
+    """
+    print("------------------------------------------------------")
+    print("Título: " + info[0])
+    print("Canal: " + info[1])
+    print("Identificador de categoría: " + str(info[3]))
+    print("Número de días como tendencia: " + str(info[2]))
+
+
 def printCategoriesList(catalog):
     "Imprime la lista de categorías"
     for category in lt.iterator(catalog['categories']):
@@ -121,7 +132,14 @@ def secondReq():
     return controller.secondReq()
 
 
-def thirdReq(catalog, data_size, country, tag):
+def thirdReq(catalog, category):
+    """
+    Solicita al controller la información del requerimiento 3
+    """
+    return controller.thirdReq(catalog, category)
+
+
+def fourthReq(catalog, data_size, country, tag):
     """
     Solicita al controller la información del requerimiento 3
     """
@@ -148,6 +166,7 @@ while True:
         printCategoriesList(catalog)
 
     elif int(inputs[0]) == 2:
+        print("------------------------------------------------------")
         print("Req. 1: Consultar n videos con más views en un país, por categoría")
         data_size = askForDataSize(catalog)
         country = input("Indique el país: " )
@@ -157,10 +176,18 @@ while True:
             printVideoInfo1(video)
     
     elif int(inputs[0]) == 3:
+        print("------------------------------------------------------")
         print("Req. 2: Consultar video que más días ha sido trending en un país")
+        pass
     
     elif int(inputs[0]) == 4:
+        print("------------------------------------------------------")
         print("Req. 3: Consultar video que más dias ha sido trending, por categoría")
+        #category = input("Indique la categoría: ")
+        category = "music"
+        result = thirdReq(catalog, category)
+        printVideoInfo3(result)
+        
 
     else:
         sys.exit(0)
