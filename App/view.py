@@ -39,10 +39,10 @@ def printMenu():
     print("------------------------------------------------------")
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Consultar n videos con más views en un país, por categoría")
-    print("3- Consultar video que más días ha sido trending en un país")
-    print("4- Consultar video que más dias ha sido trending, por categoría")
-    print("5- Consultar n videos con más likes en un país, por tag")
+    print("2- Req. 1: Consultar n videos con más views en un país, por categoría")
+    print("3- Req. 2: Consultar video que más días ha sido trending en un país")
+    print("4- Req. 3: Consultar video que más dias ha sido trending, por categoría")
+    print("5- Req. 4: Consultar n videos con más likes en un país, por tag")
     print("0- Salir")
 
 
@@ -114,6 +114,20 @@ def firstReq(catalog, data_size, country, category):
     return controller.firstReq(catalog, data_size, country, category)
 
 
+def secondReq():
+    """
+    Solicita al controller la información del requerimiento 2
+    """
+    return controller.secondReq()
+
+
+def thirdReq(catalog, data_size, country, tag):
+    """
+    Solicita al controller la información del requerimiento 3
+    """
+    return controller.thirdReq(catalog, data_size, country, tag)
+
+
 catalog = None
 """
 """
@@ -134,13 +148,20 @@ while True:
         printCategoriesList(catalog)
 
     elif int(inputs[0]) == 2:
+        print("Req. 1: Consultar n videos con más views en un país, por categoría")
         data_size = askForDataSize(catalog)
         country = input("Indique el país: " )
         category = input("Indique la categoría: ")
         result = firstReq(catalog, data_size, country, category)
         for video in result["elements"]:
             printVideoInfo1(video)
-        
+    
+    elif int(inputs[0]) == 3:
+        print("Req. 2: Consultar video que más días ha sido trending en un país")
+    
+    elif int(inputs[0]) == 4:
+        print("Req. 3: Consultar video que más dias ha sido trending, por categoría")
+
     else:
         sys.exit(0)
 sys.exit(0)

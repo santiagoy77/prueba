@@ -83,7 +83,9 @@ def cmpVideosByViews(video1, video2):
 
 
 def firstReq(catalog, data_size, country, category):
-    "Completa el requerimiento #1"
+    """
+    Completa el requerimiento 1
+    """
     filtered = catalog.copy()
     i = 1
     t = lt.size(filtered["videos"])
@@ -99,4 +101,19 @@ def firstReq(catalog, data_size, country, category):
     data_sublist = data_sublist.copy()
     sorted_list = qck.sort(data_sublist, cmpVideosByViews)
     return sorted_list
+
+
+def secondReq():
+    """
+    Completa el requerimiento 2
+    """
+    pass
+
+
+def thirdReq(catalog, data_size, country, tag):
+    """
+    Completa el requerimiento 3
+    """
+    pass
+
     
