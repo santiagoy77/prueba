@@ -49,10 +49,8 @@ def newCatalog(tipo_lista):
     tipo = ""
     if tipo_lista == 1:
         tipo = "ARRAY_LIST"
-        print("array_list")
     elif tipo_lista == 2:
         tipo = "SINGLE_LINKED"
-        print("single_linked")
     catalog = {'title': None,
                'categories': None}
 
@@ -67,8 +65,12 @@ def newCatalog(tipo_lista):
 def addVideo(catalog, videos):
     lt.addLast(catalog['title'], videos)
 
-def addCat(catalog, cat)
-    lt.addLast(catalog["categories"],cat)
+def addCat(catalog, cat):
+    element = lt.addLast(catalog["categories"],cat)
+    if element not in cat:
+        pass
+    else:
+        lt.addLast(catalog["categories"],cat)
 
 def newVideo(name):
     """
@@ -79,6 +81,19 @@ def newVideo(name):
     video['name'] = name
     video['views'] = lt.newList('ARRAY_LIST')
     return video
+
+def newCategory(catalog):
+    lc = lt.newList(datastructure="ARRAY_LIST")
+    for numbs in catalog["categories"]["elements"]:
+        cat = {"Category number": "", "categoria" : None}
+        cat["Category number"] = numbs["id"]
+        cat["categoria"] =  numbs["name"]
+        lt.addLast(lc,cat)
+    return lc
+
+def first(lst):
+    element = lt.firstElement(lst)
+    return element
 
 # Funciones de consulta
 
@@ -118,6 +133,4 @@ def sortVideos(catalog,size,orden):
     resul = (elapsed_time_mseg, list_orden)
     return resul
 
-
-    
 

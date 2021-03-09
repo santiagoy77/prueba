@@ -102,6 +102,7 @@ while True:
             print("No ha seleccionado una opcion valida")
         else:
             print('Videos cargados: ' + str(lt.size(catalog['title'])))
+            
 
     elif int(inputs[0]) == 2:
         print ("Encontrar buenos videos por categoría y país")
@@ -118,6 +119,7 @@ while True:
             orden = int(input())
             (a,b) = controller.sortVideos(catalog,size,orden)
             print("El tiempo que ha tardado el proceso es:",a,"milisegundos.")
+            print(b)
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
 

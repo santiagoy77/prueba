@@ -23,7 +23,7 @@
 import config as cf
 import model
 import csv
-
+ 
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -52,15 +52,21 @@ def loadBooks(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videosfile = cf.data_dir + 'videos-80pct.csv'
+    videosfile = cf.data_dir + 'videos-5pct.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
     catfile = cf.data_dir + 'category-id.csv'
-    input_cat_file = csv.DictReader(open(categoryfile, encoding="utf-8"),  delimiter='\t')
+    input_cat_file = csv.DictReader(open(catfile, encoding="utf-8"),  delimiter='\t')
     for cat in input_cat_file:
         model.addCat(catalog, cat)
 
+catalog = initCatalog(1)
+def newCategory(catalog):
+    loadBooks(catalog)
+    dc = model.newCategory(catalog)
+    return dc
+print(newCategory(catalog))
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento
