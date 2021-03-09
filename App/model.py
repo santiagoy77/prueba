@@ -26,6 +26,7 @@
 
 
 import config as cf
+import csv
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.Algorithms.Sorting import shellsort as she
@@ -43,13 +44,13 @@ los mismos.
 """
 
 
-def newCatalog(list_type):
+def newCatalog():
     catalog = {'videos': None,
                'country': None,
                'category': None,
                'tags': None}
 
-    catalog['videos'] = lt.newList(list_type,
+    catalog['videos'] = lt.newList(datastructure="ARRAY_LIST",
                                    cmpfunction=compVideosByViews)
     catalog['country'] = mp.newMap(numelements=17,
                                 prime=109345121,
@@ -57,11 +58,6 @@ def newCatalog(list_type):
                                 loadfactor=0.5,
                                 comparefunction=None)
     catalog['category'] = mp.newMap(numelements=17,
-                                prime=109345121,
-                                maptype='CHAINING',
-                                loadfactor=0.5,
-                                comparefunction=None)
-    catalog['tags'] = mp.newMap(numelements=17,
                                 prime=109345121,
                                 maptype='CHAINING',
                                 loadfactor=0.5,
@@ -83,21 +79,28 @@ def addVideoCountry(catalog, video):
         mp.put(countries,countryname,l)
         
 
-def addVideoCategory(catalog, categoryname, video):
+def addVideoCategory(catalog, video):
+    categoryidnu = video["category_id"]
     categories = catalog['category']
-    poscategory = lt.isPresent(categories, countryname)
-    if poscategory > 0:
-        category = lt.getElement(categories, poscategory)
-    else:
-        category = newCategory(categoryname)
-        lt.addLast(categories, category)
-    lt.addLast(category['videos'], video)
+    name = None
+    categoryfile = cf.data_dir + 'Videos/category-id.csv'
+    with open(categoryfile, encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile,delimiter="\t")
+        for row in reader:
+            if row['id'] ==categoryidnu :
+                name = row['name']
+                break
 
-def newCategory(name):
-    category = {'category': "", "videos": None,  "trending": 0}
-    category['category'] = name
-    category['videos'] = lt.newList('ARRAY_LIST')
-    return category
+    if mp.contains(categories,name):
+        l = mp.get(categories,name)["value"]
+        l.append(video["video_id"])
+        mp.put(categories,name,l)
+    else:
+        l=[video["video_id"]]
+        mp.put(categories,name,l)
+
+
+
 
 
 

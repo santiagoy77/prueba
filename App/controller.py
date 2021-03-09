@@ -25,8 +25,8 @@ import model
 import csv
 
 
-def initCatalog(list_type):
-    catalog = model.newCatalog(list_type)
+def initCatalog():
+    catalog = model.newCatalog()
     return catalog
 
 def loadData(catalog):
@@ -40,6 +40,8 @@ def loadVideos(catalog):
     for video in input_file:
         model.addVideo(catalog, video)
         model.addVideoCountry(catalog,video)
+        model.addVideoCategory(catalog,video)
+    
 
 
 def sortVideos(catalog,list_num, list_alg):

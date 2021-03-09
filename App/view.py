@@ -44,8 +44,8 @@ def printMenu():
     print("5- Cargar Video con mas likes segun Tags")
     print("0- Salir")
     
-def initCatalog(list_type):
-    return controller.initCatalog(list_type)
+def initCatalog():
+    return controller.initCatalog()
 
 
 def loadData(catalog):
@@ -64,8 +64,7 @@ while True:
     if int(inputs[0]) == 1:
         t1=time.process_time()
         print("Cargando información del catalogo ....")
-        list_type = input("Ingrese el tipo de lista que desea usar:\n")
-        catalog = initCatalog(list_type,)
+        catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['country'])))
