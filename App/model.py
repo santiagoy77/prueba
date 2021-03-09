@@ -35,6 +35,7 @@ from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import mergesort as mgs
+from DISClib.DataStructures import arraylistiterator as it
 assert cf
 
 """
@@ -70,7 +71,35 @@ def addVideo(catalog, videos):
 def addCat(catalog, cat):
     lt.addLast(catalog["categories"],cat)
 
+def translateCategory(name,catalog):
+    categories = newCategory(catalog)
+    iterator = it.newIterator(categories)
+    
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        print("element:::::", element)
+      #  if element["Categoria"].lower() == name.lower():
+       #     return element["Category number"]
+        #else:
+        #    pass
 
+def req1(catalog,name,country,size):
+    videos = newVideo(catalog)
+    idd = translateCategory(name,catalog)
+    nl = lt.newList(datastructure="ARRAY_LIST")
+    iterator = it.newIterator(videos)
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        if element["country"].lower() == country.lower() and element["category_id"] == idd:
+            newdict = {"trending_date": element['trending_date'],
+            'title': element['title'],
+            "channel_title": element['channel_title'],
+            "publish_time": element["publish_time"],
+            'views': element['views'],
+            "likes": element['likes'], 
+            "dislikes": element['dislikes']}
+            lt.addLast(nl,newdict)
+    return nl
 
 def newVideo(catalog):
     """
@@ -78,7 +107,9 @@ def newVideo(catalog):
     un autor y su promedio de ratings
     """
     lvid = lt.newList(datastructure="ARRAY_LIST")
-    for vid in catalog["ListCompleteVidAll"]["elements"]:
+    iterator = it.newIterator(catalog["ListCompleteVidAll"])
+    while it.hasNext(iterator):
+        vid = it.next(iterator)
         video = {'title': vid['title'], 
         "channel_title": vid['channel_title'], 
         "trending_date": vid['trending_date'], 
@@ -98,9 +129,15 @@ def newVideo(catalog):
 
 def newCategory(catalog):
     lc = lt.newList(datastructure="ARRAY_LIST")
-    for numbs in catalog["categories"]["elements"]:
-        cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
-        lt.addLast(lc,cat)
+    iterator = it.newIterator(catalog["categories"])
+    while it.hasNext(iterator):
+        numbs = it.next(iterator)
+        isp = lt.isPresent(lc,numbs["Category number"])
+        if isp > 0:
+            pass
+        else:
+            cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
+            lt.addLast(lc,cat)
     return lc
 
 

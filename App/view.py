@@ -135,7 +135,8 @@ while True:
             print(b)
     elif int(inputs[0]) == 3:
         print ("Encontrar video tendencia por categoría")
-
+        controller.newCategory(catalog)
+        
     elif int(inputs[0]) == 4:
         print('Encontrar videos tendencias por pais')
     

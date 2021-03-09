@@ -67,8 +67,12 @@ def newCategory(catalog):
     dc = model.newCategory(catalog)
     return dc
 
-#catalog = initCatalog(1)
-#print(newCategory(catalog))
+catalog = initCatalog(1)
+print(newCategory(catalog))
+#print(model.translateCategory("music",catalog))
+#print(model.req1(catalog,"Music","canada",0))
+
+
 
 
 
