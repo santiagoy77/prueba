@@ -68,7 +68,6 @@ def newCategory(catalog):
     return dc
 categorias = newCategory(catalog)
 
-
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento
