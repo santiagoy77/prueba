@@ -26,7 +26,7 @@ import controller
 import threading
 from DISClib.ADT import list as lt
 assert cf
-
+from debugController import doSortingTests
 
 """
 La vista se encarga de la interacción con el usuario
@@ -69,10 +69,11 @@ def printMostViewed(ord_videos, sample= 10):
         print(dir[1],dir[2], dir[3], dir[5], dir[6], dir[7], dir[8], sep="   ")
         i+=1
 
-def doSortingTests(catalog):
+def consoleSortingTests(catalog):
+    # flag is a pointer that shares information between the threads
     flag = [True, True]
-    x = threading.Thread(target=controller.doSortingTests, args=(catalog, flag))
-    x.start()
+    testThread = threading.Thread(target=doSortingTests, args=(catalog, flag,))
+    testThread.start()
     while flag[0]:
         change = int(input("0. Remain doing tests\n1. Stop when average has been computed\n2. Stop as soon as possible\n"))
         if (change == 1):
@@ -81,7 +82,7 @@ def doSortingTests(catalog):
             flag[0] = False
             flag[1] = False
     print("Wait for the testing to end.")
-    x.join()
+    testThread.join()
     print("Testing ended!")
 
 catalog = None
@@ -113,7 +114,7 @@ while True:
         print("1. ShellSort\n2.InsertionSort\n3.SelectionSort\n4.QuickSort\n5.MergeSort")
         algorithm = int(input("Introduzca el índice del algoritmo que quiere usar: "))
         if (debug and (algorithm == 0)):
-            doSortingTests(catalog)
+            consoleSortingTests(catalog)
         else:
             if(algorithm == 1):
                 algorithm = 'shell'
