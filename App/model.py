@@ -132,7 +132,8 @@ def newCategory(catalog):
     iterator = it.newIterator(catalog["categories"])
     while it.hasNext(iterator):
         numbs = it.next(iterator)
-        isp = lt.isPresent(lc,numbs["Category number"])
+        print(lc["elements"])
+        isp = lt.isPresent(lc['elements'],numbs["id"])
         if isp > 0:
             pass
         else:
