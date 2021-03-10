@@ -25,6 +25,7 @@ import model
 import csv
 
 
+
 def initCatalog():
     catalog = model.newCatalog()
     return catalog
@@ -37,18 +38,32 @@ def loadData(catalog):
 def loadVideos(catalog):
     videosfile = cf.data_dir + 'Videos/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    contador = 1
     for video in input_file:
         model.addVideo(catalog, video)
-        model.addVideoCountry(catalog,video)
-        model.addVideoCategory(catalog,video)
+        model.addVideoCountry(catalog,video,contador)
+        model.addVideoCategory(catalog,video,contador)
+        contador+=1
     
 
 
-def sortVideos(catalog,list_num, list_alg):
-    lst = model.newSList(catalog["videos"],0,int(list_num)-1)
-    sList = model.sort(lst,list_alg)
+
     
-    return sList
+
+def req1(country,category,num,catalog):
+    video =model.videosTrending(country,category,catalog)
+    sList = model.sort(video,'selectionsort')
+    lst = model.newSList(sList,0,int(num)-1)
+    model.presantacion(lst)
+
+def req4(country,tag,num,catalog):
+    video=model.tagsEsp(country,tag,catalog)
+    #sList = model.sort(video,'selectionsort')
+    #lst = model.newSList(video,0,int(num)-1)
+    model.presantacionTag(video)
+    
+
+
 
 #def loadTags(catalog):
 #   tagsfile = cf.data_dir + 'Videos/category-id.csv'
