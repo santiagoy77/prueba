@@ -23,6 +23,9 @@
 import config as cf
 import model
 import csv
+from datetime import datetime   
+from datetime import date
+import iso8601 as iso
 
 
 
@@ -36,13 +39,26 @@ def loadData(catalog):
 
 
 def loadVideos(catalog):
-    videosfile = cf.data_dir + 'Videos/videos-small.csv'
+    videosfile = cf.data_dir + 'Videos/videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     contador = 1
-    for video in input_file:
-        model.addVideo(catalog, video)
-        model.addVideoCountry(catalog,video,contador)
-        model.addVideoCategory(catalog,video,contador)
+    for e in input_file:
+        ee={
+                'video_id':e['video_id'],
+                'trending_date': datetime.strptime(e['trending_date'],'%y.%d.%m').date(),
+                'title':e['title'],
+                'channel_title':e['title'],
+                'category_id': e['category_id'],
+                'publish_time':iso.parse_date(e['publish_time']),
+                'tags':e['tags'],
+                'views':e['views'],
+                'likes':e['likes'],
+                'dislikes':e['dislikes'],
+                'country':e['country']
+            }
+        model.addVideo(catalog, ee)
+        model.addVideoCountry(catalog,ee,contador)
+        model.addVideoCategory(catalog,ee,contador)
         contador+=1
     
 
@@ -52,8 +68,8 @@ def loadVideos(catalog):
 
 def req1(country,category,num,catalog):
     video =model.videosTrending(country,category,catalog)
-    sList = model.sort(video,'selectionsort')
-    lst = model.newSList(sList,0,int(num)-1)
+    sList = model.sort(video,'mergesort')
+    lst = model.newSList(sList,1,int(num))
     model.presantacion(lst)
 
 def req4(country,tag,num,catalog):

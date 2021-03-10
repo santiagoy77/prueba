@@ -174,7 +174,7 @@ def idTranslate(ids,videos):
 def presantacion(l):
     newIterator=lt.iterator(l)
     for i in newIterator:
-        print(i['category_id']+'Trending Date: '+i['trending_date']+'\t''Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+i['publish_time']+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes'])
+        print('Trending Date: '+str(i['trending_date'])+'\t''Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+str(i['publish_time'])+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes']+'\n'+'\n')
 
 def tagsEsp(country,tag,catalog):
     video=catalog['videos']
@@ -192,9 +192,10 @@ def tagsEsp(country,tag,catalog):
 def presantacionTag(l):
     newIterator=lt.iterator(l)
     for i in newIterator:
-        print('Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+i['publish_time']+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes']+'\t'+'Tags: '+i['tags'])
+        print('Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+str(i['publish_time'])+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes']+'\t'+'Tags: '+i['tags']+'\n'+'\n')
 
-    
+
+
     
 
 
