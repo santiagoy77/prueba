@@ -134,6 +134,7 @@ def newCategory(catalog):
         else:"""
         cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
         lt.addLast(lc,cat)
+        ""
     return lc
 
 
