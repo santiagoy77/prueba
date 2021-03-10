@@ -114,6 +114,9 @@ def element_videos(videos, i, j):
     else:
         return 'error'
 
+def element_videos_with_order(videos, index_order, i, j):
+    return element_videos(videos, index_order['indexes'][i], j)
+
 
 def parameter_minimum(videos, index_order, index_parameter, parameter, floor, ceiling):
     """
@@ -188,6 +191,9 @@ def range_by_parameter(videos, order, parameters):
 def has_tag(videos, i, tag):
     return lt.isPresent(videos['elements'][i][1], tag)
 
+def has_tag_with_order(videos, index_order, i, tag):
+    return has_tag(videos, index_order[i], tag)
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def base_sort_function(videos, i, parameter_indexes):
@@ -260,7 +266,7 @@ def inefficient_ordering(videos, size, algorithm = 'shell'):
 if __name__ == '__main__':
     import time
     print("Loading vidios", time.asctime(time.gmtime()))
-    vidios = create_videos(cf.data_dir+'videos-all.csv')
+    vidios = create_videos(cf.data_dir+'videos-small.csv')
     print("Videos loaded! Size: ", lt.size(vidios), "\n")
 
     print("Creating order", time.asctime(time.gmtime()), "\n")

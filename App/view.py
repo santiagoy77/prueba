@@ -35,7 +35,7 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
-debug = True
+debug = False
 
 def printMenu():
     print("Bienvenido")
@@ -69,6 +69,16 @@ def printMostViewed(ord_videos, sample= 10):
         print(dir[1],dir[2], dir[3], dir[5], dir[6], dir[7], dir[8], sep="   ")
         i+=1
 
+def printResults(parameters,result):
+    size = len(parameters)
+    str_format = ''
+    indexes = [str(i) for i in range(0, size)]
+    str_format = '{'+':^20s}   {'.join(indexes) + ':^20s}'
+    print(str_format.format(*tuple(parameters)))
+    for line in result:
+        line = line[1:]
+        print(str_format.format(*tuple(line)))
+
 def consoleSortingTests(catalog):
     # flag is a pointer that shares information between the threads
     flag = [True, True]
@@ -86,6 +96,10 @@ def consoleSortingTests(catalog):
     print("Testing ended!")
 
 catalog = None
+req1_order = None
+req2_order = None
+req3_order = None
+req4_order = None
 """
 Menu principal
 """
@@ -95,8 +109,18 @@ while True:
     if int(inputs[0]) == 1:
         print("\nCargando información de los archivos ....")
         catalog= initCatalog()
-        dir=catalog["elements"][0][0]["elements"]
         print("Se han cargado " , lt.size(catalog), "registros de videos")
+        if not debug:
+            print("Optimizando requerimiento 1")
+            req1_order = controller.create_index_order(catalog, 'country', 'category_id', 'views')
+        print("Optimizando requerimiento 2")
+        req2_order = controller.create_index_order(catalog, 'country', 'title')
+        print("Optimizando requerimiento 3")
+        req3_order = controller.create_index_order(catalog, 'category_id', 'title')
+        print("Optimizando requerimiento 4")
+        req4_order = controller.create_index_order(catalog, 'likes')
+        print("Requerimientos optimizados")
+        dir=catalog["elements"][0][0]["elements"]
         print("\nPrimer video: ",dir[2])
         print("Canal: ", dir[3])
         print("Fecha de tendencia: ",dir[1])
@@ -108,38 +132,57 @@ while True:
         initTags()
         
     elif int(inputs[0]) == 2:
-        size = int(input("Introduzca el tamaño de la muestra que quiere ordenar: "))
         if debug:
+            size = int(input("Introduzca el tamaño de la muestra que quiere ordenar: "))
             print("0. Serial experiments Sort")
-        print("1. ShellSort\n2.InsertionSort\n3.SelectionSort\n4.QuickSort\n5.MergeSort")
-        algorithm = int(input("Introduzca el índice del algoritmo que quiere usar: "))
-        if (debug and (algorithm == 0)):
-            consoleSortingTests(catalog)
-        else:
-            if(algorithm == 1):
-                algorithm = 'shell'
-            elif(algorithm == 2):
-                algorithm = 'insertion'
-            elif(algorithm == 3):
-                algorithm = 'selection'
-            elif(algorithm == 4):
-                algorithm = 'quick'
+            print("1. ShellSort\n2.InsertionSort\n3.SelectionSort\n4.QuickSort\n5.MergeSort")
+            algorithm = int(input("Introduzca el índice del algoritmo que quiere usar: "))
+            result = None
+            if (algorithm == 0):
+                consoleSortingTests(catalog)
             else:
-                algorithm = 'merge'
+                if(algorithm == 1):
+                    algorithm = 'shell'
+                elif(algorithm == 2):
+                    algorithm = 'insertion'
+                elif(algorithm == 3):
+                    algorithm = 'selection'
+                elif(algorithm == 4):
+                    algorithm = 'quick'
+                else:
+                    algorithm = 'merge'
+                sample = int(input("Introduzca el número de vídeos que quiere listar: "))
+                time, result = controller.order_by_Views(catalog, size, algorithm)
+                print("El tiempo de ordenamiento fue de",time,"ms.")
+                printMostViewed(result, sample=sample)
+        else:
+            country = input("Introduzca el nombre del país que quiere consultar: ")
+            # TODO category name en vez de id
+            category = input("Introduzca el id de la categoría que quiere consultar: ")
             sample = int(input("Introduzca el número de vídeos que quiere listar: "))
-            result = controller.order_by_Views(catalog, size, algorithm)
-            print("El tiempo de ordenamiento fue de",result[0],"ms.")
-            printMostViewed(result[1], sample=sample)
+            print_parameters = ['trending_date', 'title', 'channel_title', 'publish_time', 'views', 'likes', 'dislikes']
+            result = controller.top_videos_order(catalog, req1_order, [country, category],
+                print_parameters, n=sample)
+            printResults(print_parameters, result)
         input("Presione cualquier tecla para continuar.")
     elif int(inputs[0]) == 3:
-        pass
-
+        country = input("Introduzca el id de el país que quiere consultar: ")
+        print_parameters = ['title', 'channel_title', 'country']
+        result = controller.most_days_tendency(catalog, req2_order, [country], print_parameters)
+        print_parameters.append('Días')
+        printResults(print_parameters, result)
     elif int(inputs[0]) == 4:
-        pass
-
+        # TODO category name en vez de id
+        category = input("Introduzca el id de la categoría que quiere consultar: ")
+        print_parameters = ['title', 'channel_title', 'category_id']
+        result = controller.most_days_tendency(catalog, req3_order, [category], print_parameters)
+        print_parameters.append('Días')
+        printResults(print_parameters, result)
     elif int(inputs[0]) == 5:
-        pass
-
+        tag = input("Introduzca el tag que quiere consultar: ")
+        print_parameters = ['title', 'channel_title', 'publish_time', 'views', 'likes', 'dislikes']
+        result = controller.top_videos_order(catalog, req4_order, None, print_parameters, n=1, tag=tag)
+        printResults(print_parameters, result)
     else:
         sys.exit(0)
 sys.exit(0)

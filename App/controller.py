@@ -31,7 +31,7 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 index_by_id = {
     'video_id': 0,
-    'trending date': 1,
+    'trending_date': 1,
     'title': 2,
     'channel_title': 3,
     'category_id': 4,
@@ -65,6 +65,77 @@ def initLista_tags():
 # Funciones de ordenamiento
 def order_by_Views(videos, size, algorithm = 'shell'):
     return model.inefficient_ordering(videos, size, algorithm)
+
+def names_to_indexes(names):
+    indexes = []
+    for name in names:
+        indexes.append(index_by_id[name])
+    return indexes
+
+def create_index_order(videos, *args):
+    order_indexes = names_to_indexes(args)
+    index_order = model.create_index_order(videos, order_indexes)
+    return index_order
+
+def most_days_tendency(videos, index_order, selection_parameters, print_parameters):
+    floor = 0
+    ceiling = len(index_order) - 1
+    if selection_parameters:
+        floor, ceiling = model.range_by_parameter(videos, index_order, selection_parameters)
+    i = floor
+    imax = floor
+    maxdays = 0
+    days = 0
+    title = model.element_videos_with_order(videos, index_order, i, 2)
+    while i <= ceiling:
+        cmp_title =  model.element_videos_with_order(videos, index_order, i, 2)
+        if title == cmp_title:
+            days += 1
+        else:
+            if days > maxdays:
+                imax = i - days
+                maxdays = days
+            days = 1
+            title = cmp_title
+        i += 1
+    if days > maxdays:
+        maxdays = days
+    print_indexes = names_to_indexes(print_parameters)
+    result = [index_order['indexes'][imax]]
+    for j in print_indexes:
+        result.append(str(model.element_videos_with_order(videos, index_order, imax, j)))
+    result.append(str(maxdays))
+    return [result]
+
+
+def top_videos_order(videos, index_order, selection_parameters, print_parameters, n=None, tag = None, top=True):
+    floor = 0
+    ceiling = len(index_order) - 1
+    if selection_parameters:
+        floor, ceiling = model.range_by_parameter(videos, index_order, selection_parameters)
+    print_indexes = names_to_indexes(print_parameters)
+    if not n:
+        n = ceiling - floor + 1
+    result = []
+    if top:
+        i = ceiling
+        while (i >= floor) and (len(result) < n):
+            if (not tag) or model.has_tag_with_order(videos, index_order, i, tag):
+                ithResult = [index_order['indexes'][i]]
+                for j in print_indexes:
+                    ithResult.append(str(model.element_videos_with_order(videos, index_order, i, j)))
+                result.append(ithResult)
+            i -= 1
+    else:
+        i = floor
+        while (i <= ceiling) and (len(result) < n):
+            if (not tag) or model.has_tag_with_order(videos, index_order, i, tag):
+                ithResult = [index_order['indexes'][i]]
+                for j in print_indexes:
+                    ithResult.append(str(model.element_videos_with_order(videos, index_order, i, j)))
+                result.append(ithResult)
+            i += 1
+    return result
 
 
 # Funciones de consulta sobre el catálogo
