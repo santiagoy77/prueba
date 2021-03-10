@@ -120,24 +120,20 @@ def newVideo(catalog):
         "category_id": vid['category_id'], 
         "publish_time": vid["publish_time"], 
         "tags": vid['tags']} 
-
         lt.addLast(lvid, video)
     return lvid
-
-
-
 
 def newCategory(catalog):
     lc = lt.newList(datastructure="ARRAY_LIST")
     iterator = it.newIterator(catalog["categories"])
     while it.hasNext(iterator):
         numbs = it.next(iterator)
-        isp = lt.isPresent(lc,numbs["Category number"])
+        """isp = lt.isPresent(lc,numbs)
         if isp > 0:
             pass
-        else:
-            cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
-            lt.addLast(lc,cat)
+        else:"""
+        cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
+        lt.addLast(lc,cat)
     return lc
 
 
