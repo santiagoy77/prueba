@@ -71,30 +71,8 @@ def printFirstVideo(catalog):
     "dislikes": pvid['dislikes']}
     return infoprim
 
-"""
-def printAuthorData(author):
-    if author:
-        print('Autor encontrado: ' + author['name'])
-        print('Promedio: ' + str(author['average_rating']))
-        print('Total de libros: ' + str(lt.size(author['books'])))
-        for book in lt.iterator(author['books']):
-            print('Titulo: ' + book['title'] + '  ISBN: ' + book['isbn'])
-    else:
-        print('No se encontro el autor')
 
 
-def printBestBooks(books):
-    size = lt.size(books)
-    if size:
-        print(' Estos son los mejores libros: ')
-        for book in lt.iterator(books):
-            print('Titulo: ' + book['title'] + '  ISBN: ' +
-                  book['isbn'] + ' Rating: ' + book['average_rating'])
-    else:
-        print('No se encontraron libros')
-
-catalog = None
-"""
 
 """
 Menu principal
@@ -103,12 +81,11 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        tipo_lista = int(input("Elija el tipo de lista que quiere crear (Presione 1 para ARRAY_LIST o 2 para SINGLE_LINKED): "))
-        catalog = controller.initCatalog(tipo_lista)
-        category = controller.newCategory(catalog)
+        catalog = controller.initCatalog()
+        category = catalog["categories"]
+        loadData(catalog)
         pvideo = printFirstVideo(catalog)
         print("Cargando información de los archivos... Esto puede tardar un poco.")
-        loadData(catalog)
         if catalog == None:
             print("No ha seleccionado una opcion valida")
         else:

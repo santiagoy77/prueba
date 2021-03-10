@@ -46,17 +46,12 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog(tipo_lista):
-    tipo = ""
-    if tipo_lista == 1:
-        tipo = "ARRAY_LIST"
-    elif tipo_lista == 2:
-        tipo = "SINGLE_LINKED"
+def newCatalog():
     catalog = {'ListCompleteVidAll': None,
                'categories': None}
 
-    catalog['ListCompleteVidAll'] = lt.newList(tipo)
-    catalog['categories'] = lt.newList(tipo)
+    catalog['ListCompleteVidAll'] = lt.newList("ARRAY_LIST")
+    catalog['categories'] = lt.newList("ARRAY_LIST")
     
     return catalog
 
@@ -71,20 +66,21 @@ def addVideo(catalog, videos):
 def addCat(catalog, cat):
     lt.addLast(catalog["categories"],cat)
 
+
+# Funciones Req1    
+
 def translateCategory(name,catalog):
     categories = catalog["categories"]
     iterator = it.newIterator(categories)
-    print("11")
     while it.hasNext(iterator):
         element = it.next(iterator)
-        print("element:::::", element)
         if name.lower() in element["name"].lower() :
             return element["id"]
         else:
             pass
 
 def req1(catalog,name,country,size):
-    videos = newVideo(catalog)
+    videos = catalog["ListCompleteVidAll"]
     idd = translateCategory(name,catalog)
     nl = lt.newList(datastructure="ARRAY_LIST")
     iterator = it.newIterator(videos)
@@ -97,15 +93,11 @@ def req1(catalog,name,country,size):
             "publish_time": element["publish_time"],
             'views': element['views'],
             "likes": element['likes'], 
-            "dislikes": element['dislikes']
-            "dislikes": element['dislikes']
-            }
+            "dislikes": element['dislikes']}
             lt.addLast(nl,newdict)
     return nl
 
-def newVideo(catalog):
-    """
-    """
+    """def newVideo(catalog):
     lvid = lt.newList(datastructure="ARRAY_LIST")
     iterator = it.newIterator(catalog["ListCompleteVidAll"])
     while it.hasNext(iterator):
@@ -128,21 +120,20 @@ def newCategory(catalog):
     iterator = it.newIterator(catalog["categories"])
     while it.hasNext(iterator):
         numbs = it.next(iterator)
-        """isp = lt.isPresent(lc,numbs)
+        isp = lt.isPresent(lc,numbs)
         if isp > 0:
             pass
-        else:"""
+        else:
         cat = {"Category number": numbs["id"], "Categoria" : numbs["name"]}
         lt.addLast(lc,cat)
         ""
-    return lc
+    return lc"""
 
 
 def first(lst):
     element = lt.firstElement(lst)
     return element
 
-# Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -155,6 +146,8 @@ def cmpVideosByViews(video1, video2):
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views' """
     return (float(video1['views']) < float(video2['views']))
+
+
 
 # Funciones de ordenamiento
 

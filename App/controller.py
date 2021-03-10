@@ -31,22 +31,17 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de videos
 
-def initCatalog(tipo_lista):
+def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog(tipo_lista)
+    catalog = model.newCatalog()
+
     return catalog
 
     
-def loadData(catalog):
-    """
-    Carga los datos de los archivos y cargar los datos en la
-    estructura de datos
-    """
-    loadBooks(catalog)
 
-def loadBooks(catalog):
+def loadData(catalog):
     """
     Carga los libros del archivo.  Por cada libro se toman sus autores y por
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
@@ -62,29 +57,21 @@ def loadBooks(catalog):
         model.addCat(catalog, cat)
 
 
-def newCategory(catalog):
-    loadBooks(catalog)
-    dc = model.newCategory(catalog)
-    return dc
 
-catalog = initCatalog(1)
-loadBooks(catalog)
+#catalog = initCatalog(1)
+#loadData(catalog)
 #print(newCategory(catalog))
 #print(model.translateCategory("music",catalog))
-print(model.req1(catalog,"Music","canada",0))
+#print(model.req1(catalog,"Music","canada",0))
 
 
 
 
 
-def newVideo(catalog):
-    loadBooks(catalog)
-    dv = model.newVideo(catalog)
-    return dv
 
 
 def firstVideo(catalog):
-    Pvideo = model.first(newVideo(catalog))
+    Pvideo = model.first(catalog['ListCompleteVidAll'])
     return Pvideo
 
 #print(firstVideo(catalog))
