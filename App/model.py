@@ -174,3 +174,32 @@ def sortVideos(catalog,size,orden):
     return resul
 
 
+
+
+
+
+
+
+
+
+
+
+def req2(catalog,country):
+    videos = catalog["ListCompleteVidAll"]
+    dictitles = {}
+    dicsave = {}
+    iterator = it.newIterator(videos)
+    mayor = 0
+    nomayor = 0
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        if element["country"].lower() == country.lower():
+            if element['title'] in dictitles:
+                dictitles[element["title"]] += 1
+            else:
+                dictitles[element["title"]] = 1
+                dicsave[element["title"]] = element
+
+    (a, b) = max((dictitles[key], key) for key in dictitles)
+    
+    return {'title': b, 'channel_title': dicsave[b]['channel_title'], 'countr': country, 'número de días': a}

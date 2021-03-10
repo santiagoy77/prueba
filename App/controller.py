@@ -58,7 +58,7 @@ def loadData(catalog):
 
 
 
-#catalog = initCatalog(1)
+#catalog = initCatalog()
 #loadData(catalog)
 #print(newCategory(catalog))
 #print(model.translateCategory("music",catalog))
@@ -85,3 +85,6 @@ def sortVideos(catalog,size,orden):
     return model.sortVideos(catalog,size,orden)
     
 
+
+def req2(catalog, country):
+    return model.req2(catalog, country)

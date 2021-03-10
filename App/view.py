@@ -44,8 +44,8 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Encontrar buenos videos por categoría y país")
-    print("3- Encontrar video tendencia por categoría")
-    print("4- Encontrar video tendencia por país")
+    print("3- Encontrar video tendencia por país")
+    print("4- Encontrar video tendencia por categoría")
     print("5- Buscar los videos con más Likes")
     print("0- Salir")
     
@@ -110,12 +110,15 @@ while True:
             (a,b) = controller.sortVideos(catalog,size,orden)
             print("El tiempo que ha tardado el proceso es:",a,"milisegundos.")
             print(b)
+
+
     elif int(inputs[0]) == 3:
-        print ("Encontrar video tendencia por categoría")
-        controller.newCategory(catalog)
+        print ("Encontrar video tendencia por país")
+        country = input("Ingrese el nombre del país del cual quiere saber el video que más fue tendencia: ")
+        print(controller.req2(catalog, country))
         
     elif int(inputs[0]) == 4:
-        print('Encontrar videos tendencias por pais')
+        print('Encontrar videos tendencias por categoría')
     
     elif int(inputs[0]) == 5:
         print('Buscar los videos con mas likes')
