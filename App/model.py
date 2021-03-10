@@ -72,16 +72,16 @@ def addCat(catalog, cat):
     lt.addLast(catalog["categories"],cat)
 
 def translateCategory(name,catalog):
-    categories = newCategory(catalog)
+    categories = catalog["categories"]
     iterator = it.newIterator(categories)
-    
+    print("11")
     while it.hasNext(iterator):
         element = it.next(iterator)
         print("element:::::", element)
-      #  if element["Categoria"].lower() == name.lower():
-       #     return element["Category number"]
-        #else:
-        #    pass
+        if name.lower() in element["name"].lower() :
+            return element["id"]
+        else:
+            pass
 
 def req1(catalog,name,country,size):
     videos = newVideo(catalog)
@@ -97,14 +97,14 @@ def req1(catalog,name,country,size):
             "publish_time": element["publish_time"],
             'views': element['views'],
             "likes": element['likes'], 
-            "dislikes": element['dislikes']}
+            "dislikes": element['dislikes']
+            "dislikes": element['dislikes']
+            }
             lt.addLast(nl,newdict)
     return nl
 
 def newVideo(catalog):
     """
-    Crea una nueva estructura para modelar los libros de
-    un autor y su promedio de ratings
     """
     lvid = lt.newList(datastructure="ARRAY_LIST")
     iterator = it.newIterator(catalog["ListCompleteVidAll"])

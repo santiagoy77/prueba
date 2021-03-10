@@ -68,9 +68,10 @@ def newCategory(catalog):
     return dc
 
 catalog = initCatalog(1)
-print(newCategory(catalog))
+loadBooks(catalog)
+#print(newCategory(catalog))
 #print(model.translateCategory("music",catalog))
-#print(model.req1(catalog,"Music","canada",0))
+print(model.req1(catalog,"Music","canada",0))
 
 
 
