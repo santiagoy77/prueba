@@ -38,14 +38,14 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Cargar Videos con mas views")    
+    print("2- Cargar Videos con trending en un pais y categoria")    
     print("3- Cargar Video con mas trading segun su país")
     print("4- Cargar Video con mas trading segun su categoría")
     print("5- Cargar Video con mas likes segun Tags")
     print("0- Salir")
     
-def initCatalog(list_type):
-    return controller.initCatalog(list_type)
+def initCatalog():
+    return controller.initCatalog()
 
 
 def loadData(catalog):
@@ -64,8 +64,7 @@ while True:
     if int(inputs[0]) == 1:
         t1=time.process_time()
         print("Cargando información del catalogo ....")
-        list_type = input("Ingrese el tipo de lista que desea usar:\n")
-        catalog = initCatalog(list_type,)
+        catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['country'])))
@@ -76,13 +75,16 @@ while True:
 
     elif int(inputs[0]) == 2:
         t1=time.process_time()
-        list_num = input("Ingrese la cantidad de datos que desa ver:\n")
-        list_alg = input("Ingrese el algoritmo de ordenamiento que desa usar:\n")
-        sv = sortVideos(catalog,list_num,list_alg)
-        print("Cargando Videos con mas vistas....")
+        pais = input("Ingrese el pais que desea ver:\n")
+        categ = ' '+input("Ingrese la categoria que desea ver:\n")
+        num = 1+int(input("Ingrese la cantidad de datos que desa ver:\n"))
+        print("Cargando Videos trending....")
+        controller.req1(pais,categ,num,catalog)
         t2=time.process_time()
-        tf=round(((t2-t1)*1000),2)
-        print('El tiempo de procesamiento es: {}.'.format(tf))
+        tft=round(((t2-t1)*1000),2)
+        print('El tiempo de procesamiento es: {}.'.format(tft))
+    
+    
 
     elif int(inputs[0]) == 3:
         t1=time.process_time()
@@ -93,6 +95,10 @@ while True:
     elif int(inputs[0]) == 4:
         t1=time.process_time()
         print("Cargando Video con mas trading segun su categoría ....")
+        country= input('pais')
+        tag=input('tag')
+        num=input('num')
+        controller.req4(country,tag,num,catalog)
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
