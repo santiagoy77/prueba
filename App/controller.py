@@ -83,16 +83,10 @@ def firstReq(catalog, data_size, country, category):
     return model.firstReq(catalog, data_size, country, idcat)
 
 
-def secondReq():
-    """
-    Solicita al model la información del requerimiento 2
-    """
-    return model.secondReq()
-
-
 def thirdReq(catalog, category):
     """
     Solicita al model la información del requerimiento 3
     """
     idcat = findCategoryId(catalog, category)
     return model.thirdReq(catalog, idcat)
+

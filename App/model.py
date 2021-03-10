@@ -73,13 +73,24 @@ def addCategory(catalog, category):
 
 def cmpVideosByViews(video1, video2):
     """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que
+    Devuelve verdadero (True) si los 'views' de video1 son mayores que
     los del video2
     Args:
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
     """
-    return (video1["views"] < video2["views"])
+    return (int(video1["views"]) < int(video2["views"]))
+
+
+def cmpVideosByLikes(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'likes' de video1 son mayores que
+    los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'likes'
+    video2: informacion del segundo video que incluye su valor 'likes'
+    """
+    return (int(video1["likes"]) < int(video2["likes"]))
 
 
 def firstReq(catalog, data_size, country, category):
@@ -96,23 +107,19 @@ def firstReq(catalog, data_size, country, category):
             t -= 1
             i -= 1
         i += 1
-    print("list ------------------------------------------------------------------")
-    print(filtered["videos"])
+    #print("list ------------------------------------------------------------------")
+    #print(filtered["videos"])
     sorted_list = quick.sort(filtered["videos"], cmpVideosByViews)
-    print("Sorted list -----------------------------------------------------------")
-    print(sorted_list)
+    #print("Sorted list -----------------------------------------------------------")
+    #print(sorted_list)
     data_sublist = lt.subList(sorted_list, 1, data_size)
     data_sublist = data_sublist.copy()
-    print("Data sublist ----------------------------------------------------------")
-    print(data_sublist)
+    #print("Data sublist ----------------------------------------------------------")
+    #print(data_sublist)
     return data_sublist
 
 
-def secondReq():
-    """
-    Completa el requerimiento 2
-    """
-    pass
+
 
 
 def thirdReq(catalog, category):
@@ -149,15 +156,6 @@ def thirdReq(catalog, category):
     resultado = [primerosdatos[0], primerosdatos[1], mayor[1], category]
     return resultado
 
-    
 
-    
-
-
-def fourthReq(catalog, data_size, country, tag):
-    """
-    Completa el requerimiento 3
-    """
-    pass
 
     

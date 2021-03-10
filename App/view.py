@@ -83,9 +83,19 @@ def printVideoInfo1(video):
     print("Canal: " + video["channel_title"])
     print("Fecha en que fue trending: " + video["trending_date"])
     print("Fecha de publicación: " + video["publish_time"])
-    print("Cantidad de vistas: " + video["views"])
+    print("Cantidad de reproducciones: " + video["views"])
     print("Cantidad de Likes: " + video["likes"])
     print("Cantidad de Dislikes: " + video["dislikes"])
+
+
+def printVideoInfo2(info):
+    """
+    Imprime la información principal de un video
+    """
+    print("------------------------------------------------------")
+    print("Título: " + info[0])
+    print("Canal: " + info[1])
+    print("Número de días como tendencia: " + str(info[2]))
 
 
 def printVideoInfo3(info):
@@ -97,6 +107,20 @@ def printVideoInfo3(info):
     print("Canal: " + info[1])
     print("Identificador de categoría: " + str(info[3]))
     print("Número de días como tendencia: " + str(info[2]))
+
+
+def printVideoInfo4(video):
+    """
+    Imprime la información principal de un video
+    """
+    print("------------------------------------------------------")
+    print("Título: " + video["title"])
+    print("Canal: " + video["channel_title"])
+    print("Fecha de publicación: " + video["publish_time"])
+    print("Cantidad de reproducciones: " + video["views"])
+    print("Cantidad de Likes: " + video["likes"])
+    print("Cantidad de Dislikes: " + video["dislikes"])
+    print("Tags: " + video["tags"])
 
 
 def printCategoriesList(catalog):
@@ -125,25 +149,11 @@ def firstReq(catalog, data_size, country, category):
     return controller.firstReq(catalog, data_size, country, category)
 
 
-def secondReq():
-    """
-    Solicita al controller la información del requerimiento 2
-    """
-    return controller.secondReq()
-
-
 def thirdReq(catalog, category):
     """
     Solicita al controller la información del requerimiento 3
     """
     return controller.thirdReq(catalog, category)
-
-
-def fourthReq(catalog, data_size, country, tag):
-    """
-    Solicita al controller la información del requerimiento 3
-    """
-    return controller.thirdReq(catalog, data_size, country, tag)
 
 
 catalog = None
@@ -153,7 +163,7 @@ catalog = None
 
 while True:
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
+    inputs = input('Seleccione una opción para continuar: ')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
@@ -175,20 +185,13 @@ while True:
         for video in result["elements"]:
             printVideoInfo1(video)
     
-    elif int(inputs[0]) == 3:
-        print("------------------------------------------------------")
-        print("Req. 2: Consultar video que más días ha sido trending en un país")
-        pass
-    
     elif int(inputs[0]) == 4:
         print("------------------------------------------------------")
         print("Req. 3: Consultar video que más dias ha sido trending, por categoría")
-        #category = input("Indique la categoría: ")
-        category = "music"
+        category = input("Indique la categoría: ")
         result = thirdReq(catalog, category)
         printVideoInfo3(result)
-        
-
+    
     else:
         sys.exit(0)
 sys.exit(0)
