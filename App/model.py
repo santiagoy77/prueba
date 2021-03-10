@@ -79,7 +79,7 @@ def cmpVideosByViews(video1, video2):
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
     """
-    return (int(video1["views"]) < int(video2["views"]))
+    return (int(video1["views"]) > int(video2["views"]))
 
 
 def cmpVideosByLikes(video1, video2):
@@ -90,7 +90,7 @@ def cmpVideosByLikes(video1, video2):
     video1: informacion del primer video que incluye su valor 'likes'
     video2: informacion del segundo video que incluye su valor 'likes'
     """
-    return (int(video1["likes"]) < int(video2["likes"]))
+    return (int(video1["likes"]) > int(video2["likes"]))
 
 
 def firstReq(catalog, data_size, country, category):
@@ -169,7 +169,10 @@ def fourthReq(catalog, data_size, country, tag):
             i -= 1
         i += 1
     sorted_list = quick.sort(filtered["videos"], cmpVideosByLikes)
-    data_sublist = lt.subList(sorted_list, 1, data_size)
-    data_sublist = data_sublist.copy()
-    return data_sublist
+    try:
+        data_sublist = lt.subList(sorted_list, 1, data_size)
+        data_sublist = data_sublist.copy()
+        return data_sublist
+    except:
+        return sorted_list
     

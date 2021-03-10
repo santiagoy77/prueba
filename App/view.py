@@ -137,7 +137,8 @@ def askForDataSize(catalog):
     data_size = int(input("Número de videos que se quiere listar: "))
     if data_size > int(lt.size(catalog['videos'])):
         print("Error: valor excede tamaño de los datos cargados.")
-        askForDataSize()
+        print("> Tip: Intente con un valor más pequeño o ejecute la opción 1 nuevamente antes de intentarlo.")
+        askForDataSize(catalog)
     else:
         return data_size
 
