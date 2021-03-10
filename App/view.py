@@ -28,6 +28,7 @@ assert cf
 import time 
 
 
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -77,7 +78,7 @@ while True:
         t1=time.process_time()
         pais = input("Ingrese el pais que desea ver:\n")
         categ = ' '+input("Ingrese la categoria que desea ver:\n")
-        num = 1+int(input("Ingrese la cantidad de datos que desa ver:\n"))
+        num = int(input("Ingrese la cantidad de datos que desa ver:\n"))
         print("Cargando Videos trending....")
         controller.req1(pais,categ,num,catalog)
         t2=time.process_time()
@@ -95,9 +96,9 @@ while True:
     elif int(inputs[0]) == 4:
         t1=time.process_time()
         print("Cargando Video con mas trading segun su categoría ....")
-        country= input('pais')
-        tag=input('tag')
-        num=input('num')
+        country= input("Ingrese el pais del video que desea ver:\n")
+        tag=input("Ingrese el tag del video que desea ver:\n")
+        num=input("Ingrese el numero de videos que desea ver:\n")
         controller.req4(country,tag,num,catalog)
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
