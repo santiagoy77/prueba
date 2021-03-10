@@ -156,6 +156,13 @@ def thirdReq(catalog, category):
     return controller.thirdReq(catalog, category)
 
 
+def fourthReq(catalog, data_size, country, tag):
+    """
+    Solicita al controller la información del requerimiento 3
+    """
+    return controller.fourthReq(catalog, data_size, country, tag)
+
+
 catalog = None
 """
 """
@@ -192,6 +199,18 @@ while True:
         result = thirdReq(catalog, category)
         printVideoInfo3(result)
     
+
+    elif int(inputs[0]) == 5:
+        print("------------------------------------------------------")
+        print("Req. 4: Consultar n videos con más likes en un país, por tag")
+        data_size = askForDataSize(catalog)
+        country = input("Indique el país: " )
+        tag = str(input("Indique el tag: " ))
+        result = fourthReq(catalog, data_size, country, tag)
+        for video in result["elements"]:
+            printVideoInfo4(video)
+
+
     else:
         sys.exit(0)
 sys.exit(0)

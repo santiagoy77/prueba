@@ -29,7 +29,7 @@ import csv
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
+# Inicialización del Catálogo de videos
 
 
 def initCatalog():
@@ -89,4 +89,11 @@ def thirdReq(catalog, category):
     """
     idcat = findCategoryId(catalog, category)
     return model.thirdReq(catalog, idcat)
+
+
+def fourthReq(catalog, data_size, country, tag):
+    """
+    Solicita al model la información del requerimiento 4
+    """
+    return model.fourthReq(catalog, data_size, country, tag)
 

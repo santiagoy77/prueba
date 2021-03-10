@@ -119,9 +119,6 @@ def firstReq(catalog, data_size, country, category):
     return data_sublist
 
 
-
-
-
 def thirdReq(catalog, category):
     """
     Completa el requerimiento 3
@@ -157,5 +154,22 @@ def thirdReq(catalog, category):
     return resultado
 
 
-
+def fourthReq(catalog, data_size, country, tag):
+    """
+    Completa el requerimiento 4
+    """
+    filtered = catalog.copy()
+    i = 1
+    t = lt.size(filtered["videos"])
+    while i <= t:
+        elem = lt.getElement(filtered["videos"], i)
+        if (elem["country"].lower()) != (country.lower()) or tag not in elem["tags"]:
+            lt.deleteElement(filtered["videos"], i)
+            t -= 1
+            i -= 1
+        i += 1
+    sorted_list = quick.sort(filtered["videos"], cmpVideosByLikes)
+    data_sublist = lt.subList(sorted_list, 1, data_size)
+    data_sublist = data_sublist.copy()
+    return data_sublist
     
