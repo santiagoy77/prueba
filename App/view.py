@@ -238,6 +238,7 @@ while True:
         wantSee = int(input('Ingrese el numero de videos que desea ver: '))
         videosLikesCountryTags = controller.videosLikesCountryTags(catalog, pais, tag)
         printResultsReq4(videosLikesCountryTags, pais, wantSee)
+        
     #Options 6 Ends Here
     #------------------------
 

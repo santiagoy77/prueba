@@ -164,6 +164,7 @@ def videosCountryTrendingResumed(lst):
     videosResumed = lt.newList('ARRAY_LIST')
     first_video = lt.getElement(lst,0)
     first_video['trending_days'] = 1
+    first_video['likes'] = int(first_video['likes'])
     lt.addLast(videosResumed,first_video)
 
     lst_index = 1
@@ -171,9 +172,11 @@ def videosCountryTrendingResumed(lst):
     while lst_index < lt.size(lst) + 1:
         if lt.getElement(lst,lst_index)['video_id'] == lt.getElement(videosResumed,videosResumed_index)['video_id'] or lt.getElement(lst,lst_index)['title'] == lt.getElement(videosResumed,videosResumed_index)['title']:
             lt.getElement(videosResumed,videosResumed_index)['trending_days'] += 1
+            lt.getElement(videosResumed,videosResumed_index)['likes'] = int(lt.getElement(videosResumed,videosResumed_index)['likes']) + abs(int(lt.getElement(lst,lst_index)['likes']) - int(lt.getElement(videosResumed,videosResumed_index)['likes']))
             lst_index += 1
         else:
             lt.getElement(lst,lst_index)['trending_days'] = 1
+            lt.getElement(lst,lst_index)['likes'] = int(lt.getElement(lst,lst_index)['likes'])
             lt.addLast(videosResumed,lt.getElement(lst,lst_index))
             lst_index += 1
             videosResumed_index += 1
@@ -200,6 +203,7 @@ def videosLikesCountryTags(catalog, country,tag):
             i += 1
         else:
             i += 1
+    videostag = sortVideosForCountry(videostag,lt.size(videostag))
     resumed = videosCountryTrendingResumed(videostag)
     sortedByLikes = sortVideosbyLikes(resumed,lt.size(resumed))
     return sortedByLikes
