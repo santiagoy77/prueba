@@ -93,7 +93,7 @@ def req3(category,catalog):
 
 
 # Inicialización del Catálogo de libros
-
+##xx
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento
