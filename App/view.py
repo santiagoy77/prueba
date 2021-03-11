@@ -68,7 +68,27 @@ def printResults(ord_videos, sample=10):
             video = lt.getElement(ord_videos, i)
             print('Titulo: ' + video['title'] + ' Fecha de Tendencia: ' + video['trending_date'] + ' Vistas: ' + video['views'])
             i+=1
+
+def printResultsReq2(filtered, pais, sample=10):
+    size = lt.size(filtered)
+    if size > sample:
+        print("Los primeros ", sample, " videos en tendencia en " + pais + ' son: ')
+        i=1
+        while i <= sample:
+            video = lt.getElement(filtered, i)
+            print('Titulo: ' + video['title'] + ' |- Canal: ' + video['channel_title'] + ' |- Pais: ' + video['country'] + ' |- Dias en tendencia: ' + str(video['trending_days']))
+            i+=1
     
+def printResultsReq3(filtered, pais, sample=10):
+    size = lt.size(filtered)
+    if size > sample:
+        print("Los primeros ", sample, " videos con mas likes en " + pais + ' son: ')
+        i=1
+        while i <= sample:
+            video = lt.getElement(filtered, i)
+            print('Titulo: ' + video['title'] + ' |- Canal: ' + video['channel_title'] + ' |- Publicación: ' + video['publish_time'] + ' |- Vistas: ' + video['views'] + ' |- Likes: ' + str(video['likes']) + ' |- Dislikes: ' + video['dislikes'] + ' |- Tags: ' + video['tags'])
+            i+=1
+
 def initCatalog(listType):
     'The catalog is initialized'
     return controller.initCatalog(listType)
@@ -161,6 +181,37 @@ while True:
     
     elif int(inputs[0]) == 3:
         pass
+
+    #Options 3 Ends Here
+    #------------------------
+    #Options 4 Starts Here
+
+    elif int(inputs[0]) == 4:
+        pais = input('Ingrese el pais deseado: ')
+        trendingVideos = controller.videosCountry(catalog, pais)
+        wantSee = int(input('Ingrese el numerdo de videos que desea ver: '))
+        trendingVideosDays = controller.videosCountryTrendingResumed(trendingVideos)
+        printResultsReq2(trendingVideosDays, pais, wantSee)
+
+    #Options 4 Ends Here
+    #------------------------
+    #Options 5 Starts Here
+
+    elif int(inputs[0]) == 5:
+        pass
+
+    #Options 5 Ends Here
+    #------------------------
+    #Options 6 Starts Here
+
+    elif int(inputs[0]) == 6:
+        pais = input('Ingrese el pais deseado: ')
+        tag = input('Ingrese el tag deseado: ')
+        wantSee = int(input('Ingrese el numero de videos que desea ver: '))
+        videosLikesCountryTags = controller.videosLikesCountryTags(catalog, pais, tag)
+        printResultsReq3(videosLikesCountryTags, pais, wantSee)
+    #Options 6 Ends Here
+    #------------------------
 
     else:
         sys.exit(0)

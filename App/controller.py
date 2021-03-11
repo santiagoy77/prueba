@@ -77,3 +77,12 @@ def loadCategories(catalog):
 def sortVideos(catalog, size, method):
     'Sort videos by views'
     return model.sortVideos(catalog, size, method)
+
+def videosCountry(catalog, country):
+    return model.videosCountry(catalog, country)
+
+def videosCountryTrendingResumed(lst):
+    return model.videosCountryTrendingResumed(lst)
+
+def videosLikesCountryTags(catalog, pais,tag):
+    return model.videosLikesCountryTags(catalog, pais,tag)
