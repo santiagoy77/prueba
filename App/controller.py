@@ -86,3 +86,9 @@ def videosCountryTrendingResumed(lst):
 
 def videosLikesCountryTags(catalog, pais,tag):
     return model.videosLikesCountryTags(catalog, pais,tag)
+
+def videosCountryCategory(catalog, pais, categoria):
+    return model.videosCountryCategory(catalog, pais, categoria)
+
+def videosCategoryTrendingResumed(catalog, category):
+    return model.videosCategoryTrendingResumed(catalog, category)

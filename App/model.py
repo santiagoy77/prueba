@@ -66,11 +66,20 @@ def addCategory(catalog, category):
 
 # Funciones de consulta
 
+def categoryRead(catalog, id):
+    size = lt.size(catalog['categories'])
+    i = 0
+    while i < size:
+        if int(lt.getElement(catalog['categories'],i)['id\tname'][0:2].strip()) == id:
+            return lt.getElement(catalog['categories'],i)['id\tname'][2:len(lt.getElement(catalog['categories'],i)['id\tname'])].strip()
+        else:
+            i += 1
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmpVideosByViews(video1, video2):
     'Return True if vid1 < vid2'
-    return (float(video1['views']) < float(video2['views']))
+    return (float(video1['views']) > float(video2['views']))
 
 def cmpVideosById(video1, video2):
     'Return True if vid1 < vid2'
@@ -78,7 +87,7 @@ def cmpVideosById(video1, video2):
 
 def cmpVideosByTrendingDays(video1, video2):
     'Return True if vid1 > vid2'
-    return (float(video1['trending_days']) > float(video2['trending_days']))
+    return (float(video1['trending_days']) >= float(video2['trending_days']))
 
 def cmpVideosByLikes(video1, video2):
     'Return True if vid1 > vid2'
@@ -109,6 +118,13 @@ def sortVideos(catalog, size, method):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
+
+def sortVideosByviews(lst, size):
+    sortmet = selectSortMethod('mgs')
+    sub_list = lt.subList(lst, 0, size)
+    sub_list = sub_list.copy()
+    sorted_list = sortmet.sort(sub_list, cmpVideosByViews)
+    return sorted_list
 
 def sortVideosForCountry(lst, size):
     sortmet = selectSortMethod('mgs')
@@ -148,7 +164,6 @@ def videosCountryTrendingResumed(lst):
     videosResumed = lt.newList('ARRAY_LIST')
     first_video = lt.getElement(lst,0)
     first_video['trending_days'] = 1
-    first_video['likes'] = int(first_video['likes'])
     lt.addLast(videosResumed,first_video)
 
     lst_index = 1
@@ -156,11 +171,9 @@ def videosCountryTrendingResumed(lst):
     while lst_index < lt.size(lst) + 1:
         if lt.getElement(lst,lst_index)['video_id'] == lt.getElement(videosResumed,videosResumed_index)['video_id'] or lt.getElement(lst,lst_index)['title'] == lt.getElement(videosResumed,videosResumed_index)['title']:
             lt.getElement(videosResumed,videosResumed_index)['trending_days'] += 1
-            lt.getElement(videosResumed,videosResumed_index)['likes'] = int(lt.getElement(videosResumed,videosResumed_index)['likes']) + abs(int(lt.getElement(lst,lst_index)['likes']) - int(lt.getElement(videosResumed,videosResumed_index)['likes']))
             lst_index += 1
         else:
             lt.getElement(lst,lst_index)['trending_days'] = 1
-            lt.getElement(lst,lst_index)['likes'] = int(lt.getElement(lst,lst_index)['likes'])
             lt.addLast(videosResumed,lt.getElement(lst,lst_index))
             lst_index += 1
             videosResumed_index += 1
@@ -190,3 +203,43 @@ def videosLikesCountryTags(catalog, country,tag):
     resumed = videosCountryTrendingResumed(videostag)
     sortedByLikes = sortVideosbyLikes(resumed,lt.size(resumed))
     return sortedByLikes
+
+#req1
+
+def videosCountryCategory(catalog, country, category):
+    videos = lt.newList('ARRAY_LIST')
+    i = 0
+    while i < lt.size(catalog['videos']) + 1:
+        video = lt.getElement(catalog['videos'], i)
+        if video['country'] == country:
+            lt.addLast(videos,video)
+            i += 1
+        else:
+            i += 1
+    videoscategory = lt.newList('ARRAY_LIST')
+    i = 0
+    while i < lt.size(videos) + 1:
+        videoc = lt.getElement(videos, i)
+        if categoryRead(catalog, int(videoc['category_id'])) == category:
+            lt.addLast(videoscategory,videoc)
+            i += 1
+        else:
+            i += 1
+    videosCountryCategory = sortVideosByviews(videoscategory, lt.size(videoscategory))
+    return videosCountryCategory
+
+#req3
+
+def videosCategoryTrendingResumed(catalog, category):
+    videoscategory = lt.newList('ARRAY_LIST')
+    i = 0
+    while i < lt.size(catalog['videos']) + 1:
+        videoc = lt.getElement(catalog['videos'], i)
+        if categoryRead(catalog, int(videoc['category_id'])) == category:
+            lt.addLast(videoscategory,videoc)
+            i += 1
+        else:
+            i += 1
+    filteredTrending = videosCountryTrendingResumed(videoscategory)
+    return filteredTrending
+        

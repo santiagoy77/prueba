@@ -69,6 +69,16 @@ def printResults(ord_videos, sample=10):
             print('Titulo: ' + video['title'] + ' Fecha de Tendencia: ' + video['trending_date'] + ' Vistas: ' + video['views'])
             i+=1
 
+def printResultsReq1(filtered, pais, categoria, sample=10):
+    size = lt.size(filtered)
+    if size > sample:
+        print("Los primeros ", sample, " videos con mas views en " + pais + ' de la categoria ' + categoria +' son: ')
+        i=1
+        while i <= sample:
+            video = lt.getElement(filtered, i)
+            print('Trending Date: ' + video['trending_date'] + ' Titulo: ' + video['title'] + ' |- Canal: ' + video['channel_title'] + ' |- Publicación: ' + video['publish_time'] + ' |- Vistas: ' + video['views'] + ' |- Likes: ' + str(video['likes']) + ' |- Dislikes: ' + video['dislikes'])
+            i+=1
+
 def printResultsReq2(filtered, pais, sample=10):
     size = lt.size(filtered)
     if size > sample:
@@ -78,8 +88,18 @@ def printResultsReq2(filtered, pais, sample=10):
             video = lt.getElement(filtered, i)
             print('Titulo: ' + video['title'] + ' |- Canal: ' + video['channel_title'] + ' |- Pais: ' + video['country'] + ' |- Dias en tendencia: ' + str(video['trending_days']))
             i+=1
+
+def printResultsReq3(filtered, category, sample=10):
+    size = lt.size(filtered)
+    if size > sample:
+        print("Los primeros ", sample, " videos en tendencia en " + category + ' son: ')
+        i=1
+        while i <= sample:
+            video = lt.getElement(filtered, i)
+            print('Titulo: ' + video['title'] + ' |- Canal: ' + video['channel_title'] + ' |- Category_Id: ' + video['category_id'] + ' |- Dias en tendencia: ' + str(video['trending_days']))
+            i+=1
     
-def printResultsReq3(filtered, pais, sample=10):
+def printResultsReq4(filtered, pais, sample=10):
     size = lt.size(filtered)
     if size > sample:
         print("Los primeros ", sample, " videos con mas likes en " + pais + ' son: ')
@@ -180,7 +200,11 @@ while True:
     #Options 3 Starts Here
     
     elif int(inputs[0]) == 3:
-        pass
+        categoria = input('Ingrese la categoria: ')
+        pais = input('Ingrese el pais deseado: ')
+        wantSee = int(input('Ingrese el numerdo de videos que desea ver: '))
+        videosCategoryCountry = controller.videosCountryCategory(catalog, pais, categoria)
+        printResultsReq1(videosCategoryCountry,pais,categoria,wantSee)
 
     #Options 3 Ends Here
     #------------------------
@@ -198,7 +222,11 @@ while True:
     #Options 5 Starts Here
 
     elif int(inputs[0]) == 5:
-        pass
+        category = input('Ingrese la categoria deseada: ')
+        wantSee = int(input('Ingrese el numerdo de videos que desea ver: '))
+        trendingVideosCatDays = controller.videosCategoryTrendingResumed(catalog, category)
+        print(lt.size(trendingVideosCatDays))
+        printResultsReq3(trendingVideosCatDays, category, wantSee)
 
     #Options 5 Ends Here
     #------------------------
@@ -209,7 +237,7 @@ while True:
         tag = input('Ingrese el tag deseado: ')
         wantSee = int(input('Ingrese el numero de videos que desea ver: '))
         videosLikesCountryTags = controller.videosLikesCountryTags(catalog, pais, tag)
-        printResultsReq3(videosLikesCountryTags, pais, wantSee)
+        printResultsReq4(videosLikesCountryTags, pais, wantSee)
     #Options 6 Ends Here
     #------------------------
 
