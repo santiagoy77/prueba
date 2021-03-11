@@ -240,6 +240,7 @@ def videosCategoryTrendingResumed(catalog, category):
             i += 1
         else:
             i += 1
-    filteredTrending = videosCountryTrendingResumed(videoscategory)
+    sortedVCategory = sortVideosForCountry(videoscategory,lt.size(videoscategory))
+    filteredTrending = videosCountryTrendingResumed(sortedVCategory)
     return filteredTrending
         
