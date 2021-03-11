@@ -202,10 +202,10 @@ def presantacionTag(l):
 def contVidsCat(category,catalog):
     videos=catalog['videos']
     c= catalog['category']
-    z = mp.get(c,category)['value']
+    l = mp.get(c,category)['value']
     d=mp.newMap(numelements=1)
-    for x in z:
-        t=lt.getElement(videos,x)
+    for i in l:
+        t=lt.getElement(videos,i)
         if mp.contains(d,t['video_id']):
             v=mp.get(d,t['video_id'])['value']
             v+=1
@@ -221,8 +221,8 @@ def contVidsCat(category,catalog):
         if tv > mayor:
             mayor= tv
             temp =k
-    for y in z:
-        t=lt.getElement(videos,y)
+    for u in l:
+        t=lt.getElement(videos,u)
         if t['video_id']==temp:
             lr=[t['title'],t['channel_title'],t['category_id'],mayor]
             return lr
