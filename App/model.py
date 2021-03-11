@@ -179,7 +179,6 @@ def presantacion(l):
     for i in newIterator:
         print('Trending Date: '+str(i['trending_date'])+'\t''Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+str(i['publish_time'])+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes']+'\n'+'\n')
 
-
 def tagsEsp(country,tag,catalog):
     video=catalog['videos']
     countries=catalog['country']
