@@ -36,8 +36,22 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+
+    catalog = { 'artista': None,
+                'obras': None
+                }
+
+    catalog['artista']  = lt.newList(datastructure='SINGLE_LINKED')
+    catalog['obras']  = lt.newList(datastructure='SINGLE_LINKED')
 
 # Funciones para agregar informacion al catalogo
+def addArtist(catalog, artista):
+
+    lt.addLast(catalog['artista'], artista)
+
+def addArtwork(catalog, artwork):
+    lt.addLast(catalog['obra'], artwork)
 
 # Funciones para creacion de datos
 
