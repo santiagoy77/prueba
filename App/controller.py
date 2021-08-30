@@ -39,7 +39,9 @@ def initCatalog():
 
 
 # Funciones para la carga de datos
-
+def loadData(catalog):
+    loadArtists(catalog)
+    loadArtworks(catalog)
 
 def loadArtists(catalog):
     artist_file: cf.data_dir + 'MoMA/Artists-utf8-5pct.csv'
