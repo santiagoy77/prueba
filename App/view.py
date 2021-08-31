@@ -37,7 +37,12 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Artistas en orden cronológico")
+    print('3- Adquisiciones en orden cronológico')
+    print('4- Obras de arte de artista por técnica')
+    print('5- Obras de arte por nacionalidad de artista')
+    print('6- Transportar obras de un departamento')
+    print('0- Proponer una nueva exposición en el museo')
 
 catalog = None
 
