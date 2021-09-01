@@ -35,17 +35,29 @@ def initCatalog():
     catalog = model.newCatalog()
     return catalog
 
-# Funciones para la carga de datos
-def loadData(catalog):
+def artistsInfo():
+    artists_info = model.artistsInfo()
+    return artists_info
 
+# Funciones para la carga de datos
+def loadData(catalog, artists_info):
+    loadArtistsinfo(artists_info)
     loadArtWorks(catalog)
    
 
 def loadArtWorks(catalog):
-    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-large.csv'
     input_file = csv.DictReader(open(artworksfile, encoding = 'utf-8'))
     for artwork in input_file:
         model.addArtWork(catalog, artwork)
+
+def loadArtistsinfo(artists_info):
+    artistsfile = cf.data_dir + 'MoMA/Artists-utf8-large.csv'
+    input_file =  csv.DictReader(open(artistsfile, encoding= 'utf-8'))
+    
+    for info in input_file:
+        model.addArtistsInfo(artists_info, info)
+    
 
 
 # Funciones de ordenamiento

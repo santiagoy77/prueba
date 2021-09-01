@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import addLast
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -47,16 +48,20 @@ def newCatalog():
                                     cmpfunction=compareartists)
     return catalog
 
+def artistsInfo():
+    artists_info = lt.newList('SINGLE_LINKED',
+                cmpfunction=None)
+    return artists_info
 
 # Funciones para agregar informacion al catalogo
 
 def addArtWork(catalog, artwork):
-
     lt.addLast(catalog['artworks'], artwork)
     artists = artwork['ConstituentID'].split(',')
+    artworktitle = artwork['Title']
 
     for artist in artists:
-        addArtWorkArtist(catalog, artist.strip() , artwork)
+        addArtWorkArtist(catalog, artist.strip() , artworktitle)
     
 
 def addArtWorkArtist(catalog, artistname, artwork):
@@ -68,8 +73,16 @@ def addArtWorkArtist(catalog, artistname, artwork):
     else:
         artist = newArtist(artistname)
         lt.addLast(artists, artist)
+    artistname = artist['name']
+
     lt.addLast(artist['artworks'], artwork)
 
+def addArtistsInfo(artists_info, info):
+    var =  lt.isEmpty(artists_info)
+    if var == True:
+        lt.addFirst(artists_info, info)
+    else:
+        lt.addLast(artists_info, info)
     
 
 # Funciones para creacion de datos
@@ -78,10 +91,12 @@ def newArtist(name):
 
     artist = {
         'name' : "",
-        'artworks' : None
+        'artworks' : None,
+        'info' : None,
             }
     artist['name'] = name
     artist['artworks'] = lt.newList('ARRAY_LIST')
+    artist['info'] = 'x'
     return artist
         
 

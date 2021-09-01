@@ -46,12 +46,15 @@ def initCatalog():
 
     return controller.initCatalog()
 
-def loadData(catalog):
+def loadData(catalog, artists_info):
     
-    controller.loadData(catalog)
+    controller.loadData(catalog, artists_info)
     
 def printArtistData(artist):
     print('Artista encontrado: ' + artist['name'])
+
+def artistsInfo():
+    return controller.artistsInfo()
 
 catalog = None
 
@@ -64,13 +67,14 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
-        loadData(catalog)
+        artists_info = artistsInfo()
+        loadData(catalog, artists_info)
         print('Artworks cargados: ' + str(lt.size(catalog['artworks'])))
-        print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
+        print('Artistas cargados: ' + str(str(lt.size(artists_info))))
 
     elif int(inputs[0]) == 2:
         a  = catalog['artists']
-        print(lt.firstElement(a))
+        print((lt.firstElement(a)))
     elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 4:
