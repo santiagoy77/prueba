@@ -35,9 +35,31 @@ operación solicitada
 """
 
 def printMenu():
+    """
+    Imprime las opciones del menú.
+    """
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("1- Cargar información en el catálogo.")
+    print("2- Listar cronológicamente los artistas.")
+    print("3- Listar cronológicamente las adquisiciones.")
+    print("4- Clasificar las obras de un artista por técnica.")
+    print("5- Clasificar las obras por la nacionalidad de sus creadores.")
+    print("6- Transportar obras de un departamento.")
+    print("7- Proponer una nueva exposición en el museo.")
+    print("0- Detener la ejecución del programa.")
+
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 catalog = None
 
@@ -45,14 +67,29 @@ catalog = None
 Menu principal
 """
 while True:
+    error = "Por favor ingrese un número entero entre 0 y 7."
     printMenu()
-    inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    try:
+        inputs = int(input('Seleccione una opción para continuar\n'))
+    except:
+        print(error)
+        continue
+    if inputs == 1:
         print("Cargando información de los archivos ....")
-
-    elif int(inputs[0]) == 2:
-        pass
-
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
+        print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
+        print('Últimos tres artistas cargados:\n')
+        for i in [-3,-2,-1]:
+            print(str(lt.getElement(catalog['artists'],i)))
+        print('Últimas tres obras de arte cargadas:\n')
+        for i in [-3,-2,-1]:
+            print(str(lt.getElement(catalog['artworks'],i)))
+    elif (inputs>1) and (inputs<8):
+        print("Este requerimiento aún no se ha implementado.")
+    elif inputs >= 8:
+        print(error)
     else:
         sys.exit(0)
 sys.exit(0)

@@ -31,18 +31,55 @@ from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
+Se define la estructura de un catálogo de obras de arte. 
+El catálogo tendrá dos listas, una para las obras de arte, 
+otra para los artistas de estas.
 """
 
 # Construccion de modelos
 
+def newCatalog():
+    """
+    Inicializa el catálogo de obras de arte. 
+    Crea listas vacías con los siguientes própositos:
+    Para guardar las obras de arte
+    Para guardar los autores
+    Quizá luego se añaden más listas con los autores ordenados o lo que se necesite.
+    """
+    catalog = {'artists': None,
+               'artworks': None}
+
+    catalog['artists'] = lt.newList('ARRAY_LIST',
+                                    cmpfunction=compare_artists)
+    catalog['artworks'] = lt.newList('ARRAY_LIST',
+                                 cmpfunction=compare_artworks)
+
+    return catalog
+
+## NOTA: Se están cargando los datos de forma muy simple. 
+# Se está pensando en la primera entrega, no en los requerimientos. 
+# Pronto se estructurará el catálogo de mejor manera.
+
 # Funciones para agregar informacion al catalogo
+
+def addArtist(catalog, artist):
+    # Se añade el artista al final de la lista de artistas en el catálogo.
+    lt.addLast(catalog['artists'], artist)
+
+def addArtwork(catalog, artwork):
+    # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
+    lt.addLast(catalog['artworks'], artwork)
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def compare_artists():
+    pass
+
+def compare_artworks():
+    pass
 
 # Funciones de ordenamiento
