@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from model import addArtWork
 import config as cf
 import model
 import csv
@@ -30,8 +31,22 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
+def initCatalog():
+    catalog = model.newCatalog()
+    return catalog
 
 # Funciones para la carga de datos
+def loadData(catalog):
+
+    loadArtWorks(catalog)
+   
+
+def loadArtWorks(catalog):
+    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    input_file = csv.DictReader(open(artworksfile, encoding = 'utf-8'))
+    for artwork in input_file:
+        model.addArtWork(catalog, artwork)
+
 
 # Funciones de ordenamiento
 

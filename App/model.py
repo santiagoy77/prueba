@@ -36,13 +36,64 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+
+    catalog = {
+        "artworks" : None,
+        "artists" : None,
+    }
+    catalog['artworks'] =  lt.newList()
+    catalog['artists'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=compareartists)
+    return catalog
+
 
 # Funciones para agregar informacion al catalogo
 
+def addArtWork(catalog, artwork):
+
+    lt.addLast(catalog['artworks'], artwork)
+    artists = artwork['ConstituentID'].split(',')
+
+    for artist in artists:
+        addArtWorkArtist(catalog, artist.strip() , artwork)
+    
+
+def addArtWorkArtist(catalog, artistname, artwork):
+
+    artists = catalog['artists']
+    posArtist = lt.isPresent(artists, artistname)
+    if posArtist > 0:
+        artist = lt.getElement(artists, posArtist)
+    else:
+        artist = newArtist(artistname)
+        lt.addLast(artists, artist)
+    lt.addLast(artist['artworks'], artwork)
+
+    
+
 # Funciones para creacion de datos
+
+def newArtist(name):
+
+    artist = {
+        'name' : "",
+        'artworks' : None
+            }
+    artist['name'] = name
+    artist['artworks'] = lt.newList('ARRAY_LIST')
+    return artist
+        
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def compareartists(artistname1, artist):
+    if (artistname1.lower() in artist['name'].lower()):
+        return 0
+    return -1
+    return None
+
 
 # Funciones de ordenamiento
