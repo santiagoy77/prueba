@@ -143,3 +143,7 @@ dmypy.json
 !Data/videos-small.csv
 
 .vim
+
+# Excluded data
+./Data/MoMA
+./Data/MoMA.zip
