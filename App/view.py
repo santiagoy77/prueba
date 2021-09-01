@@ -69,8 +69,18 @@ while True:
         catalog = initCatalog()
         artists_info = artistsInfo()
         loadData(catalog, artists_info)
-        print('Artworks cargados: ' + str(lt.size(catalog['artworks'])))
-        print('Artistas cargados: ' + str(str(lt.size(artists_info))))
+        num_artworks = lt.size(catalog['artworks'])
+        num_artists = lt.size(artists_info)
+        print('Artworks cargados: ' + str(num_artworks))
+        print('Artistas cargados: ' + str(num_artists))
+        print("Ultimos Artworks cargados:")
+        for i in range(0,3):
+            print(i+1,". ",(lt.getElement(catalog["artworks"],num_artworks-i)["Title"]))
+        print("--------------------------------------------------------------")
+        print("Ultimos artistas cargados: ")
+        for i in range(0,3):
+            print(i+1,". ",lt.getElement(artists_info,num_artists-i)["DisplayName"])
+
 
     elif int(inputs[0]) == 2:
         a  = catalog['artists']
