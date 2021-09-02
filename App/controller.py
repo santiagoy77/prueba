@@ -24,6 +24,34 @@ import config as cf
 import model
 import csv
 
+def initCatalog():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    catalog = model.newCatalog()
+    return catalog
+
+def loadData(catalog):
+    """"
+    Carga los archivos del museo 
+    """
+    loadArtwork(catalog)
+    loadArtists(catalog)
+
+def loadArtwork(catalog):
+
+    awfile = cf.data_dir + "Artworks-utf8-small.csv"
+    input_file = csv.DictReader(open(awfile, encoding ="utf-8"))
+    for aw in input_file:
+        model.addArtwork(catalog, aw)
+
+def loadArtists(catalog):
+    artistfile = cf.data_dir + "Artists-utf8-small.csv"
+    input_file = csv.DictReader(open(artistfile, encoding ="utf-8"))
+    for artist in input_file:
+        model.addArtists(catalog, artist)
+
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

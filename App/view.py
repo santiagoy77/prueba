@@ -33,19 +33,31 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
-
-def printMenu():
-	print("Bienvenido")
-    print("1- Cargar datos")
-	print("2- Listar cronológicamente los artistas ")
-	print("3- Listar cronológicamente las adquisiciones ")
-	print("4- Clasificar las obras de un artista por técnica")
-	print("5- Clasificar las obras por la nacionalidad de sus creadores")
-	print("6- Costo de transportar las obras de un departamento")
-	print("7- Proponer una nueva exposición en el museo")
-	print("0- Salir")
-
 catalog = None
+def printMenu():
+    print ("Bienvenido")
+    print ("1. Cargar archivos.")
+    print ("2. Listar cronológicamente los artistas")
+    print ("3. Listar cronológicamente las adquisiciones.")
+    print ("4. Clasificar las obras de un artista por técnica")
+    print ("5. Clasificar las obras por la nacionalidad de sus creadores.")
+    print ("6. Costo de transportar las obras de un departamento a otro")
+    print ("7. Proponer una nueva exposción en el museo")
+    print ("0. Salir")
+
+
+
+def initCatalog():
+    """
+    Inicializa el catalogo del museo
+    """
+    return controller.initCatalog()
+
+def loadData(catalog):
+    """
+    Carga los datos en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 """
 Menu principal
@@ -53,9 +65,14 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
+    
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Libros cargados: ' + str(lt.size(catalog['artists'])))
+        print('Autores cargados: ' + str(lt.size(catalog['artworks'])))           
+        print (catalog)
     elif int(inputs[0]) == 2:
         pass
 
