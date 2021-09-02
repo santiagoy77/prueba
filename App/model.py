@@ -39,46 +39,71 @@ los mismos.
 
 def newCatalog():
   """
+  Inicializa el catálogo de artistas y obras (PENDIENTE)
   """
-  artists_catalog = {'ConstituentID': None,
-                     'DisplayName': None,
-                     'ArtistBio': None,
-                     'Nationality': None,
-                     'Gender': None,
-                     'BeginDate': None,
-                     'EndDate': None,
-                     'Wiki QID': None,
-                     'ULAN': None}
-  artworks_catalog = {'ObjectID': None,
-                      'Title': None,
-                      'ConstituentID': None,
-                      'Date': None,
-                      'Medium': None,
-                      'Dimensions': None,
-                      'CreditLine': None,
-                      'AccessionNumber': None,
-                      'Classification': None,
-                      'Department': None,
-                      'DateAcquired': None,
-                      'Cataloged': None,
-                      'URL': None,
-                      'Circumference (cm)': None,
-                      'Depth (cm)': None,
-                      'Diameter (cm)': None,
-                      'Height (cm)': None,
-                      'Lenght (cm)': None,
-                      'Weight (kg)': None,
-                      'Width (cm)': None,
-                      'Seat Height (cm)': None,
-                      'Duration (sec.)': None}
-  artworks_catalog['ConstituentID'] = lt.newList()
+  catalog = {'artists': None,
+             'artworks': None}
+
+  catalog['artists'] = lt.newList('SINGLE_LINKED', cmpfunction=compareartists)
+  catalog['artworks'] = lt.newList()
+
+  return catalog
 
 # Funciones para agregar informacion al catalogo
 
+def addArtwork(catalog, artwork):
+    # Se adiciona la obra a la lista de obras
+    lt.addLast(catalog['artworks'], artwork)
+    # Se obtienen los artistas de la obra
+    artists = artwork[''].split(",")
+    # Cada artista, se crea en la lista de artistas del catálogo, y se
+    # crea una obraa en la lista de dicho artista (apuntador a la obra)
+    for artist in artists:
+        addArtworkArtist(catalog, artist.strip(), artwork)
+
+def addArtworkArtist(catalog, artistname, born, death, gender, nation):
+    """
+    Adiciona un artista a lista de artistas, la cual guarda referencias
+    a las obras de dicho artista (PENDIENTE)
+    """
+    artists = catalog['artists']
+    posartist = lt.isPresent(artists, artistname)
+    if posartist > 0:
+        artist = lt.getElement(artists, posartist)
+    else:
+        artist = newArtist(artistname, born, death, gender, nation)
+        lt.addLast(artists, artist)
+
+    # lt.addLast(artist['artworks'], artwork)
+
 # Funciones para creacion de datos
+def newArtist(name, begin_date, end_date, gender, nationality):
+  """
+  Crea una nueva estructura para modelar el perfil del artista (su información personal) y sus obras
+  """
+  artist = {'name': "",
+            'born_date': None,
+            'death_date': None,
+            'gender': "",
+            'nationality': "",
+            'artworks': None}
+  
+  artist['name'] = name
+  artist['born_date'] = begin_date
+  artist['death_date'] = end_date
+  artist['gender'] = gender
+  artist['nationality'] = nationality
+  artist['artworks'] = lt.newList('ARRAY_LIST')
+
+  return artist
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def compareartists(artistname1, artist):
+  if (artistname1.lower() in artist['name'].lower()):
+    return 0
+  return -1
 
 # Funciones de ordenamiento
