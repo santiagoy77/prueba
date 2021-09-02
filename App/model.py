@@ -37,12 +37,64 @@ los mismos.
 
 # Construccion de modelos
 
+def newCatalog():
+    """
+    Inicializa el catálogo del museo. Crea una lista vacia para guardar
+    todos los artistas, adicionalmente, crea una lista vacia para las obras de arte.
+    Retorna el catalogo inicializado.
+    """
+    catalog = {'artists': None,
+               'artworks': None}
+
+    catalog['artists'] = lt.newList('ARRAY_LIST',
+                                    cmpfunction=compareartistyears)
+    catalog['artworks'] = lt.newList('ARRAY_LIST',
+                                    cmpfunction=compareartworkyears)
+    
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
+def addArtist(catalog, artist):
+    """
+    Adiciona un artista a la lista de artistas
+    """
+    a = newArtist(artist['DisplayName'], artist['Wiki QID'])
+    lt.addLast(catalog['artists'], a)
+
+def addArtwork(catalog, artwork):
+    """
+    Adiciona una obra a la lista de obras
+    """
+    art = newArtwork(artwork['Title'], artwork['ConstituentID'])
+    lt.addLast(catalog['artworks'], art)
+
 # Funciones para creacion de datos
+def newArtist(name, id):
+    """
+    Esta estructura almancena los artistas utilizados.
+    """
+    artist = {'DisplayName': '', 'Wiki QID': ''}
+    artist['DisplayName'] = name
+    artist['Wiki QID'] = id
+    return artist
+
+def newArtwork(name, id):
+    """
+    Esta estructura almancena las obras utilizadas.
+    """
+    artist = {'Title': '', 'ConstituentID': ''}
+    artist['Title'] = name
+    artist['ConstituentID'] = id
+    return artist
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+def compareartistyears(year1, year2):
+    return (int(year1['BeginDate']) > int(year2['BeginDate']))
+
+def compareartworkyears(year1, year2):
+    return (int(year1['Date']) > int(year2['Date']))

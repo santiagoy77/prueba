@@ -33,6 +33,16 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+def initCatalog():
+    return controller.initCatalog()
+
+def loadData(catalog):
+    """
+    Carga los artistas y las obras en la estructura de datos
+    """
+    controller.loadData(catalog)
+
+    
 
 def printMenu():
     print("Bienvenido")
@@ -45,11 +55,13 @@ def printMenu():
     print("7- Proponer una nueva exposición en el museo ")
     print("0- Salir"
 
-catalog = None
+
+
 
 """
 Menu principal
 """
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
@@ -59,6 +71,19 @@ while True:
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
+        artista1= lt.getElement(catalog['artists'],1)
+        print(artista1)
+        artista2= lt.getElement(catalog['artists'],2)
+        print(artista2)
+        artista3= lt.getElement(catalog['artists'],3)
+        print(artista3)
+        obra1= lt.getElement(catalog['artworks'],1)
+        print(obra1)
+        obra2= lt.getElement(catalog['artworks'],2)
+        print(obra2)
+        obra3= lt.getElement(catalog['artworks'],3)
+        print(obra3)
+
 
     elif int(inputs[0]) == 2:
         pass
