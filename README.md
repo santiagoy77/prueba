@@ -1,8 +1,8 @@
 Integrantes:
 
-Federico Melo Barrero <br> 202021525 <br> f.melo@uniandes.edu.co <br> Implementa el requerimiento individual 3.
+<b>Federico Melo Barrero</b> <br> 202021525 <br> f.melo@uniandes.edu.co <br> Implementa el requerimiento individual 3.
 
-Juan Camilo Prieto Avella <br> 201814815 <br> jc.prietoa@uniandes.edu.co <br> Implementa el requerimiento individual 4.
+<b>Juan Camilo Prieto Avella</b> <br> 201814815 <br> jc.prietoa@uniandes.edu.co <br> Implementa el requerimiento individual 4.
 
 #ISIS1225 - Librerias de soporte
 
