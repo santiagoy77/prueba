@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from controller import loadData
 import config as cf
 import sys
 import controller
@@ -44,6 +45,7 @@ def printMenu():
     print('6- Transportar obras de un departamento')
     print('0- Proponer una nueva exposición en el museo')
 
+
 catalog = None
 
 """
@@ -54,7 +56,14 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = (controller.InitCatalog())
+        controller.loadData(catalog)
+        print("Número de Arttistas registrados: " + str(lt.size(catalog['Artists'])))
+        print("Número de obras de arte registradas: " + str(lt.size(catalog['Artworks'])))
+        print("Primeros 3 artistas: " + str(catalog['Artists']['elements'][:3]))
+        print("Ultimos 3 artistas: " + str(catalog['Artists']['elements'][-3:]))
+        print("Primeras 3 obras de arte: " + str(catalog['Artworks']['elements'][:3]))
+        print("Ultimas 3 obras de arte: " + str(catalog['Artworks']['elements'][-3:]))
     elif int(inputs[0]) == 2:
         pass
 
