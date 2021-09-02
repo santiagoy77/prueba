@@ -37,7 +37,13 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Listar cronológicamente los artistas ")
+    print("3- Listar cronológicamente las adquisiciones")
+    print("4- Clasificar las obras de un artista por técnica")
+    print("5- Clasificar las obras por la nacionalidad de sus creadores")
+    print("6- Transportar obras de un departamento ")
+    print("7- Proponer una nueva exposición en el museo ")
+    print("0- Salir"
 
 catalog = None
 
@@ -49,6 +55,10 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog = initCatalog()
+        loadData(catalog)
+        print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
+        print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
 
     elif int(inputs[0]) == 2:
         pass
