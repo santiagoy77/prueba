@@ -36,8 +36,44 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+    catalog = {'name': None,
+               'bio': None,
+               'nationality': None,
+               'gender': None}
+
+    catalog['name'] = lt.newList()
+    catalog['bio'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=compareauthors)
+    catalog['nationality'] = lt.newList('SINGLE_LINKED',
+                                 cmpfunction=comparetagnames)
+    catalog['gender'] = lt.newList('SINGLE_LINKED')
+
+    return catalog
 
 # Funciones para agregar informacion al catalogo
+
+def addBook(catalog, name):
+    # Se adiciona el libro a la lista de libros
+    lt.addLast(catalog['name'], name)
+    # Se obtienen los autores del libro
+    authors = name['name'].split(",")
+    # Cada autor, se crea en la lista de libros del catalogo, y se
+    # crea un libro en la lista de dicho autor (apuntador al libro)
+    for author in authors:
+        addBookAuthor(catalog, author.strip(), name)
+
+
+def addBookAuthor(catalog, authorname, name):
+    authors = catalog['authors']
+    posauthor = lt.isPresent(authors, authorname)
+    if posauthor > 0:
+        name = lt.getElement(authors, posauthor)
+    else:
+        name = newAuthor(authorname)
+        lt.addLast(authors, author)
+    lt.addLast(author['name'], name)
+
 
 # Funciones para creacion de datos
 
