@@ -69,3 +69,10 @@ def loadArtworks(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+def getArtistsbyYear(catalog, year1, year2):
+    """
+    Retorna los artistas entre los años dados
+    """
+    ArtistbyYear = model.getArtistsbyYear(catalog, year1, year2)
+    return(ArtistbyYear)

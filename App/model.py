@@ -90,6 +90,21 @@ def newArtwork(name, id):
 
 # Funciones de consulta
 
+def getArtistsbyYear(catalog, year1, year2):
+    """
+    Retorna los mejores libros
+    """
+    artists = catalog['artists']
+    ArtistsbyYear = lt.newList('ARRAY_LIST',
+                                cmpfunction=compareartistyears)
+    i=1
+    while i<= range(artists):
+        artist = lt.getElement(artists, i)
+        year=artist["BeginDate"]
+        if year1<year<year2:
+            lt.addLast(ArtistsbyYear, artist)
+    return ArtistsbyYear
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
@@ -98,3 +113,4 @@ def compareartistyears(year1, year2):
 
 def compareartworkyears(year1, year2):
     return (int(year1['Date']) > int(year2['Date']))
+

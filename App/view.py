@@ -53,10 +53,32 @@ def printMenu():
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
     print("6- Transportar obras de un departamento ")
     print("7- Proponer una nueva exposición en el museo ")
-    print("0- Salir"
+    print("0- Salir")
 
 
-
+def printArtistbyYear(artists):
+    size = lt.size(artists)
+    if size:
+        print(' Estos son los 3 primeros: ')
+        i=1
+        while i<=3:
+            artist=lt.getElement(artists,i)
+            print('Nombre: ' + artist['DisplayName'] + '  Año de nacimiento: ' +
+                  artist['BeginDate'] + ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
+                  artist['Gender'])
+            i+=1
+        print (' Estos son los 3 últimos: ')
+        j=size
+        a=1
+        while a<=3:
+            artist=lt.getElement(artists,j)
+            print('Nombre: ' + artist['DisplayName'] + '  Año de nacimiento: ' +
+                  artist['BeginDate'] + ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
+                  artist['Gender'])
+            j-=1
+            a+=1
+    else:
+        print('No se encontraron libros')
 
 """
 Menu principal
@@ -71,22 +93,24 @@ while True:
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
-        artista1= lt.getElement(catalog['artists'],1)
-        print(artista1)
-        artista2= lt.getElement(catalog['artists'],2)
-        print(artista2)
-        artista3= lt.getElement(catalog['artists'],3)
-        print(artista3)
-        obra1= lt.getElement(catalog['artworks'],1)
-        print(obra1)
-        obra2= lt.getElement(catalog['artworks'],2)
-        print(obra2)
-        obra3= lt.getElement(catalog['artworks'],3)
-        print(obra3)
+        
+        i=1
+        while i<=3:
+            artista=lt.getElement(catalog['artists'],i)
+            print(artista)
+            i+=1
+        j=1
+        while j<=3:
+            obra=lt.getElement(catalog['artworks'],j)
+            print(obra)
+            j+=1
 
-
+        
     elif int(inputs[0]) == 2:
-        pass
+        year1 = input("Ingrese el año inicial: ")
+        year2 = input("Ingrese el año final: ")
+        artists = controller.getArtistsbyYear(catalog, int(year1), int(year2))
+        printArtistbyYear(artists)
 
     else:
         sys.exit(0)
