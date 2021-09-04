@@ -47,30 +47,30 @@ def loadData(catalog):
     estructura de datos
     """
     loadArtworks(catalog)
+    loadArtists(catalog)
 
 
 def loadArtworks(catalog):
     """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    Carga las obras de arte del archivo.  Por cada obra de arte se toman sus autores y por
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
+    referencia a la obra de arte que se esta procesando.
     """
     artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addArtwork(catalog, book)
+    for artwork in input_file:
+        model.addArtwork(catalog, artwork)
 
+def loadArtists(catalog):
+    """
+    Carga todos los artistas del archivo y los agrega a la lista de tags
+    """
+    tagsfile = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
+    input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
+    for artist in input_file:
+        model.addArtist(catalog, artist)
 
 # Funciones de ordenamiento
-
-def sortArtworks(catalog):
-    """
-    Ordena los libros por average_rating
-    """
-    model.sortArtworks(catalog)
-
-
-# Funciones para la carga de datos
 
 # Funciones de ordenamiento
 

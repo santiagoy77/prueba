@@ -44,8 +44,6 @@ def printMenu():
     print("6- Transportar obras de un departamento ")
     print("7- Proponer una nueva exposición en el museo")
 
-catalog = None
-
 def initCatalog():
     """
     Inicializa el catalogo de libros
@@ -57,6 +55,9 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
+
+catalog = None
+
 """
 Menu principal
 """
@@ -69,10 +70,6 @@ while True:
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
-        
-
-    elif int(inputs[0]) == 2:
-        pass
 
     else:
         sys.exit(0)
