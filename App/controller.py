@@ -24,11 +24,11 @@ import config as cf
 import model
 import csv
 
-def initCatalog():
+def initCatalog(tipolista : str):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalog(tipolista)
     return catalog
 
 def loadData(catalog):

@@ -47,11 +47,11 @@ def printMenu():
 
 
 
-def initCatalog():
+def initCatalog(tipolista: str):
     """
     Inicializa el catalogo del museo
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipolista)
 
 def loadData(catalog):
     """
@@ -67,8 +67,15 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     
     if int(inputs[0]) == 1:
+        print ("Escoja el tipo de lista que quiere utilizar: ")
+        print ("1. Array List.\n2. Single Linked")
+        num = int(input("Digite el número de estructura de la lista escogido: "))
+        if num == 1:
+            tipolista = "ARRAY_LIST"
+        else:
+            tipolista = "SINGLE_LINKED"
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        catalog = initCatalog(tipolista)
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))           

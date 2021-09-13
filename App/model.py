@@ -29,23 +29,26 @@ import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
+import datetime
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def newCatalog():
+def newCatalog(tipolista: str):
     catalog = {'artists': None,
                'artworks': None,
                }
-    catalog["artists"] = lt.newList("ARRAY_LIST", cmpfunction= compareartists)
-    catalog["artworks"] = lt.newList("ARRAY_LIST")
+    catalog["artists"] = lt.newList(tipolista,cmpfunction= compareartists)
+    catalog["artworks"] = lt.newList(tipolista)
 
     return catalog
 
 def addArtwork(catalog, artwork):  
     lt.addLast(catalog["artworks"], artwork)
-    artists = artwork["ConstituentID"].strip("[]")
+    artists = artwork["ConstituentID"].replace("[", "")
+    artists = artwork["ConstituentID"].replace("]","")
+    artist = artwork["ConstituentID"].replace(" ", "")
     artists = artwork["ConstituentID"].split(",")
     for artist in artists:
         addArtistArtWork(catalog,artist.strip(),artwork)
@@ -84,7 +87,10 @@ def compareartists(artistname1, artist):
         return 0
     return -1
 
+"""def cmpArtworkByDateAcquired(artwork1, artwork2):
+    if artwork1
 
+"""
 
 
 # Construccion de modelos
