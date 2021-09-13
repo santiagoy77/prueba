@@ -30,6 +30,7 @@ def initCatalog(tipolista : str):
     """
     catalog = model.newCatalog(tipolista)
     return catalog
+    
 
 def loadData(catalog):
     """"

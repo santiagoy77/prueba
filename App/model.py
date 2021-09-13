@@ -46,12 +46,11 @@ def newCatalog(tipolista: str):
 
 def addArtwork(catalog, artwork):  
     lt.addLast(catalog["artworks"], artwork)
-    artists = artwork["ConstituentID"].replace("[", "")
-    artists = artwork["ConstituentID"].replace("]","")
-    artist = artwork["ConstituentID"].replace(" ", "")
+    artists = artwork["ConstituentID"].strip("[]")
     artists = artwork["ConstituentID"].split(",")
     for artist in artists:
-        addArtistArtWork(catalog,artist.strip(),artwork)
+        addArtistArtWork(catalog,artist,artwork)
+  
 
 def addArtistArtWork(catalog,artistname,artwork):
     artists = catalog["artists"]

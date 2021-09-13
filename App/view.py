@@ -78,7 +78,10 @@ while True:
         catalog = initCatalog(tipolista)
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
-        print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))           
+        print('Obras cargadas: ' + str(lt.size(catalog['artworks']))) 
+        for i in catalog["artists"]["elements"]:
+            
+                 
     elif int(inputs[0]) == 2:
         pass
 
