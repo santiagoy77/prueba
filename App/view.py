@@ -36,12 +36,12 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- Listar cronológicamente los artistas")
-    print("3- Clasificar las obras de un artista por técnica")
-    print("4- Clasificar las obras por la nacionalidad de sus creadores")
-    print("5- Transportar obras de un departamento")
-    print("6- Proponer una nueva exposición en el museo")
+    print("0- Cargar información en el catálogo")
+    print("1- Listar cronológicamente los artistas por un rango de años")
+    print("2- Clasificar las obras de un artista por técnica")
+    print("3- Clasificar las obras por la nacionalidad de sus creadores")
+    print("4- Transportar obras de un departamento")
+    print("5- Proponer una nueva exposición en el museo")
 
 def initCatalog():
     """
@@ -63,15 +63,23 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    if int(inputs[0]) == 0:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        print(catalog)
 
+    elif int(inputs[0]) == 1:
+        pass
     elif int(inputs[0]) == 2:
+        pass
+    elif int(inputs[0]) == 3:
+        pass
+    elif int(inputs[0]) == 4:
+        pass
+    elif int(inputs[0]) == 5:
+        pass
+    elif int(inputs[0]) == 6:
         pass
 
     else:
         sys.exit(0)
-sys.exit(0)

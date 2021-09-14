@@ -44,29 +44,28 @@ def loadData(catalog):
   Carga los datos de los archivos y cargar los datos en la
   estructura de datos
   """
-  loadArtists(catalog)
+  loadArtwork(catalog)
+  # loadArtists(catalog)
+
+def loadArtwork(catalog):
+  """
+  Carga los obras del archivo.  Por cada obra se toman sus artistas y por
+  cada uno de ellos, se crea en la lista de artistas, a dicho artista y una
+  referencia a la obra que se está procesando.
+  """
+  artworks_file = f"{cf.data_dir}/MoMA/Artworks-utf8-5pct.csv"
+  input_file = csv.DictReader(open(artworks_file, encoding='utf-8'))
+  for artwork in input_file:
+    model.addArtwork(catalog, artwork)
 
 def loadArtists(catalog):
   """
-  Carga los libros del archivo.  Por cada libro se toman sus autores y por 
-  cada uno de ellos, se crea en la lista de autores, a dicho autor y una 
-  referencia al libro que se esta procesando.
+  Carga los datos de los artistas del archivo y los agrega a la lista de artistas
   """
-  artistsfile = cf.data_dir + "MoMA/Artists-utf8-small.csv"
-  input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
-  for artist in input_file:
-    try:
-    # print(artist)
-      name = artist['DisplayName']
-      gender = artist["Gender"]
-      nation = artist["Nationality"]
-      born = artist["BeginDate"]
-      death = artist["EndDate"]
-
-      model.addArtworkArtist(catalog, artist, born, death, gender, nation)
-    except:
-      pass
-
+  artists_info_file = f"{cf.data_dir}/MoMA/Artists-utf8-5pct.csv"
+  input_file = csv.DictReader(open(artists_info_file, encoding='utf-8'))
+  for artist_info in input_file:
+    model.addArtistInfo(catalog, artist_info)
 
 # Funciones de ordenamiento
 

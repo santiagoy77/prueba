@@ -147,3 +147,4 @@ dmypy.json
 # Excluded data
 ./Data/MoMA
 ./Data/MoMA.zip
+./temp.txt
