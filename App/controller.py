@@ -36,8 +36,10 @@ def loadData(catalog):
     """"
     Carga los archivos del museo 
     """
+
     loadArtwork(catalog)
     loadArtists(catalog)
+
 
 def loadArtwork(catalog):
 

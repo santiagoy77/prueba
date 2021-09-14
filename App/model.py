@@ -71,12 +71,23 @@ def newArtist(name):
 def addArtists(catalog,artist):
     ConstituentID = artist["ConstituentID"]
     posartista = lt.isPresent(catalog["artists"], ConstituentID)
-    nombre = lt.getElement(catalog["artists"],posartista)
-    nombre["DisplayName"] = artist["DisplayName"]
-    nombre["Nationality"] = artist["Nationality"]
-    nombre["Gender"] = artist["Gender"]
-    nombre["BeginDate"] = artist["BeginDate"]
-    nombre["EndDate"] = artist["EndDate"]
+    if posartista > 0:
+        nombre = lt.getElement(catalog["artists"],posartista)
+        nombre["DisplayName"] = artist["DisplayName"]
+        nombre["Nationality"] = artist["Nationality"]
+        nombre["Gender"] = artist["Gender"]
+        nombre["BeginDate"] = artist["BeginDate"]
+        nombre["EndDate"] = artist["EndDate"]
+    else:
+        nombre = newArtist (ConstituentID)
+        nombre["DisplayName"] = artist["DisplayName"]
+        nombre["Nationality"] = artist["Nationality"]
+        nombre["Gender"] = artist["Gender"]
+        nombre["BeginDate"] = artist["BeginDate"]
+        nombre["EndDate"] = artist["EndDate"]
+        lt.addLast(catalog["artists"], nombre)
+
+
     
     
 

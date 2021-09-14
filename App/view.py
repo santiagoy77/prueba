@@ -27,6 +27,8 @@ from DISClib.ADT import list as lt
 assert cf
 
 
+
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -79,12 +81,9 @@ while True:
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks']))) 
-        for i in catalog["artists"]["elements"]:
-            
-                 
+             
     elif int(inputs[0]) == 2:
         pass
-
     else:
         sys.exit(0)
 sys.exit(0)
