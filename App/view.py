@@ -36,24 +36,30 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("0- Cargar información en el catálogo")
-    print("1- Listar cronológicamente los artistas por un rango de años")
-    print("2- Clasificar las obras de un artista por técnica")
-    print("3- Clasificar las obras por la nacionalidad de sus creadores")
-    print("4- Transportar obras de un departamento")
-    print("5- Proponer una nueva exposición en el museo")
+    print("1- Cargar información en el catálogo")
+    print("2- Listar cronológicamente los artistas por un rango de años")
+    print("3- Clasificar las obras de un artista por técnica")
+    print("4- Clasificar las obras por la nacionalidad de sus creadores")
+    print("5- Transportar obras de un departamento")
+    print("6- Proponer una nueva exposición en el museo")
 
-def initCatalog():
+def printListOptions():
+    print("Seleccione la implementación de las listas del catálogo")
+    print("1- ARRAY_LIST")
+    print("2- SINGLE_LINKED")
+
+def initCatalog(implementation):
     """
     Inicia el catálogo de obras
     """
-    return controller.initCatalog()
+    return controller.initCatalog(implementation)
 
 def loadData(catalog):
     """
     Carga las obras en la estructura de datos
     """
     controller.loadData(catalog)
+
 
 catalog = None
 
@@ -63,14 +69,16 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 0:
+    if int(inputs[0]) == 1:
+        printListOptions()
+        option = input("Seleccione una opción para continuar\n")
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        catalog = initCatalog(option)
         loadData(catalog)
 
-    elif int(inputs[0]) == 1:
-        pass
     elif int(inputs[0]) == 2:
+        pass
+    elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 3:
         pass

@@ -37,15 +37,20 @@ los mismos.
 
 # Construccion de modelos
 
-def newCatalog():
+def newCatalog(implementation):
   """
   Inicializa el catálogo de artistas y obras (PENDIENTE)
   """
   catalog = {'artists': None,
              'artworks': None}
 
-  catalog['artists'] = lt.newList('ARRAY_LIST', cmpfunction=compareartists)
-  catalog['artworks'] = lt.newList('ARRAY_LIST')
+  if int(implementation) == 1:
+    option = "ARRAY_LIST"
+  elif int(implementation) == 2:
+    option = "SINGLE_LINKED"
+
+  catalog['artists'] = lt.newList(option, cmpfunction=compareartists)
+  catalog['artworks'] = lt.newList(option)
 
   return catalog
 
