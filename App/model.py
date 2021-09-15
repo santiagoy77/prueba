@@ -45,7 +45,7 @@ def addArtist(catalog, artistname):
 
     lt.addLast(catalog['Artist'], artistname)
 
-def newCatalog():
+def newCatalog(estructuraDatos):
 
     catalog = {'Art': None,
                'Artist': None,}
