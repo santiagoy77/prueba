@@ -45,7 +45,13 @@ def loadData(catalog):
   estructura de datos
   """
   loadArtwork(catalog)
-  # loadArtists(catalog)
+  loadArtists(catalog)
+
+def selectSample(catalog, sample):
+  """
+  Selecciona una muestra de los datos de la longitud que indique el parámetro sample
+  """
+  return model.selectSample(catalog, sample)
 
 def loadArtwork(catalog):
   """
@@ -68,5 +74,13 @@ def loadArtists(catalog):
     model.addArtistInfo(catalog, artist_info)
 
 # Funciones de ordenamiento
+
+def sortArtworksByDate(catalog, implementation, initial_year, end_year):
+  """
+  Ordena las obras en el rango de fechas dispuesto
+  """
+  sorted_artworks = model.sortArtworksByDate(catalog, implementation, initial_year, end_year)
+  return sorted_artworks
+  
 
 # Funciones de consulta sobre el catálogo

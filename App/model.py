@@ -25,15 +25,29 @@
  """
 
 
+import copy
+import time
+from datetime import datetime
 import config as cf
+
+
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as insertion
+from DISClib.Algorithms.Sorting import mergesort as merge
+from DISClib.Algorithms.Sorting import quicksort as quick
+from DISClib.Algorithms.Sorting import shellsort as shell
+
+
 assert cf
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+
+# Selectores
+
+sort_algo = {1: insertion, 2: shell, 3: merge, 4: quick}
 
 # Construccion de modelos
 
@@ -50,9 +64,23 @@ def newCatalog(implementation):
     option = "SINGLE_LINKED"
 
   catalog['artists'] = lt.newList(option, cmpfunction=compareartists)
-  catalog['artworks'] = lt.newList(option)
+  catalog['artworks'] = lt.newList(option, cmpfunction=cmpArtworkByDateAcquired)
 
   return catalog
+
+def selectSample(catalog, sample):
+  """
+  Selecciona una muestra de los datos de la longitud que indique el parámetro sample
+  """
+  sample = int(sample)
+  artworks_lenght = lt.size(catalog["artworks"])
+  if sample not in range(artworks_lenght):
+    lenght = artworks_lenght
+  else:
+    lenght = sample
+
+  subsection = lt.subList(catalog["artworks"], 0, lenght)
+  return subsection
 
 # Funciones para agregar informacion al catalogo
 
@@ -96,7 +124,6 @@ def addArtistInfo(catalog, artist_info):
     lt.addLast(artists, artist_info)
 
 
-
 # Funciones para creacion de datos
 def newArtist(artist_id):
   """
@@ -127,4 +154,47 @@ def compareartists(artist_id, artist):
     return 0
   return -1
 
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+  """
+  Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
+    Args:
+    artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+  """
+  if artwork1['DateAcquired'] < artwork2['DateAcquired']:
+    return 1
+  return 0
+
 # Funciones de ordenamiento
+
+def sortArtworksByDate(catalog, implementation, initial_year, end_year):
+  """
+  Ordena las obras en el rango de fechas dispuesto
+  """
+  ranged_artworks = filterArtworksByDate(catalog, initial_year, end_year)
+  algorithm = sort_algo[int(implementation)]
+  start_time = time.process_time()
+  sorted_entries = algorithm.sort(ranged_artworks, cmpArtworkByDateAcquired)
+  stop_time = time.process_time()
+  elapsed_time_mseg = (stop_time - start_time) * 1000
+  return elapsed_time_mseg, sorted_entries
+  
+# Funciones auxiliares
+
+def filterArtworksByDate(catalog, initial_year, end_year):
+  """
+  Filtra las obras que no se encuentren en el rango de años deseado
+  """
+  iter_artworks = lt.iterator(catalog["artworks"])
+  filtered_artworks = copy.deepcopy(catalog["artworks"])
+
+  i_year = f"01/01/initial_year"
+  e_year = f"31/12/end_year"
+  initial_year = datetime.strptime(i_year, "")
+  end_year = datetime.strptime(end_year, "%d/%b/%Y:%H:%M:%S")
+
+  for ix, artwork in enumerate(iter_artworks):
+    date = datetime.strptime(artwork["Date"], "%d/%b/%Y:%H:%M:%S")
+    if initial_year > date or end_year < date:
+      lt.deleteElement(filtered_artworks, ix)
+  return filtered_artworks
