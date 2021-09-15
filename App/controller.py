@@ -54,7 +54,8 @@ def loadArtists(catalog):
     for artist in input_file:
         model.addArtists(catalog, artist)
 
-
+def sortartworks(catalog,sizesublist,typeofsort):
+    return model.sortartworks(catalog,sizesublist,typeofsort)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

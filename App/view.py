@@ -89,16 +89,28 @@ while True:
              
     elif int(inputs[0]) == 2:
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
-        while not(lt.size(catalog["artworks"]) <= sizesublist):
+        while lt.size(catalog["artworks"]) <= sizesublist:
             sizesublist = int(input("Escoja el tamaño de la sublista valido: "))
         print ("Escoja el tipo de ordenamiento a realizar:")
         print ("1. Insertion Sort.")
         print ("2. Shell Sort")
         print ("3. Merge Sort")
         print ("4. Quick Sorts")
-       # sortedartworks = controller.sortartworks(catalog,sizesublist,typeofsort)
+        typeofsort = int(input("Si digita una opción invalida se escojerá por defecto quick sort: "))
+        if typeofsort == 1: 
+            typeofsort = "insertion"
+        elif typeofsort == 2:
+            typeofsort = "shell"
+        elif typeofsort ==3:
+            typeofsort = "merge"
+        else:
+            typeofsort = "quick"
+        sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
+        print (sortedartworkstime)
+
 
             
     else:
         sys.exit(0)
 sys.exit(0)
+

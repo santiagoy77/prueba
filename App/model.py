@@ -27,9 +27,13 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import shellsort as ss
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
-import datetime
+from datetime import datetime
+import time
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -98,11 +102,7 @@ def compareartists(artistname1, artist):
     return -1
 
 def cmpArtworkByDateAcquired(artwork1, artwork2):
-    if artwork1 < artwork2:
-        x = True
-    else:
-        x = False
-    return x
+    return datetime.strptime(artwork1["DateAcquired"], "%Y-%m-%d") < datetime.strptime(artwork2["DateAcquired"], "%Y-%m-%d")
 
 
 
@@ -119,11 +119,18 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog, sizesublist, type):
+def sortartworks(catalog, sizesublist, typeofsort):
     sub_list = lt.subList(catalog['artworks'], 1, sizesublist)
     sub_list = sub_list.copy()
     start_time = time.process_time()
-    sorted_list = sa.sort(sub_list, compareratings)
+    if typeofsort == "insertion":
+        sorted_list = ins.sort(sub_list, cmpArtworkByDateAcquired)
+    elif typeofsort == "shell":
+        sorted_list = ss.sort(sub_list, cmpArtworkByDateAcquired)
+    elif typeofsort == "merge":
+        sorted_list = ms.sort(sub_list, cmpArtworkByDateAcquired)
+    elif typeofsort == "quick":
+        sorted_list = qs.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return elapsed_time_mseg , sorted_list
+    return elapsed_time_mseg
