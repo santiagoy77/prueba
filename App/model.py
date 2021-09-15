@@ -238,19 +238,20 @@ def filterArtworksByDate(catalog, initial_date, end_date):
   """
   Filtra las obras que no se encuentren en el rango de años deseado
   """
-  iter_artworks = enumerate(lt.iterator(catalog["artworks"]))
+  iter_artworks = lt.iterator(catalog["artworks"])
 
   initial_date = datetime.strptime(initial_date, "%Y-%m-%d")
   end_date = datetime.strptime(end_date, "%Y-%m-%d")
   pos_to_delete = lt.newList()
 
   deleted_elements = 0
-  for ix, artwork in iter_artworks:
+  for ix, artwork in enumerate(iter_artworks):
     if artwork["DateAcquired"] == '':
       lt.addLast(pos_to_delete, ix - deleted_elements)
       deleted_elements += 1
-    date = datetime.strptime(artwork["DateAcquired"], "%Y-%m-%d")
-    if initial_date > date or end_date < date:
+      continue
+    art_dates = datetime.strptime(artwork["DateAcquired"], "%Y-%m-%d")
+    if initial_date > art_dates or end_date < art_dates:
       lt.addLast(pos_to_delete, ix - deleted_elements)
       deleted_elements += 1
   
