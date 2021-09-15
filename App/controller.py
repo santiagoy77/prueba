@@ -72,6 +72,12 @@ def loadArtists(catalog):
 
 # Funciones de ordenamiento
 
+def sort_adq(catalog, size):
+    """
+    Ordena las obras de arte por fecha de adquisición
+    """
+    return model.sort_adq(catalog, size)
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

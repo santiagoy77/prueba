@@ -27,6 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+import time
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -44,7 +45,7 @@ def newCatalog(tad_list_type):
     catalog = {'artworks': None,
                'artists': None,}
 
-    catalog['artworks'] = lt.newList(datastructure=tad_list_type, cmpfunction=cmpArtworkByDateAcquired())
+    catalog['artworks'] = lt.newList(datastructure=tad_list_type)
     catalog['artists'] = lt.newList(datastructure=tad_list_type,
                                     cmpfunction=compareartists)
 
@@ -83,8 +84,8 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
     artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
     """
-    f1 = artwork1["DateAquired"]
-    f2 = artwork2["DateAquired"]
+    f1 = artwork1["DateAcquired"]
+    f2 = artwork2["DateAcquired"]
     f1_lst = f1.split("-")
     f2_lst = f2.split("-")
     if f1_lst[0] < f2_lst[0]:
@@ -106,3 +107,12 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     return ret
 
 # Funciones de ordenamiento
+
+def sort_adq(catalog, size):
+    sub_list = lt.subList(catalog['artworks'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, cmpArtworkByDateAcquired)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
