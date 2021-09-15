@@ -44,7 +44,7 @@ def newCatalog(tad_list_type):
     catalog = {'artworks': None,
                'artists': None,}
 
-    catalog['artworks'] = lt.newList(datastructure=tad_list_type)
+    catalog['artworks'] = lt.newList(datastructure=tad_list_type, cmpfunction=cmpArtworkByDateAcquired())
     catalog['artists'] = lt.newList(datastructure=tad_list_type,
                                     cmpfunction=compareartists)
 
@@ -75,5 +75,20 @@ def compareartists(authorname1, author):
     if (authorname1.lower() in author['name'].lower()):
         return 0
     return -1
+
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    """
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menor que el de artwork2
+    Args:
+    artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+
+    if artwork1["DateAquired"] < artwork2["DateAquired"]:
+        ret = True
+    else:
+        ret = False
+    
+    return ret
 
 # Funciones de ordenamiento
