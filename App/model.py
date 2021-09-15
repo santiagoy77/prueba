@@ -188,13 +188,15 @@ def filterArtworksByDate(catalog, initial_year, end_year):
   iter_artworks = lt.iterator(catalog["artworks"])
   filtered_artworks = copy.deepcopy(catalog["artworks"])
 
-  i_year = f"01/01/initial_year"
-  e_year = f"31/12/end_year"
-  initial_year = datetime.strptime(i_year, "")
-  end_year = datetime.strptime(end_year, "%d/%b/%Y:%H:%M:%S")
+  i_year = f"01/01/{initial_year}"
+  e_year = f"31/12/{end_year}"
+  initial_year = datetime.strptime(i_year, "%d/%m/%Y")
+  end_year = datetime.strptime(e_year, "%d/%m/%Y")
 
   for ix, artwork in enumerate(iter_artworks):
-    date = datetime.strptime(artwork["Date"], "%d/%b/%Y:%H:%M:%S")
+    if artwork["DateAcquired"] == '':
+      continue
+    date = datetime.strptime(artwork["DateAcquired"], "%Y-%m-%d")
     if initial_year > date or end_year < date:
-      lt.deleteElement(filtered_artworks, ix)
+      lt.deleteElement(filtered_artworks, ix + 1)
   return filtered_artworks
