@@ -83,12 +83,26 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
     artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
     """
-
-    if artwork1["DateAquired"] < artwork2["DateAquired"]:
+    f1 = artwork1["DateAquired"]
+    f2 = artwork2["DateAquired"]
+    f1_lst = f1.split("-")
+    f2_lst = f2.split("-")
+    if f1_lst[0] < f2_lst[0]:
         ret = True
-    else:
+    elif f1_lst[0] > f2_lst[0]:
         ret = False
-    
+    elif f1_lst[0] == f2_lst[0]:
+        if f1_lst[1] < f2_lst[1]:
+            ret = True
+        elif f1_lst[1] > f2_lst[1]:
+            ret = False
+        else:
+            if f1_lst[2] < f2_lst[2]:
+                ret = True
+            elif f1_lst[2] > f2_lst[2]:
+                ret = False
+            else:
+                ret = False
     return ret
 
 # Funciones de ordenamiento
