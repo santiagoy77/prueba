@@ -39,11 +39,15 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+# Selector para identificar el nombre del algoritmo
+algo_sel = {1: 'insertion', 2: 'shell', 3: 'merge', 4: 'quick'}
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Listar cronológicamente los artistas por un rango de años")
     print("3- Listar cronológicamente las adquisiciones")
+    print("4- Salir del programa")
 
 def printListOptions():
     print("Seleccione la implementación de las listas del catálogo")
@@ -98,6 +102,12 @@ while True:
         
         catalog = initCatalog(option)
         loadData(catalog)
+
+        num_artists = lt.size(catalog["artists"])
+        num_artworks = lt.size(catalog["artworks"])
+
+        print(f"{num_artists} artists records were loaded.")
+        print(f"There are {num_artworks} artworks in total.")
         
     elif int(inputs[0]) == 2:
         pass
@@ -105,8 +115,7 @@ while True:
     elif int(inputs[0]) == 3:
 
         sample = input("Digite el tamaño que desea de la muestra\n")
-        sub_catalog = copy.deepcopy(catalog)
-        sub_catalog["artworks"] = selectSample(catalog, sample)
+        catalog["artworks"] = selectSample(catalog, sample)
 
         printSortOptions()
         option = input("Seleccione una opción para continuar\n")
@@ -117,8 +126,8 @@ while True:
         time, sorted_artworks = sortArtworksByDate(catalog, option, initial_year, end_year)
         size = lt.size(sorted_artworks)
 
-        print("{size} artworks were loaded.")
-        print(f"The time taken to run the algorithm was {time}")
+        print(f"{size} artworks were loaded.")
+        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time}")
 
     else:
         sys.exit(0)

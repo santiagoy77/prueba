@@ -37,7 +37,6 @@ from DISClib.Algorithms.Sorting import mergesort as merge
 from DISClib.Algorithms.Sorting import quicksort as quick
 from DISClib.Algorithms.Sorting import shellsort as shell
 
-
 assert cf
 
 """
@@ -171,10 +170,10 @@ def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   """
   Ordena las obras en el rango de fechas dispuesto
   """
-  ranged_artworks = filterArtworksByDate(catalog, initial_year, end_year)
+  filterArtworksByDate(catalog, initial_year, end_year)
   algorithm = sort_algo[int(implementation)]
   start_time = time.process_time()
-  sorted_entries = algorithm.sort(ranged_artworks, cmpArtworkByDateAcquired)
+  sorted_entries = algorithm.sort(catalog["artworks"], cmpArtworkByDateAcquired)
   stop_time = time.process_time()
   elapsed_time_mseg = (stop_time - start_time) * 1000
   return elapsed_time_mseg, sorted_entries
@@ -185,18 +184,22 @@ def filterArtworksByDate(catalog, initial_year, end_year):
   """
   Filtra las obras que no se encuentren en el rango de años deseado
   """
-  iter_artworks = lt.iterator(catalog["artworks"])
-  filtered_artworks = copy.deepcopy(catalog["artworks"])
+  iter_artworks = enumerate(lt.iterator(catalog["artworks"]))
 
   i_year = f"01/01/{initial_year}"
   e_year = f"31/12/{end_year}"
   initial_year = datetime.strptime(i_year, "%d/%m/%Y")
   end_year = datetime.strptime(e_year, "%d/%m/%Y")
+  pos_to_delete = lt.newList()
 
-  for ix, artwork in enumerate(iter_artworks):
+  deleted_elements = 0
+  for ix, artwork in iter_artworks:
     if artwork["DateAcquired"] == '':
       continue
     date = datetime.strptime(artwork["DateAcquired"], "%Y-%m-%d")
     if initial_year > date or end_year < date:
-      lt.deleteElement(filtered_artworks, ix + 1)
-  return filtered_artworks
+      lt.addLast(pos_to_delete, ix - deleted_elements)
+      deleted_elements += 1
+  
+  for pos in lt.iterator(pos_to_delete):
+    lt.deleteElement(catalog['artworks'], pos)

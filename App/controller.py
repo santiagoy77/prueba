@@ -80,8 +80,7 @@ def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   """
   Ordena las obras en el rango de fechas dispuesto
   """
-  sorted_artworks = model.sortArtworksByDate(catalog, implementation, initial_year, end_year)
-  return sorted_artworks
+  return model.sortArtworksByDate(catalog, implementation, initial_year, end_year)
   
 
 # Funciones de consulta sobre el catálogo
