@@ -44,11 +44,11 @@ def printMenu():
     print("6- Transportar obras de un departamento ")
     print("7- Proponer una nueva exposición en el museo")
 
-def initCatalog():
+def initCatalog(tad_list_type):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tad_list_type)
 
 def loadData(catalog):
     """
@@ -65,8 +65,13 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        tad_int = int(input("Escriba 1 si desea usar Single Linked o 2 si desea usar Array List: "))
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        if tad_int == 1:
+            tad_list_type = 'SINGLE_LINKED'
+        elif tad_int == 2:
+            tad_list_type = 'ARRAY_LIST'
+        catalog = initCatalog(tad_list_type)
         loadData(catalog)
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))

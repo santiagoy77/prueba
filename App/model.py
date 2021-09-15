@@ -34,7 +34,7 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def newCatalog():
+def newCatalog(tad_list_type):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
@@ -44,8 +44,8 @@ def newCatalog():
     catalog = {'artworks': None,
                'artists': None,}
 
-    catalog['artworks'] = lt.newList()
-    catalog['artists'] = lt.newList('ARRAY_LIST',
+    catalog['artworks'] = lt.newList(datastructure=tad_list_type)
+    catalog['artists'] = lt.newList(datastructure=tad_list_type,
                                     cmpfunction=compareartists)
 
     return catalog
