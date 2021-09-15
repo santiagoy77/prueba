@@ -25,8 +25,10 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+import sys
 
-
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 
 """
@@ -35,16 +37,18 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+
 catalog = None
 def printMenu():
     print ("Bienvenido")
     print ("1. Cargar archivos.")
-    print ("2. Listar cronológicamente los artistas")
-    print ("3. Listar cronológicamente las adquisiciones.")
-    print ("4. Clasificar las obras de un artista por técnica")
-    print ("5. Clasificar las obras por la nacionalidad de sus creadores.")
-    print ("6. Costo de transportar las obras de un departamento a otro")
-    print ("7. Proponer una nueva exposción en el museo")
+    print ("2. Ordenar por orden de adquisición de las obras")
+    print ("3. Listar cronológicamente los artistas")
+    print ("4. Listar cronológicamente las adquisiciones.")
+    print ("5. Clasificar las obras de un artista por técnica")
+    print ("6. Clasificar las obras por la nacionalidad de sus creadores.")
+    print ("7. Costo de transportar las obras de un departamento a otro")
+    print ("8. Proponer una nueva exposción en el museo")
     print ("0. Salir")
 
 
@@ -61,6 +65,7 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+catalog = None
 """
 Menu principal
 """
@@ -83,7 +88,17 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['artworks']))) 
              
     elif int(inputs[0]) == 2:
-        pass
+        sizesublist = int(input("Escoja el tamaño de la sublista: "))
+        while not(lt.size(catalog["artworks"]) <= sizesublist):
+            sizesublist = int(input("Escoja el tamaño de la sublista valido: "))
+        print ("Escoja el tipo de ordenamiento a realizar:")
+        print ("1. Insertion Sort.")
+        print ("2. Shell Sort")
+        print ("3. Merge Sort")
+        print ("4. Quick Sorts")
+       # sortedartworks = controller.sortartworks(catalog,sizesublist,typeofsort)
+
+            
     else:
         sys.exit(0)
 sys.exit(0)

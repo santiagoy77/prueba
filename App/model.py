@@ -97,10 +97,14 @@ def compareartists(artistname1, artist):
         return 0
     return -1
 
-"""def cmpArtworkByDateAcquired(artwork1, artwork2):
-    if artwork1
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    if artwork1 < artwork2:
+        x = True
+    else:
+        x = False
+    return x
 
-"""
+
 
 
 # Construccion de modelos
@@ -114,3 +118,12 @@ def compareartists(artistname1, artist):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+def sortBooks(catalog, sizesublist, type):
+    sub_list = lt.subList(catalog['artworks'], 1, sizesublist)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, compareratings)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg , sorted_list
