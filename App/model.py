@@ -63,49 +63,12 @@ def addArtist(catalog, artist):
 
 # Funciones para creacion de datos
 
-def newArtist(ID):
-    """
-    Crea una nueva estructura para modelar los libros de
-    un autor y su promedio de ratings
-    """
-    artist = {'ConstituentID': "", "DisplayName": None,  
-            "ArtistBio": 0 , "Nationality": None , "Gender": None , "BeginDate": None,
-            "EndDate": None , "Wiki QID": None , "ULAN": None}
-    artist['ConstituentID'] = ID
-    return artist
-
-def newArtwork(object_id):
-    """
-    Crea una nueva estructura para modelar los libros de
-    un autor y su promedio de ratings
-    """
-    artwork = {'ObjectID': "", 
-            "Title": None,  
-            "ConstituentID": 0 , 
-            "Date": None , 
-            "Medium": None , 
-            "Dimensions": None,
-            "CreditLine": None , 
-            "AccessionNumber": None , 
-            "AccessionNumber": None , 
-            "Classification": None,
-            "Department": None , 
-            "DateAcquired": None, 
-            "Cataloged": None , "URL": None, 
-            "Circumference (cm)": None, 
-            "Depth (cm)": None,
-            "Diameter (cm)": None,
-            "Height (cm)": None,
-            "Length (cm)": None,
-            "Weight (kg)": None,
-            "Width (cm)": None,
-            "Seat Height (cm)": None,
-            "Duration (sec.)": None}
-
-    artwork['ObjectID'] = object_id
-    return artwork
+def ultimo_elemento(catalog):
+    lt.size(catalog['artworks'])
+    
 
 # Funciones de consulta
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareartists(authorname1, author):
