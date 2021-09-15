@@ -38,7 +38,7 @@ otra para los artistas de estas.
 
 # Construccion de modelos
 
-def newCatalog():
+def newCatalog(lista: int):
     """
     Inicializa el catálogo de obras de arte. 
     Crea listas vacías con los siguientes própositos:
@@ -48,12 +48,16 @@ def newCatalog():
     """
     catalog = {'artists': None,
                'artworks': None}
-
-    catalog['artists'] = lt.newList('ARRAY_LIST',
-                                    cmpfunction=compare_artists)
-    catalog['artworks'] = lt.newList('ARRAY_LIST',
-                                 cmpfunction=compare_artworks)
-
+    if lista==1:
+        catalog['artists'] = lt.newList('ARRAY_LIST',
+                                        cmpfunction=compare_artists)
+        catalog['artworks'] = lt.newList('ARRAY_LIST',
+                                        cmpfunction=compare_artworks)
+    else:
+        catalog['artists'] = lt.newList('SINGLE_LINKED',
+                                        cmpfunction=compare_artists)
+        catalog['artworks'] = lt.newList('SINGLE_LINKED',
+                                        cmpfunction=compare_artworks)
     return catalog
 
 ## NOTA: Se están cargando los datos de forma muy simple. 

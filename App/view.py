@@ -48,11 +48,11 @@ def printMenu():
     print("7- Proponer una nueva exposición en el museo.")
     print("0- Detener la ejecución del programa.")
 
-def initCatalog():
+def initCatalog(lista: int):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(lista)
 
 
 def loadData(catalog):
@@ -76,7 +76,8 @@ while True:
         continue
     if inputs == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        lista=int(input("Digite 1 si quiere crear un array list o 0 si quiere crear un linked list: "))
+        catalog = initCatalog(lista)
         loadData(catalog)
         print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
         print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
