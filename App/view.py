@@ -20,10 +20,12 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from time import process_time
 import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from time import process_time
 assert cf
 import sys
 
@@ -82,11 +84,14 @@ while True:
         else:
             tipolista = "SINGLE_LINKED"
         print("Cargando información de los archivos ....")
+        t1 = process_time()
         catalog = initCatalog(tipolista)
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks']))) 
-             
+        t2 = process_time()
+        time = t2-t1
+        print("El tiempo para cargar los archivos fue de:"+ time + "s")     
     elif int(inputs[0]) == 2:
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
         while lt.size(catalog["artworks"]) <= sizesublist:
