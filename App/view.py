@@ -39,11 +39,10 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- Consultar los top x ")
     print("3- Consultar los top x ")
-    print("4- Consultar los top x ")
-    print("5- Clasificar las obras por la nacionalidad de sus creadores")
+    print("4- Clasificar las obras de un artista por su tecnica.")
+    print("5- Consultar los top x ")
 
 def initCatalog():
-
     return controller.initCatalog()
 
 def loadData(catalog, artists_info):
@@ -56,8 +55,16 @@ def printArtistData(artist):
 def artistsInfo():
     return controller.artistsInfo()
 
+def artistsNationality(catalog,artists_info):
+    controller.artistsNationality
+    return
+
+def artistsTecnique(catalog,artist_info,artist):
+    controller.artistsTecnique(catalog,artists_info,artist)
+    pass
+
 catalog = None
-artists_info = None
+
 """
 Menu principal
 """
@@ -83,18 +90,17 @@ while True:
 
 
     elif int(inputs[0]) == 2:
-        print(lt.firstElement(artists_info))
-
-        
-
+        a  = catalog['artists']
+        print((lt.firstElement(a)))
     elif int(inputs[0]) == 3:
+        date1 = input("Digite la primera fecha: ")
+        date2 = input("Digite la segunda fecha: ")
+        tamanio = input("Tamaño de muestra: ")
         pass
     elif int(inputs[0]) == 4:
-        pass
+        artistsTecnique(catalog,artists_info,"Louise Bourgeois")
     elif int(inputs[0]) == 5:
-        artworks = catalog['artworks']
-        controller.ObrasPorNacionalidad(artworks, artists_info)
-        
+
         pass
 
     else:
