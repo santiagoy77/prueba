@@ -29,6 +29,10 @@ import config as cf
 from DISClib.ADT import list as lt
 import time
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as mer
+from DISClib.Algorithms.Sorting import quicksort as qu
+
 assert cf
 
 """
@@ -108,11 +112,17 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sort_adq(catalog, size):
+def sort_adq(catalog, size , algo_type):
     sub_list = lt.subList(catalog['artworks'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()
-    sorted_list = sa.sort(sub_list, cmpArtworkByDateAcquired)
+    if algo_type == 1:
+        sorted_list = ins.sort(sub_list, cmpArtworkByDateAcquired)
+    elif algo_type == 2:
+        sorted_list = sa.sort(sub_list, cmpArtworkByDateAcquired)
+    elif algo_type == 3:
+        sorted_list = mer.sort(sub_list, cmpArtworkByDateAcquired)
+    
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
