@@ -102,6 +102,11 @@ def compareartists(artistname1, artist):
     return -1
 
 def cmpArtworkByDateAcquired(artwork1, artwork2):
+    if artwork1["DateAcquired"] == None or artwork1["DateAcquired"] == "":
+        artwork1["DateAcquired"] = "0001-01-01"
+    if artwork2["DateAcquired"] == None or artwork2["DateAcquired"] == "":
+        artwork2["DateAcquired"] = "0001-01-01"
+
     return datetime.strptime(artwork1["DateAcquired"], "%Y-%m-%d") < datetime.strptime(artwork2["DateAcquired"], "%Y-%m-%d")
 
 

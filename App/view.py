@@ -106,11 +106,7 @@ while True:
         else:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
-        print (sortedartworkstime)
-
-
-            
+        print (sortedartworkstime)          
     else:
         sys.exit(0)
 sys.exit(0)
-
