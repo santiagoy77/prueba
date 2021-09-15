@@ -76,11 +76,17 @@ def loadArtists(catalog):
     
 # Funciones de ordenamiento
 
-def sortArtworksByDate(catalog, implementation, initial_year, end_year):
+def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
+  """
+  Ordena los artistas en el rango de fechas dispuesto
+  """
+  return model.sortArtistsByBeginDate(catalog, implementation, initial_date, end_date)
+
+def sortArtworksByDate(catalog, implementation, initial_date, end_date):
   """
   Ordena las obras en el rango de fechas dispuesto
   """
-  return model.sortArtworksByDate(catalog, implementation, initial_year, end_year)
+  return model.sortArtworksByDate(catalog, implementation, initial_date, end_date)
   
 
 # Funciones de consulta sobre el catálogo

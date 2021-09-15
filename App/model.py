@@ -153,6 +153,17 @@ def compareartists(artist_id, artist):
     return 0
   return -1
 
+def cmpArtistsByBeginDate(artist1, artist2):
+  """
+  Devuelve verdadero (True) si el 'BeginDate' de artist1 es menores que el de artist2
+    Args:
+    artist1: informacion de la primera obra que incluye su valor 'BeginDate'
+    artist2: informacion de la segunda obra que incluye su valor 'BeginDate'
+  """
+  if artist1['BeginDate'] < artist2['BeginDate']:
+    return 1
+  return 0
+
 def cmpArtworkByDateAcquired(artwork1, artwork2):
   """
   Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2
@@ -165,6 +176,18 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
   return 0
 
 # Funciones de ordenamiento
+
+def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
+  """
+  Ordena los artistas en el rango de fechas dispuesto
+  """
+  filterArtistsByBeginDate(catalog, initial_date, end_date)
+  algorithm = sort_algo[int(implementation)]
+  start_time = time.process_time()
+  sorted_entries = algorithm.sort(catalog["artists"], cmpArtistsByBeginDate)
+  stop_time = time.process_time()
+  elapsed_time_mseg = (stop_time - start_time) * 1000
+  return elapsed_time_mseg, sorted_entries
 
 def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   """
@@ -180,26 +203,62 @@ def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   
 # Funciones auxiliares
 
-def filterArtworksByDate(catalog, initial_year, end_year):
+def filterArtistsByBeginDate(catalog, initial_date, end_date):
+  """
+  Filtra los artistas que no se encuentren en el rango de años deseado
+  (NO ESTÁ TERMINADA. FUNCIÓN ACTUALMENTE DEFECTUOSA)
+  """
+  iter_artists = enumerate(lt.iterator(catalog["artists"]))
+
+  initial_date = datetime.strptime(initial_date, "%Y")
+  end_date = datetime.strptime(end_date, "%Y")
+  pos_to_delete = lt.newList()
+
+  deleted_elements = 0
+  for ix, artist in iter_artists:
+    if type(artist["BeginDate"]) == None:
+      print(f"TEMP: {type(artist['BeginDate'])}")
+      lt.addLast(pos_to_delete, ix - deleted_elements)
+      deleted_elements += 1
+      continue
+    elif artist["BeginDate"] == 0 or artist["BeginDate"] == "0":
+      lt.addLast(pos_to_delete, ix - deleted_elements)
+      deleted_elements += 1
+      continue
+    else:
+      date = datetime.strptime(artist["BeginDate"], "%Y")
+      if initial_date > date or end_date < date:
+        lt.addLast(pos_to_delete, ix - deleted_elements)
+        deleted_elements += 1
+  
+  for pos in lt.iterator(pos_to_delete):
+    lt.deleteElement(catalog['artists'], pos)
+
+def filterArtworksByDate(catalog, initial_date, end_date):
   """
   Filtra las obras que no se encuentren en el rango de años deseado
   """
   iter_artworks = enumerate(lt.iterator(catalog["artworks"]))
 
-  i_year = f"01/01/{initial_year}"
-  e_year = f"31/12/{end_year}"
-  initial_year = datetime.strptime(i_year, "%d/%m/%Y")
-  end_year = datetime.strptime(e_year, "%d/%m/%Y")
+  initial_date = datetime.strptime(initial_date, "%Y-%m-%d")
+  end_date = datetime.strptime(end_date, "%Y-%m-%d")
   pos_to_delete = lt.newList()
 
   deleted_elements = 0
   for ix, artwork in iter_artworks:
     if artwork["DateAcquired"] == '':
-      continue
+      lt.addLast(pos_to_delete, ix - deleted_elements)
+      deleted_elements += 1
     date = datetime.strptime(artwork["DateAcquired"], "%Y-%m-%d")
-    if initial_year > date or end_year < date:
+    if initial_date > date or end_date < date:
       lt.addLast(pos_to_delete, ix - deleted_elements)
       deleted_elements += 1
   
   for pos in lt.iterator(pos_to_delete):
     lt.deleteElement(catalog['artworks'], pos)
+
+# def createDateRange(first_date, second_date):
+#   """
+#   Given two datetime objects, it returns a list with all the dates in between
+#   """
+#   for 

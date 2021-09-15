@@ -73,17 +73,23 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
+    """
+    Ordena los artistas en el rango de fechas dispuesto
+    """
+    return controller.sortArtistsByBeginDate(catalog, implementation, initial_date, end_date)
+
 def selectSample(catalog, sample):
     """
     Selecciona una muestra de los datos de la longitud que indique el parámetro sample
     """
     return controller.selectSample(catalog, sample)
 
-def sortArtworksByDate(catalog, implementation, initial_year, end_year):
+def sortArtworksByDate(catalog, implementation, initial_date, end_date):
     """
     Ordena las obras en el rango de fechas dispuesto
     """
-    return controller.sortArtworksByDate(catalog, implementation, initial_year, end_year)
+    return controller.sortArtworksByDate(catalog, implementation, initial_date, end_date)
 
 catalog = None
 
@@ -110,7 +116,19 @@ while True:
         print(f"There are {num_artworks} artworks in total.")
         
     elif int(inputs[0]) == 2:
-        pass
+
+        printSortOptions()
+        option = input("Seleccione una opción para continuar\n")
+        
+        initial_year = input("Digite el año inicial:\n")
+        end_year = input("Digite el año final:\n")
+
+        time, sorted_artists = sortArtistsByBeginDate(catalog, option, initial_year, end_year)
+        size = lt.size(sorted_artists)
+
+        print(f"{size} artists were loaded.")
+        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} seconds.")
+
 
     elif int(inputs[0]) == 3:
 
@@ -120,14 +138,14 @@ while True:
         printSortOptions()
         option = input("Seleccione una opción para continuar\n")
 
-        initial_year = input("Digite el año inicial:\n")
-        end_year = input("Digite el año final:\n")
+        initial_date = input("Digite el año, mes y día inicial en el formato AAAA-MM-DD:\n")
+        end_date = input("Digite el año, mes y día final en el formato AAAA-MM-DD:\n")
 
-        time, sorted_artworks = sortArtworksByDate(catalog, option, initial_year, end_year)
+        time, sorted_artworks = sortArtworksByDate(catalog, option, initial_date, end_date)
         size = lt.size(sorted_artworks)
 
         print(f"{size} artworks were loaded.")
-        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time}")
+        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} seconds.")
 
     else:
         sys.exit(0)
