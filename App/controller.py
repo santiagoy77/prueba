@@ -73,19 +73,6 @@ def loadArtists(catalog):
   input_file = csv.DictReader(open(artists_info_file, encoding='utf-8'))
   for artist_info in input_file:
     model.addArtistInfo(catalog, artist_info)
-
-def cmpArtworkByDateAcquired(artwork1, artwork2):
-
-  """ Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2 Args: artwork1: informacion de la primera obra que incluye su valor 'DateAcquired' artwork2:
-      artwork1: informacion de la primera obra que incluye su valor 'DateAcquired' 
-      artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
-  """
-  dateacquired1= artwork1["DateAcquired"]
-  dateacquired2= artwork2["DateAcquired"]
-  if(dateacquired1 < dateacquired2):
-    return 1
-  else:
-    return 0
     
 # Funciones de ordenamiento
 
