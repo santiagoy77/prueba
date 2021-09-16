@@ -74,3 +74,6 @@ def sortArtworks(catalog, size, sor):
 # Funciones de consulta sobre el catálogo
 
 
+
+
+
