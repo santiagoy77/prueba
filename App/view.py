@@ -92,22 +92,21 @@ while True:
     elif int(inputs[0]) == 2:
         Añoi= int(input("Desde que año quieres buscar?:  "))
         Añof = int(input("Hasta que año quieres buscar?:  "))
-        cantidadArtistas = controller.artistasFecha(lista, inicio, final)
+        cantidadArtistas = controller.artistasFecha()
         printArtistasFecha(cantidadArtistas)
         
     elif int(inputs[0]) == 3:
-        FechaInicial = input("desde que fecha quieres buscar?(AAAA-MM-DD):   ")
-        FechaFin = input("hasta que fecha quieres buscar?(AAAA-MM-DD):   ")
-        MetodoSort=input('Qué algoritmo de ordenamiento desea utilizar: (InsertionSort, ShellSort, MergeSort, QuickSort)   ')
-        SizeSubLista=input('Eliga el porecentaje de la muestra (entre 0 y 1):  ')
+        FechaInicial = input("¿Desde que fecha quiere buscar? (formato AAAA-MM-DD):   ")
+        FechaFin = input("¿Hasta que fecha quiere buscar?(formato AAAA-MM-DD):   ")
+        MetodoSort=input('¿Qué algoritmo de ordenamiento quiere implementar: (InsertionSort, ShellSort, MergeSort, QuickSort)   ')
+        SizeSubLista=input('Ingrese el porecentaje de la muestra (entre 0 y 1):  ')
         CantidadObras=controller.obrasFecha(catalog,FechaInicial,FechaFin,MetodoSort,float(SizeSubLista))
         printObrasCr(CantidadObras)
 
     elif int(inputs[0]) == 4:
-        nombre = input("de que artista deseas buscar?: ")
-
+        pass
     elif int(inputs[0]) == 5:
-        print("Cargando...")
+        pass
     else:
         sys.exit(0)
 sys.exit(0)
