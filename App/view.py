@@ -91,7 +91,7 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['artworks']))) 
         t2 = process_time()
         time = t2-t1
-        print("El tiempo para cargar los archivos fue de:"+ time + "s")     
+        print("El tiempo para cargar los archivos fue de:", str(time) , "s")     
     elif int(inputs[0]) == 2:
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
         while lt.size(catalog["artworks"]) <= sizesublist:
@@ -111,7 +111,7 @@ while True:
         else:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
-        print (sortedartworkstime)          
+        print(sortedartworkstime)          
     else:
         sys.exit(0)
 sys.exit(0)

@@ -137,5 +137,6 @@ def sortartworks(catalog, sizesublist, typeofsort):
     elif typeofsort == "quick":
         sorted_list = qs.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
-    elapsed_time_mseg = (stop_time - start_time)*1000
+    tiempo = (stop_time - start_time)*1000
+    elapsed_time_mseg = round(tiempo, 2)
     return elapsed_time_mseg
