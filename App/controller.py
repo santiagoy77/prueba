@@ -23,6 +23,8 @@
 import config as cf
 import model
 import csv
+from DISClib.ADT import list as lt
+import datetime
 
 
 """
@@ -52,26 +54,45 @@ def loadArtists(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    booksfile = cf.data_dir + 'Artists-utf8-small.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addBook(catalog, book)
+    artistsfile = cf.data_dir + 'MoMa/Artists-utf8-small.csv'
+    input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
+    for artist in input_file:
+        model.addArtist(catalog, artist)
 
 
 def loadArtworks(catalog):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
-    tagsfile = cf.data_dir + 'Artworks-utf8-small.csv'
-    input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
-    for tag in input_file:
-        model.addTag(catalog, tag)
+    artworksfile = cf.data_dir + 'Moma/Artworks-utf8-small.csv'
+    input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
+    for artwork in input_file:
+        model.addArtwork(catalog, artwork)
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog):
-    """
-    Ordena los libros por average_rating
-    """
-    model.sortBooks(catalog)
 # Funciones de consulta sobre el catálogo
+
+def getUltimos(lista):
+    Elements=model.getUltimos()
+    return Elements
+
+def artistasFecha(lista, inicio, final):
+    artistasfechas = model.artistaFecha(lista, inicio, final)
+    return artistasfechas
+
+def obrasFecha(lista, inicio, final,metodo):
+    if inicio:
+        datel=inicio.split('-')
+        inicio2=datetime.date(int(datel[0]),int(datel[1]),int(datel[2]))
+    else:
+        print('ERROR, FECHA NO VALIDA')
+    
+    if final:
+        datelst2=final.split('-')
+        final2=datetime.date(int(datelst2[0]),int(datelst2[1]),int(datelst2[2]))
+    else:
+        print('ERROR, FECHA NO VALIDA')
+    
+    if not(metodo=='MergeSort' or metodo=='QuickSort'or metodo=='ShellSort'or metodo=='InsertionSort'):
+        print('ERROR, METODO NO VALIDO')

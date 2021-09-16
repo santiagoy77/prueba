@@ -41,10 +41,39 @@ def printMenu():
     print("3- Listar cronológicamente las adquisiciones")
     print("4- Clasificar las obras de una artista por tecnica")
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
-    
+    print("0- Salir")
 
-catalog = None
+def initCatalog():
+    return controller.initCatalog()
 
+def loadData(catalog):
+    controller.loadData(catalog)
+
+def printObrasCr(lista):
+    cantidad = lt.size(lista)
+    print("Hay " + str(cantidad) + " obras adquiridas en el rago seleccioando")
+    print()
+    print("Top 3 mas jovenes: ")
+    for x in range(3):
+        elemento = lt.getElement(lista, x)
+        print("La obra: " + elemento["name"] + " adquirida en : " + str(elemento["dateacquired"]) + " con medio: " + elemento["medium"] + " y de dimensiones: " +  elemento["dimensions"])
+    print("Top 3 mas viejos: ")
+    for x in range(3):
+        elemento = lt.getElement(lista, cantidad - x)
+        print("La obra: " + elemento["name"] + " adquirida en : " + str(elemento["dateacquired"]) + " con medio: " + elemento["medium"] + " y de dimensiones: " +  elemento["dimensions"])
+
+def printArtistasFecha(lista):
+    cantidad = lt.size(lista)
+    print("Hay " + str(cantidad) + " artistas en el rango seleccionado")
+    print()
+    print("Top 3 mas jovenes: ")
+    for x in range(3):
+        elemento = lt.getElement(lista, x)
+        print("El artista: " + elemento["nombre"] + " nacido en: " + str(elemento["edad"]) + " de nacionalidad: " + elemento["nacionalidad"] + " y de genero: " +  elemento["genero"])
+    print("Top 3 mas viejos: ")
+    for x in range(3):
+        elemento = lt.getElement(lista, cantidad - x)
+        print("El artista: " + elemento["nombre"] + " nacido en: " + str(elemento["edad"]) + " de nacionalidad: " + elemento["nacionalidad"] + " y de genero: " +  elemento["genero"])
 """
 Menu principal
 """
@@ -53,10 +82,32 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = initCatalog()
+        loadData(catalog)
+        datatype=input('Seleccione el tipo de tipo de estructura para los datos (ARRAY_LIST, LINKED_LIST)')
+        print('Obras de arte cargadas: ' + str(lt.size(catalog['artworks'])))
+        print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
+        print('Últimas 3 obras cargadas: ')
+        
     elif int(inputs[0]) == 2:
-        pass
+        Añoi= int(input("Desde que año quieres buscar?:  "))
+        Añof = int(input("Hasta que año quieres buscar?:  "))
+        cantidadArtistas = controller.artistasFecha(lista, inicio, final)
+        printArtistasFecha(cantidadArtistas)
+        
+    elif int(inputs[0]) == 3:
+        FechaInicial = input("desde que fecha quieres buscar?(AAAA-MM-DD):   ")
+        FechaFin = input("hasta que fecha quieres buscar?(AAAA-MM-DD):   ")
+        MetodoSort=input('Qué algoritmo de ordenamiento desea utilizar: (InsertionSort, ShellSort, MergeSort, QuickSort)   ')
+        SizeSubLista=input('Eliga el porecentaje de la muestra (entre 0 y 1):  ')
+        CantidadObras=controller.obrasFecha(catalog,FechaInicial,FechaFin,MetodoSort,float(SizeSubLista))
+        printObrasCr(CantidadObras)
 
+    elif int(inputs[0]) == 4:
+        nombre = input("de que artista deseas buscar?: ")
+
+    elif int(inputs[0]) == 5:
+        print("Cargando...")
     else:
         sys.exit(0)
 sys.exit(0)
