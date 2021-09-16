@@ -91,8 +91,11 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
         result = controller.sortArtworks(catalog, int(size),sor)
-        print('Últimas tres obras de arte cargadas:\n')
+        print('Primeras tres obras de arte cargadas:\n')
         for i in [3,2,1]:
+            print(str(lt.getElement(result[1],i)))
+        print('Últimas tres obras de arte cargadas:\n')
+        for i in [-3,-2,-1]:
             print(str(lt.getElement(result[1],i)))
         print("Se demoro ",result[0])
     elif (inputs>2) and (inputs<8):
