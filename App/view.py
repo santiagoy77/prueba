@@ -112,8 +112,8 @@ while True:
         num_artists = lt.size(catalog["artists"])
         num_artworks = lt.size(catalog["artworks"])
 
-        print(f"{num_artists} artists records were loaded.")
-        print(f"There are {num_artworks} artworks in total.")
+        print(f"{num_artists} artistas cargados.")
+        print(f"Hay {num_artworks} obras en total.")
         
     elif int(inputs[0]) == 2:
 
@@ -127,12 +127,12 @@ while True:
         size = lt.size(sorted_artists)
 
         print(f"{size} artists were loaded.")
-        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} milliseconds.")
+        print(f"Tiempo del algoritmo {algo_sel[int(option)]} es {time} milisegundos.")
 
 
     elif int(inputs[0]) == 3:
 
-        sample = input("Digite el tamaño que desea de la muestra\nEn caso de que digite un número que sobrepase de alguna u otra manera el los límites del arreglo, el catálogo quedará intacto.")
+        sample = input("Digite el tamaño que desea de la muestra\nEn caso de que digite un número que sobrepase de alguna u otra manera el los límites del arreglo, el catálogo quedará intacto.\n")
         catalog["artworks"] = selectSample(catalog, sample)
 
         printSortOptions()
@@ -144,8 +144,8 @@ while True:
         time, sorted_artworks = sortArtworksByDate(catalog, option, initial_date, end_date)
         size = lt.size(sorted_artworks)
 
-        print(f"{size} artworks were loaded.")
-        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} milliseconds.")
+        print(f"Hay {size} obras en este rango.")
+        print(f"Tiempo del algoritmo {algo_sel[int(option)]} es {time} milisegundos.")
 
     else:
         sys.exit(0)
