@@ -87,7 +87,11 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(catalog['artworks'],i)))
-    elif (inputs>1) and (inputs<8):
+    elif inputs==2:
+        size = input("Indique tamaño de la muestra: ")
+        sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
+        result = controller.sortBooks(catalog, int(size))
+    elif (inputs>2) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
         print(error)

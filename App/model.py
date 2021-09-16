@@ -28,6 +28,10 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as mer
+from DISClib.Algorithms.Sorting import quicksort as quc
+from DISClib.Algorithms.Sorting import selectionsort as sel
 assert cf
 
 """
@@ -80,10 +84,40 @@ def addArtwork(catalog, artwork):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-def compare_artists():
-    pass
+def compare_artists(artist1,artist):
+    if artist1.lower() in artist["artists"].lower():
+        return 0
+    return -1
 
 def compare_artworks():
     pass
 
 # Funciones de ordenamiento
+
+def sortArtworks(catalog, size,sor):
+    sub_list = lt.subList(catalog['artworks'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    if sor==1:
+        sorted_list= sa.sort(sub_list, compare_artworks)
+    elif sor==2:
+        sorted_list= ins.sort(sub_list, compare_artworks)
+    elif sor==3:
+        sorted_list= mer.sort(sub_list, compare_artworks)
+    elif sor==4:
+        sorted_list= quc.sort(sub_list, compare_artworks)
+    elif sor==5:
+        sorted_list= sel.sort(sub_list, compare_artworks)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
+
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    """
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2 Args:
+        artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+        artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+    if artwork1["DateAcquired"]<artwork2["DateAcquired"]:
+        return 0
+    return -1
