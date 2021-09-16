@@ -93,7 +93,6 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     f1_lst = f1.split("-")
     f2_lst = f2.split("-")
     ret = None
-    print(f1_lst , f2_lst)
 
     if len(f1_lst) > len(f2_lst):
         ret = False
