@@ -68,4 +68,9 @@ def loadArtworks(catalog):
 
 # Funciones de ordenamiento
 
+def sortArtworks(catalog, size, sor):
+    return model.sortArtworks(catalog, size, sor)
+
 # Funciones de consulta sobre el catálogo
+
+

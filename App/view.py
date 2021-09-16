@@ -90,7 +90,7 @@ while True:
     elif inputs==2:
         size = input("Indique tamaño de la muestra: ")
         sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
-        result = controller.sortBooks(catalog, int(size))
+        result = controller.sortArtworks(catalog, int(size),sor)
     elif (inputs>2) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
