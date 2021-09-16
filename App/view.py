@@ -43,16 +43,16 @@ def printMenu():
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
     print("6- Transportarcobras de un departamento ")
     print("7- Proponer una nueva exposición en el museo")
+    print("0- Salir")
     
 
 catalog = None
-
 
 def initCatalog():
     """
     Inicializa el catalogo
     """
-    return controller.initCatalog()
+    return controller.initCatalog(TipoEstructura)
 
 
 def loadData(catalog):
@@ -61,21 +61,28 @@ def loadData(catalog):
 """
 Menu principal
 """
+TipoEstructura= "SINGLE_LINKED"
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        input1 = input('Seleccione una opción para continuar\n'+
+                        'Presione 1 para cargar la lista como un Array List\n' +
+                         'Presione 2 para cargar la lista como un Linked List\n')
+        if int(input1) == 1:
+            #Cargar como Array List
+            TipoEstructura = 'ARRAY_LIST'
+            print("Se ha configurado como Array List")
+            
+        elif int(input1) == 2:
+            #Cargar como Linked List
+            TipoEstructura = 'SINGLE_LINKED'
+            print("Se ha configurado como Linked List")
+                
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        print('Artistas cargados: ' + str(lt.size(catalog['books'])))
-        print('Obras cargados: ' + str(lt.size(catalog['authors'])))
-        print('Ultimos 3 artistas: ' + str(lt.size(catalog['tags'])))
-        print('Ultimas 3 obras ' + str(lt.size(catalog['book_tags'])))
-
-    elif int(inputs[0]) == 2:
-        pass
-
-    else:
-        sys.exit(0)
-sys.exit(0)
+        print('Artistas cargados: ' + str(lt.size(catalog['Artist'])))
+        print('Obras cargados: ' + str(lt.size(catalog['Art'])))
+        print('Ultimos 3 artistas: ') #+ str(lt.size(catalog[''])))
+        print('Ultimas 3 obras ' ) #str(lt.size(catalog[''])))
