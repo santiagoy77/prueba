@@ -92,22 +92,30 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     f2 = artwork2["DateAcquired"]
     f1_lst = f1.split("-")
     f2_lst = f2.split("-")
-    if f1_lst[0] < f2_lst[0]:
-        ret = True
-    elif f1_lst[0] > f2_lst[0]:
+    ret = None
+    print(f1_lst , f2_lst)
+
+    if len(f1_lst) > len(f2_lst):
         ret = False
-    elif f1_lst[0] == f2_lst[0]:
-        if f1_lst[1] < f2_lst[1]:
+    elif len(f1_lst) < len(f2_lst):
+        ret = True
+    elif len(f1_lst) == 3 and len(f2_lst) == 3:
+        if f1_lst[0] < f2_lst[0]:
             ret = True
-        elif f1_lst[1] > f2_lst[1]:
+        elif f1_lst[0] > f2_lst[0]:
             ret = False
-        else:
-            if f1_lst[2] < f2_lst[2]:
+        elif f1_lst[0] == f2_lst[0]:
+            if f1_lst[1] < f2_lst[1]:
                 ret = True
-            elif f1_lst[2] > f2_lst[2]:
+            elif f1_lst[1] > f2_lst[1]:
                 ret = False
             else:
-                ret = False
+                if f1_lst[2] < f2_lst[2]:
+                    ret = True
+                elif f1_lst[2] > f2_lst[2]:
+                    ret = False
+                else:
+                    ret = False
     return ret
 
 # Funciones de ordenamiento
@@ -122,6 +130,8 @@ def sort_adq(catalog, size , algo_type):
         sorted_list = sa.sort(sub_list, cmpArtworkByDateAcquired)
     elif algo_type == 3:
         sorted_list = mer.sort(sub_list, cmpArtworkByDateAcquired)
+    elif algo_type == 4:
+        sorted_list = qu.sort(sub_list , cmpArtworkByDateAcquired())
     
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000

@@ -91,7 +91,8 @@ while True:
 
     elif int(inputs[0]) == 2:
         size = int(input("Indique el tamaño de la muestra: "))
-        result = controller.sort_adq(catalog, int(size))
+        algo_type = int(input("1- Insetion, 2 - Shell, 3 - Merge , 4 - Quick Sorts"))
+        result = controller.sort_adq(catalog, int(size) , algo_type)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         printSortResults(result[1])

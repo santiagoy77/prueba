@@ -56,7 +56,7 @@ def loadArtworks(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia a la obra de arte que se esta procesando.
     """
-    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-20pct.csv'
     input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
@@ -72,11 +72,11 @@ def loadArtists(catalog):
 
 # Funciones de ordenamiento
 
-def sort_adq(catalog, size):
+def sort_adq(catalog, size , algo_type):
     """
     Ordena las obras de arte por fecha de adquisición
     """
-    return model.sort_adq(catalog, size)
+    return model.sort_adq(catalog, size , algo_type)
 
 # Funciones de ordenamiento
 
