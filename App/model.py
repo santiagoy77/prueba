@@ -139,4 +139,4 @@ def sortartworks(catalog, sizesublist, typeofsort):
     stop_time = time.process_time()
     tiempo = (stop_time - start_time)*1000
     elapsed_time_mseg = round(tiempo, 2)
-    return elapsed_time_mseg
+    return elapsed_time_mseg 
