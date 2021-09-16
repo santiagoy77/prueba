@@ -127,7 +127,7 @@ while True:
         size = lt.size(sorted_artists)
 
         print(f"{size} artists were loaded.")
-        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} seconds.")
+        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} milliseconds.")
 
 
     elif int(inputs[0]) == 3:
@@ -145,7 +145,7 @@ while True:
         size = lt.size(sorted_artworks)
 
         print(f"{size} artworks were loaded.")
-        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} seconds.")
+        print(f"The time taken to run the {algo_sel[int(option)]} algorithm was {time} milliseconds.")
 
     else:
         sys.exit(0)
