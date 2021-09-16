@@ -130,7 +130,7 @@ def sort_adq(catalog, size , algo_type):
     elif algo_type == 3:
         sorted_list = mer.sort(sub_list, cmpArtworkByDateAcquired)
     elif algo_type == 4:
-        sorted_list = qu.sort(sub_list , cmpArtworkByDateAcquired())
+        sorted_list = qu.sort(sub_list , cmpArtworkByDateAcquired)
     
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
