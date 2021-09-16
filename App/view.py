@@ -132,7 +132,7 @@ while True:
 
     elif int(inputs[0]) == 3:
 
-        sample = input("Digite el tamaño que desea de la muestra\n")
+        sample = input("Digite el tamaño que desea de la muestra\nEn caso de que digite un número que sobrepase de alguna u otra manera el los límites del arreglo, el catálogo quedará intacto.")
         catalog["artworks"] = selectSample(catalog, sample)
 
         printSortOptions()
