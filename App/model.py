@@ -186,7 +186,7 @@ def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
   start_time = time.process_time()
   sorted_entries = algorithm.sort(catalog["artists"], cmpArtistsByBeginDate)
   stop_time = time.process_time()
-  elapsed_time_mseg = round((stop_time - start_time) * 1000, 2)
+  elapsed_time_mseg = round((stop_time - start_time) * 1000, 3)
   return elapsed_time_mseg, sorted_entries
 
 def sortArtworksByDate(catalog, implementation, initial_year, end_year):
