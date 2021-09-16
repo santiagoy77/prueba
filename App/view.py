@@ -26,7 +26,6 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
-
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -54,7 +53,6 @@ def initCatalog(lista: int):
     """
     return controller.initCatalog(lista)
 
-
 def loadData(catalog):
     """
     Carga los libros en la estructura de datos
@@ -64,7 +62,7 @@ def loadData(catalog):
 catalog = None
 
 """
-Menu principal
+Menú principal
 """
 while True:
     error = "Por favor ingrese un número entero entre 0 y 7."
@@ -97,7 +95,7 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(result[1],i)))
-        print("Se demoro ",result[0])
+        print("Se demoró ",result[0])
     elif (inputs>2) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
