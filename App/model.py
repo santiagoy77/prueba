@@ -102,9 +102,9 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     """
     if artwork1["DateAcquired"]=="" or artwork2["DateAcquired"]=="":
         if artwork1["DateAcquired"]=="":
-            return 0
-        else:
             return -1
+        else:
+            return 0
     elif datetime.strptime(artwork1["DateAcquired"], '%Y-%m-%d').date()<datetime.strptime(artwork2["DateAcquired"], '%Y-%m-%d').date():
         return -1
     return 0
