@@ -26,6 +26,8 @@
 
 
 import config as cf
+from datetime import datetime
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import insertionsort as ins
@@ -92,6 +94,21 @@ def compare_artists(artist1,artist):
 def compare_artworks():
     pass
 
+def cmpArtworkByDateAcquired(artwork1, artwork2):
+    """
+    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2 Args:
+        artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
+        artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+    if artwork1["DateAcquired"]=="" or artwork2["DateAcquired"]=="":
+        if artwork1["DateAcquired"]=="":
+            return -1
+        else:
+            return 0
+    elif datetime.strptime(artwork1["DateAcquired"], '%Y-%m-%d').date()<datetime.strptime(artwork2["DateAcquired"], '%Y-%m-%d').date():
+        return 0
+    return -1
+
 # Funciones de ordenamiento
 
 def sortArtworks(catalog, size,sor):
@@ -99,25 +116,17 @@ def sortArtworks(catalog, size,sor):
     sub_list = sub_list.copy()
     start_time = time.process_time()
     if sor==1:
-        sorted_list= sa.sort(sub_list, compare_artworks)
+        sorted_list= sa.sort(sub_list, cmpArtworkByDateAcquired)
     elif sor==2:
-        sorted_list= ins.sort(sub_list, compare_artworks)
+        sorted_list= ins.sort(sub_list, cmpArtworkByDateAcquired)
     elif sor==3:
-        sorted_list= mer.sort(sub_list, compare_artworks)
+        sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
     elif sor==4:
-        sorted_list= quc.sort(sub_list, compare_artworks)
+        sorted_list= quc.sort(sub_list, cmpArtworkByDateAcquired)
     elif sor==5:
-        sorted_list= sel.sort(sub_list, compare_artworks)
+        sorted_list= sel.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
-def cmpArtworkByDateAcquired(artwork1, artwork2):
-    """
-    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2 Args:
-        artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
-        artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
-    """
-    if artwork1["DateAcquired"]<artwork2["DateAcquired"]:
-        return 0
-    return -1
+

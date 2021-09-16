@@ -40,8 +40,8 @@ def printMenu():
     """
     print("Bienvenido")
     print("1- Cargar información en el catálogo.")
-    print("2- Listar cronológicamente los artistas.")
-    print("3- Listar cronológicamente las adquisiciones.")
+    print("2- Listar cronológicamente los adquisiciones.")
+    print("3- Listar cronológicamente las artistas.")
     print("4- Clasificar las obras de un artista por técnica.")
     print("5- Clasificar las obras por la nacionalidad de sus creadores.")
     print("6- Transportar obras de un departamento.")
@@ -91,6 +91,10 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
         result = controller.sortArtworks(catalog, int(size),sor)
+        print('Últimas tres obras de arte cargadas:\n')
+        for i in [3,2,1]:
+            print(str(lt.getElement(result[1],i)))
+        print("Se demoro ",result[0])
     elif (inputs>2) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
