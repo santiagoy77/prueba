@@ -22,7 +22,7 @@
 
 import config as cf
 import sys
-import controller
+import controller as c
 from DISClib.ADT import list as lt
 assert cf
 
@@ -44,10 +44,10 @@ def printMenu():
     print("0- Salir")
 
 def initCatalog():
-    return controller.initCatalog()
+    return c.initCatalog()
 
 def loadData(catalog):
-    controller.loadData(catalog)
+    c.loadData(catalog)
 
 def printObrasCr(lista):
     cantidad = lt.size(lista)
@@ -62,18 +62,23 @@ def printObrasCr(lista):
         elemento = lt.getElement(lista, cantidad - x)
         print("La obra: " + elemento["name"] + " adquirida en : " + str(elemento["dateacquired"]) + " con medio: " + elemento["medium"] + " y de dimensiones: " +  elemento["dimensions"])
 
-def printArtistasFecha(lista):
+
+def printArtistasFecha(lista,lista1,lista2):
     cantidad = lt.size(lista)
     print("Hay " + str(cantidad) + " artistas en el rango seleccionado")
     print()
     print("Top 3 mas jovenes: ")
-    for x in range(3):
-        elemento = lt.getElement(lista, x)
-        print("El artista: " + elemento["nombre"] + " nacido en: " + str(elemento["edad"]) + " de nacionalidad: " + elemento["nacionalidad"] + " y de genero: " +  elemento["genero"])
+    x=1
+    while x<=lt.size(lista2):
+        y=lt.getElement(lista2,x)
+        print(y)
+        x+=1
     print("Top 3 mas viejos: ")
-    for x in range(3):
-        elemento = lt.getElement(lista, cantidad - x)
-        print("El artista: " + elemento["nombre"] + " nacido en: " + str(elemento["edad"]) + " de nacionalidad: " + elemento["nacionalidad"] + " y de genero: " +  elemento["genero"])
+    x=1
+    while x<=lt.size(lista1):
+        y=lt.getElement(lista1,x)
+        print(y)
+        x+=1
 """
 Menu principal
 """
@@ -92,15 +97,20 @@ while True:
     elif int(inputs[0]) == 2:
         Añoi= int(input("Desde que año quieres buscar?:  "))
         Añof = int(input("Hasta que año quieres buscar?:  "))
-        cantidadArtistas = controller.artistasFecha()
-        printArtistasFecha(cantidadArtistas)
+        lista=c.cA(catalog,Añoi,Añof)
+        result = c.sortArtistas(lista)
+        print("Para la muestra de",lt.size(catalog["artists"]), " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        printArtistasFecha(lista,result[1],result[2])
+        
+
         
     elif int(inputs[0]) == 3:
         FechaInicial = input("¿Desde que fecha quiere buscar? (formato AAAA-MM-DD):   ")
         FechaFin = input("¿Hasta que fecha quiere buscar?(formato AAAA-MM-DD):   ")
         MetodoSort=input('¿Qué algoritmo de ordenamiento quiere implementar: (InsertionSort, ShellSort, MergeSort, QuickSort)   ')
         SizeSubLista=input('Ingrese el porecentaje de la muestra (entre 0 y 1):  ')
-        CantidadObras=controller.obrasFecha(catalog,FechaInicial,FechaFin,MetodoSort,float(SizeSubLista))
+        CantidadObras=c.obrasFecha(catalog,FechaInicial,FechaFin,MetodoSort,float(SizeSubLista))
         printObrasCr(CantidadObras)
 
     elif int(inputs[0]) == 4:

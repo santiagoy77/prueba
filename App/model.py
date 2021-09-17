@@ -44,8 +44,8 @@ def newCatalog():
                'artists': None}
 
     catalog['artworks'] = lt.newList()
-    catalog['artists'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=compareartists)
+    catalog['artists'] = lt.newList("""'SINGLE_LINKED',
+                                    cmpfunction=compareartists""")
     return catalog
 
 # Funciones para creacion de datos
@@ -69,15 +69,17 @@ def nuevoArtwork(name,dateacquired,constituentid,date,medium,dimensions,departme
     artwork['classification']=classification 
     return artwork
 
-def nuevoArtist(name,begindate,enddate,nationality,gender,constituentid):
-    artist={'name':'','begindate':'','enddate':'','nationality':'','gender':'','constituentid':''}
-    artist['name']=name
-    artist['begindate']=begindate
-    artist['enddate']=enddate
-    artist['nationality']=nationality
-    artist['gender']=gender
-    artist['constituentid']=constituentid
-    return artist
+def newArtist(ConstituentID,nom,aN,aF,nacion,genero):
+    artista = {"ConstituentID": "","Nombre":"", "Año De Nacimiento": "",  
+               "Año De Fallecimiento": "","Nacion":"","Genero":""}
+    artista["ConstituentID"] = ConstituentID
+    artista["Nombre"]=nom
+    artista["Año De Nacimiento"]=aN
+    artista["Año De Fallecimiento"]=aF
+    artista["Nacion"]=nacion
+    artista["Genero"]=genero
+
+    return artista
 
 # Funciones para agregar informacion al catalogo
 
@@ -85,9 +87,11 @@ def addArtwork(catalog, artwork):
     nuevo=nuevoArtwork(artwork['Title'],artwork['DateAcquired'],artwork['ConstituentID'],artwork['Date'],artwork['Medium'],artwork['Dimensions'],artwork['Department'],artwork['CreditLine'],artwork['Classification'])
     lt.addLast(catalog['artworks'],nuevo)
 
-def addArtist(catalog, artist): 
-    nuevo=nuevoArtist(artist['DisplayName'],artist['BeginDate'],artist['EndDate'],artist['Nationality'],artist['Gender'],artist['ConstituentID'])
-    lt.addLast(catalog['artists'],nuevo)
+def addArtist(catalog, artista):
+    # Se adiciona el artista a la lista de artistas
+    art = newArtist(artista['ConstituentID'], artista['DisplayName'],artista['BeginDate'],
+                    artista['EndDate'],artista['Nationality'],artista['Gender'])
+    lt.addLast(catalog['artists'], art)
 
 
 # Funciones de consulta
@@ -96,28 +100,6 @@ def getUltimos(lista):
     posicionl=lt.size(lista)-2
     return lt.subList(lista, posicionl, 3)
 
-def fechaCompArtistas(art1, art2):
-    return art1["edad"] < art2["edad"]
-
-def artistasCronologico(lista, inicio, final):
-    artistas = lista["artists"]
-    cont = 0
-    retorno = lt.newList()
-    for artista in range(lt.size(artistas)):
-        llave = lt.getElement(artistas, artista)
-        edad = int(llave["begindate"])
-        nombre = llave["name"]
-        muerte = int(llave["enddate"])
-        genero = llave["gender"]
-        nacionalidad = llave["nationality"]
-
-        if edad != 0 and edad != None and edad >= inicio and edad <= final:
-            agregar = {"nombre" : nombre, "edad" : edad, "muerte" : muerte, "genero" : genero, "nacionalidad" : nacionalidad}
-            lt.addLast(retorno, agregar)
-    
-    sa.sort(retorno, fechaCompArtistas)
-
-    return retorno
 
 def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista): 
     obras = lista["artworks"]
@@ -143,16 +125,47 @@ def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista):
     StopTime=time.process_time()
     TimeMseg=(StopTime-StartTime)*1000
     return retorno
+def sortArtistas(Artistasc):
+
+    sub_list = lt.subList(Artistasc,1,lt.size(Artistasc))
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = sa.sort(sub_list, compareartists)
+    stop_time = time.process_time()
+    
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    final=lt.newList()
+    final2=lt.newList()
+    e=1
+    while e<=3:
+        lt.addFirst(final,lt.getElement(sorted_list,e))
+        e+=1
+    e=0    
+    while e<=2:
+        lt.addFirst(final2,lt.getElement(sorted_list,(lt.size(sorted_list)-e)))
+        e+=1    
+    return elapsed_time_mseg, final, final2
+def cArtistas(catalog,aInicio,aFinal) :
+    Artistasc=lt.newList()
+    x=1
+    while x<=lt.size(catalog["artists"]):
+        y=lt.getElement(catalog["artists"],x)
+        if (aInicio<=int(y["Año De Nacimiento"])<=aFinal):
+            lt.addLast(Artistasc,y)
+        x+=1    
+    """for i in catalog['artists']: 
+
+        print(i)"""
+        #x=int(i["Año De Nacimiento"])
+        #if (aInicio<=x<=aFinal):
+            #lt.addLast(Artistasc,i)
+    return Artistasc
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareartists(artist1,artist2):
-    if (artist1.lower() in artist2['name'].lower()):
-        respuesta=0
-    else: 
-        respuesta=-1
-    return respuesta
+    return (float(artist1['Año De Nacimiento']) < float(artist2['Año De Nacimiento']))
     
 
 def cmpArtworkByDateAcquired(artwork1,artwork2): 
