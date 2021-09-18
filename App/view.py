@@ -78,7 +78,7 @@ def printArtistbyYear(artists):
             j-=1
             a+=1
     else:
-        print('No se encontraron libros')
+        print('No se encontraron datos.')
 
 """
 Menu principal
