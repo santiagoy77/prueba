@@ -59,58 +59,68 @@ def addArtist(catalog, artist):
     """
     Adiciona un artista a la lista de artistas
     """
-    a = newArtist(artist['DisplayName'], artist['Wiki QID'])
+    a = newArtist(artist['DisplayName'], artist['ConstituentID'], artist['Nationality'], artist['Gender'], artist['BeginDate'], artist['EndDate'])
     lt.addLast(catalog['artists'], a)
 
 def addArtwork(catalog, artwork):
     """
     Adiciona una obra a la lista de obras
     """
-    art = newArtwork(artwork['Title'], artwork['ConstituentID'])
+    art = newArtwork(artwork['Title'], artwork['ObjectID'])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
-def newArtist(name, id):
+def newArtist(name, id, nacionality, gender, begin, end):
     """
     Esta estructura almancena los artistas utilizados.
     """
-    artist = {'DisplayName': '', 'Wiki QID': ''}
+    artist = {'DisplayName': '', 'ConstituentID': '', 'Nationality': '','Gender': '','BeginDate': '','EndDate': '' }
     artist['DisplayName'] = name
-    artist['Wiki QID'] = id
+    artist['ConstituentID'] = id
+    artist['Nationality'] = nacionality
+    artist['Gender'] = gender
+    artist['BeginDate'] = begin
+    artist['EndDate'] = end
     return artist
 
 def newArtwork(name, id):
     """
     Esta estructura almancena las obras utilizadas.
     """
-    artist = {'Title': '', 'ConstituentID': ''}
+    artist = {'Title': '', 'ObjectID': ''}
     artist['Title'] = name
-    artist['ConstituentID'] = id
+    artist['ObjectID'] = id
     return artist
 
 # Funciones de consulta
 
+
+
 def getArtistsbyYear(catalog, year1, year2):
-    """
-    Retorna los mejores libros
-    """
+    
     artists = catalog['artists']
-    ArtistsbyYear = lt.newList('ARRAY_LIST',
-                                cmpfunction=compareartistyears)
+    ArtistsbyYear = lt.newList()
     i=1
-    while i<= range(artists):
+    for a in artists:
         artist = lt.getElement(artists, i)
-        year=artist["BeginDate"]
-        if year1<year<year2:
+        year=artist['BeginDate']
+        if year1<int(year)<year2:
             lt.addLast(ArtistsbyYear, artist)
+        i+=1
     return ArtistsbyYear
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-# Funciones de ordenamiento
 def compareartistyears(year1, year2):
     return (int(year1['BeginDate']) > int(year2['BeginDate']))
 
 def compareartworkyears(year1, year2):
     return (int(year1['Date']) > int(year2['Date']))
 
+# Funciones de ordenamiento
+
+def sortArtist(catalog):
+    sa.sort(catalog['artist'], compareartistyears)
+
+def sortArtworks(catalog):
+    sa.sort(catalog['artworks'], compareartworkyears)
