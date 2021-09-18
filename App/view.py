@@ -51,16 +51,21 @@ def loadData(catalog):
 
 def printObrasCr(lista):
     cantidad = lt.size(lista)
-    print("Hay " + str(cantidad) + " obras adquiridas en el rago seleccioando")
+    print("Hay " + str(cantidad) + " obras adquiridas en el rango seleccioando , de las cuales, "
+           +str(c.getPurchase(lista))+" se adquirieron por compra." )
     print()
     print("Top 3 mas jovenes: ")
-    for x in range(3):
-        elemento = lt.getElement(lista, x)
-        print("La obra: " + elemento["name"] + " adquirida en : " + str(elemento["dateacquired"]) + " con medio: " + elemento["medium"] + " y de dimensiones: " +  elemento["dimensions"])
+    x=1
+    while x<=3:
+        y=lt.getElement(lista,x)
+        print(y)
+        x+=1
     print("Top 3 mas viejos: ")
-    for x in range(3):
-        elemento = lt.getElement(lista, cantidad - x)
-        print("La obra: " + elemento["name"] + " adquirida en : " + str(elemento["dateacquired"]) + " con medio: " + elemento["medium"] + " y de dimensiones: " +  elemento["dimensions"])
+    x=0
+    while x<=2:
+        y=lt.getElement(lista,(lt.size(lista)-x))
+        print(y)
+        x+=1
 
 
 def printArtistasFecha(lista,lista1,lista2):
@@ -93,6 +98,9 @@ while True:
         print('Obras de arte cargadas: ' + str(lt.size(catalog['artworks'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Últimas 3 obras cargadas: ')
+        print(c.getUltimos(catalog["artworks"]))
+        print('Últimos 3 artistas cargados: ')
+        print(c.getUltimos(catalog["artists"]))
         
     elif int(inputs[0]) == 2:
         Añoi= int(input("Desde que año quieres buscar?:  "))

@@ -57,7 +57,8 @@ def nuevoArtwork(name,dateacquired,constituentid,date,medium,dimensions,departme
     else:
         dateacquired2=datetime.date(1,1,1)
     
-    artwork={'name':'','dateacquired':'','constituentid':'','date':'','medium':'','dimensions':'','department':'','creditline':'','classification':''}
+    artwork={'name':'','dateacquired':'','constituentid':'','date':'','medium':'',
+             'dimensions':'','department':'','creditline':'','classification':''}
     artwork['name']=name
     artwork['dateacquired']=dateacquired2
     artwork['constituentid']=constituentid
@@ -84,7 +85,10 @@ def newArtist(ConstituentID,nom,aN,aF,nacion,genero):
 # Funciones para agregar informacion al catalogo
 
 def addArtwork(catalog, artwork):
-    nuevo=nuevoArtwork(artwork['Title'],artwork['DateAcquired'],artwork['ConstituentID'],artwork['Date'],artwork['Medium'],artwork['Dimensions'],artwork['Department'],artwork['CreditLine'],artwork['Classification'])
+    nuevo=nuevoArtwork(artwork['Title'],artwork['DateAcquired'],
+                       artwork['ConstituentID'],artwork['Date'],
+                       artwork['Medium'],artwork['Dimensions'],
+                       artwork['Department'],artwork['CreditLine'],artwork['Classification'])
     lt.addLast(catalog['artworks'],nuevo)
 
 def addArtist(catalog, artista):
@@ -99,6 +103,18 @@ def addArtist(catalog, artista):
 def getUltimos(lista):
     posicionl=lt.size(lista)-2
     return lt.subList(lista, posicionl, 3)
+def getPrimeros(lista):
+    
+    return lt.subList(lista, 1, 3)
+def getPurchase(lista):
+    cont=0
+    x=1
+    while x <=lt.size(lista):
+        if "purchase" in (lt.getElement(lista,x)["creditline"].lower()):
+            cont+=1
+        x+=1    
+    return cont        
+
 
 
 def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista): 
@@ -110,8 +126,11 @@ def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista):
         name = llave["name"]
         medium = llave["medium"]
         dimensions = llave["dimensions"]
+        creditline=llave["creditline"]
+        artistas=llave["constituentid"]
         if  dateacquired >= inicio and dateacquired <= final:
-            agregar = {"name" : name, "dateacquired" : dateacquired, "medium" : medium, "dimensions" : dimensions}
+            agregar = {"name" : name,"artistas":artistas, "dateacquired" : dateacquired, 
+                       "medium" : medium, "creditline":creditline, "dimensions" : dimensions}
             lt.addLast(retorno, agregar)
     StartTime=time.process_time()
     if metodo=='ShellSort':
@@ -136,14 +155,8 @@ def sortArtistas(Artistasc):
     elapsed_time_mseg = (stop_time - start_time)*1000
     final=lt.newList()
     final2=lt.newList()
-    e=1
-    while e<=3:
-        lt.addFirst(final,lt.getElement(sorted_list,e))
-        e+=1
-    e=0    
-    while e<=2:
-        lt.addFirst(final2,lt.getElement(sorted_list,(lt.size(sorted_list)-e)))
-        e+=1    
+    final=getPrimeros(sorted_list)
+    final2=getUltimos(sorted_list)   
     return elapsed_time_mseg, final, final2
 def cArtistas(catalog,aInicio,aFinal) :
     Artistasc=lt.newList()
@@ -153,12 +166,6 @@ def cArtistas(catalog,aInicio,aFinal) :
         if (aInicio<=int(y["Año De Nacimiento"])<=aFinal):
             lt.addLast(Artistasc,y)
         x+=1    
-    """for i in catalog['artists']: 
-
-        print(i)"""
-        #x=int(i["Año De Nacimiento"])
-        #if (aInicio<=x<=aFinal):
-            #lt.addLast(Artistasc,i)
     return Artistasc
 
 

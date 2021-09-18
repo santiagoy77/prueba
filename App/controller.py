@@ -74,8 +74,10 @@ def loadArtworks(catalog):
 # Funciones de consulta sobre el catálogo
 
 def getUltimos(lista):
-    Elements=model.getUltimos()
-    return Elements
+    Elements=model.getUltimos(lista)
+    return Elements 
+def getPurchase(lista):
+    return model.getPurchase(lista)       
 
 """"def artistasFecha(lista, inicio, final):
     artistasfechas = model.artistaFecha(lista, inicio, final)
@@ -86,18 +88,22 @@ def sortArtistas(lista):
 def cA(catalog,inicio,final):
     
     return model.cArtistas(catalog,inicio,final)    
-def obrasFecha(lista, inicio, final,metodo):
+def obrasFecha(lista, inicio, final,metodo,sizesublista):
     if inicio:
         datel=inicio.split('-')
         inicio2=datetime.date(int(datel[0]),int(datel[1]),int(datel[2]))
     else:
-        print('ERROR, FECHA NO VALIDA')
+        return(1)
     
     if final:
         datelst2=final.split('-')
         final2=datetime.date(int(datelst2[0]),int(datelst2[1]),int(datelst2[2]))
     else:
-        print('ERROR, FECHA NO VALIDA')
+        #print('ERROR, FECHA NO VALIDA')
+        return(2)
     
-    if not(metodo=='MergeSort' or metodo=='QuickSort'or metodo=='ShellSort'or metodo=='InsertionSort'):
-        print('ERROR, METODO NO VALIDO')
+    if not(metodo=='MergeSort' or metodo=='QuickSort'or 
+            metodo=='ShellSort'or metodo=='InsertionSort'):
+        #print('ERROR, METODO NO VALIDO')
+        return(3)
+    return model.obrasCronologicoacq(lista,inicio2,final2,metodo,sizesublista)        
