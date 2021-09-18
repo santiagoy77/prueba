@@ -112,6 +112,16 @@ while True:
         artists = controller.getArtistsbyYear(catalog, int(year1), int(year2))
         printArtistbyYear(artists)
 
+    
+    
+    
+    
+    elif int(inputs[0]) == 4:
+        ArtistName = input("Ingrese el nombre del artista: ")
+        Artworks = controller.ArtworksByArtist(catalog, ArtistName)
+        print (Artworks)
+        
+
     else:
         sys.exit(0)
 sys.exit(0)
