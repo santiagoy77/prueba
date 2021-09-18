@@ -47,6 +47,7 @@ def loadData(catalog):
     """
     loadArtists(catalog)
     loadArtworks(catalog)
+    
 
 def loadArtists(catalog):
     """
@@ -68,6 +69,14 @@ def loadArtworks(catalog):
 
 # Funciones de ordenamiento
 
+def sortArtists(catalog):
+    
+    model.sortArtist(catalog)
+
+def sortArtworks(catalog):
+    
+    model.sortArtworks(catalog)
+
 # Funciones de consulta sobre el catálogo
 
 def getArtistsbyYear(catalog, year1, year2):
@@ -75,4 +84,5 @@ def getArtistsbyYear(catalog, year1, year2):
     Retorna los artistas entre los años dados
     """
     ArtistbyYear = model.getArtistsbyYear(catalog, year1, year2)
-    return(ArtistbyYear)
+    Artistsort =sortArtists(ArtistbyYear)
+    return(Artistsort)
