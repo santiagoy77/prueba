@@ -66,7 +66,7 @@ def addArtwork(catalog, artwork):
     """
     Adiciona una obra a la lista de obras
     """
-    art = newArtwork(artwork['Title'], artwork['ObjectID'])
+    art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
@@ -83,13 +83,15 @@ def newArtist(name, id, nacionality, gender, begin, end):
     artist['EndDate'] = end
     return artist
 
-def newArtwork(name, id):
+def newArtwork(name, id, constituentid, medium):
     """
     Esta estructura almancena las obras utilizadas.
     """
-    artist = {'Title': '', 'ObjectID': ''}
+    artist = {'Title': '', 'ObjectID': '', 'ConstituentID': ''}
     artist['Title'] = name
     artist['ObjectID'] = id
+    artist['ConstituentID'] = constituentid
+    artist['Medium'] = medium
     return artist
 
 # Funciones de consulta
@@ -100,7 +102,7 @@ def getArtistsbyYear(catalog, year1, year2):
     
     artists = catalog['artists']
     ArtistsbyYear = lt.newList()
-    i=1
+    i=0
     for a in artists:
         artist = lt.getElement(artists, i)
         year=artist['BeginDate']
@@ -108,6 +110,64 @@ def getArtistsbyYear(catalog, year1, year2):
             lt.addLast(ArtistsbyYear, artist)
         i+=1
     return ArtistsbyYear
+
+
+def ArtistID (catalog, artistname):
+
+    artists = catalog['artists']     
+    i=0
+    flag=True
+
+    while i <= lt.size(artists) and flag == True:
+        artist = lt.getElement(artists, i)
+        
+        Name = artist['DisplayName'] 
+        
+        if Name == artistname:
+            artistID = artist["ConstituentID"]
+            flag=False
+            return artistID
+    
+        i+=1
+
+        if i > lt.size(artists):
+            return("No se he encontrado el artista especificado")
+
+
+
+def ArtworksByID (catalog, artistID):
+    
+    artworks = catalog["artworks"]
+    artworksByID = lt.newList()
+    i=0
+    
+    while i <= lt.size(artworks):
+        artwork = lt.getElement(artworks, i)
+        catalogID = artwork["ConstituentID"]
+        
+        if artistID in catalogID:
+            lt.addLast(artworksByID, artwork)
+        
+        i+=1    
+
+    return artworksByID
+
+
+def MediumInArtworks (artworksByID):
+    
+    mediums = []
+    i=0
+    
+    while i <= lt.size(artworksByID):
+        artwork = lt.getElement(artworksByID, i)
+        Medium = artwork["Medium"]
+       
+        lt.addLast(mediums, Medium)
+
+        i+=1  
+   
+    print(mediums)
+    return mediums
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
