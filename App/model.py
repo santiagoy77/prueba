@@ -66,7 +66,9 @@ def addArtwork(catalog, artwork):
     """
     Adiciona una obra a la lista de obras
     """
-    art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'])
+    art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'], artwork['Circumference (cm)'], 
+                    artwork['Depth (cm)'], artwork['Diameter (cm)'], artwork['Height (cm)'], artwork['Length (cm)'], artwork['Weight (kg)'], 
+                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
@@ -83,16 +85,30 @@ def newArtist(name, id, nacionality, gender, begin, end):
     artist['EndDate'] = end
     return artist
 
-def newArtwork(name, id, constituentid, medium):
+def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, diametro, altura, largo, peso, ancho, altura_asiento, duracion, 
+                fecha, fecha_compra, adquisicion):
     """
     Esta estructura almancena las obras utilizadas.
     """
-    artist = {'Title': '', 'ObjectID': '', 'ConstituentID': ''}
-    artist['Title'] = name
-    artist['ObjectID'] = id
-    artist['ConstituentID'] = constituentid
-    artist['Medium'] = medium
-    return artist
+    artwork = {'Title': '', 'ObjectID': '', 'ConstituentID': ''}
+    artwork['Title'] = name
+    artwork['ObjectID'] = id
+    artwork['ConstituentID'] = constituentid
+    artwork['Medium'] = medium
+    artwork['Circumference (cm)'] = circunferencia
+    artwork['Depth (cm)'] = profundidad
+    artwork['Diameter (cm)'] = diametro
+    artwork['Height (cm)'] = altura
+    artwork['Length (cm)'] = largo
+    artwork['Weight (kg)'] = peso
+    artwork['Width (cm)'] = ancho
+    artwork['Seat Height (cm)'] = altura_asiento
+    artwork['Duration (sec.)'] = duracion
+    artwork['Date'] = fecha
+    artwork['DateAcquired'] = fecha_compra
+    artwork['CreditLine'] = adquisicion
+    
+    return artwork
 
 # Funciones de consulta
 
