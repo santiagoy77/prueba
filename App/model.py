@@ -101,13 +101,13 @@ def getArtistsbyYear(catalog, year1, year2):
     
     artists = catalog['artists']
     ArtistsbyYear = lt.newList()
-    i=0
-    for a in artists:
-        artist = lt.getElement(artists, i)
+    size = lt.size(artists)
+    for cont in range(1,size+1):
+        artist = lt.getElement(artists, cont)
         year=artist['BeginDate']
-        if year1<int(year)<year2:
+        if year1<=int(year)<=year2:
             lt.addLast(ArtistsbyYear, artist)
-        i+=1
+       
     return ArtistsbyYear
 
 
@@ -223,15 +223,18 @@ def MostUsedMedium(freq, Mediums):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareartistyears(year1, year2):
-    return (int(year1['BeginDate']) > int(year2['BeginDate']))
+    return (int(year1['BeginDate']) < int(year2['BeginDate']))
 
 def compareartworkyears(year1, year2):
     return (int(year1['Date']) > int(year2['Date']))
 
 # Funciones de ordenamiento
 
-def sortArtist(catalog):
-    sa.sort(catalog['artist'], compareartistyears)
+def sortArtist(artists):
+    resul=sa.sort(artists, compareartistyears)
+    return(resul)
+    
+    
 
 def sortArtworks(catalog):
     sa.sort(catalog['artworks'], compareartworkyears)
