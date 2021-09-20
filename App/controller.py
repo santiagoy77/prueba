@@ -87,6 +87,22 @@ def getArtistsbyYear(catalog, year1, year2):
     Artistsort =sortArtists(ArtistbyYear)
     return(Artistsort)
 
+
+def getArtworksbyDate(catalog, date1, date2):
+    """
+    Retorna las obras entre las fechas dadas
+    """
+    ArtworksbyYear = model.getArtistsbyYear(catalog, date1, date2)
+    Artworksort =sortArtists(ArtworksbyYear)
+    return(Artworksort)
+
+def PurchaseArtworks(obras):
+    """
+    Retorna las obras adquiridas por compra
+    """
+    purchased = model.PurchaseArtworks(obras)
+    print (purchased)
+
 def ArtworksByArtist(catalog, artistname):
 
     artistID = model.ArtistID (catalog, artistname)
