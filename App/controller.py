@@ -20,11 +20,9 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-
 import config as cf
 import model
 import csv
-from DISClib.ADT import list as lt
 
 
 """
@@ -71,16 +69,13 @@ def loadArtworks(catalog):
 
 # Funciones de ordenamiento
 
-def sortArtists(artists):
-    resul=model.sortArtist(artists)
+def sortArtists(catalog):
     
-    
-    return(resul)
+    model.sortArtist(catalog)
 
 def sortArtworks(catalog):
     
-    return(model.sortArtworks(catalog['artworks']))
-    
+    model.sortArtworks(catalog)
 
 # Funciones de consulta sobre el catálogo
 
@@ -91,7 +86,6 @@ def getArtistsbyYear(catalog, year1, year2):
     ArtistbyYear = model.getArtistsbyYear(catalog, year1, year2)
     Artistsort =sortArtists(ArtistbyYear)
     return(Artistsort)
-
 
 def ArtworksByArtist(catalog, artistname):
 
@@ -121,3 +115,8 @@ def MostUsedMedium(freq, Mediums):
 
     return MostUsedMedium
 
+
+def MUMList(MostUsedMedium, Artworkslist):
+    MUMList = model.MUMList(MostUsedMedium, Artworkslist)
+
+    return MUMList
