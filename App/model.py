@@ -90,7 +90,9 @@ def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, dia
     """
     Esta estructura almancena las obras utilizadas.
     """
-    artwork = {'Title': '', 'ObjectID': '', 'ConstituentID': ''}
+    artwork = {'Title': '', 'ObjectID': '', 'ConstituentID': '', 'Medium': '','Circumference (cm)': '','Depth (cm)': '','Diameter (cm)': '',
+                'Height (cm)': '','Length (cm)': '','Weight (kg)': '','Width (cm)': '','Seat Height (cm)': '','Duration (sec.)': '',
+                'Date': '','DateAcquired': '','CreditLine': ''}
     artwork['Title'] = name
     artwork['ObjectID'] = id
     artwork['ConstituentID'] = constituentid
