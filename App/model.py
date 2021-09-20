@@ -97,7 +97,6 @@ def newArtwork(name, id, constituentid, medium):
 # Funciones de consulta
 
 
-
 def getArtistsbyYear(catalog, year1, year2):
     
     artists = catalog['artists']
@@ -138,8 +137,8 @@ def ArtistID (catalog, artistname):
 def ArtworksByID (catalog, artistID):
     
     artworks = catalog["artworks"]
-    artworksByID = lt.newList()
-    i=0
+    artworksByID = lt.newList('ARRAY_LIST')
+    i=1
     
     while i <= lt.size(artworks):
         artwork = lt.getElement(artworks, i)
@@ -152,22 +151,74 @@ def ArtworksByID (catalog, artistID):
 
     return artworksByID
 
+def freqMedium (Mediums, Artworkslist):
+
+    MediumListReps=lt.newList('ARRAY_LIST')
+    size=lt.size(Artworkslist)
+
+    for n in range(1,size+1):
+        
+        artwork = lt.getElement(Artworkslist, n)
+        
+        Medium=artwork["Medium"]
+
+        lt.addLast(MediumListReps, Medium)
+
+    freq = lt.newList('ARRAY_LIST')
+    
+    size2 = lt.size(Mediums)
+    size3 = lt.size(MediumListReps)
+
+    for Medium in range(1, 1+size2):
+        y=lt.getElement(Mediums, Medium)
+        i=0
+
+        for count in range(1, 1+size3):
+            x=lt.getElement(MediumListReps, count)
+
+            if y == x:
+                i+=1
+        
+        lt.addLast(freq, i)
+
+    return freq
+
 
 def MediumInArtworks (artworksByID):
     
-    mediums = []
+    mediums = lt.newList('ARRAY_LIST')
     i=0
     
     while i <= lt.size(artworksByID):
         artwork = lt.getElement(artworksByID, i)
         Medium = artwork["Medium"]
-       
-        lt.addLast(mediums, Medium)
+        pos=lt.isPresent(mediums, Medium)
+
+        if pos == 0:
+            lt.addLast(mediums, Medium)
 
         i+=1  
    
-    print(mediums)
-    return mediums
+    return (mediums)
+
+
+def MostUsedMedium(freq, Mediums):
+
+    max = 0
+    print(freq)
+    size=lt.size(freq)
+
+    for i in range(1, 1+size):
+        f = lt.getElement(freq, i)
+
+        if f > max:
+            max = f
+        
+    pos = lt.isPresent(freq, max)
+
+    MostUsedMedium = lt.getElement(Mediums, pos)
+
+    return MostUsedMedium
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

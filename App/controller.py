@@ -20,9 +20,11 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+
 import config as cf
 import model
 import csv
+from DISClib.ADT import list as lt
 
 
 """
@@ -86,3 +88,33 @@ def getArtistsbyYear(catalog, year1, year2):
     ArtistbyYear = model.getArtistsbyYear(catalog, year1, year2)
     Artistsort =sortArtists(ArtistbyYear)
     return(Artistsort)
+
+
+def ArtworksByArtist(catalog, artistname):
+
+    artistID = model.ArtistID (catalog, artistname)
+    artworkslist = model.ArtworksByID (catalog, artistID)
+    
+    return artworkslist 
+
+
+def MediumInArtwork(artworksByID):
+    
+    mediums = model.MediumInArtworks(artworksByID)
+
+    return mediums
+
+
+def FreqMediums(mediums, Artworkslist):
+
+    freq = model.freqMedium (mediums, Artworkslist)
+
+    return freq
+
+
+def MostUsedMedium(freq, Mediums):
+
+    MostUsedMedium=model.MostUsedMedium(freq, Mediums)
+
+    return MostUsedMedium
+
