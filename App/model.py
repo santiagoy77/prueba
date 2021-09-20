@@ -169,6 +169,24 @@ def ArtworksByID (catalog, artistID):
 
     return artworksByID
 
+
+def ArtistsByID (MUMList, artistID):
+    
+    artistByID = lt.newList('ARRAY_LIST')
+    i=1
+    
+    while i <= lt.size(MUMList):
+        artwork = lt.getElement(MUMList, i)
+        ArtistIDinArtwork = artwork["ConstituentID"]
+        
+        if artistID in ArtistIDinArtwork:
+            lt.addLast(artistByID, artwork[])
+        
+        i+=1    
+
+    return artistByID
+
+
 def freqMedium (Mediums, Artworkslist):
 
     MediumListReps=lt.newList('ARRAY_LIST')
@@ -223,7 +241,6 @@ def MediumInArtworks (artworksByID):
 def MostUsedMedium(freq, Mediums):
 
     max = 0
-    print(freq)
     size=lt.size(freq)
 
     for i in range(1, 1+size):
@@ -237,6 +254,24 @@ def MostUsedMedium(freq, Mediums):
     MostUsedMedium = lt.getElement(Mediums, pos)
 
     return MostUsedMedium
+
+
+def MUMList(MostUsedMedium, Artworkslist):
+
+    MUMList = lt.newList('ARRAY:LIST')
+    size = lt.size(Artworkslist)
+
+    for i in range(1, 1+size):
+        Artwork = lt.getElement(Artworkslist, i)
+        Medium = Artwork["Medium"]
+
+        if Medium == MostUsedMedium:
+            lt.addLast(MUMList, Artwork)
+            
+
+    return MUMList    
+
+    
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
