@@ -80,6 +80,19 @@ def printArtistbyYear(artists):
     else:
         print('No se encontraron libros')
 
+def printartistandfreq(Mediums, freq):
+    i = 1
+    size = lt.size(Mediums)
+
+    while i <= size:
+        tecnica = lt.getElement(Mediums, i)
+        frecuencia = lt.getElement(freq, i)
+
+        i+=1
+
+        print(str(tecnica)+": "+str(frecuencia))
+
+
 """
 Menu principal
 """
@@ -111,6 +124,24 @@ while True:
         year2 = input("Ingrese el año final: ")
         artists = controller.getArtistsbyYear(catalog, int(year1), int(year2))
         printArtistbyYear(artists)
+
+
+
+
+    elif int(inputs[0]) == 4:
+        
+        ArtistName = input("Ingrese el nombre del artista: ")
+        Artworkslist = controller.ArtworksByArtist(catalog, ArtistName)
+        totaldeobras = lt.size(Artworkslist)
+        print(str(ArtistName)+" tiene un total de "+str(totaldeobras)+" obras.")
+        Mediums = controller.MediumInArtwork(Artworkslist)
+        freq = controller.FreqMediums(Mediums, Artworkslist)
+        print(str(ArtistName)+" tiene un total de "+str(lt.size(Mediums))+" técnicas usadas.")
+        MostUsedMedium = controller.MostUsedMedium(freq, Mediums)
+        printartistandfreq(Mediums, freq)
+        print("La técnica más usada por "+str(ArtistName)+" es: "+str(MostUsedMedium)+".")
+
+    
 
     else:
         sys.exit(0)
