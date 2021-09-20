@@ -99,11 +99,17 @@ def printMUMList(MUMList):
     size = lt.size(MUMList)
 
     while i <= size:
-        element = lt.getElement(MUMList, i)
+        artwork = lt.getElement(MUMList, i)
+        ArtistID=artwork['ConstituentID']
+        Artist = controller.ArtistsByID (MUMList, ArtistID)
+
+        print('Titulo: ' + artwork['Title'])
+        print('Artista(s): ' + str(Artist))
+        print('Fecha de creación: ' + artwork['Date'])
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
 
         i+=1
 
-        print(str(element))
 
 """
 Menu principal

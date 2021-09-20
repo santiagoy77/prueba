@@ -167,6 +167,24 @@ def ArtworksByID (catalog, artistID):
 
     return artworksByID
 
+
+def ArtistsByID (MUMList, artistID):
+    
+    artistByID = lt.newList('ARRAY_LIST')
+    i=1
+    
+    while i <= lt.size(MUMList):
+        artwork = lt.getElement(MUMList, i)
+        ArtistIDinArtwork = artwork["ConstituentID"]
+        
+        if artistID in ArtistIDinArtwork:
+            lt.addLast(artistByID, artwork[])
+        
+        i+=1    
+
+    return artistByID
+
+
 def freqMedium (Mediums, Artworkslist):
 
     MediumListReps=lt.newList('ARRAY_LIST')
@@ -234,6 +252,7 @@ def MostUsedMedium(freq, Mediums):
     MostUsedMedium = lt.getElement(Mediums, pos)
 
     return MostUsedMedium
+
 
 def MUMList(MostUsedMedium, Artworkslist):
 
