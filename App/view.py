@@ -128,7 +128,13 @@ while True:
         print('Hay ' + str(lt.size(artists))+ ' artistas entre ' + str(year1) +' y '+str(year2))
         printArtistbyYear(artists)
 
-
+    elif int(inputs[0]) == 3:
+        date1 = input("Ingrese la fecha inicial (AAAA-MM-DD): ")
+        date2 = input("Ingrese la fecha final (AAAA-MM-DD): ")
+        obras = controller.getArtworksbyDate(catalog, date1, date2)
+        print ("Hay un total de "+str(lt.size(obras))+" obras entre las fechas seleccionadas")
+        compradas = controller.PurchaseArtworks(obras)
+        print ("Hay un total de "+str(lt.size(compradas))+" obras que fueron compradas entre las fechas seleccionadas")
 
 
     elif int(inputs[0]) == 4:

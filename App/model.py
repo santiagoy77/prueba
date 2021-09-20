@@ -129,6 +129,69 @@ def getArtistsbyYear(catalog, year1, year2):
        
     return ArtistsbyYear
 
+def getArtworksbyDate(catalog, date1, date2):
+    
+    artworks = catalog['artworks']
+
+    ArtworksByYear = lt.newList()
+    
+    size = lt.size(artworks)
+
+    fecha1 = date1.split("-")
+    fecha2 = date2.split("-") 
+
+    for cont in range(1,size+1):
+        artwork = lt.getElement(artworks, cont)
+        date = artwork['DateAcquired'].split("-")
+
+        if (fecha1[0])<=(date[0])<=(fecha2[0]):
+            lt.addLast(ArtworksByYear, artwork)
+
+    size2 = lt.size(ArtworksByYear)
+
+    for cont in range(1,size2+1):
+        artwork = lt.getElement(ArtworksByYear, cont)
+        
+        date = artwork['DateAcquired'].split("-")
+
+        if fecha1[0]==date[0]:
+            if date[1]<fecha1[1]:
+                pos = lt.isPresent(ArtworksByYear, artwork)
+                lt.deleteElement(ArtworksByYear,pos)
+
+        if fecha2[0]==date[0]:
+            if date[1]>fecha1[1]:
+                pos = lt.isPresent(ArtworksByYear, artwork)
+                lt.deleteElement(ArtworksByYear,pos)
+
+        if fecha1[0]==date[0] and fecha1[1==date[1]]:
+            if date[2]<=fecha1[2]:
+                pos = lt.isPresent(ArtworksByYear, artwork)
+                lt.deleteElement(ArtworksByYear,pos)
+        
+        if fecha2[0]==date[0] and fecha2[1==date[1]]:
+            if date[2]>=fecha1[2]:
+                pos = lt.isPresent(ArtworksByYear, artwork)
+                lt.deleteElement(ArtworksByYear,pos)
+                  
+
+
+    return ArtworksByYear
+
+def PurchaseArtworks(obras):
+
+    purchased = lt.newList()
+    size = lt.size(obras)
+    for count in range(1, size+1):
+        obra = lt.getElement(obras, count)
+        adquisicion = obra["CreditLine"]
+        if adquisicion == "Purchase":
+            lt.addLast(purchased, obra)
+
+    return purchased
+
+
+
 
 def ArtistID (catalog, artistname):
 
