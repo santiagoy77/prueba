@@ -64,7 +64,7 @@ def printArtistbyYear(artists):
         while i<=3:
             artist=lt.getElement(artists,i)
             print('Nombre: ' + artist['DisplayName'] + '  Año de nacimiento: ' +
-                  artist['BeginDate'] + ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
+                  artist['BeginDate'] + '  Año de fallecimiento: ' + artist['EndDate']+ ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
                   artist['Gender'])
             i+=1
         print (' Estos son los 3 últimos: ')
@@ -73,12 +73,12 @@ def printArtistbyYear(artists):
         while a<=3:
             artist=lt.getElement(artists,j)
             print('Nombre: ' + artist['DisplayName'] + '  Año de nacimiento: ' +
-                  artist['BeginDate'] + ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
+                  artist['BeginDate'] + '  Año de fallecimiento: ' + artist['EndDate']+ ' Nacionalidad: ' + artist['Nationality']  + '  Genero: ' +
                   artist['Gender'])
             j-=1
             a+=1
     else:
-        print('No se encontraron libros')
+        print('No se encontraron artistas')
 
 """
 Menu principal
@@ -110,6 +110,7 @@ while True:
         year1 = input("Ingrese el año inicial: ")
         year2 = input("Ingrese el año final: ")
         artists = controller.getArtistsbyYear(catalog, int(year1), int(year2))
+        print('Hay ' + str(lt.size(artists))+ ' artistas entre ' + str(year1) +' y '+str(year2))
         printArtistbyYear(artists)
 
     else:
