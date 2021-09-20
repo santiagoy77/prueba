@@ -68,7 +68,7 @@ def addArtwork(catalog, artwork):
     """
     art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'], artwork['Circumference (cm)'], 
                     artwork['Depth (cm)'], artwork['Diameter (cm)'], artwork['Height (cm)'], artwork['Length (cm)'], artwork['Weight (kg)'], 
-                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'])
+                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'], artwork["Dimensions"])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
@@ -86,7 +86,7 @@ def newArtist(name, id, nacionality, gender, begin, end):
     return artist
 
 def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, diametro, altura, largo, peso, ancho, altura_asiento, duracion, 
-                fecha, fecha_compra, adquisicion):
+                fecha, fecha_compra, adquisicion, dimensions):
     """
     Esta estructura almancena las obras utilizadas.
     """
@@ -97,6 +97,7 @@ def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, dia
     artwork['ObjectID'] = id
     artwork['ConstituentID'] = constituentid
     artwork['Medium'] = medium
+    artwork["Dimensions"] = dimensions
     artwork['Circumference (cm)'] = circunferencia
     artwork['Depth (cm)'] = profundidad
     artwork['Diameter (cm)'] = diametro
@@ -170,21 +171,23 @@ def ArtworksByID (catalog, artistID):
     return artworksByID
 
 
-def ArtistsByID (MUMList, artistID):
+def ArtistNameByID (catalog, artistID):
     
-    artistByID = lt.newList('ARRAY_LIST')
+    Artists = catalog["artists"]
     i=1
     
-    while i <= lt.size(MUMList):
-        artwork = lt.getElement(MUMList, i)
-        ArtistIDinArtwork = artwork["ConstituentID"]
+    while i <= lt.size(Artists):
+        artist = lt.getElement(Artists, i)
+        ID = artist["ConstituentID"]
         
-        if artistID in ArtistIDinArtwork:
-            lt.addLast(artistByID, artwork[])
-        
-        i+=1    
+        if ID == artistID:
+            name = artist["DisplayName"]
+            i=1+lt.size(Artists)
 
-    return artistByID
+            return name
+
+        i+=1    
+        
 
 
 def freqMedium (Mediums, Artworkslist):

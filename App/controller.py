@@ -23,6 +23,7 @@
 import config as cf
 import model
 import csv
+from DISClib.ADT import list as lt
 
 
 """
@@ -120,3 +121,41 @@ def MUMList(MostUsedMedium, Artworkslist):
     MUMList = model.MUMList(MostUsedMedium, Artworkslist)
 
     return MUMList
+
+
+
+def printMUMList(catalog, MUMList):
+    i = 1
+    size = lt.size(MUMList)
+
+    while i <= size:
+        artwork = lt.getElement(MUMList, i)
+
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = model.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+
+        i+=1

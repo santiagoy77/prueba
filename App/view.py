@@ -94,22 +94,6 @@ def printartistandfreq(Mediums, freq):
 
         print(str(tecnica)+": "+str(frecuencia))
 
-def printMUMList(MUMList):
-    i = 1
-    size = lt.size(MUMList)
-
-    while i <= size:
-        artwork = lt.getElement(MUMList, i)
-        ArtistID=artwork['ConstituentID']
-        Artist = controller.ArtistsByID (MUMList, ArtistID)
-
-        print('Titulo: ' + artwork['Title'])
-        print('Artista(s): ' + str(Artist))
-        print('Fecha de creación: ' + artwork['Date'])
-        print('Técnica(s) usada(s): ' + artwork['Medium'])
-
-        i+=1
-
 
 """
 Menu principal
@@ -169,7 +153,7 @@ while True:
         List = controller.MUMList(MostUsedMedium, Artworkslist)
         print("Las obras en las que se usó dicha técnica son: ")
         print(" ")
-        printMUMList(List)
+        controller.printMUMList(catalog, List)
         print(" ")
 
     
