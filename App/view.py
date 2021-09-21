@@ -84,12 +84,12 @@ while True:
         print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks_DateAquired'])))
         print("Se demoro: ",str(artist[0]))
         print('Últimos tres artistas cargados:\n')
-        for i in [-3,-2,-1]:
+        for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artists_BeginDate'],i)))
         print("Se demoro: ",str(artwork[0]))
         print('Últimas tres obras de arte cargadas:\n')
-        for i in [3,2,1]:
-            print(str(lt.getElement(catalog['artists_BeginDate'],i)))
+        for i in [-2,-1,0]:
+            print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
 
     elif inputs==2:
         #size = input("Indique tamaño de la muestra: ")
@@ -100,11 +100,11 @@ while True:
         print("Artistas nacidos entre ",str(anio1)," y ",str(anio2))
         print("======================== Req No. 1 Respuesta ========================")
         print("Hay ",str(lt.size(result))," artistas nacidos entre ",str(anio1)," y ",str(anio2))
-        print('Primeras tres obras de arte cargadas:\n')
+        print('\nTres artistas con menor fecha de nacimiento: :\n')
         for i in [3,2,1]:
             print(str(lt.getElement(result,i)))
-        print('Últimas tres obras de arte cargadas:\n')
-        for i in [-3,-2,-1]:
+        print('\nTres artistas con mayor fecha de nacimiento: \n')
+        for i in [-2,-1,0]:
             print(str(lt.getElement(result,i)))
         #print("Se demoró ",result[0])
 

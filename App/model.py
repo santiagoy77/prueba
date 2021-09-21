@@ -78,23 +78,49 @@ def addArtwork(catalog, artwork):
 def rangoArtists(catalog, anio1, anio2):
     artists = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
-    n=1
-    while n<=lt.size(artists):
-        if int(lt.firstElement(artists)["BeginDate"])<anio1:
-            lt.removeFirst(artists)
+    pos=1
+    while pos<=lt.size(artists):
+        if int(lt.getElement(artists,pos)["BeginDate"])>=anio1:
+            start=pos
+            break
+        pos+=1
+    initial=start
+    num=0
+    while start<=lt.size(artists):
+        if int(lt.getElement(artists,start)["BeginDate"])<=anio2:
+            num+=1
         else:
-            n=lt.size(artists)
-        n+=1
-    n=1
-    while n<=lt.size(artists):
-        if int(lt.lastElement(artists)["BeginDate"])>anio2:
-            lt.removeLast(artists)
-        else:
-            n=lt.size(artists)
-        n+=1
+            break
+        start+=1
+    answ = lt.subList(artists,initial,num)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
-    return artists
+    return answ
+    
+# =============================================================================
+
+#      artists = catalog["artists_BeginDate"].copy()
+#      start_time = time.process_time()
+#      n=1
+#      while n<=lt.size(artists):
+#          if int(lt.firstElement(artists)["BeginDate"])<anio1:
+#              lt.removeFirst(artists)
+#              lt.removeFirst(artists)
+#          else:
+#              n=lt.size(artists)
+#          n+=1
+#      n=1
+#      while n<=lt.size(artists):
+#          if int(lt.lastElement(artists)["BeginDate"])>anio2:
+#              lt.removeLast(artists)
+#          else:
+#              n=lt.size(artists)
+#          n+=1
+#      stop_time = time.process_time()
+#      elapsed_time_mseg = (stop_time - start_time)*1000
+#     return artists
+# =============================================================================
+    
 
 def rangoArtworks(catalog, anio1, anio2):
     sub_list = catalog["artworks"].copy()
