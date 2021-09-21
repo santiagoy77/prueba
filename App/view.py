@@ -47,11 +47,11 @@ def printMenu():
     print("7- Proponer una nueva exposición en el museo.")
     print("0- Detener la ejecución del programa.")
 
-def initCatalog(lista: int):
+def initCatalog():
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog(lista)
+    return controller.initCatalog()
 
 def loadData(catalog):
     """
@@ -68,14 +68,13 @@ while True:
     error = "Por favor ingrese un número entero entre 0 y 7."
     printMenu()
     try:
-        inputs = int(input('Seleccione una opción para continuar\n'))
+        inputs = int(input('Seleccione una opción para continuar: \n'))
     except:
         print(error)
         continue
     if inputs == 1:
         print("Cargando información de los archivos ....")
-        lista=int(input("Digite 1 si quiere crear un array list o 0 si quiere crear un linked list: "))
-        catalog = initCatalog(lista)
+        catalog = initCatalog()
         loadData(catalog)
         print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
         print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
@@ -87,8 +86,7 @@ while True:
             print(str(lt.getElement(catalog['artworks'],i)))
     elif inputs==2:
         size = input("Indique tamaño de la muestra: ")
-        sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
-        result = controller.sortArtworks(catalog, int(size),sor)
+        result = controller.sortArtworks(catalog, int(size))
         print('Primeras tres obras de arte cargadas:\n')
         for i in [3,2,1]:
             print(str(lt.getElement(result[1],i)))
