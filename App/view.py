@@ -37,15 +37,15 @@ def printMenu():
     """
     Imprime las opciones del menú.
     """
-    print("Bienvenido")
-    print("1- Cargar información en el catálogo.")
-    print("2- Listar cronológicamente los adquisiciones.")
-    print("3- Listar cronológicamente las artistas.")
-    print("4- Clasificar las obras de un artista por técnica.")
-    print("5- Clasificar las obras por la nacionalidad de sus creadores.")
-    print("6- Transportar obras de un departamento.")
-    print("7- Proponer una nueva exposición en el museo.")
-    print("0- Detener la ejecución del programa.")
+    print("Menú de opciones:\n")
+    print("0. Cargar información en el catálogo.")
+    print("Requisito 1. Listar cronológicamente las artistas.")
+    print("Requisito 2. Listar cronológicamente los adquisiciones.")
+    print("Requisito 3. Clasificar las obras de un artista por técnica.")
+    print("Requisito 4. Clasificar las obras por la nacionalidad de sus creadores.")
+    print("Requisito 5. Transportar obras de un departamento.")
+    print("Requisito 6 (Bono). Proponer una nueva exposición en el museo.")
+    print("7. Detener la ejecución del programa.")
 
 def initCatalog():
     """
@@ -72,18 +72,18 @@ while True:
     except:
         print(error)
         continue
-    if inputs == 1:
+    if inputs == 0:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
-        print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
-        print('Últimos tres artistas cargados:\n')
+        print('Número de artistas en el catálogo: ',str(lt.size(catalog['artists'])))
+        print('Número de obras de arte en el catálogo: ',str(lt.size(catalog['artworks'])))
+        print('\nÚltimos tres artistas cargados:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(catalog['artists'],i)))
-        print('Últimas tres obras de arte cargadas:\n')
+        print('\nÚltimas tres obras de arte cargadas:\n')
         for i in [-3,-2,-1]:
-            print(str(lt.getElement(catalog['artworks'],i)))
+            print(str(lt.getElement(catalog['artworks'],i)))  
     elif inputs==2:
         size = input("Indique tamaño de la muestra: ")
         result = controller.sortArtworks(catalog, int(size))
@@ -94,7 +94,7 @@ while True:
         for i in [-3,-2,-1]:
             print(str(lt.getElement(result[1],i)))
         print("Se demoró ",result[0])
-    elif (inputs>2) and (inputs<8):
+    elif (inputs==1) or ((inputs>2) and (inputs<7)):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
         print(error)
