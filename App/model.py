@@ -75,7 +75,29 @@ def addArtwork(catalog, artwork):
 # Funciones para creacion de datos
 
 # Funciones de consulta
-def rango_artists(artists, anio1, anio2):
+def rangoArtists(catalog, anio1, anio2):
+    artists = catalog["artists"].copy()
+    start_time = time.process_time()
+    n=1
+    while n<=lt.size(artists):
+        if int(lt.firstElement(artists)["BeginDate"])<anio1:
+            lt.removeFirst(artists)
+        else:
+            n=lt.size(artists)
+        n+=1
+    n=1
+    while n<=lt.size(artists):
+        if int(lt.lastElement(artists)["BeginDate"])>anio2:
+            lt.removeLast(artists)
+        else:
+            n=lt.size(artists)
+        n+=1
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return artists
+
+def rangoArtworks(catalog, anio1, anio2):
+    sub_list = catalog["artworks"].copy()
     n=1
     while n<=lt.size(artists):
         if lt.firstElement(artists)["BeginDate"]<anio1:
@@ -91,10 +113,11 @@ def rango_artists(artists, anio1, anio2):
             n=lt.size(artists)
         n+=1
     return artists
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compare_artists(artist1,artist2):
-    if artist1["BeginDate"]<artist2["BeginDate"]:
+    if artist1["BeginDate"]<=artist2["BeginDate"]:
         return -1
     else:
         return 0
