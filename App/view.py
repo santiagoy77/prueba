@@ -172,8 +172,8 @@ while True:
         precioObras = controller.precioObras(tamanoObras, pesoobras)
         PrecioTotal = controller.sumaTotal(precioObras)
         pesoTotal = controller.sumaTotal(pesoobras)
-        print("El precio estimado para el tranporte de estas obras es de: "+str(PrecioTotal)+" USD.")
-        print("El peso estimado de estas obras es de: "+str(pesoTotal)+" kg.")
+        print("El precio estimado para el tranporte de estas obras es de: "+str(round(PrecioTotal, 3))+" USD.")
+        print("El peso estimado de estas obras es de: "+str(round(pesoTotal, 3))+" kg.")
 
 
     

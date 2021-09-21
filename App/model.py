@@ -369,52 +369,61 @@ def tamanoObras (artworksByDepto):
         altura = artwork["Height (cm)"]
         largo = artwork["Length (cm)"]
         ancho = artwork["Width (cm)"]
-        peso = artwork["Weight (kg)"]
 
         dimensiones = 0   
         
         if altura != "":
-            altura = float(altura)
+            altura = float(altura)/100
 
             if circunferencia != "":
-                circunferencia = float(circunferencia)
+                circunferencia = float(circunferencia)/100
                 dimensiones = (3.14159*(circunferencia/(2*3.14159))**2)*altura
 
             elif diametro != "":
-                diametro = float(diametro)
+                diametro = float(diametro)/100
                 dimensiones = (3.14159*(diametro/(2))**2)*altura
 
             elif profundidad != "" and ancho != "":
-                profundidad = float(profundidad)
-                ancho = float(ancho)
+                profundidad = float(profundidad)/100
+                ancho = float(ancho)/100
                 dimensiones = profundidad*ancho*altura
 
             elif largo != "" and ancho != "":
-                largo = float(largo)
-                ancho = float(ancho)
+                largo = float(largo)/100
+                ancho = float(ancho)/100
                 dimensiones = profundidad*ancho*altura
 
             elif profundidad != "":
-                profundidad = float(profundidad)
+                profundidad = float(profundidad)/100
                 dimensiones = profundidad*altura
 
             elif largo != "":
-                largo = float(largo)
+                largo = float(largo)/100
                 dimensiones = profundidad*altura
             
             elif ancho != "":
-                ancho = float(ancho)
+                ancho = float(ancho)/100
                 dimensiones = ancho*altura
 
 
         elif largo != "" and ancho != "":
-            largo = float(largo)
-            ancho = float(ancho)
+            largo = float(largo)/100
+            ancho = float(ancho)/100
             dimensiones = profundidad*ancho 
+
+        elif circunferencia != "":
+            circunferencia = float(circunferencia)/100
+            dimensiones = (3.14159*(circunferencia/(2*3.14159))**2)
+
+        elif diametro != "":
+            diametro = float(diametro)/100
+            dimensiones = (3.14159*(diametro/(2))**2)
         
+
         lt.addLast(dimensionList, dimensiones)
 
     return dimensionList
+
 
 def pesoObras (artworksByDepto): 
     size = lt.size(artworksByDepto)
@@ -440,7 +449,7 @@ def precioObras (dimensiones, pesoObras):
         dimension = lt.getElement(dimensiones, i)
 
         if dimension != 0:
-            precio = dimension*72
+            precio = dimension*72   
 
         if peso != "":
             peso = float(peso)
@@ -451,6 +460,9 @@ def precioObras (dimensiones, pesoObras):
                 precio = peso*72
             elif peso < dimension:
                 precio = dimension*72
+
+        if peso == "" and dimension == 0:
+            precio = 42
         
         lt.addLast(precioObras, precio)
         
