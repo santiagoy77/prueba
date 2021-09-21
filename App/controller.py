@@ -139,6 +139,32 @@ def MUMList(MostUsedMedium, Artworkslist):
     return MUMList
 
 
+def ArtworksByDepto (catalog, Depto):
+    artworks = model.ArtworksByDepto (catalog, Depto)
+
+    return artworks
+
+
+def tamanoObras (artworksByDepto):
+    tamanoobras = model.tamanoObras(artworksByDepto)
+
+    return tamanoobras
+
+def precioObras (dimensiones, pesoObras):
+    precioobras = model.precioObras(dimensiones, pesoObras)
+
+    return precioobras
+
+def pesoObras (artworksByDepto):
+    pesoobras = model.pesoObras (artworksByDepto)
+
+    return pesoobras
+
+def sumaTotal(lista):
+    precio = model.sumaTotal(lista)
+
+    return precio
+
 
 def printMUMList(catalog, MUMList):
     i = 1
@@ -175,3 +201,5 @@ def printMUMList(catalog, MUMList):
         print(" ")
 
         i+=1
+
+    

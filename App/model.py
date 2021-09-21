@@ -68,7 +68,7 @@ def addArtwork(catalog, artwork):
     """
     art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'], artwork['Circumference (cm)'], 
                     artwork['Depth (cm)'], artwork['Diameter (cm)'], artwork['Height (cm)'], artwork['Length (cm)'], artwork['Weight (kg)'], 
-                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'], artwork["Dimensions"])
+                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'], artwork['Dimensions'], artwork['Department'])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
@@ -86,18 +86,18 @@ def newArtist(name, id, nacionality, gender, begin, end):
     return artist
 
 def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, diametro, altura, largo, peso, ancho, altura_asiento, duracion, 
-                fecha, fecha_compra, adquisicion, dimensions):
+                fecha, fecha_compra, adquisicion, dimensions, departamento):
     """
     Esta estructura almancena las obras utilizadas.
     """
     artwork = {'Title': '', 'ObjectID': '', 'ConstituentID': '', 'Medium': '','Circumference (cm)': '','Depth (cm)': '','Diameter (cm)': '',
                 'Height (cm)': '','Length (cm)': '','Weight (kg)': '','Width (cm)': '','Seat Height (cm)': '','Duration (sec.)': '',
-                'Date': '','DateAcquired': '','CreditLine': ''}
+                'Date': '','DateAcquired': '','CreditLine': '','Department':''}
     artwork['Title'] = name
     artwork['ObjectID'] = id
     artwork['ConstituentID'] = constituentid
     artwork['Medium'] = medium
-    artwork["Dimensions"] = dimensions
+    artwork['Dimensions'] = dimensions
     artwork['Circumference (cm)'] = circunferencia
     artwork['Depth (cm)'] = profundidad
     artwork['Diameter (cm)'] = diametro
@@ -110,6 +110,7 @@ def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, dia
     artwork['Date'] = fecha
     artwork['DateAcquired'] = fecha_compra
     artwork['CreditLine'] = adquisicion
+    artwork['Department'] = departamento
     
     return artwork
 
@@ -337,7 +338,136 @@ def MUMList(MostUsedMedium, Artworkslist):
 
     return MUMList    
 
+def ArtworksByDepto (catalog, Depto):
     
+    artworks = catalog["artworks"]
+    artworksByDepto = lt.newList('ARRAY_LIST')
+    i=1
+    
+    while i <= lt.size(artworks):
+        artwork = lt.getElement(artworks, i)
+        catalogDepto = artwork["Department"]
+        
+        if Depto in catalogDepto:
+            lt.addLast(artworksByDepto, artwork)
+        
+        i+=1    
+
+    return artworksByDepto
+
+
+def tamanoObras (artworksByDepto):
+    size = lt.size(artworksByDepto)
+    dimensionList = lt.newList()
+
+    for i in range(1, 1+size):
+        artwork = lt.getElement(artworksByDepto, i)
+
+        circunferencia = artwork["Circumference (cm)"]
+        profundidad = artwork["Depth (cm)"]
+        diametro = artwork["Diameter (cm)"]
+        altura = artwork["Height (cm)"]
+        largo = artwork["Length (cm)"]
+        ancho = artwork["Width (cm)"]
+        peso = artwork["Weight (kg)"]
+
+        dimensiones = 0   
+        
+        if altura != "":
+            altura = float(altura)
+
+            if circunferencia != "":
+                circunferencia = float(circunferencia)
+                dimensiones = (3.14159*(circunferencia/(2*3.14159))**2)*altura
+
+            elif diametro != "":
+                diametro = float(diametro)
+                dimensiones = (3.14159*(diametro/(2))**2)*altura
+
+            elif profundidad != "" and ancho != "":
+                profundidad = float(profundidad)
+                ancho = float(ancho)
+                dimensiones = profundidad*ancho*altura
+
+            elif largo != "" and ancho != "":
+                largo = float(largo)
+                ancho = float(ancho)
+                dimensiones = profundidad*ancho*altura
+
+            elif profundidad != "":
+                profundidad = float(profundidad)
+                dimensiones = profundidad*altura
+
+            elif largo != "":
+                largo = float(largo)
+                dimensiones = profundidad*altura
+            
+            elif ancho != "":
+                ancho = float(ancho)
+                dimensiones = ancho*altura
+
+
+        elif largo != "" and ancho != "":
+            largo = float(largo)
+            ancho = float(ancho)
+            dimensiones = profundidad*ancho 
+        
+        lt.addLast(dimensionList, dimensiones)
+
+    return dimensionList
+
+def pesoObras (artworksByDepto): 
+    size = lt.size(artworksByDepto)
+    pesoObras = lt.newList()
+
+    for i in range(1, 1+size):
+        artwork = lt.getElement(artworksByDepto, i)
+
+        peso = artwork["Weight (kg)"]
+
+        lt.addLast(pesoObras, peso)
+
+    return pesoObras
+
+
+def precioObras (dimensiones, pesoObras):
+    size = lt.size(dimensiones)
+    precioObras = lt.newList()
+
+    for i in range(1, 1+size):
+        
+        peso = lt.getElement(pesoObras, i)
+        dimension = lt.getElement(dimensiones, i)
+
+        if dimension != 0:
+            precio = dimension*72
+
+        if peso != "":
+            peso = float(peso)
+
+            if peso == 0 and dimension == 0:
+                precio = 42        
+            elif peso >= dimension:
+                precio = peso*72
+            elif peso < dimension:
+                precio = dimension*72
+        
+        lt.addLast(precioObras, precio)
+        
+    return precioObras
+
+def sumaTotal(lista):
+    size = lt.size(lista)
+    total = 0
+    
+    for i in range(1, size+1):
+        elemento = lt.getElement(lista, i)
+
+        if elemento != "":
+            total=total+float(elemento)
+    
+    return total
+        
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

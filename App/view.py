@@ -160,6 +160,22 @@ while True:
         controller.printMUMList(catalog, List)
         print(" ")
 
+    elif int(inputs[0]) == 6:
+        dpto = input("Ingrese el departamento que desea consultar: ")
+        artworksByDepto = controller.ArtworksByDepto (catalog, dpto)
+        numeroDeObras = lt.size(artworksByDepto)
+        print("// ")
+        print("El MOMA va a transportar "+str(numeroDeObras)+" desde el departamento "+str(dpto)+".")
+        print(" ")
+        tamanoObras = controller.tamanoObras(artworksByDepto)
+        pesoobras = controller.pesoObras(artworksByDepto)
+        precioObras = controller.precioObras(tamanoObras, pesoobras)
+        PrecioTotal = controller.sumaTotal(precioObras)
+        pesoTotal = controller.sumaTotal(pesoobras)
+        print("El precio estimado para el tranporte de estas obras es de: "+str(PrecioTotal)+" USD.")
+        print("El peso estimado de estas obras es de: "+str(pesoTotal)+" kg.")
+
+
     
 
     else:
