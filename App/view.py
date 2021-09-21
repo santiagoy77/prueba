@@ -92,7 +92,6 @@ while True:
             print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
 
     elif inputs==2:
-        #size = input("Indique tamaño de la muestra: ")
         anio1=int(input("Digite un año inicial: "))
         anio2=int(input("Digite un año final: "))
         result=controller.rangoArtists(catalog, anio1, anio2)
@@ -101,29 +100,26 @@ while True:
         print("======================== Req No. 1 Respuesta ========================")
         print("Hay ",str(lt.size(result))," artistas nacidos entre ",str(anio1)," y ",str(anio2))
         print('\nTres artistas con menor fecha de nacimiento: :\n')
-        for i in [3,2,1]:
+        for i in [1,2,3]:
             print(str(lt.getElement(result,i)))
         print('\nTres artistas con mayor fecha de nacimiento: \n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(result,i)))
-        #print("Se demoró ",result[0])
 
     elif inputs==3:
-        size = input("Indique tamaño de la muestra: ")
-        anio1=int(input("Digite un año inicial: "))
-        anio2=int(input("Digite un año final: "))
-        result = controller.sortArtists(catalog, int(size), anio1, anio2)
+        fecha1=input("Ingrese una fecha inicial en formato AAAA-MM-DD: ")
+        fecha2=input("Ingrese una fecha final en formato AAAA-MM-DD: ")
+        result = controller.rangoArtworks(catalog, fecha1, fecha2)
         print("======================== Req No. 1 Inputs ========================")
-        print("Artistas nacidos entre ",str(anio1)," y ",str(anio2))
+        print("Artistas nacidos entre ",fecha1," y ",fecha2)
         print("======================== Req No. 1 Respuesta ========================")
-        print("Hay ",str(lt.size(result))," artistas nacidos entre ",str(anio1)," y ",str(anio2))
-        print('Primeras tres obras de arte cargadas:\n')
-        for i in [3,2,1]:
-            print(str(lt.getElement(result[1],i)))
-        print('Últimas tres obras de arte cargadas:\n')
+        print("Hay ",str(lt.size(result))," artistas nacidos entre ",fecha1," y ",fecha2)
+        print('\nPrimeras tres obras de arte adquiridas:\n')
+        for i in [1,2,3]:
+            print(str(lt.getElement(result,i)))
+        print('\nÚltimas tres obras de arte adquiridas:\n')
         for i in [-3,-2,-1]:
-            print(str(lt.getElement(result[1],i)))
-        print("Se demoró ",result[0])
+            print(str(lt.getElement(result,i)))
 
     elif (inputs>3) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")

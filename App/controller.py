@@ -79,6 +79,7 @@ def sortArtworks_DateAcquired(catalog):
 def rangoArtists(catalog, anio1, anio2):
     return model.rangoArtists(catalog, anio1, anio2)
 
-
+def rangoArtworks(catalog, fecha1, fecha2):
+    return model.rangoArtworks(catalog, fecha1, fecha2)
 
 

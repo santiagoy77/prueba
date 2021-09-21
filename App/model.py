@@ -53,11 +53,11 @@ def newCatalog():
     Quizá luego se añaden más listas con los autores ordenados o lo que se necesite.
     """
     catalog = {'artists_BeginDate': None,
-               'artworks_DateAquired': None,
+               'artworks_DateAcquired': None,
                'artists_chronologically': None}
     
     catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
-    catalog['artworks_DateAquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
     catalog['artists_chronologically'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
     
     return catalog
@@ -70,7 +70,7 @@ def addArtist(catalog, artist):
 
 def addArtwork(catalog, artwork):
     # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
-    lt.addLast(catalog['artworks_DateAquired'], artwork)
+    lt.addLast(catalog['artworks_DateAcquired'], artwork)
 
 # Funciones para creacion de datos
 
@@ -78,6 +78,7 @@ def addArtwork(catalog, artwork):
 def rangoArtists(catalog, anio1, anio2):
     artists = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
+    start=float("inf")
     pos=1
     while pos<=lt.size(artists):
         if int(lt.getElement(artists,pos)["BeginDate"])>=anio1:
@@ -97,48 +98,29 @@ def rangoArtists(catalog, anio1, anio2):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return answ
     
-# =============================================================================
-
-#      artists = catalog["artists_BeginDate"].copy()
-#      start_time = time.process_time()
-#      n=1
-#      while n<=lt.size(artists):
-#          if int(lt.firstElement(artists)["BeginDate"])<anio1:
-#              lt.removeFirst(artists)
-#              lt.removeFirst(artists)
-#          else:
-#              n=lt.size(artists)
-#          n+=1
-#      n=1
-#      while n<=lt.size(artists):
-#          if int(lt.lastElement(artists)["BeginDate"])>anio2:
-#              lt.removeLast(artists)
-#          else:
-#              n=lt.size(artists)
-#          n+=1
-#      stop_time = time.process_time()
-#      elapsed_time_mseg = (stop_time - start_time)*1000
-#     return artists
-# =============================================================================
-    
-
-def rangoArtworks(catalog, anio1, anio2):
-    sub_list = catalog["artworks"].copy()
-    n=1
-    while n<=lt.size(artists):
-        if lt.firstElement(artists)["BeginDate"]<anio1:
-            artists=lt.removeFirst(artists)
+def rangoArtworks(catalog, fecha1, fecha2):
+    artworks = catalog["artworks_DateAcquired"].copy()
+    start_time = time.process_time()
+    start=float("inf")
+    pos=1
+    while pos<=lt.size(artworks):
+        if lt.getElement(artworks,pos)["DateAcquired"] != "":
+            if datetime.strptime(lt.getElement(artworks,pos)["DateAcquired"], '%Y-%m-%d').date()>=datetime.strptime(fecha1, '%Y-%m-%d').date():
+                start=pos
+                break
+        pos+=1
+    initial=start
+    num=0
+    while start<=lt.size(artworks):
+        if datetime.strptime(lt.getElement(artworks,start)["DateAcquired"], '%Y-%m-%d').date()<=datetime.strptime(fecha2, '%Y-%m-%d').date():
+            num+=1
         else:
-            n=lt.size(artists)
-        n+=1
-    n=1
-    while n<=lt.size(artists):
-        if lt.lastElement(artists)["BeginDate"]>anio2:
-            artists=lt.removeLast(artists)
-        else:
-            n=lt.size(artists)
-        n+=1
-    return artists
+            break
+        start+=1
+    answ = lt.subList(artworks,initial,num)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return answ
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -184,7 +166,7 @@ def cmpArtworkByDateAcquired(artwork1:dict , artwork2:dict)->int:
 # Funciones de ordenamiento
 
 def sortArtworks_DateAcquired(catalog):
-    sub_list = catalog["artworks_DateAquired"].copy()
+    sub_list = catalog["artworks_DateAcquired"].copy()
     start_time = time.process_time()
     sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
