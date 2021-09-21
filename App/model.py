@@ -52,12 +52,12 @@ def newCatalog():
     Para guardar los autores
     Quizá luego se añaden más listas con los autores ordenados o lo que se necesite.
     """
-    catalog = {'artists': None,
-               'artworks': None,
+    catalog = {'artists_BeginDate': None,
+               'artworks_DateAquired': None,
                'artists_chronologically': None}
     
-    catalog['artists'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
-    catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
+    catalog['artworks_DateAquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
     catalog['artists_chronologically'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
     
     return catalog
@@ -66,17 +66,17 @@ def newCatalog():
 
 def addArtist(catalog, artist):
     # Se añade el artista al final de la lista de artistas en el catálogo.
-    lt.addLast(catalog['artists'], artist)
+    lt.addLast(catalog['artists_BeginDate'], artist)
 
 def addArtwork(catalog, artwork):
     # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
-    lt.addLast(catalog['artworks'], artwork)
+    lt.addLast(catalog['artworks_DateAquired'], artwork)
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
 def rangoArtists(catalog, anio1, anio2):
-    artists = catalog["artists"].copy()
+    artists = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
     n=1
     while n<=lt.size(artists):
@@ -157,16 +157,16 @@ def cmpArtworkByDateAcquired(artwork1:dict , artwork2:dict)->int:
 
 # Funciones de ordenamiento
 
-def sortArtworks(catalog):
-    sub_list = catalog["artworks"].copy()
+def sortArtworks_DateAcquired(catalog):
+    sub_list = catalog["artworks_DateAquired"].copy()
     start_time = time.process_time()
     sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
-def sortArtists(catalog):
-    sub_list = catalog["artists"].copy()
+def sortArtists_BeginDate(catalog):
+    sub_list = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
     sorted_list= mer.sort(sub_list, compare_artists)
     stop_time = time.process_time()

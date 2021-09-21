@@ -68,11 +68,11 @@ def loadArtworks(catalog):
 
 # Funciones de ordenamiento
 
-def sortArtists(catalog):
-    return model.sortArtists(catalog)
+def sortArtists_BeginDate(catalog):
+    return model.sortArtists_BeginDate(catalog)
 
-def sortArtworks(catalog):
-    return model.sortArtworks(catalog)
+def sortArtworks_DateAcquired(catalog):
+    return model.sortArtworks_DateAcquired(catalog)
 
 # Funciones de consulta sobre el catálogo
 

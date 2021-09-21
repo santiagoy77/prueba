@@ -76,20 +76,20 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        artist=controller.sortArtists(catalog)
-        artwork=controller.sortArtworks(catalog)
-        catalog["artists"]=artist[1]
-        catalog["artworks"]=artwork[1]
-        print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
-        print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
+        artist=controller.sortArtists_BeginDate(catalog)
+        artwork=controller.sortArtworks_DateAcquired(catalog)
+        catalog["artists_BeginDate"]=artist[1]
+        catalog["artworks_DateAquired"]=artwork[1]
+        print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists_BeginDate'])))
+        print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks_DateAquired'])))
         print("Se demoro: ",str(artist[0]))
         print('Últimos tres artistas cargados:\n')
         for i in [-3,-2,-1]:
-            print(str(lt.getElement(catalog['artists'],i)))
+            print(str(lt.getElement(catalog['artists_BeginDate'],i)))
         print("Se demoro: ",str(artwork[0]))
         print('Últimas tres obras de arte cargadas:\n')
-        for i in [-3,-2,-1]:
-            print(str(lt.getElement(catalog['artworks'],i)))
+        for i in [3,2,1]:
+            print(str(lt.getElement(catalog['artists_BeginDate'],i)))
 
     elif inputs==2:
         #size = input("Indique tamaño de la muestra: ")
