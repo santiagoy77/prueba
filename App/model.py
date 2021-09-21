@@ -83,13 +83,29 @@ def addArtwork(catalog, artwork):
 # Funciones para creacion de datos
 
 # Funciones de consulta
-
+def rango_artists(artists, anio1, anio2):
+    n=1
+    while n<=lt.size(artists):
+        if lt.firstElement(artists)["BeginDate"]<anio1:
+            artists=lt.removeFirst(artists)
+        else:
+            n=lt.size(artists)
+        n+=1
+    n=1
+    while n<=lt.size(artists):
+        if lt.lastElement(artists)["BeginDate"]>anio2:
+            artists=lt.removeLast(artists)
+        else:
+            n=lt.size(artists)
+        n+=1
+    return artists
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-def compare_artists(artist1,artist):
-    if artist1.lower() in artist["artists"].lower():
+def compare_artists(artist1,artist2):
+    if artist1["BeginDate"]<artist2["BeginDate"]:
+        return -1
+    else:
         return 0
-    return -1
 
 def compare_artworks():
     pass
@@ -111,38 +127,18 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sortArtworks(catalog, size,anio1, anio2):
-    sub_list = lt.subList(catalog['artworks'], 1, size)
-    sub_list = sub_list.copy()
+def sortArtworks(catalog):
+    sub_list = catalog["artworks"].copy()
     start_time = time.process_time()
-    if sor==1:
-        sorted_list= sa.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==2:
-        sorted_list= ins.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==3:
-        sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==4:
-        sorted_list= quc.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==5:
-        sorted_list= sel.sort(sub_list, cmpArtworkByDateAcquired)
+    sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
-def sortArtists(catalog, size,anio1, anio2):
-    sub_list = lt.subList(catalog['artworks'], 1, size)
-    sub_list = sub_list.copy()
+def sortArtists(catalog):
+    sub_list = catalog["artists"].copy()
     start_time = time.process_time()
-    if sor==1:
-        sorted_list= sa.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==2:
-        sorted_list= ins.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==3:
-        sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==4:
-        sorted_list= quc.sort(sub_list, cmpArtworkByDateAcquired)
-    elif sor==5:
-        sorted_list= sel.sort(sub_list, cmpArtworkByDateAcquired)
+    sorted_list= mer.sort(sub_list, compare_artists)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list

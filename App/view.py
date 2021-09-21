@@ -77,11 +77,17 @@ while True:
         lista=int(input("Digite 1 si quiere crear un array list o 0 si quiere crear un linked list: "))
         catalog = initCatalog(lista)
         loadData(catalog)
+        artist=controller.sortArtists(catalog)
+        artwork=controller.sortArtworks(catalog)
+        catalog["artists"]=artist[1]
+        catalog["artworks"]=artwork[1]
         print('Número de artistas en el catálogo: ' + str(lt.size(catalog['artists'])))
         print('Número de obras de arte en el catálogo: ' + str(lt.size(catalog['artworks'])))
+        print("Se demoro: ",str(artist[0]))
         print('Últimos tres artistas cargados:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(catalog['artists'],i)))
+        print("Se demoro: ",str(artwork[0]))
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(catalog['artworks'],i)))

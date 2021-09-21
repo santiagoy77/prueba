@@ -61,18 +61,18 @@ def loadArtworks(catalog):
     """
     Carga las obras de arte del archivo.
     """
-    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-10pct.csv'
+    artworksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
 
 # Funciones de ordenamiento
 
-def sortArtists(catalog, size, anio1,anio2):
-    return model.sortArtists(catalog, size, anio1,anio2)
+def sortArtists(catalog):
+    return model.sortArtists(catalog)
 
-def sortArtworks(catalog, size, anio1,anio2):
-    return model.sortArtworks(catalog, size, anio1, anio2)
+def sortArtworks(catalog):
+    return model.sortArtworks(catalog)
 
 # Funciones de consulta sobre el catálogo
 
