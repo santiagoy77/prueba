@@ -166,6 +166,12 @@ def sumaTotal(lista):
     return precio
 
 
+def obrasPorFecha (artworks):
+    obras = model.obrasPorFecha(artworks)
+
+    return obras
+
+
 def printMUMList(catalog, MUMList):
     i = 1
     size = lt.size(MUMList)
@@ -202,4 +208,42 @@ def printMUMList(catalog, MUMList):
 
         i+=1
 
-    
+
+def print5oldestArtworks (catalog, obrasporfecha):  
+    i=1
+
+    while i <= 5:
+        artwork = lt.getElement(obrasporfecha, i)
+
+        print(" ")
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = model.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print("Clasificación: " + artwork["Classification"])
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+        print("Costo asociado al transporte: ")
+
+        i+=1
