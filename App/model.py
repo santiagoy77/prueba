@@ -44,7 +44,7 @@ otra para los artistas de estas.
 
 # Construccion de modelos
 
-def newCatalog(lista: int):
+def newCatalog():
     """
     Inicializa el catálogo de obras de arte. 
     Crea listas vacías con los siguientes própositos:
@@ -53,22 +53,14 @@ def newCatalog(lista: int):
     Quizá luego se añaden más listas con los autores ordenados o lo que se necesite.
     """
     catalog = {'artists': None,
-               'artworks': None}
-    if lista==1:
-        catalog['artists'] = lt.newList('ARRAY_LIST',
-                                        cmpfunction=compare_artists)
-        catalog['artworks'] = lt.newList('ARRAY_LIST',
-                                        cmpfunction=compare_artworks)
-    else:
-        catalog['artists'] = lt.newList('SINGLE_LINKED',
-                                        cmpfunction=compare_artists)
-        catalog['artworks'] = lt.newList('SINGLE_LINKED',
-                                        cmpfunction=compare_artworks)
+               'artworks': None,
+               'artists_chronologically': None}
+    
+    catalog['artists'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
+    catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    catalog['artists_chronologically'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    
     return catalog
-
-## NOTA: Se están cargando los datos de forma muy simple. 
-# Se está pensando en la primera entrega, no en los requerimientos. 
-# Pronto se estructurará el catálogo de mejor manera.
 
 # Funciones para agregar informacion al catalogo
 
@@ -110,11 +102,26 @@ def compare_artists(artist1,artist2):
 def compare_artworks():
     pass
 
-def cmpArtworkByDateAcquired(artwork1, artwork2):
+def cmpArtworkByDateAcquired(artwork1:dict , artwork2:dict)->int:
     """
-    Devuelve verdadero (True) si el 'DateAcquired' de artwork1 es menores que el de artwork2 Args:
-        artwork1: informacion de la primera obra que incluye su valor 'DateAcquired'
-        artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    Compara dos obras de arte por la fecha en la que fueron adquiridas, 
+    'DateAcquired'.
+    
+    Si el 'DateAcquired' de una obra de arte es vacío, la obra se toma como 
+    la más antigua.
+
+    Parámetros
+    ----------
+    artwork1 : dict
+        Informacion de la primera obra que incluye su valor 'DateAcquired'.
+    artwork2 : dict
+        Informacion de la segunda obra que incluye su valor 'DateAcquired'.
+
+    Retorno
+    -------
+    int
+        0 si artwork1 fue adquirido más recientemente que artwork2.
+        -1 si artwork2 fue adquirido más recientemente que artwork1.
     """
     if artwork1["DateAcquired"]=="" or artwork2["DateAcquired"]=="":
         if artwork1["DateAcquired"]=="":
@@ -143,4 +150,5 @@ def sortArtists(catalog):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
+# Nosotros elejimos el algoritmo: sa.sort, ins.sort, mer.sort, quc.sort, sel.sort.
 

@@ -37,7 +37,7 @@ def printMenu():
     """
     Imprime las opciones del menú.
     """
-    print("Bienvenido")
+    print("Menú de opciones:\n")
     print("1- Cargar información en el catálogo.")
     print("2- Listar cronológicamente los artistas.")
     print("3- Listar cronológicamente las adquisiciones.")
@@ -47,11 +47,11 @@ def printMenu():
     print("7- Proponer una nueva exposición en el museo.")
     print("0- Detener la ejecución del programa.")
 
-def initCatalog(lista: int):
+def initCatalog():
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog(lista)
+    return controller.initCatalog()
 
 def loadData(catalog):
     """
@@ -68,14 +68,13 @@ while True:
     error = "Por favor ingrese un número entero entre 0 y 7."
     printMenu()
     try:
-        inputs = int(input('Seleccione una opción para continuar\n'))
+        inputs = int(input('Seleccione una opción para continuar: \n'))
     except:
         print(error)
         continue
-    if inputs == 1:
+    if inputs == 0:
         print("Cargando información de los archivos ....")
-        lista=int(input("Digite 1 si quiere crear un array list o 0 si quiere crear un linked list: "))
-        catalog = initCatalog(lista)
+        catalog = initCatalog()
         loadData(catalog)
         artist=controller.sortArtists(catalog)
         artwork=controller.sortArtworks(catalog)
