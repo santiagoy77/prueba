@@ -86,3 +86,4 @@ while True:
         print('Obras cargados: ' + str(lt.size(catalog['Art'])))
         print('Ultimos 3 artistas: ') #+ str(lt.size(catalog[''])))
         print('Ultimas 3 obras ' ) #str(lt.size(catalog[''])))
+        

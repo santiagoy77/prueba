@@ -34,23 +34,16 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def addArt(catalog, art):
+def addArt(catalog, artwork):
 
-    lt.addLast(catalog['Art'], art)
+    lt.addLast(catalog['Art'], artwork)
     # Se obtienen los autores del libro
-    aartist = art['artist'].split(",")
+   #artist = artwork['artist'].split(",")
   
 
-def addArtist(catalog, artistname,art):
+def addArtist(catalog, artistname):
 
-    artist = catalog['artist']
-    posauthor = lt.isPresent(artist, artistname)
-    if posauthor > 0:
-        author = lt.getElement(artist, posauthor)
-    else:
-        author = artist(artistname)
-        lt.addLast(artist, author)
-    lt.addLast(author['Art'], art)
+    lt.addLast(catalog['Artist'], artistname)
 
 def newCatalog():
 
