@@ -39,8 +39,8 @@ def printMenu():
     """
     print("Bienvenido")
     print("1- Cargar información en el catálogo.")
-    print("2- Listar cronológicamente los adquisiciones.")
-    print("3- Listar cronológicamente las artistas.")
+    print("2- Listar cronológicamente los artistas.")
+    print("3- Listar cronológicamente las adquisiciones.")
     print("4- Clasificar las obras de un artista por técnica.")
     print("5- Clasificar las obras por la nacionalidad de sus creadores.")
     print("6- Transportar obras de un departamento.")
@@ -85,10 +85,16 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-3,-2,-1]:
             print(str(lt.getElement(catalog['artworks'],i)))
+
     elif inputs==2:
         size = input("Indique tamaño de la muestra: ")
-        sor=int(input("Digite 1 si quiere usar shell sort, 2 insertion, 3 merge, 4 quick o 5 selection: "))
-        result = controller.sortArtworks(catalog, int(size),sor)
+        anio1=int(input("Digite un año inicial: "))
+        anio2=int(input("Digite un año final: "))
+        result = controller.sortArtists(catalog, int(size),anio1,anio2)
+        print("======================== Req No. 1 Inputs ========================")
+        print("Artistas nacidos entre ",str(anio1)," y ",str(anio2))
+        print("======================== Req No. 1 Respuesta ========================")
+        print("Hay ",str(lt.size(result))," artistas nacidos entre ",str(anio1)," y ",str(anio2))
         print('Primeras tres obras de arte cargadas:\n')
         for i in [3,2,1]:
             print(str(lt.getElement(result[1],i)))
@@ -96,7 +102,25 @@ while True:
         for i in [-3,-2,-1]:
             print(str(lt.getElement(result[1],i)))
         print("Se demoró ",result[0])
-    elif (inputs>2) and (inputs<8):
+
+    elif inputs==3:
+        size = input("Indique tamaño de la muestra: ")
+        anio1=int(input("Digite un año inicial: "))
+        anio2=int(input("Digite un año final: "))
+        result = controller.sortArtists(catalog, int(size), anio1, anio2)
+        print("======================== Req No. 1 Inputs ========================")
+        print("Artistas nacidos entre ",str(anio1)," y ",str(anio2))
+        print("======================== Req No. 1 Respuesta ========================")
+        print("Hay ",str(lt.size(result))," artistas nacidos entre ",str(anio1)," y ",str(anio2))
+        print('Primeras tres obras de arte cargadas:\n')
+        for i in [3,2,1]:
+            print(str(lt.getElement(result[1],i)))
+        print('Últimas tres obras de arte cargadas:\n')
+        for i in [-3,-2,-1]:
+            print(str(lt.getElement(result[1],i)))
+        print("Se demoró ",result[0])
+
+    elif (inputs>3) and (inputs<8):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
         print(error)
