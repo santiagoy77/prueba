@@ -26,6 +26,7 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 import sys
+import datetime
 
 """
 La vista se encarga de la interacción con el usuario
@@ -40,7 +41,8 @@ sys.setrecursionlimit(default_limit*10)
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Listar cronologicamente las adquisiciones")
+    print("2- Listar cronológicamente los artistas")
+    print("3- Listar cronologicamente las adquisiciones")
     print("4- Clasificar las obras de un artista por técnica")
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
     print("6- Transportar obras de un departamento ")
@@ -92,10 +94,12 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
 
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 3:
         size = int(input("Indique el tamaño de la muestra: "))
+        initial_date = tuple(input("Indique la fecha inicial en formato (AAAA-MM-DD): ").split("-"))
+        final_date = tuple(input("Indique la fecha final en formato (AAAA-MM-DD): ").split("-"))
         algo_type = int(input("1- Insetion, 2 - Shell, 3 - Merge , 4 - Quick Sorts"))
-        result = controller.sort_adq(catalog, int(size) , algo_type)
+        result = controller.sort_adq(catalog, int(size) , algo_type , initial_date , final_date)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         printSortResults(result[1])

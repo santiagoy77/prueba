@@ -35,6 +35,8 @@ from DISClib.Algorithms.Sorting import quicksort as qu
 
 assert cf
 
+import datetime
+
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
@@ -119,7 +121,7 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sort_adq(catalog, size , algo_type):
+def sort_adq(catalog, size , algo_type , initial_date , final_date):
     sub_list = lt.subList(catalog['artworks'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()
@@ -132,6 +134,47 @@ def sort_adq(catalog, size , algo_type):
     elif algo_type == 4:
         sorted_list = qu.sort(sub_list , cmpArtworkByDateAcquired)
     
+    inferior_limit = int(sorted_list_delimiter_inferior(sorted_list , initial_date))
+    superior_limit = int(sorted_list_delimiter_superior(sorted_list , final_date))
+
+    counter = 0
+
+    while counter < inferior_limit:
+        lt.deleteElement(sorted_list , counter)
+        counter += 1
+    
+    counter2 = superior_limit
+    size = lt.size(sorted_list)
+
+    while counter2 <= size:
+        lt.deleteElement(sorted_list , counter2)
+        counter2 += 1
+
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
+
+def sorted_list_delimiter_inferior(sorted_list, initial_date):
+
+    #Retorna la posición del elemento con la fecha mayor o igual a initial_date
+    
+    for artwork in sorted_list:
+        date = artwork["DateAcquired"]
+        date_tuple_format = tuple(date.split("-"))
+        position = None
+        if date_tuple_format >= initial_date:
+            position = lt.isPresent(sorted_list , artwork)
+            return position
+
+def sorted_list_delimiter_superior(sorted_list, final_date):
+
+    #Retorna la posición del elemento con la fecha mayor a final_date.
+    
+    for artwork in sorted_list:
+        print(sorted_list)
+        date = artwork["DateAcquired"]
+        date_tuple_format = tuple(date.split("-"))
+        position = None
+        if date_tuple_format > final_date:
+            position = lt.isPresent(sorted_list , artwork)
+            return position
