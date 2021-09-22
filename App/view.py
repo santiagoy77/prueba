@@ -132,9 +132,13 @@ while True:
         date1 = input("Ingrese la fecha inicial (AAAA-MM-DD): ")
         date2 = input("Ingrese la fecha final (AAAA-MM-DD): ")
         obras = controller.getArtworksbyDate(catalog, date1, date2)
-        print ("Hay un total de "+str(lt.size(obras))+" obras entre las fechas seleccionadas")
+        print ("Hay un total de "+str(lt.size(obras))+" obras entre "+str(date1)+" y "+str(date2)+".")
         compradas = controller.PurchaseArtworks(obras)
-        print ("Hay un total de "+str(lt.size(compradas))+" obras que fueron compradas entre las fechas seleccionadas")
+        print (lt.size(compradas))
+        autores = controller.CountArtists(obras)
+        print(lt.size(autores))
+        print ("Con "+str(lt.size(autores))+" diferentes artistas y "+ str(lt.size(compradas))+" de ellas fueron compradas.")
+        sorted = controller.sortArtworks(obras)
 
 
     elif int(inputs[0]) == 4:
