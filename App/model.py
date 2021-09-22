@@ -147,28 +147,47 @@ def rangoArtworks(catalog, fecha1, fecha2):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return answ
 
-def id_artists(catalog, author):
+def id_artist(catalog, artist):
+    """
+    reorna el id de un artista. O(n)
+    """
     id_=0
     for i in lt.iterator(catalog['artists_BeginDate']):
-        if catalog['artists_BeginDate']['DisplayName']==author:
+        if catalog['artists_BeginDate']['DisplayName']==artist:
             id_ = catalog['artists_BeginDate']['ConstituentID']
             break
     return id_
 
-def id_artworks(catalog, author):
+def artist_artworks(catalog, artist):
     """
-
-    Returns
-    -------
-    list_ : TYPE
-        Lista de las obras de un artista determinado.
+    Nombre, ID y lista de las obras de un artista determinado. O(n)
     """
-    id_=id_artists(catalog, author)
+    id_=id_artist(catalog, artist)
     list_=lt.newList('ARRAY_LIST')
     for i in lt.iterator(catalog['artworks_DateAcquired']):
         if id_ in i['ConstituentID']:                
             lt.addLast(list_, i)
-    return list_
+    return artist, id_, list_
+
+def artist_medium(catalog, artist):
+    mediums_=lt.newList('ARRAY_LIST')
+    mediums_count=lt.newList('ARRAY_LIST')
+    artist, id_, list_ = artist_artworks(catalog, artist)
+    for i in lt.iterator(list_):
+        posmedium = lt.isPresent(mediums_, i['Medium'])
+        if posmedium == 0:
+            medium = lt.addLast(mediums_, i['Medium'])
+            mediums_count = lt.addLast(mediums_count, 1)
+        else:
+            mediums_count = lt.changeInfo(mediums_count, posmedium, lt.getElement(mediums_count, posmedium))
+    greatest=0
+    count=0
+    for num in lt.iterator(mediums_count):
+        count+=1
+        if num > greatest:
+            greatest=num
+            pos_most_used=count
+    return mediums_,mediums_count,pos_most_used
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

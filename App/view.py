@@ -121,8 +121,8 @@ def printReq2():
     print(answ)
     
 def printReq3():
-    author=input("Ingrese el nombre del autor: ")
-    result=controller.id_artworks(catalog,author)
+    author=input("Ingrese el nombre del artista: ")
+    result=controller.id_artworks(catalog,artista)
     print("======================== Req No. 3 Inputs ========================")
     print("Examinar el trabajo del artista de nombre ",author)
     print("======================== Req No. 3 Respuesta ========================")
