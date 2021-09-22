@@ -94,7 +94,7 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     f2 = artwork2["DateAcquired"]
     f1_lst = f1.split("-")
     f2_lst = f2.split("-")
-    ret = None
+    ret = None 
 
     if len(f1_lst) > len(f2_lst):
         ret = False
@@ -121,9 +121,27 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
 
 # Funciones de ordenamiento
 
-def sort_adq(catalog, size , algo_type , initial_date , final_date):
-    sub_list = lt.subList(catalog['artworks'], 1, size)
-    sub_list = sub_list.copy()
+def date_filter(catalog, initial_date , final_date):
+    """
+    Recibe una lista y la filtra eliminando las fechas que no se encuentren en el rango
+    propuesto por el ususario.
+    """
+    
+    sub_list1 = catalog['artworks']
+    sub_list2 = sub_list1.copy()
+    iterator = lt.iterator(sub_list2)
+    date = tuple(iterator["DateAcquired"].split("-"))
+    if date < initial_date or date > final_date:
+        position = lt.isPresent(sub_list2 , iterator)
+        lt.deleteElement(sub_list2 , position)
+    
+    return sub_list2
+
+
+def sort_adq_date(catalog, algo_type , initial_date , final_date):
+
+    sub_list = date_filter(catalog, initial_date , final_date)
+
     start_time = time.process_time()
     if algo_type == 1:
         sorted_list = ins.sort(sub_list, cmpArtworkByDateAcquired)
@@ -133,48 +151,8 @@ def sort_adq(catalog, size , algo_type , initial_date , final_date):
         sorted_list = mer.sort(sub_list, cmpArtworkByDateAcquired)
     elif algo_type == 4:
         sorted_list = qu.sort(sub_list , cmpArtworkByDateAcquired)
-    
-    inferior_limit = int(sorted_list_delimiter_inferior(sorted_list , initial_date))
-    superior_limit = int(sorted_list_delimiter_superior(sorted_list , final_date))
-
-    counter = 0
-
-    while counter < inferior_limit:
-        lt.deleteElement(sorted_list , counter)
-        counter += 1
-    
-    counter2 = superior_limit
-    size = lt.size(sorted_list)
-
-    while counter2 <= size:
-        lt.deleteElement(sorted_list , counter2)
-        counter2 += 1
 
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
+    
     return elapsed_time_mseg, sorted_list
-
-def sorted_list_delimiter_inferior(sorted_list, initial_date):
-
-    #Retorna la posición del elemento con la fecha mayor o igual a initial_date
-    
-    for artwork in sorted_list:
-        date = artwork["DateAcquired"]
-        date_tuple_format = tuple(date.split("-"))
-        position = None
-        if date_tuple_format >= initial_date:
-            position = lt.isPresent(sorted_list , artwork)
-            return position
-
-def sorted_list_delimiter_superior(sorted_list, final_date):
-
-    #Retorna la posición del elemento con la fecha mayor a final_date.
-    
-    for artwork in sorted_list:
-        print(sorted_list)
-        date = artwork["DateAcquired"]
-        date_tuple_format = tuple(date.split("-"))
-        position = None
-        if date_tuple_format > final_date:
-            position = lt.isPresent(sorted_list , artwork)
-            return position

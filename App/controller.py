@@ -73,11 +73,11 @@ def loadArtists(catalog):
 
 # Funciones de ordenamiento
 
-def sort_adq(catalog, size , algo_type , initial_date , final_date):
+def sort_adq_date(catalog, algo_type , initial_date , final_date):
     """
     Ordena las obras de arte por fecha de adquisición
     """
-    return model.sort_adq(catalog, size , algo_type , initial_date , final_date)
+    return model.sort_adq_date(catalog, algo_type , initial_date , final_date)
 
 # Funciones de ordenamiento
 
