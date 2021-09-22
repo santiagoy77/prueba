@@ -172,8 +172,27 @@ while True:
         precioObras = controller.precioObras(tamanoObras, pesoobras)
         PrecioTotal = controller.sumaTotal(precioObras)
         pesoTotal = controller.sumaTotal(pesoobras)
-        print("El precio estimado para el tranporte de estas obras es de: "+str(round(PrecioTotal, 3))+" USD.")
+        print("// ")
+        print("El precio estimado para el transporte de estas obras es de: "+str(round(PrecioTotal, 3))+" USD.")
+        print(" ")
         print("El peso estimado de estas obras es de: "+str(round(pesoTotal, 3))+" kg.")
+        print(" ")
+        obrasporfecha = controller.obrasPorFecha(artworksByDepto)
+        zippedIDandPrice = controller.zipper(artworksByDepto, precioObras)
+        zippedIDandPrice2 = controller.zipper2(artworksByDepto, precioObras)
+        print("// ")
+        print("Las 5 obras más antiguas a transportar son: ")
+        controller.print5MostArtworks(catalog, obrasporfecha, zippedIDandPrice)
+        print(" ")
+        print("// ")
+        print("Las 5 obras más costosas de transportar son: ")
+        obrasporcosto = controller.obrasporcosto(artworksByDepto, zippedIDandPrice2)
+        controller.print5MostExpArtworks(catalog, obrasporcosto, zippedIDandPrice, artworksByDepto)
+        print(" ")
+
+    
+
+
 
 
     
