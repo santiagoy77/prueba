@@ -77,13 +77,14 @@ def addArtwork(catalog, artwork):
     
 def addArtworkArtist(catalog, artist, artwork):
     artist_artwork = catalog['artists_artworks']
+    print(artist_artwork)
     posartist = lt.isPresent(artist_artwork, artist)
     if posartist > 0:
         author = lt.getElement(artist_artwork, posartist)
     else:
         author = newArtist(artist)
         lt.addLast(artist_artwork, author)
-    lt.addLast(artist_artwork['Medium'],artwork )
+    lt.addLast(author['Medium'],artwork )
 
 # Funciones para creacion de datos
 
