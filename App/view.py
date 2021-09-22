@@ -73,6 +73,7 @@ def printloadData():
     print('\nARTISTS ARTWORKS:\n')
     for i in [12,13,14]:
         print(str(lt.getElement(catalog['artists_artworks'],i)))
+    return catalog
     
 def printReq1():
     anio1=int(input("Digite un año inicial: "))
@@ -121,13 +122,18 @@ def printReq2():
     print(answ)
     
 def printReq3():
-    author=input("Ingrese el nombre del artista: ")
-    result=controller.id_artworks(catalog,artista)
+    artist=input("Ingrese el nombre del artista: ")
+    artist,id_, list_,mediums_,mediums_count,pos_most_used=controller.artist_medium(catalog,artist)
     print("======================== Req No. 3 Inputs ========================")
-    print("Examinar el trabajo del artista de nombre ",author)
+    print("Examinar el trabajo del artista de nombre ",artist)
     print("======================== Req No. 3 Respuesta ========================")
-    print("El artista ",author,' tiene ',str(lt.size(result)), 'obras en el MoMA')
-            
+    print("El artista ",str(artist).strip(),' con código ',str(id_),' tiene ',
+          str(lt.size(list_)), 'obras en el MoMA.')
+    print("Medios: ",mediums_)
+# =============================================================================
+#     print('Usó ',mediums_count,' medios o técnicas distintas en su trabajo.')
+#     print('La técnica que más usó es: ',lt.getElement(mediums_,pos_most_used),'.')
+# =============================================================================
 def printReq4():
     print("Este requerimiento aún no se ha implementado.")
     
@@ -164,7 +170,7 @@ while True:
         print(error)
         continue
     if inputs == 0:
-        printloadData()
+        catalog=printloadData()
     elif inputs>0 and inputs<7:
         if type(catalog)!=dict:
             print(error_cargar)
