@@ -66,7 +66,8 @@ catalog = None
 Menú principal
 """
 while True:
-    error = "Por favor ingrese un número entero entre 0 y 7."
+    error = "\nError: Por favor ingrese un número entero entre 0 y 7.\n"
+    error_cargar= "\nError: Se deben cargar los datos antes de usar los requisitos.\n"
     printMenu()
     try:
         inputs = int(input('Seleccione una opción para continuar: \n'))
@@ -93,54 +94,57 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
-    elif inputs==1:
-        anio1=int(input("Digite un año inicial: "))
-        anio2=int(input("Digite un año final: "))
-        result=controller.rangoArtists(catalog, anio1, anio2)
-        print("======================== Req No. 1 Inputs ========================")
-        print("Artistas nacidos entre ",str(anio1)," y ",str(anio2)),"."
-        print("======================== Req No. 1 Respuesta ========================")
-        print("Hay ",str(lt.size(result))," artistas nacidos entre ",
-              str(anio1)," y ",str(anio2)),"."
-        print('\nPrimeros y últimos tres artistas nacidos en el rango de años:\n')
-        answ = PrettyTable(['Nombre','Nacimiento','Fallecimiento'
-                            ,'Nacionalidad','Género'])
-        for i in [1,2,3,-2,-1,0]:        
-            answ.add_row([lt.getElement(result,i)['DisplayName'],
-                          lt.getElement(result,i)['BeginDate'],
-                          lt.getElement(result,i)['EndDate'],
-                          lt.getElement(result,i)['Nationality'],
-                          lt.getElement(result,i)['Gender']])
-        answ._max_width = {'Nombre':40}
-        print(answ)
-
-    elif inputs==2:
-        fecha1=input("Ingrese una fecha inicial en formato AAAA-MM-DD: ")
-        fecha2=input("Ingrese una fecha final en formato AAAA-MM-DD: ")
-        result = controller.rangoArtworks(catalog, fecha1, fecha2)
-        num_artists = 5 # TODO: FALTA
-        num_purchased = 5 # TODO: Falta
-        print("======================== Req No. 1 Inputs ========================")
-        print("Obras adquiridas entre ",fecha1," y ",fecha2)
-        print("======================== Req No. 1 Respuesta ========================")
-        print("El MoMA adquirió ",str(lt.size(result))," obras entre ",fecha1,
-              " y ",fecha2," con ",str(num_artists),
-              " artistas, de las cuales compró ",str(num_purchased))
-        print('\nPrimeras y últimas tres obras adquiridas en el rango de fechas:\n')
-        answ = PrettyTable(['Título','Artista(s)','Fecha','Medio',
-                            'Dimensiones'])
-        for i in [1,2,3,-2,-1,0]:        
-            answ.add_row([lt.getElement(result,i)['Title'],
-                          lt.getElement(result,i)['ConstituentID'], # TODO: Artista
-                          lt.getElement(result,i)['DateAcquired'],
-                          lt.getElement(result,i)['Medium'],
-                          lt.getElement(result,i)['Dimensions']])
-        answ._max_width = {'Título':40,'Artista(s)':20,'Fecha':20,'Medio':40,
-                            'Dimensiones':40}
-        print(answ)
-
-    elif (inputs==1) or ((inputs>2) and (inputs<7)):
-        print("Este requerimiento aún no se ha implementado.")
+    elif inputs>0 and inputs<7:
+        if type(catalog)!=dict:
+            print(error_cargar)
+        elif inputs==1:
+            anio1=int(input("Digite un año inicial: "))
+            anio2=int(input("Digite un año final: "))
+            result=controller.rangoArtists(catalog, anio1, anio2)
+            print("======================== Req No. 1 Inputs ========================")
+            print("Artistas nacidos entre ",str(anio1)," y ",str(anio2)),"."
+            print("======================== Req No. 1 Respuesta ========================")
+            print("Hay ",str(lt.size(result))," artistas nacidos entre ",
+                  str(anio1)," y ",str(anio2)),"."
+            print('\nPrimeros y últimos tres artistas nacidos en el rango de años:\n')
+            answ = PrettyTable(['Nombre','Nacimiento','Fallecimiento'
+                                ,'Nacionalidad','Género'])
+            for i in [1,2,3,-2,-1,0]:        
+                answ.add_row([lt.getElement(result,i)['DisplayName'],
+                              lt.getElement(result,i)['BeginDate'],
+                              lt.getElement(result,i)['EndDate'],
+                              lt.getElement(result,i)['Nationality'],
+                              lt.getElement(result,i)['Gender']])
+            answ._max_width = {'Nombre':40}
+            print(answ)
+    
+        elif inputs==2:
+            fecha1=input("Ingrese una fecha inicial en formato AAAA-MM-DD: ")
+            fecha2=input("Ingrese una fecha final en formato AAAA-MM-DD: ")
+            result = controller.rangoArtworks(catalog, fecha1, fecha2)
+            num_artists = 5 # TODO: FALTA
+            num_purchased = 5 # TODO: Falta
+            print("======================== Req No. 1 Inputs ========================")
+            print("Obras adquiridas entre ",fecha1," y ",fecha2)
+            print("======================== Req No. 1 Respuesta ========================")
+            print("El MoMA adquirió ",str(lt.size(result))," obras entre ",fecha1,
+                  " y ",fecha2," con ",str(num_artists),
+                  " artistas, de las cuales compró ",str(num_purchased))
+            print('\nPrimeras y últimas tres obras adquiridas en el rango de fechas:\n')
+            answ = PrettyTable(['Título','Artista(s)','Fecha','Medio',
+                                'Dimensiones'])
+            for i in [1,2,3,-2,-1,0]:        
+                answ.add_row([lt.getElement(result,i)['Title'],
+                              lt.getElement(result,i)['ConstituentID'], # TODO: Artista
+                              lt.getElement(result,i)['DateAcquired'],
+                              lt.getElement(result,i)['Medium'],
+                              lt.getElement(result,i)['Dimensions']])
+            answ._max_width = {'Título':40,'Artista(s)':20,'Fecha':20,'Medio':40,
+                                'Dimensiones':40}
+            print(answ)
+    
+        elif inputs>2:
+            print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
         print(error)
     else:
