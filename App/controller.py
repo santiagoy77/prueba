@@ -202,132 +202,15 @@ def obrasporcosto (artworksByDepto, zippedIDandPrice2):
 
     return obrasPorCosto
 
+def ArtistNameByID (catalog, autorID):
+    artistname = model.ArtistNameByID (catalog, autorID)
 
-def printMUMList(catalog, MUMList):
-    i = 1
-    size = lt.size(MUMList)
+    return artistname
 
-    while i <= size:
-        artwork = lt.getElement(MUMList, i)
+def ArtworksByIDItself (artworksByDepto, artworkID):
+    artworks = model.ArtworksByIDItself (artworksByDepto, artworkID)
 
-        print('Titulo: ' + artwork['Title'])
-        print(" ")
-        print('Artista(s): ')
-
-        CA = artwork["ConstituentID"]
-        CA2=CA.lstrip("[")
-        CA3 = CA2.rstrip("]")
-        coAutors = CA3.split(", ")
-        
-        j=0
-
-        for A in coAutors:
-            autorID = coAutors[j]
-            ArtistName = model.ArtistNameByID (catalog, autorID)
-
-            print(ArtistName)
-
-            j+=1
-
-        print(" ")
-        print('Fecha de creación: ' + artwork['Date'])
-        print(" ")
-        print('Técnica(s) usada(s): ' + artwork['Medium'])
-        print(" ")
-        print("Dimensiones: " + artwork["Dimensions"])
-        print(" ")
-
-        i+=1
-
-
-def print5MostArtworks (catalog, obras, zippedIDandPrice):  
-    i=1
-
-    while i <= 5:
-        artwork = lt.getElement(obras, i)
-
-        print(i)
-        print(" ")
-        print('Titulo: ' + artwork['Title'])
-        print(" ")
-        print('Artista(s): ')
-
-        CA = artwork["ConstituentID"]
-        CA2=CA.lstrip("[")
-        CA3 = CA2.rstrip("]")
-        coAutors = CA3.split(", ")
-        
-        j=0
-
-        for A in coAutors:
-            autorID = coAutors[j]
-            ArtistName = model.ArtistNameByID (catalog, autorID)
-
-            print(ArtistName)
-
-            j+=1
-
-        print(" ")
-        print("Clasificación: " + artwork["Classification"])
-        print(" ")
-        print('Fecha de creación: ' + artwork['Date'])
-        print(" ")
-        print('Técnica(s) usada(s): ' + artwork['Medium'])
-        print(" ")
-        print("Dimensiones: " + artwork["Dimensions"])
-        print(" ")
-        print("Costo asociado al transporte: " + str(zippedIDandPrice[artwork["ObjectID"]]) + " USD.")
-
-        i+=1
-
-
-def print5MostExpArtworks (catalog, obrasporcosto, zippedIDandPrice, artworksByDepto):  
-    i=1
-
-    while i <= 5:
-        artworkIDandCost = lt.getElement(obrasporcosto, i)
-
-        artworkID = artworkIDandCost["ObjectID"]
-        artworkPrice = artworkIDandCost["Price"]
-        
-
-        obra =  model.ArtworksByIDItself (artworksByDepto, artworkID)
-
-        artwork = lt.getElement(obra, 1)
-
-        print(i)
-        print(" ")
-        print('Titulo: ' + artwork['Title'])
-        print(" ")
-        print('Artista(s): ')
-
-        CA = artwork["ConstituentID"]
-        CA2=CA.lstrip("[")
-        CA3 = CA2.rstrip("]")
-        coAutors = CA3.split(", ")
-        
-        j=0
-
-        for A in coAutors:
-            autorID = coAutors[j]
-            ArtistName = model.ArtistNameByID (catalog, autorID)
-
-            print(ArtistName)
-
-            j+=1
-
-        print(" ")
-        print("Clasificación: " + artwork["Classification"])
-        print(" ")
-        print('Fecha de creación: ' + artwork['Date'])
-        print(" ")
-        print('Técnica(s) usada(s): ' + artwork['Medium'])
-        print(" ")
-        print("Dimensiones: " + artwork["Dimensions"])
-        print(" ")
-        print("Costo asociado al transporte: " + str(artworkPrice) + " USD.")
-
-        i+=1
+    return artworks
 
 
 def zipper (lt1, lt2):

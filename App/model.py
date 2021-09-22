@@ -648,8 +648,7 @@ def sortArtworksByPrice(zippedIDandPrice):
     result = sa.sort(zippedIDandPrice, compareartworkprices)
     
     return result
-    resul=sa.sort(artists, compareartistyears)
-    return(resul)
+    
        
 def sortArtworksYear(artworks):
     sa.sort(artworks, compareartworkyears)
