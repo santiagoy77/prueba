@@ -142,7 +142,8 @@ while True:
             answ._max_width = {'Título':40,'Artista(s)':20,'Fecha':20,'Medio':40,
                                 'Dimensiones':40}
             print(answ)
-    
+        elif inputs==4:
+            
         elif inputs>2:
             print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
