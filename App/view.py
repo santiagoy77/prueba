@@ -87,15 +87,16 @@ while True:
         print('Número de obras de arte en el catálogo: ',
               str(lt.size(catalog['artworks_DateAquired'])))
         print("Se demoro: ",str(artist[0]))
-        print('Últimos tres artistas cargados:\n')
+        print('\nÚltimos tres artistas cargados:\n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artists_BeginDate'],i)))
         print("Se demoro: ",str(artwork[0]))
-        print('Últimas tres obras de arte cargadas:\n')
+        print('\nÚltimas tres obras de arte cargadas:\n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
-        print('Últimas tres obras de arte cargadas:\n')
-        for i in [-2,-1,0]:
+            # Quitar
+        print('\nÚltimas tres obras de arte cargadas:\n')
+        for i in [12,13,14]:
             print(str(lt.getElement(catalog['artists_artworks'],i)))
     elif inputs>0 and inputs<7:
         if type(catalog)!=dict:
