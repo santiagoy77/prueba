@@ -43,9 +43,8 @@ def newCatalog():
     catalog = {'artworks': None,
                'artists': None}
 
-    catalog['artworks'] = lt.newList()
-    catalog['artists'] = lt.newList("""'SINGLE_LINKED',
-                                    cmpfunction=compareartists""")
+    catalog['artworks'] = lt.newList("ARRAY_LIST")
+    catalog['artists'] = lt.newList("ARRAY_LIST")
     return catalog
 
 # Funciones para creacion de datos
@@ -117,32 +116,49 @@ def getPurchase(lista):
 def getNacion(lista):
     obras=lista["artworks"]  
     artistas=lista["artists"]
-    retorno = {"na":{}}        
-    for i in range(round(lt.size(obras))):
+    retorno = {}  
+    naciones=lt.newList("ARRAY_LIST")
+    c=0    
+    for i in range(lt.size(obras)+1):
         llave = lt.getElement(obras, i)
         dateacquired = llave["dateacquired"]
         name = llave["name"]
         medium = llave["medium"]
         dimensions = llave["dimensions"]
-        artistas=llave["constituentid"]
-        naciones=lt.newList()
-        
-        for i in range(round(lt.size(artistas))):
+        artista=llave["constituentid"]
+        na=lt.newList()
+        for i in range(lt.size(artistas)):
+            
             llave2=lt.getElement(artistas,i)
-            id=llave2["ConstituentID"]
+            id=llave2['ConstituentID']
             nacion=llave2["Nacion"]
-            if id in artistas:
-                lt.addLast(naciones,nacion
-                )        
-        for i in lt.size(naciones):
-            agregar = {"name" : name,"artistas":artistas, "dateacquired" : dateacquired, 
+            if (id in artista):
+                    lt.addLast(na,nacion)
+            if (id in artista) and (lt.isPresent(naciones,nacion) ==0) :
+                    lt.addLast(naciones,nacion)
+                    
+                          
+        for i in range(lt.size(naciones)):
+            agregar = {"name" : name,"artistas":artista, "dateacquired" : dateacquired, 
                        "medium" : medium, "dimensions" : dimensions}
-            if  lt.getElement(naciones,i) in retorno['na'] :
-                lt.addLast(retorno["na"][lt.getElement(naciones,i)], agregar)    
-            else:
-                retorno["na"][lt.getElement(naciones,i)]=lt.newList()  
-                lt.addLast(retorno["na"][lt.getElement(naciones,i)], agregar)
-    return retorno               
+            if  (lt.getElement(naciones,i) in retorno) and (lt.isPresent(na,lt.getElement(naciones,i))!=0) :
+                lt.addLast(retorno[lt.getElement(naciones,i)], agregar) 
+                
+
+            elif (lt.isPresent(na,lt.getElement(naciones,i))!=0):
+                retorno[lt.getElement(naciones,i)]=lt.newList("ARRAY_LIST")  
+                lt.addLast(retorno[lt.getElement(naciones,i)], agregar)         
+    print(retorno.keys())
+    print(naciones)                          
+    total=lt.newList("ARRAY_LIST")           
+    for i in range(lt.size(naciones)):
+        pais=lt.getElement(naciones,i)
+        
+        num=lt.size(retorno[pais])
+        new={"pais":pais,"numero de obras":num}
+        lt.addLast(total,new)
+    retorn=sa.sort(total,sortnacion)    
+    return lt.subList(retorn,1,10), getPrimeros(lt.getElement(retorn,1)), getUltimos(lt.getElement(retorn,1))              
 
             
 
@@ -214,3 +230,5 @@ def cmpArtworkByDateAcquired(artwork1,artwork2):
     artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
     """
     return artwork1['dateacquired']<artwork2['dateacquired']
+def sortnacion(pais1,pais2):
+    return pais1["numero de obras"]>pais2["numero de obras"]

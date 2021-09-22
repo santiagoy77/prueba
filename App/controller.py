@@ -85,6 +85,9 @@ def getPurchase(lista):
 def sortArtistas(lista):
     
     return model.sortArtistas(lista)
+def getNacion(lista):
+    return model.getNacion(lista)  
+      
 def cA(catalog,inicio,final):
     
     return model.cArtistas(catalog,inicio,final)    

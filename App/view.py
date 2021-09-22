@@ -122,7 +122,7 @@ while True:
         printObrasCr(CantidadObras)
 
     elif int(inputs[0]) == 4:
-        pass
+        print(c.getNacion(catalog))
     elif int(inputs[0]) == 5:
         pass
     else:
