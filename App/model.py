@@ -54,14 +54,12 @@ def newCatalog():
     """
     catalog = {'artists_BeginDate': None,
                'artworks_DateAcquired': None,
-               'artists_ConstituentID': None,
-               'match_ids': None}
+               'artists_artworks':None}
     
     catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
     catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
-    catalog['artists_ConstituentID'] = lt.newList('ARRAY_LIST', key='ConstituentID'),
-    catalog['match_ids'] = lt.newList('ARRAY_LIST')
-    
+    catalog['artists_artworks'] = lt.newList('ARRAY_LIST')
+
     return catalog
 
 # Funciones para agregar informacion al catalogo
@@ -73,9 +71,19 @@ def addArtist(catalog, artist):
 def addArtwork(catalog, artwork):
     # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
     lt.addLast(catalog['artworks_DateAcquired'], artwork)
+    artists = artwork['ConstituentID']
+    for artist in artists:
+        addArtworkArtist(catalog, artist, artwork)
     
-def addIDs (catalog, ids):
-    lt.addLast(catalog['match_ids'], ids)
+def addArtworkArtist(catalog, artist, artwork):
+    artist_artwork = catalog['artists_artworks']
+    posartist = lt.isPresent(artist_artwork, artist)
+    if posartist > 0:
+        author = lt.getElement(artist_artwork, posartist)
+    else:
+        author = newArtist(artist)
+        lt.addLast(artist_artwork, author)
+    lt.addLast(artist_artwork['Medium'],artwork )
 
 # Funciones para creacion de datos
 
@@ -85,6 +93,15 @@ def addIDs (catalog, ids):
 #     ids = {'artist_id': artist_id, 'artwork_id': artwork_id}
 #     return ids
 # =============================================================================
+def newArtist(artist):
+    """
+    Crea una nueva estructura para modelar los libros de
+    un autor y su promedio de ratings
+    """
+    author = {'name': "", "Medium": None,  "average_rating": 0}
+    author['name'] = artist
+    author['Medium'] = lt.newList('ARRAY_LIST')
+    return author
 
 # Funciones de consulta
 def rangoArtists(catalog, anio1, anio2):

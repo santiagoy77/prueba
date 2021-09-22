@@ -94,6 +94,9 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
+        print('Últimas tres obras de arte cargadas:\n')
+        for i in [-2,-1,0]:
+            print(str(lt.getElement(catalog['artists_artworks'],i)))
     elif inputs>0 and inputs<7:
         if type(catalog)!=dict:
             print(error_cargar)

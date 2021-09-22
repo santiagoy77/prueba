@@ -47,7 +47,7 @@ def loadData(catalog):
     """
     loadArtists(catalog)
     loadArtworks(catalog)
-
+ 
 def loadArtists(catalog):
     """
     Carga los artistas desde el archivo CSV. 
