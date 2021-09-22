@@ -132,13 +132,12 @@ while True:
         printObrasCr(CantidadObras)
 
     elif int(inputs[0]) == 4:
-        print(c.getNacion(catalog))
         nombre_artista = input("Ingrese el nombre del artista: ")
         obras = c.artistas_tecnica(catalog,nombre_artista)
         printObrasTecnica(obras,nombre_artista)
     
     elif int(inputs[0]) == 5:
-        pass
+        print(c.getNacion(catalog))
     else:
         sys.exit(0)
 sys.exit(0)
