@@ -68,7 +68,7 @@ def addArtwork(catalog, artwork):
     """
     art = newArtwork(artwork['Title'], artwork['ObjectID'], artwork['ConstituentID'], artwork['Medium'], artwork['Circumference (cm)'], 
                     artwork['Depth (cm)'], artwork['Diameter (cm)'], artwork['Height (cm)'], artwork['Length (cm)'], artwork['Weight (kg)'], 
-                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'], artwork['Dimensions'], artwork['Department'])
+                    artwork['Width (cm)'], artwork['Seat Height (cm)'], artwork['Duration (sec.)'], artwork['Date'], artwork['DateAcquired'],artwork['CreditLine'], artwork['Dimensions'], artwork['Department'], artwork['Classification'])
     lt.addLast(catalog['artworks'], art)
 
 # Funciones para creacion de datos
@@ -86,13 +86,13 @@ def newArtist(name, id, nacionality, gender, begin, end):
     return artist
 
 def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, diametro, altura, largo, peso, ancho, altura_asiento, duracion, 
-                fecha, fecha_compra, adquisicion, dimensions, departamento):
+                fecha, fecha_compra, adquisicion, dimensions, departamento, clasificacion):
     """
     Esta estructura almancena las obras utilizadas.
     """
     artwork = {'Title': '', 'ObjectID': '', 'ConstituentID': '', 'Medium': '','Circumference (cm)': '','Depth (cm)': '','Diameter (cm)': '',
                 'Height (cm)': '','Length (cm)': '','Weight (kg)': '','Width (cm)': '','Seat Height (cm)': '','Duration (sec.)': '',
-                'Date': '','DateAcquired': '','CreditLine': '','Department':''}
+                'Date': '','DateAcquired': '','CreditLine': '','Department':'','Classification':''}
     artwork['Title'] = name
     artwork['ObjectID'] = id
     artwork['ConstituentID'] = constituentid
@@ -111,6 +111,7 @@ def newArtwork(name, id, constituentid, medium, circunferencia, profundidad, dia
     artwork['DateAcquired'] = fecha_compra
     artwork['CreditLine'] = adquisicion
     artwork['Department'] = departamento
+    artwork['Classification'] = clasificacion
     
     return artwork
 
@@ -264,7 +265,7 @@ def ArtistID (catalog, artistname):
 def ArtworksByID (catalog, artistID):
     
     artworks = catalog["artworks"]
-    artworksByID = lt.newList('ARRAY_LIST')
+    artworksByID = lt.newList()
     i=1
     
     while i <= lt.size(artworks):
@@ -272,6 +273,24 @@ def ArtworksByID (catalog, artistID):
         catalogID = artwork["ConstituentID"]
         
         if artistID in catalogID:
+            lt.addLast(artworksByID, artwork)
+        
+        i+=1    
+
+    return artworksByID
+
+
+def ArtworksByIDItself (artworksByDepto, artworkID):
+    
+    artworks = artworksByDepto
+    artworksByID = lt.newList("ARRAY_LIST")
+    i=1
+    
+    while i <= lt.size(artworks):
+        artwork = lt.getElement(artworks, i)
+        catalogID = artwork["ObjectID"]
+        
+        if artworkID in catalogID:
             lt.addLast(artworksByID, artwork)
         
         i+=1    
@@ -499,14 +518,14 @@ def precioObras (dimensiones, pesoObras):
             peso = float(peso)
 
             if peso == 0 and dimension == 0:
-                precio = 42        
+                precio = 48        
             elif peso >= dimension:
                 precio = peso*72
             elif peso < dimension:
                 precio = dimension*72
 
         if peso == "" and dimension == 0:
-            precio = 42
+            precio = 48
         
         lt.addLast(precioObras, precio)
         
@@ -524,6 +543,55 @@ def sumaTotal(lista):
     
     return total
         
+def obrasPorFecha (artworks):
+    size = lt.size(artworks)
+    artworksWithDate = lt.newList()
+    
+    for i in range(1, size+1):
+        artwork = lt.getElement(artworks, i)
+        date = artwork["Date"]
+
+        if date != "":
+            lt.addLast(artworksWithDate, artwork)
+        
+    sortedArtwoks = sortArtworksByDate(artworksWithDate)
+
+    return sortedArtwoks
+
+def obrasporcosto (artworksByDepto, zippedIDandPrice2):        
+    sortedArtworks = sortArtworksByPrice(zippedIDandPrice2)
+
+    return sortedArtworks
+
+
+def zipper (lt1, lt2):
+    zipped = {}
+    size = lt.size(lt1)
+
+    for i in range(1, size+1):
+        element1 = lt.getElement(lt1, i)
+        element2 = lt.getElement(lt2, i)
+
+        zipped[element1] = element2
+        
+    return zipped
+
+def zipper2 (lt1, lt2):
+    zipped = lt.newList()
+    size = lt.size(lt1)
+
+    for i in range(1, size+1):
+        element1 = lt.getElement(lt1, i)
+        element2 = lt.getElement(lt2, i)
+
+        elementzip = {"ObjectID": element1, "Price": element2}
+
+        lt.addLast(zipped, elementzip)
+        
+    return zipped
+
+
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -551,9 +619,35 @@ def compareartworkdays(date1, date2):
     year2 = fecha2[2]
     return (int(year1['Date']) > int(year2['Date']))
 
+def compareartworkyearsinv(year1, year2):
+    return (int(year1['Date']) < int(year2['Date']))
+
+def compareartworkprices(price1, price2):
+    return (float(price1["Price"]) > float(price2["Price"]))
+
+    
+
 # Funciones de ordenamiento
 
 def sortArtist(artists):
+    result=sa.sort(artists, compareartistyears)
+    return(result)
+
+
+def sortArtworksByDate (artworks):
+    result = sa.sort(artworks, compareartworkyearsinv)
+
+    return(result)
+    
+
+def sortArtworks(catalog):
+    sa.sort(catalog['artworks'], compareartworkyears)
+
+
+def sortArtworksByPrice(zippedIDandPrice):
+    result = sa.sort(zippedIDandPrice, compareartworkprices)
+    
+    return result
     resul=sa.sort(artists, compareartistyears)
     return(resul)
        

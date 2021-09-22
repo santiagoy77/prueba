@@ -91,10 +91,7 @@ def sortArtworks(ArtWorks):
        pos = lt.isPresent(Years, year)
 
        if pos == 0:
-           lt.addLast(Years, year)
-    
-    
-        
+           lt.addLast(Years, year)   
 
    
 
@@ -200,6 +197,11 @@ def obrasPorFecha (artworks):
 
     return obras
 
+def obrasporcosto (artworksByDepto, zippedIDandPrice2):
+    obrasPorCosto = model.obrasporcosto (artworksByDepto, zippedIDandPrice2)
+
+    return obrasPorCosto
+
 
 def printMUMList(catalog, MUMList):
     i = 1
@@ -238,12 +240,13 @@ def printMUMList(catalog, MUMList):
         i+=1
 
 
-def print5oldestArtworks (catalog, obrasporfecha):  
+def print5MostArtworks (catalog, obras, zippedIDandPrice):  
     i=1
 
     while i <= 5:
-        artwork = lt.getElement(obrasporfecha, i)
+        artwork = lt.getElement(obras, i)
 
+        print(i)
         print(" ")
         print('Titulo: ' + artwork['Title'])
         print(" ")
@@ -273,6 +276,85 @@ def print5oldestArtworks (catalog, obrasporfecha):
         print(" ")
         print("Dimensiones: " + artwork["Dimensions"])
         print(" ")
-        print("Costo asociado al transporte: ")
+        print("Costo asociado al transporte: " + str(zippedIDandPrice[artwork["ObjectID"]]) + " USD.")
 
         i+=1
+
+
+def print5MostExpArtworks (catalog, obrasporcosto, zippedIDandPrice, artworksByDepto):  
+    i=1
+
+    while i <= 5:
+        artworkIDandCost = lt.getElement(obrasporcosto, i)
+
+        artworkID = artworkIDandCost["ObjectID"]
+        artworkPrice = artworkIDandCost["Price"]
+        
+
+        obra =  model.ArtworksByIDItself (artworksByDepto, artworkID)
+
+        artwork = lt.getElement(obra, 1)
+
+        print(i)
+        print(" ")
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = model.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print("Clasificación: " + artwork["Classification"])
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+        print("Costo asociado al transporte: " + str(artworkPrice) + " USD.")
+
+        i+=1
+
+
+def zipper (lt1, lt2):
+    size = lt.size(lt1)
+    IDartworks = lt.newList()
+
+    for i in range(1, size+1):
+        artwork = lt.getElement(lt1, i)
+        ID = artwork["ObjectID"]
+
+        lt.addLast(IDartworks, ID)
+    
+    zipped = model.zipper(IDartworks, lt2)
+
+    return zipped
+
+
+def zipper2 (lt1, lt2):
+    size = lt.size(lt1)
+    IDartworks = lt.newList()
+
+    for i in range(1, size+1):
+        artwork = lt.getElement(lt1, i)
+        ID = artwork["ObjectID"]
+
+        lt.addLast(IDartworks, ID)
+    
+    zipped = model.zipper2(IDartworks, lt2)
+
+    return zipped
