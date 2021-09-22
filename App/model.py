@@ -58,7 +58,7 @@ def newCatalog():
     
     catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
     catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
-    catalog['artists_artworks'] = lt.newList('ARRAY_LIST')
+    catalog['artists_artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartists_artworks)
 
     return catalog
 
@@ -72,12 +72,12 @@ def addArtwork(catalog, artwork):
     # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
     lt.addLast(catalog['artworks_DateAcquired'], artwork)
     artists = artwork['ConstituentID']
+    artists=artists[1:-1].split(",")
     for artist in artists:
-        addArtworkArtist(catalog, artist, artwork)
+        addArtworkArtist(catalog, artist.strip(), artwork)
     
 def addArtworkArtist(catalog, artist, artwork):
     artist_artwork = catalog['artists_artworks']
-    print(artist_artwork)
     posartist = lt.isPresent(artist_artwork, artist)
     if posartist > 0:
         author = lt.getElement(artist_artwork, posartist)
@@ -190,6 +190,11 @@ def compare_artists(artist1,artist2):
         return -1
     else:
         return 0
+
+def compareartists_artworks(authorname1, author):
+    if (authorname1 in author['name']):
+        return 0
+    return -1
 
 def compare_artworks():
     pass
