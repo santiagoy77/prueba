@@ -54,11 +54,13 @@ def newCatalog():
     """
     catalog = {'artists_BeginDate': None,
                'artworks_DateAcquired': None,
-               'artists_chronologically': None}
+               'artists_ConstituentID': None,
+               'match_ids': None}
     
     catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
     catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
-    catalog['artists_chronologically'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    catalog['artists_ConstituentID'] = lt.newList('ARRAY_LIST', key='ConstituentID'),
+    catalog['match_ids'] = lt.newList('ARRAY_LIST')
     
     return catalog
 
@@ -71,8 +73,18 @@ def addArtist(catalog, artist):
 def addArtwork(catalog, artwork):
     # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
     lt.addLast(catalog['artworks_DateAcquired'], artwork)
+    
+def addIDs (catalog, ids):
+    lt.addLast(catalog['match_ids'], ids)
 
 # Funciones para creacion de datos
+
+# =============================================================================
+# def match_ids(catalog):
+#     for i in lt.iterator(catalog['artists_BeginDate']):
+#     ids = {'artist_id': artist_id, 'artwork_id': artwork_id}
+#     return ids
+# =============================================================================
 
 # Funciones de consulta
 def rangoArtists(catalog, anio1, anio2):
@@ -121,6 +133,37 @@ def rangoArtworks(catalog, fecha1, fecha2):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return answ
+
+def id_artists(catalog, author):
+    id_=0
+    for i in lt.iterator(catalog['artists_BeginDate']):
+        if catalog['artists_BeginDate']['DisplayName']==author:
+            id_ = catalog['artists_BeginDate']['ConstituentID']
+            break
+    return id_
+
+def id_artworks(catalog, author):
+    """
+
+    Returns
+    -------
+    list_ : TYPE
+        Lista de las obras de un artista determinado.
+    """
+    id_=id_artists(catalog, author)
+    list_=lt.newList('ARRAY_LIST')
+    for i in lt.iterator(catalog['artworks_DateAcquired']):
+        if id_ in i['ConstituentID']:                
+            lt.addLast(list_, i)
+    return list_
+
+def list_artworks_artist(artworks_artist):
+    mediums = lt.newList('ARRAY_LIST')
+    for i in lt.iterator(artworks_artist):
+        if i['Medium'] not in mediums:
+            medio = lt.newList('ARRAY_LIST')
+            
+    return 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -181,5 +224,15 @@ def sortArtists_BeginDate(catalog):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
+# =============================================================================
+# def sortArtists_ConstituentID(catalog):
+#     sub_list = catalog["artists_ConstituentID"].copy()
+#     start_time = time.process_time()
+#     sorted_list= mer.sort(sub_list)
+#     stop_time = time.process_time()
+#     elapsed_time_mseg = (stop_time - start_time)*1000
+#     return elapsed_time_mseg, sorted_list
+# 
+# =============================================================================
 # Nosotros elejimos el algoritmo: sa.sort, ins.sort, mer.sort, quc.sort, sel.sort.
 

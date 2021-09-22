@@ -142,7 +142,15 @@ while True:
             answ._max_width = {'Título':40,'Artista(s)':20,'Fecha':20,'Medio':40,
                                 'Dimensiones':40}
             print(answ)
-        elif inputs==4:
+        elif inputs==3:
+            author=input("Ingrese el nombre del autor: ")
+            result=controller.id_artworks(catalog,author)
+            print("======================== Req No. 3 Inputs ========================")
+            print("Examinar el trabajo del artista de nombre ",author)
+            print("======================== Req No. 3 Respuesta ========================")
+            print("El artista ",author,' tiene ',str(lt.size(result)), 'obras en el MoMA')
+            
+            
             
         elif inputs>2:
             print("Este requerimiento aún no se ha implementado.")

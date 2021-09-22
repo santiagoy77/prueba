@@ -82,4 +82,5 @@ def rangoArtists(catalog, anio1, anio2):
 def rangoArtworks(catalog, fecha1, fecha2):
     return model.rangoArtworks(catalog, fecha1, fecha2)
 
-
+def id_artworks(catalog,author):
+    return model.id_artworks(catalog, author)
