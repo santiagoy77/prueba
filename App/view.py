@@ -84,6 +84,16 @@ def printArtistasFecha(lista,lista1,lista2):
         y=lt.getElement(lista1,x)
         print(y)
         x+=1
+
+
+
+def printObrasTecnica (info, name):
+    print(f"{name} tiene en total {info['TotObras']} obras en el museo.")
+    print(f"Uso {info['TotMedios']} tecnicas diferentes.\n")
+    print(f"La tecnica mas utilizadoa fue {info['MedMasUsado']} con {lt.size(info['ObrasMedMasUsado'])} piezas.")
+    print(f"Las piesas son:")
+    for artwork in lt.iterator(info["ObrasMedMasUsado"]): 
+        print(artwork) 
 """
 Menu principal
 """
@@ -103,11 +113,11 @@ while True:
         print(c.getUltimos(catalog["artists"]))
         
     elif int(inputs[0]) == 2:
-        Añoi= int(input("Desde que año quieres buscar?:  "))
-        Añof = int(input("Hasta que año quieres buscar?:  "))
+        Añoi= int(input("¿Desde que año quiere buscar?:  "))
+        Añof = int(input("¿Hasta que año quiere buscar?:  "))
         lista=c.cA(catalog,Añoi,Añof)
         result = c.sortArtistas(lista)
-        print("Para la muestra de",lt.size(catalog["artists"]), " elementos, el tiempo (mseg) es: ",
+        print("El tiempo en mseg para la muestra de",lt.size(catalog["artists"]), " fue de: ",
                                           str(result[0]))
         printArtistasFecha(lista,result[1],result[2])
         
@@ -116,13 +126,16 @@ while True:
     elif int(inputs[0]) == 3:
         FechaInicial = input("¿Desde que fecha quiere buscar? (formato AAAA-MM-DD):   ")
         FechaFin = input("¿Hasta que fecha quiere buscar?(formato AAAA-MM-DD):   ")
-        MetodoSort=input('¿Qué algoritmo de ordenamiento quiere implementar: (InsertionSort, ShellSort, MergeSort, QuickSort)   ')
+        MetodoSort=input('¿Qué algoritmo de ordenamiento quiere implementar, InsertionSort, ShellSort, MergeSort o QuickSort?')
         SizeSubLista=input('Ingrese el porecentaje de la muestra (entre 0 y 1):  ')
         CantidadObras=c.obrasFecha(catalog,FechaInicial,FechaFin,MetodoSort,float(SizeSubLista))
         printObrasCr(CantidadObras)
 
     elif int(inputs[0]) == 4:
-        pass
+        nombre_artista = input("Ingrese el nombre del artista: ")
+        obras = c.artistas_tecnica(catalog,nombre_artista)
+        printObrasTecnica(obras,nombre_artista)
+    
     elif int(inputs[0]) == 5:
         pass
     else:

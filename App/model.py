@@ -92,7 +92,6 @@ def addArtwork(catalog, artwork):
     lt.addLast(catalog['artworks'],nuevo)
 
 def addArtist(catalog, artista):
-    # Se adiciona el artista a la lista de artistas
     art = newArtist(artista['ConstituentID'], artista['DisplayName'],artista['BeginDate'],
                     artista['EndDate'],artista['Nationality'],artista['Gender'])
     lt.addLast(catalog['artists'], art)
@@ -113,13 +112,47 @@ def getPurchase(lista):
         if "purchase" in (lt.getElement(lista,x)["creditline"].lower()):
             cont+=1
         x+=1    
-    return cont        
+    return cont   
 
+def get_artistas_tecnica(catalog, nombre_artista):
+    sub_list = catalog['artists']
+    artistas = sub_list['elements']
+    sub_list2 = catalog['obrasPorArtistas']
+    obras = sub_list2['elements']
+    lista_tecnicas = []
+    ObrasTecnica= []
 
+    for llave in artistas:
+        if llave['DisplayName'] == nombre_artista:
+            id = llave['ConstituentID']
+
+    totalObras = 0
+    totalTecnicas = 0
+    for llave in obras:
+        if llave['ConstituentID'] == id:
+            lista = llave['artworks']
+            artworks = lista['elements']
+            for cadaObra in artworks:
+                totalObras += 1
+                tecnica = cadaObra['Medium']
+                if tecnica not in lista_tecnicas:
+                    totalTecnicas += 1
+                lista_tecnicas.append(tecnica)
+
+    TecnicaMasUtilizada = max(key=lista_tecnicas.count)
+    for obras in artworks:
+        if obras['Medium'] == TecnicaMasUtilizada:
+            info = {'Titulo': obras['Title'],
+                    'Fecha': obras['Date'],
+                    'Medio': obras['Medium'],
+                    'Dimensiones': obras['Dimensions']}
+            ObrasTecnica.append(info)
+
+    return totalObras, totalTecnicas, TecnicaMasUtilizada, ObrasTecnica
 
 def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista): 
     obras = lista["artworks"]
-    retorno = lt.newList()
+    respuesta = lt.newList()
     for i in range(round(lt.size(obras)*sizesublista)):
         llave = lt.getElement(obras, i)
         dateacquired = llave["dateacquired"]
@@ -131,33 +164,33 @@ def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista):
         if  dateacquired >= inicio and dateacquired <= final:
             agregar = {"name" : name,"artistas":artistas, "dateacquired" : dateacquired, 
                        "medium" : medium, "creditline":creditline, "dimensions" : dimensions}
-            lt.addLast(retorno, agregar)
-    StartTime=time.process_time()
+            lt.addLast(respuesta, agregar)
+            tiempo_inicio=time.process_time()
     if metodo=='ShellSort':
-        sa.sort(retorno, cmpArtworkByDateAcquired)
+        sa.sort(respuesta, cmpArtworkByDateAcquired)
     elif metodo=='InsertionSort':
-        ins.sort(retorno, cmpArtworkByDateAcquired)
+        ins.sort(respuesta, cmpArtworkByDateAcquired)
     elif metodo=='MergeSort':
-        mrgsort.sort(retorno, cmpArtworkByDateAcquired)
+        mrgsort.sort(respuesta, cmpArtworkByDateAcquired)
     elif metodo=='':
-        quicks.sort(retorno,cmpArtworkByDateAcquired)
-    StopTime=time.process_time()
-    TimeMseg=(StopTime-StartTime)*1000
-    return retorno
-def sortArtistas(Artistasc):
+        quicks.sort(respuesta,cmpArtworkByDateAcquired)
+    tiempo_fin=time.process_time()
+    TimeMseg=(tiempo_fin-tiempo_inicio)*1000
+    return respuesta
 
+def sortArtistas(Artistasc):
     sub_list = lt.subList(Artistasc,1,lt.size(Artistasc))
     sub_list = sub_list.copy()
     start_time = time.process_time()
     sorted_list = sa.sort(sub_list, compareartists)
     stop_time = time.process_time()
     
-    elapsed_time_mseg = (stop_time - start_time)*1000
+    tiempo = (stop_time - start_time)*1000
     final=lt.newList()
     final2=lt.newList()
     final=getPrimeros(sorted_list)
     final2=getUltimos(sorted_list)   
-    return elapsed_time_mseg, final, final2
+    return tiempo, final, final2
 def cArtistas(catalog,aInicio,aFinal) :
     Artistasc=lt.newList()
     x=1
@@ -167,7 +200,6 @@ def cArtistas(catalog,aInicio,aFinal) :
             lt.addLast(Artistasc,y)
         x+=1    
     return Artistasc
-
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

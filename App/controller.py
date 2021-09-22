@@ -79,6 +79,10 @@ def getUltimos(lista):
 def getPurchase(lista):
     return model.getPurchase(lista)       
 
+def artistas_tecnica(catalog, nombre_artista):
+
+    return model.get_artistas_tecnica(catalog, nombre_artista)
+
 """"def artistasFecha(lista, inicio, final):
     artistasfechas = model.artistaFecha(lista, inicio, final)
     return artistasfechas"""
