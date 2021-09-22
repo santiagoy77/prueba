@@ -40,12 +40,12 @@ def printMenu():
     """
     print("\nMenú de opciones:\n")
     print("0. Cargar información en el catálogo.")
-    print("Requisito 1. Listar cronológicamente las artistas.")
-    print("Requisito 2. Listar cronológicamente los adquisiciones.")
-    print("Requisito 3. Clasificar las obras de un artista por técnica.")
-    print("Requisito 4. Clasificar las obras por la nacionalidad de sus creadores.")
-    print("Requisito 5. Transportar obras de un departamento.")
-    print("Requisito 6 (Bono). Proponer una nueva exposición en el museo.")
+    print("Req. No. 1. Listar cronológicamente las artistas.")
+    print("Req. No. 2. Listar cronológicamente los adquisiciones.")
+    print("Req. No. 3. Clasificar las obras de un artista por técnica.")
+    print("Req. No. 4. Clasificar las obras por la nacionalidad de sus creadores.")
+    print("Req. No. 5. Transportar obras de un departamento.")
+    print("Req. No. 6 (Bono). Proponer una nueva exposición en el museo.")
     print("7. Detener la ejecución del programa.")
 
 def initCatalog():
@@ -122,7 +122,7 @@ while True:
             fecha1=input("Ingrese una fecha inicial en formato AAAA-MM-DD: ")
             fecha2=input("Ingrese una fecha final en formato AAAA-MM-DD: ")
             result = controller.rangoArtworks(catalog, fecha1, fecha2)
-            num_artists = 5 # TODO: FALTA
+            num_artists = 5 # TODO: FALTA Toca asociar con los artistas para esto
             num_purchased = 5 # TODO: Falta
             print("======================== Req No. 1 Inputs ========================")
             print("Obras adquiridas entre ",fecha1," y ",fecha2)
