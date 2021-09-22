@@ -29,11 +29,7 @@ import config as cf
 from datetime import datetime
 import time
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import mergesort as mer
-from DISClib.Algorithms.Sorting import quicksort as quc
-from DISClib.Algorithms.Sorting import selectionsort as sel
 assert cf
 
 """
@@ -56,8 +52,8 @@ def newCatalog():
                'artworks_DateAcquired': None,
                'artists_artworks':None}
     
-    catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artists)
-    catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compare_artworks)
+    catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtists_BeginDate)
+    catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtists_BeginDate)
     catalog['artists_artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartists_artworks)
 
     return catalog
@@ -65,26 +61,25 @@ def newCatalog():
 # Funciones para agregar informacion al catalogo
 
 def addArtist(catalog, artist):
-    # Se añade el artista al final de la lista de artistas en el catálogo.
     lt.addLast(catalog['artists_BeginDate'], artist)
 
 def addArtwork(catalog, artwork):
-    # Se añade la obra de arte al final de la lista de obras de arte en el catálogo.
     lt.addLast(catalog['artworks_DateAcquired'], artwork)
-    artists = artwork['ConstituentID']
-    artists=artists[1:-1].split(",")
-    for artist in artists:
-        addArtworkArtist(catalog, artist.strip(), artwork)
+    ids = artwork['ConstituentID']
+    ids = ids[1:-1].split(",")
+    for id_ in ids:
+        id_ = int(id_.strip())
+        addArtworkArtist(catalog, id_, artwork)
     
-def addArtworkArtist(catalog, artist, artwork):
+def addArtworkArtist(catalog, id_:int, artwork):
     artist_artwork = catalog['artists_artworks']
-    posartist = lt.isPresent(artist_artwork, artist)
+    posartist = lt.isPresent(artist_artwork, id_)
     if posartist > 0:
-        author = lt.getElement(artist_artwork, posartist)
+        artist_id = lt.getElement(artist_artwork, posartist)
     else:
-        author = newArtist(artist)
-        lt.addLast(artist_artwork, author)
-    lt.addLast(author['Medium'],artwork )
+        artist_id = newArtworkArtist(id_)
+        lt.addLast(artist_artwork, artist_id)
+    lt.addLast(artist_id['artworks'],artwork )
 
 # Funciones para creacion de datos
 
@@ -94,17 +89,17 @@ def addArtworkArtist(catalog, artist, artwork):
 #     ids = {'artist_id': artist_id, 'artwork_id': artwork_id}
 #     return ids
 # =============================================================================
-def newArtist(artist):
+def newArtworkArtist(artist_id):
     """
-    Crea una nueva estructura para modelar los libros de
-    un autor y su promedio de ratings
+    Crea una nueva estructura para modelar los autores de cada obra
     """
-    author = {'name': "", "Medium": None,  "average_rating": 0}
-    author['name'] = artist
-    author['Medium'] = lt.newList('ARRAY_LIST')
-    return author
+    artwork_artist = {'artist':"",'artworks':None}
+    artwork_artist['artist'] = artist_id
+    artwork_artist['artworks'] = lt.newList('ARRAY_LIST')
+    return artwork_artist
 
 # Funciones de consulta
+
 def rangoArtists(catalog, anio1, anio2):
     artists = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
@@ -175,31 +170,9 @@ def id_artworks(catalog, author):
             lt.addLast(list_, i)
     return list_
 
-def list_artworks_artist(artworks_artist):
-    mediums = lt.newList('ARRAY_LIST')
-    for i in lt.iterator(artworks_artist):
-        if i['Medium'] not in mediums:
-            medio = lt.newList('ARRAY_LIST')
-            
-    return 
-
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-def compare_artists(artist1,artist2):
-    if artist1["BeginDate"]<=artist2["BeginDate"]:
-        return -1
-    else:
-        return 0
-
-def compareartists_artworks(authorname1, author):
-    if (authorname1 in author['name']):
-        return 0
-    return -1
-
-def compare_artworks():
-    pass
-
-def cmpArtworkByDateAcquired(artwork1:dict , artwork2:dict)->int:
+def compareArtworks_DateAcquired(artwork1:dict , artwork2:dict)->int:
     """
     Compara dos obras de arte por la fecha en la que fueron adquiridas, 
     'DateAcquired'.
@@ -229,12 +202,31 @@ def cmpArtworkByDateAcquired(artwork1:dict , artwork2:dict)->int:
         return -1
     return 0
 
+def compareArtists_BeginDate(artist1,artist2):
+    if artist1["BeginDate"]<=artist2["BeginDate"]:
+        return -1
+    else:
+        return 0
+
+def compareartists_artworks(artist_id, artist):
+    if artist_id == artist['artist']:
+        return 0
+    return -1
+    
+# =============================================================================
+# def compareArtists__ConstituentID(artist1,artist2):
+#     if artist1["ConstituentID"]<=artist2["ConstituentID"]:
+#         return -1
+#     else:
+#         return 0
+# =============================================================================
+
 # Funciones de ordenamiento
 
 def sortArtworks_DateAcquired(catalog):
     sub_list = catalog["artworks_DateAcquired"].copy()
     start_time = time.process_time()
-    sorted_list= mer.sort(sub_list, cmpArtworkByDateAcquired)
+    sorted_list= mer.sort(sub_list, compareArtworks_DateAcquired)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
@@ -242,7 +234,7 @@ def sortArtworks_DateAcquired(catalog):
 def sortArtists_BeginDate(catalog):
     sub_list = catalog["artists_BeginDate"].copy()
     start_time = time.process_time()
-    sorted_list= mer.sort(sub_list, compare_artists)
+    sorted_list= mer.sort(sub_list, compareArtists_BeginDate)
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
@@ -251,11 +243,8 @@ def sortArtists_BeginDate(catalog):
 # def sortArtists_ConstituentID(catalog):
 #     sub_list = catalog["artists_ConstituentID"].copy()
 #     start_time = time.process_time()
-#     sorted_list= mer.sort(sub_list)
+#     sorted_list= mer.sort(sub_list, compareArtists__ConstituentID)
 #     stop_time = time.process_time()
 #     elapsed_time_mseg = (stop_time - start_time)*1000
 #     return elapsed_time_mseg, sorted_list
-# 
 # =============================================================================
-# Nosotros elejimos el algoritmo: sa.sort, ins.sort, mer.sort, quc.sort, sel.sort.
-

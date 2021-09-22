@@ -40,8 +40,8 @@ def printMenu():
     """
     print("\nMenú de opciones:\n")
     print("0. Cargar información en el catálogo.")
-    print("Req. No. 1. Listar cronológicamente las artistas.")
-    print("Req. No. 2. Listar cronológicamente los adquisiciones.")
+    print("Req. No. 1. Listar cronológicamente los artistas.")
+    print("Req. No. 2. Listar cronológicamente las adquisiciones.")
     print("Req. No. 3. Clasificar las obras de un artista por técnica.")
     print("Req. No. 4. Clasificar las obras por la nacionalidad de sus creadores.")
     print("Req. No. 5. Transportar obras de un departamento.")
