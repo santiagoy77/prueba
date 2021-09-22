@@ -50,11 +50,13 @@ def newCatalog():
     """
     catalog = {'artists_BeginDate': None,
                'artworks_DateAcquired': None,
-               'artists_artworks':None}
+               'artists_artworks':None,
+               'nationality':None}
     
     catalog['artists_BeginDate'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtists_BeginDate)
     catalog['artworks_DateAcquired'] = lt.newList('ARRAY_LIST', cmpfunction=compareArtists_BeginDate)
     catalog['artists_artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartists_artworks)
+    catalog['nationality'] = lt.newList('ARRAY_LIST', cmpfunction=compareNationality)
 
     return catalog
 
@@ -62,6 +64,8 @@ def newCatalog():
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists_BeginDate'], artist)
+    ids=artist["Nationality"]
+
 
 def addArtwork(catalog, artwork):
     lt.addLast(catalog['artworks_DateAcquired'], artwork)
@@ -70,6 +74,7 @@ def addArtwork(catalog, artwork):
     for id_ in ids:
         id_ = int(id_.strip())
         addArtworkArtist(catalog, id_, artwork)
+        addNationality(catalog,id_,artwork)
     
 def addArtworkArtist(catalog, id_:int, artwork):
     artist_artwork = catalog['artists_artworks']
@@ -80,6 +85,18 @@ def addArtworkArtist(catalog, id_:int, artwork):
         artist_id = newArtworkArtist(id_)
         lt.addLast(artist_artwork, artist_id)
     lt.addLast(artist_id['artworks'],artwork )
+
+def addNationality(catalog, id_:int, artwork):
+    nationality = catalog['nationality']
+    posartist=lt.isPresent(catalog["artists_BeginDate"], id_)
+    nation = lt.getElement(catalog["artists_BeginDate"], posartist)["Nationality"]
+    posnationality = lt.isPresent(nationality, nation)
+    if posnationality > 0:
+        nation_id = lt.getElement(nationality, posnationality)
+    else:
+        nation_id = newNationality(nation)
+        lt.addLast(nationality, nation_id)
+    lt.addLast(nation_id['artworks'],artwork )
 
 # Funciones para creacion de datos
 
@@ -93,11 +110,19 @@ def newArtworkArtist(artist_id):
     """
     Crea una nueva estructura para modelar los autores de cada obra
     """
+    nationality = {'nation':"",'artworks':None}
+    nationality['nation'] = artist_id
+    nationality['artworks'] = lt.newList('ARRAY_LIST')
+    return nationality
+
+def newNationality(nation):
+    """
+    Crea una nueva estructura para modelar los autores de cada obra
+    """
     artwork_artist = {'artist':"",'artworks':None}
-    artwork_artist['artist'] = artist_id
+    artwork_artist['artist'] = nation
     artwork_artist['artworks'] = lt.newList('ARRAY_LIST')
     return artwork_artist
-
 # Funciones de consulta
 
 def rangoArtists(catalog, anio1, anio2):
@@ -232,6 +257,11 @@ def compareartists_artworks(artist_id, artist):
         return 0
     return -1
     
+def compareNationality(artist_id, artist):
+    if artist_id == artist['artist']:
+        return 0
+    return -1
+
 # =============================================================================
 # def compareArtists__ConstituentID(artist1,artist2):
 #     if artist1["ConstituentID"]<=artist2["ConstituentID"]:
