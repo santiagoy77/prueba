@@ -39,14 +39,14 @@ def printMenu():
     Imprime las opciones del menú.
     """
     print("\nMenú de opciones:\n")
-    print("1- Cargar información en el catálogo.")
-    print("2- Listar cronológicamente los artistas.")
-    print("3- Listar cronológicamente las adquisiciones.")
-    print("4- Clasificar las obras de un artista por técnica.")
-    print("5- Clasificar las obras por la nacionalidad de sus creadores.")
-    print("6- Transportar obras de un departamento.")
-    print("7- Proponer una nueva exposición en el museo.")
-    print("0- Detener la ejecución del programa.")
+    print("0. Cargar información en el catálogo.")
+    print("Requisito 1. Listar cronológicamente las artistas.")
+    print("Requisito 2. Listar cronológicamente los adquisiciones.")
+    print("Requisito 3. Clasificar las obras de un artista por técnica.")
+    print("Requisito 4. Clasificar las obras por la nacionalidad de sus creadores.")
+    print("Requisito 5. Transportar obras de un departamento.")
+    print("Requisito 6 (Bono). Proponer una nueva exposición en el museo.")
+    print("7. Detener la ejecución del programa.")
 
 def initCatalog():
     """
@@ -73,7 +73,7 @@ while True:
     except:
         print(error)
         continue
-    if inputs == 1:
+    if inputs == 0:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
@@ -93,8 +93,7 @@ while True:
         print('Últimas tres obras de arte cargadas:\n')
         for i in [-2,-1,0]:
             print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
-
-    elif inputs==2:
+    elif inputs==1:
         anio1=int(input("Digite un año inicial: "))
         anio2=int(input("Digite un año final: "))
         result=controller.rangoArtists(catalog, anio1, anio2)
@@ -115,7 +114,7 @@ while True:
         answ._max_width = {'Nombre':40}
         print(answ)
 
-    elif inputs==3:
+    elif inputs==2:
         fecha1=input("Ingrese una fecha inicial en formato AAAA-MM-DD: ")
         fecha2=input("Ingrese una fecha final en formato AAAA-MM-DD: ")
         result = controller.rangoArtworks(catalog, fecha1, fecha2)
@@ -136,11 +135,11 @@ while True:
                           lt.getElement(result,i)['DateAcquired'],
                           lt.getElement(result,i)['Medium'],
                           lt.getElement(result,i)['Dimensions']])
-        answ._max_width = {'Título':40,'Artista(s)':40,'Fecha':20,'Medio':40,
+        answ._max_width = {'Título':40,'Artista(s)':20,'Fecha':20,'Medio':40,
                             'Dimensiones':40}
         print(answ)
 
-    elif (inputs>3) and (inputs<8):
+    elif (inputs==1) or ((inputs>2) and (inputs<7)):
         print("Este requerimiento aún no se ha implementado.")
     elif inputs >= 8:
         print(error)
