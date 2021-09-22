@@ -136,7 +136,9 @@ def getArtworksbyDate(catalog, date1, date2):
     artworks = catalog['artworks']
 
     ArtworksByYear = lt.newList()
-    
+    delete = lt.newList()
+    ids = lt.newList()
+   
     size = lt.size(artworks)
 
     fecha1 = date1.split("-")
@@ -150,35 +152,55 @@ def getArtworksbyDate(catalog, date1, date2):
             lt.addLast(ArtworksByYear, artwork)
 
     size2 = lt.size(ArtworksByYear)
+    
+    
+    for cont in range(1,size2+1):
+        artwork = lt.getElement(ArtworksByYear,cont)
+        id = artwork['ObjectID']
+        lt.addLast(ids, id)
+        
 
     for cont in range(1,size2+1):
         artwork = lt.getElement(ArtworksByYear, cont)
-        
         date = artwork['DateAcquired'].split("-")
 
         if fecha1[0]==date[0]:
             if date[1]<fecha1[1]:
-                pos = lt.isPresent(ArtworksByYear, artwork)
-                lt.deleteElement(ArtworksByYear,pos)
+                id = artwork['ObjectID']
+                pos = lt.isPresent(ids, id)
+                lt.addLast(delete,pos)
 
         if fecha2[0]==date[0]:
             if date[1]>fecha1[1]:
-                pos = lt.isPresent(ArtworksByYear, artwork)
-                lt.deleteElement(ArtworksByYear,pos)
+                id = artwork['ObjectID']
+                pos = lt.isPresent(ids, id)
+                lt.addLast(delete,pos)
 
         if fecha1[0]==date[0] and fecha1[1==date[1]]:
             if date[2]<=fecha1[2]:
-                pos = lt.isPresent(ArtworksByYear, artwork)
-                lt.deleteElement(ArtworksByYear,pos)
+                id = artwork['ObjectID']
+                pos = lt.isPresent(ids, id)
+                lt.addLast(delete,pos)
         
         if fecha2[0]==date[0] and fecha2[1==date[1]]:
             if date[2]>=fecha1[2]:
-                pos = lt.isPresent(ArtworksByYear, artwork)
-                lt.deleteElement(ArtworksByYear,pos)
-                  
+                id = artwork['ObjectID']
+                pos = lt.isPresent(ids, id)
+                lt.addLast(delete,pos)    
+
+    size3 = lt.size(delete)
+
+    ArtworksByDate = lt.newList()
+
+    for cont in range(1,size2+1):        
+        elemento = lt.getElement(ArtworksByYear, cont)
+        presente = lt.isPresent(delete, cont)
+        if presente == 0:
+            lt.addLast(ArtworksByDate,elemento)
+        
 
 
-    return ArtworksByYear
+    return ArtworksByDate
 
 def PurchaseArtworks(obras):
 
@@ -193,7 +215,29 @@ def PurchaseArtworks(obras):
     return purchased
 
 
+def CountArtists(obras):
 
+    size = lt.size(obras)
+    lista = lt.newList()
+
+    for count in range (1,size+1):
+        obra = lt.getElement(obras, count)
+        sinconrchete1 = obra["ConstituentID"].lstrip("[")
+        sinconrchete2 = sinconrchete1.rstrip("]")
+        artists = sinconrchete2.split(",")
+        size2 = len(artists)
+        
+
+        for n in range(0, size2):
+            artist = artists[n]
+            pos = lt.isPresent(lista, artist)
+
+            if pos == 0:
+                lt.addLast(lista, artist)
+    return (lista)
+
+            
+        
 
 def ArtistID (catalog, artistname):
 
@@ -554,7 +598,25 @@ def zipper2 (lt1, lt2):
 def compareartistyears(year1, year2):
     return (int(year1['BeginDate']) < int(year2['BeginDate']))
 
-def compareartworkyears(year1, year2):
+def compareartworkyears(date1, date2):
+    fecha1 = date1['DateAcquired'].split("-")
+    fecha2 = date2['DateAcquired'].split("-")
+    year1 =  fecha1[0]
+    year2 = fecha2[0]
+    return (int(year1['Date']) > int(year2['Date']))
+
+def compareartworkmonths(date1, date2):
+    fecha1 = date1['DateAcquired'].split("-")
+    fecha2 = date2['DateAcquired'].split("-")
+    year1 =  fecha1[1]
+    year2 = fecha2[1]
+    return (int(year1['Date']) > int(year2['Date']))
+
+def compareartworkdays(date1, date2):
+    fecha1 = date1['DateAcquired'].split("-")
+    fecha2 = date2['DateAcquired'].split("-")
+    year1 =  fecha1[2]
+    year2 = fecha2[2]
     return (int(year1['Date']) > int(year2['Date']))
 
 def compareartworkyearsinv(year1, year2):
@@ -586,3 +648,14 @@ def sortArtworksByPrice(zippedIDandPrice):
     result = sa.sort(zippedIDandPrice, compareartworkprices)
     
     return result
+    resul=sa.sort(artists, compareartistyears)
+    return(resul)
+       
+def sortArtworksYear(artworks):
+    sa.sort(artworks, compareartworkyears)
+
+def sortArtworksMonth(artworks):
+    sa.sort(artworks, compareartworkmonths)
+
+def sortArtworksDay(artworks):
+    sa.sort(artworks, compareartworkdays)
