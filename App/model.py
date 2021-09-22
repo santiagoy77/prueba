@@ -174,9 +174,7 @@ def getNacion(lista):
                 lt.addLast(naciones,nacion)
                 retorno[nacion]=lt.newList("ARRAY_LIST")  
                 lt.addLast(retorno[nacion], agregar)
-                c+=1
-            elif (id in artista) and (lt.isPresent(na,nacion)==0):
-                c+=1   
+            elif (id in artista) and (lt.isPresent(na,nacion)==0):  
                 lt.addLast(na,nacion)    
                 lt.addLast(retorno[nacion], agregar)                       
                               
