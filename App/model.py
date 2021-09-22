@@ -113,6 +113,7 @@ def getPurchase(lista):
             cont+=1
         x+=1    
     return cont   
+<<<<<<< HEAD
 
 def get_artistas_tecnica(catalog, nombre_artista):
     sub_list = catalog['artists']
@@ -149,6 +150,41 @@ def get_artistas_tecnica(catalog, nombre_artista):
             ObrasTecnica.append(info)
 
     return totalObras, totalTecnicas, TecnicaMasUtilizada, ObrasTecnica
+=======
+def getNacion(lista):
+    obras=lista["artworks"]  
+    artistas=lista["artists"]
+    retorno = {"na":{}}        
+    for i in range(round(lt.size(obras))):
+        llave = lt.getElement(obras, i)
+        dateacquired = llave["dateacquired"]
+        name = llave["name"]
+        medium = llave["medium"]
+        dimensions = llave["dimensions"]
+        artistas=llave["constituentid"]
+        naciones=lt.newList()
+        
+        for i in range(round(lt.size(artistas))):
+            llave2=lt.getElement(artistas,i)
+            id=llave2["ConstituentID"]
+            nacion=llave2["Nacion"]
+            if id in artistas:
+                lt.addLast(naciones,nacion
+                )        
+        for i in lt.size(naciones):
+            agregar = {"name" : name,"artistas":artistas, "dateacquired" : dateacquired, 
+                       "medium" : medium, "dimensions" : dimensions}
+            if  lt.getElement(naciones,i) in retorno['na'] :
+                lt.addLast(retorno["na"][lt.getElement(naciones,i)], agregar)    
+            else:
+                retorno["na"][lt.getElement(naciones,i)]=lt.newList()  
+                lt.addLast(retorno["na"][lt.getElement(naciones,i)], agregar)
+    return retorno               
+
+            
+
+
+>>>>>>> 38796cc606f9b6d05bbdb35d3ff23e79cd755553
 
 def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista): 
     obras = lista["artworks"]
