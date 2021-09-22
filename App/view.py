@@ -95,6 +95,134 @@ def printartistandfreq(Mediums, freq):
         print(str(tecnica)+": "+str(frecuencia))
 
 
+def printMUMList(catalog, MUMList):
+    i = 1
+    size = lt.size(MUMList)
+
+    while i <= size:
+        artwork = lt.getElement(MUMList, i)
+
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = controller.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+
+        i+=1
+
+
+def print5MostArtworks (catalog, obras, zippedIDandPrice):  
+    i=1
+
+    while i <= 5:
+        artwork = lt.getElement(obras, i)
+
+        print(i)
+        print(" ")
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = controller.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print("Clasificación: " + artwork["Classification"])
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+        print("Costo asociado al transporte: " + str(zippedIDandPrice[artwork["ObjectID"]]) + " USD.")
+
+        i+=1
+
+
+def print5MostExpArtworks (catalog, obrasporcosto, zippedIDandPrice, artworksByDepto):  
+    i=1
+
+    while i <= 5:
+        artworkIDandCost = lt.getElement(obrasporcosto, i)
+
+        artworkID = artworkIDandCost["ObjectID"]
+        artworkPrice = artworkIDandCost["Price"]
+        
+
+        obra =  controller.ArtworksByIDItself (artworksByDepto, artworkID)
+
+        artwork = lt.getElement(obra, 1)
+
+        print(i)
+        print(" ")
+        print('Titulo: ' + artwork['Title'])
+        print(" ")
+        print('Artista(s): ')
+
+        CA = artwork["ConstituentID"]
+        CA2=CA.lstrip("[")
+        CA3 = CA2.rstrip("]")
+        coAutors = CA3.split(", ")
+        
+        j=0
+
+        for A in coAutors:
+            autorID = coAutors[j]
+            ArtistName = controller.ArtistNameByID (catalog, autorID)
+
+            print(ArtistName)
+
+            j+=1
+
+        print(" ")
+        print("Clasificación: " + artwork["Classification"])
+        print(" ")
+        print('Fecha de creación: ' + artwork['Date'])
+        print(" ")
+        print('Técnica(s) usada(s): ' + artwork['Medium'])
+        print(" ")
+        print("Dimensiones: " + artwork["Dimensions"])
+        print(" ")
+        print("Costo asociado al transporte: " + str(artworkPrice) + " USD.")
+
+        i+=1
+
+
+
 """
 Menu principal
 """
@@ -160,7 +288,7 @@ while True:
         List = controller.MUMList(MostUsedMedium, Artworkslist)
         print("Las obras en las que se usó dicha técnica son: ")
         print(" ")
-        controller.printMUMList(catalog, List)
+        printMUMList(catalog, List)
         print(" ")
 
     elif int(inputs[0]) == 6:
@@ -185,12 +313,12 @@ while True:
         zippedIDandPrice2 = controller.zipper2(artworksByDepto, precioObras)
         print("// ")
         print("Las 5 obras más antiguas a transportar son: ")
-        controller.print5MostArtworks(catalog, obrasporfecha, zippedIDandPrice)
+        print5MostArtworks(catalog, obrasporfecha, zippedIDandPrice)
         print(" ")
         print("// ")
         print("Las 5 obras más costosas de transportar son: ")
         obrasporcosto = controller.obrasporcosto(artworksByDepto, zippedIDandPrice2)
-        controller.print5MostExpArtworks(catalog, obrasporcosto, zippedIDandPrice, artworksByDepto)
+        print5MostExpArtworks(catalog, obrasporcosto, zippedIDandPrice, artworksByDepto)
         print(" ")
 
     
