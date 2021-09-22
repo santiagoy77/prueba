@@ -68,7 +68,8 @@ def printloadData():
     print('\nÚltimas tres obras de arte cargadas:\n')
     for i in [-2,-1,0]:
         print(str(lt.getElement(catalog['artworks_DateAquired'],i)))
-        # Toca quitar esto del cargar datos... pero funciona!
+        
+        # Toca quitar lo de artists_artworks esto del cargar datos, pero funciona!
     print('\nARTISTS ARTWORKS:\n')
     for i in [12,13,14]:
         print(str(lt.getElement(catalog['artists_artworks'],i)))
