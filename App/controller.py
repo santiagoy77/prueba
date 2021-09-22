@@ -92,6 +92,8 @@ def sortArtworks(ArtWorks):
 
        if pos == 0:
            lt.addLast(Years, year)
+    
+    
         
 
    
