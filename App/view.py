@@ -73,6 +73,10 @@ def printloadData():
     print('\nARTISTS ARTWORKS:\n')
     for i in [12,13,14]:
         print(str(lt.getElement(catalog['artists_artworks'],i)))
+
+    print('\nNationality:\n')
+    for i in [-2,-1,0]:
+        print(str(lt.getElement(catalog['nationality'],i)))
     return catalog
     
 def printReq1():

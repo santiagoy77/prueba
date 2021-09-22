@@ -74,7 +74,7 @@ def addArtwork(catalog, artwork):
     for id_ in ids:
         id_ = int(id_.strip())
         addArtworkArtist(catalog, id_, artwork)
-        #addNationality(catalog,id_,artwork)
+        addNationality(catalog,id_,artwork)
     
 def addArtworkArtist(catalog, id_:int, artwork):
     artist_artwork = catalog['artists_artworks']
@@ -86,10 +86,9 @@ def addArtworkArtist(catalog, id_:int, artwork):
         lt.addLast(artist_artwork, artist_id)
     lt.addLast(artist_id['artworks'],artwork )
 
-def addNationality(catalog, id_:int, artwork):
+def addNationality(catalog, id_, artwork):
     nationality = catalog['nationality']
-    posartist=lt.isPresent(catalog["artists_BeginDate"], id_)
-    nation = lt.getElement(catalog["artists_BeginDate"], posartist)["Nationality"]
+    nation=id_nation(catalog,id_)
     posnationality = lt.isPresent(nationality, nation)
     if posnationality > 0:
         nation_id = lt.getElement(nationality, posnationality)
@@ -174,7 +173,7 @@ def rangoArtworks(catalog, fecha1, fecha2):
 
 def id_artist(catalog, artist):
     """
-    reorna el id de un artista. O(n)
+    retorna el id de un artista. O(n)
     """
     id_=0
     for i in lt.iterator(catalog['artists_BeginDate']):
@@ -182,6 +181,16 @@ def id_artist(catalog, artist):
             id_ = i['ConstituentID']
             break
     return id_
+
+def id_nation(catalog, ids):
+    """
+    retorna la nacion de un artista. O(n)
+    """
+    for i in lt.iterator(catalog['artists_BeginDate']):
+        if int(i['ConstituentID'])==int(ids):
+            artist = i["Nationality"]
+            return artist
+    return None
 
 def artist_artworks(catalog, artist):
     """
@@ -258,7 +267,7 @@ def compareartists_artworks(artist_id, artist):
     return -1
     
 def compareNationality(artist_id, artist):
-    if artist_id == artist['artist']:
+    if artist_id == artist['nation']:
         return 0
     return -1
 
