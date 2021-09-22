@@ -74,7 +74,7 @@ def addArtwork(catalog, artwork):
     for id_ in ids:
         id_ = int(id_.strip())
         addArtworkArtist(catalog, id_, artwork)
-        addNationality(catalog,id_,artwork)
+        #addNationality(catalog,id_,artwork)
     
 def addArtworkArtist(catalog, id_:int, artwork):
     artist_artwork = catalog['artists_artworks']
@@ -110,8 +110,8 @@ def newArtworkArtist(artist_id):
     """
     Crea una nueva estructura para modelar los autores de cada obra
     """
-    nationality = {'nation':"",'artworks':None}
-    nationality['nation'] = artist_id
+    nationality = {'artist':"",'artworks':None}
+    nationality['artist'] = artist_id
     nationality['artworks'] = lt.newList('ARRAY_LIST')
     return nationality
 
@@ -119,8 +119,8 @@ def newNationality(nation):
     """
     Crea una nueva estructura para modelar los autores de cada obra
     """
-    artwork_artist = {'artist':"",'artworks':None}
-    artwork_artist['artist'] = nation
+    artwork_artist = {'nation':"",'artworks':None}
+    artwork_artist['nation'] = nation
     artwork_artist['artworks'] = lt.newList('ARRAY_LIST')
     return artwork_artist
 # Funciones de consulta
