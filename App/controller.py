@@ -70,13 +70,31 @@ def loadArtworks(catalog):
 
 # Funciones de ordenamiento
 
-def sortArtists(catalog):
+def sortArtists(Artists):
     
-    model.sortArtist(catalog)
+    Sorted = model.sortArtist(Artists)
+    return (Sorted)
 
-def sortArtworks(catalog):
+def sortArtworks(ArtWorks):
     
-    model.sortArtworks(catalog)
+   SortedYear = model.sortArtworksYear(ArtWorks)
+   size = lt.size(SortedYear)
+   Years = lt.newList()
+   SortedMonth = lt.newList()
+   
+   for cont in range(1,size+1):
+
+       obra = lt.getElement(SortedYear, cont)
+       date = obra['DateAcquired']
+       date2 = date.split("-")
+       year = date2[0]
+       pos = lt.isPresent(Years, year)
+
+       if pos == 0:
+           lt.addLast(Years, year)
+        
+
+   
 
 # Funciones de consulta sobre el catálogo
 
@@ -93,16 +111,25 @@ def getArtworksbyDate(catalog, date1, date2):
     """
     Retorna las obras entre las fechas dadas
     """
-    ArtworksbyYear = model.getArtistsbyYear(catalog, date1, date2)
-    Artworksort =sortArtists(ArtworksbyYear)
-    return(Artworksort)
+    ArtworksbyYear = model.getArtworksbyDate(catalog, date1, date2)
+    
+    return(ArtworksbyYear)
 
 def PurchaseArtworks(obras):
     """
     Retorna las obras adquiridas por compra
     """
     purchased = model.PurchaseArtworks(obras)
-    print (purchased)
+    return(purchased)
+
+
+def CountArtists(obras):
+    """
+    Retorna los autores de una lista de obras
+    """
+    Artists = model.CountArtists(obras)
+    return(Artists)
+
 
 def ArtworksByArtist(catalog, artistname):
 
