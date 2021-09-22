@@ -34,7 +34,6 @@ from DISClib.Algorithms.Sorting import mergesort as mer
 from DISClib.Algorithms.Sorting import quicksort as qu
 
 assert cf
-
 import datetime
 
 """
@@ -51,7 +50,7 @@ def newCatalog(tad_list_type):
     catalog = {'artworks': None,
                'artists': None,}
 
-    catalog['artworks'] = lt.newList(datastructure=tad_list_type)
+    catalog['artworks'] = lt.newList(datastructure=tad_list_type, cmpfunction = cmpArtworkByDateAcquired)
     catalog['artists'] = lt.newList(datastructure=tad_list_type,
                                     cmpfunction=compareartists)
 
@@ -126,16 +125,17 @@ def date_filter(catalog, initial_date , final_date):
     Recibe una lista y la filtra eliminando las fechas que no se encuentren en el rango
     propuesto por el ususario.
     """
-    
-    sub_list1 = catalog['artworks']
-    sub_list2 = sub_list1.copy()
-    iterator = lt.iterator(sub_list2)
-    date = tuple(iterator["DateAcquired"].split("-"))
-    if date < initial_date or date > final_date:
-        position = lt.isPresent(sub_list2 , iterator)
-        lt.deleteElement(sub_list2 , position)
-    
-    return sub_list2
+    sub_list1 = lt.subList(catalog['artworks'],1,lt.size(catalog['artworks']))
+    sub_list1 = sub_list1.copy()
+    for i in range(1 , lt.size(sub_list1) + 1):
+        artwork = lt.getElement(sub_list1 , i)
+        date = tuple(artwork['DateAcquired'].split("-"))
+        if lt.isPresent(sub_list1, i) == 0:
+            break
+        if date < initial_date or date > final_date:
+            position = lt.isPresent(sub_list1 , artwork)
+            lt.deleteElement(sub_list1 , position)
+    return sub_list1
 
 
 def sort_adq_date(catalog, algo_type , initial_date , final_date):

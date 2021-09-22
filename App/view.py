@@ -98,8 +98,8 @@ while True:
         initial_date = tuple(input("Indique la fecha inicial en formato (AAAA-MM-DD): ").split("-"))
         final_date = tuple(input("Indique la fecha final en formato (AAAA-MM-DD): ").split("-"))
         algo_type = int(input("1- Insetion, 2 - Shell, 3 - Merge , 4 - Quick Sorts"))
-        result = contrller.sort_adq_date(catalog, algo_type , initial_date , final_date)
-        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+        result = controller.sort_adq_date(catalog, algo_type , initial_date , final_date)
+        print("Para la muestra de", "1" , " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         printSortResults(result[1])
 
