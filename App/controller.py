@@ -93,3 +93,7 @@ def sort_artist_date(catalog , algo_type , initial_year , final_year):
 def purchase_artworks(catalog , initial_date , final_date):
 
     return model.purchase_artworks(catalog , initial_date , final_date)
+
+def find_artists(catalog , id2):
+
+    return model.find_artists(catalog , id2)

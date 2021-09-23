@@ -252,6 +252,22 @@ def purchase_artworks(catalog , initial_date , final_date):
     
     return counter
 
+def find_artists(catalog , id2):
+    artists = lt.subList(catalog["artists"] , 1 , lt.size(catalog["artists"]))
+    artists = artists.copy()
+    
+    artists_list = []
+
+    for individual in id2:
+        for i in range(1, lt.size(artists)):
+            artist = lt.getElement(artists, i)
+
+            if int(individual) == int(artist["ConstituentID"]):
+                artists_list.append(artist["DisplayName"])
+    
+    return artists_list
+
+
 
 
 

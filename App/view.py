@@ -62,22 +62,47 @@ def loadData(catalog):
 
 catalog = None
 
-def printSortResults_artworks(ord_artworks, purchased , sample=3): 
+def printSortResults_artworks(ord_artworks, purchased , catalog , sample=3): 
     size = lt.size(ord_artworks)
     if size > sample:
-        print("El numero de obras compradas dentro del rango seleccionado es: " + purchased)
+        print("El numero de obras compradas dentro del rango seleccionado es: " + str(purchased))
         print("Las primeros ", sample, " obras de arte son:") 
         i=1
         while i <= sample:
-            artwork = lt.getElement(ord_artworks,i) 
-            print('Titulo: ' + artwork["Title"] + ' Fecha: ' +
+            artwork = lt.getElement(ord_artworks,i)
+            
+            id = (artwork["ConstituentID"][1: len(artwork["ConstituentID"])-1]).split(',')
+            id2 = []
+            for element in id:
+                int_element = int(element)
+                id2.append(int_element)
+            
+            artist_list = controller.find_artists(catalog , id2)
+            artists_str = ""
+            for each_artist in artist_list:
+                artists_str = artists_str + str(each_artist)
+
+            print('Titulo: ' + artwork["Title"] + " Artista(s): "  + artists_str + ' Fecha: ' +
                   artwork["Date"] + ' Medio: ' + artwork["Medium"] +  'Dimensiones' + artwork["Dimensions"]) 
             i+=1
         print("Las ultimas 3 obras de arte son: ")
         i = lt.size(ord_artworks) - 2
         while i <= lt.size(ord_artworks):
-            artwork = lt.getElement(ord_artworks,i) 
-            print('Titulo: ' + artwork["Title"] + ' Fecha: ' +
+            artwork = lt.getElement(ord_artworks,i)
+
+            id = (artwork["ConstituentID"][1: len(artwork["ConstituentID"])-1]).split(',')
+            id2 = []
+            for element in id:
+                int_element = int(element)
+                id2.append(int_element)
+            
+            artist_list = controller.find_artists(catalog , id2)
+            artists_str = ""
+            for each_artist in artist_list:
+                artists_str = artists_str + str(each_artist)
+
+
+            print('Titulo: ' + artwork["Title"] + " Artista(s) " + artists_str + ' Fecha: ' +
                   artwork["Date"] + ' Medio: ' + artwork["Medium"] +  'Dimensiones' + artwork["Dimensions"])  
             i+=1
     else:
@@ -154,7 +179,7 @@ while True:
         result = controller.sort_adquisitions_date(catalog, algo_type , initial_date , final_date)
         print("Para la muestra de", "1" , " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
-        printSortResults_artworks(result[1] , purchased)
+        printSortResults_artworks(result[1] , purchased , catalog)
 
 
     else:
