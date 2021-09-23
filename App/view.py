@@ -54,8 +54,10 @@ def printloadData():
     loadData(catalog)
     artist=controller.sortArtists_BeginDate(catalog)
     artwork=controller.sortArtworks_DateAcquired(catalog)
+    nationality=controller.sortNationality(catalog)
     catalog["artists_BeginDate"]=artist[1]
     catalog["artworks_DateAquired"]=artwork[1]
+    catalog["nationality"]=nationality[1]
     print('Número de artistas en el catálogo: ',
           str(lt.size(catalog['artists_BeginDate'])))
     print('Número de obras de arte en el catálogo: ',
@@ -75,8 +77,8 @@ def printloadData():
         print(str(lt.getElement(catalog['artists_artworks'],i)))
 
     print('\nNationality:\n')
-    for i in [-2,-1,0]:
-        print(str(lt.getElement(catalog['nationality'],i)))
+    for i in [-3,-2,-1,0]:
+        print(str(lt.getElement(catalog['nationality'],i)["nation"]))
     return catalog
     
 def printReq1():
@@ -138,9 +140,35 @@ def printReq3():
 #     print('Usó ',mediums_count,' medios o técnicas distintas en su trabajo.')
 #     print('La técnica que más usó es: ',lt.getElement(mediums_,pos_most_used),'.')
 # =============================================================================
-def printReq4():
-    print("Este requerimiento aún no se ha implementado.")
-    
+def printReq4(catalog):
+    print("======================== Req No. 3 Inputs ========================")
+    print("Ranking de paises por su numero de obras en el MoMa ")
+    print("======================== Req No. 3 Respuesta ========================")
+    print("Top 10 paises en el MoMa son:")
+    answ = PrettyTable(['Nacionalidad','Obras'])
+    for i in [0,-1,-2,-3,-4,-5,-6,-7,-8,-9]:
+        answ.add_row([lt.getElement(catalog['nationality'],i)['nation'],
+                      lt.size(lt.getElement(catalog['nationality'],i)['artworks'])])
+    answ._max_width = {'Título':40,'Obras':20}
+    print(answ)
+    mejor=lt.getElement(catalog['nationality'],0)
+    print("La nacionalidad top en el museo es ", mejor["nation"], " con ",lt.size(mejor["artworks"]))
+    print("Las primeras y ultimos 3 objetos para las obras de ",mejor["nation"]," son:")
+    answ = PrettyTable(['ID','Titulo',"Nombre del artista","Medium","Fecha",
+                        "Dimensiones","Departamento","Clasificacion","URL"])
+    for i in [1,2,3,-2,-1,0]:
+        answ.add_row([lt.getElement(mejor["artworks"],i)['ObjectID'],
+                      lt.getElement(mejor["artworks"],i)['Title'],
+                      lt.getElement(mejor["artworks"],i)['ConstituentID'],
+                      lt.getElement(mejor["artworks"],i)['Medium'],
+                      lt.getElement(mejor["artworks"],i)['Date'],
+                      lt.getElement(mejor["artworks"],i)['Dimensions'],
+                      lt.getElement(mejor["artworks"],i)['Department'],
+                      lt.getElement(mejor["artworks"],i)['Classification'],
+                      lt.getElement(mejor["artworks"],i)['URL']])
+    answ._max_width = {'ID':20,'Titulo':40,"Nombre del artista":20,"Medium":20,
+                    "Fecha":20,"Dimensiones":40,"Departamento":40,"Clasificacion":20,"URL":40}
+    print(answ)
 def printReq5():
     print("Este requerimiento aún no se ha implementado.")
     
@@ -185,7 +213,7 @@ while True:
         elif inputs==3:
             printReq3()
         elif inputs==4:
-            printReq4()
+            printReq4(catalog)
         elif inputs==5:
             printReq5()
         elif inputs==6:

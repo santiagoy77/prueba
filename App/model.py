@@ -97,6 +97,7 @@ def addNationality(catalog, id_, artwork):
         lt.addLast(nationality, nation_id)
     lt.addLast(nation_id['artworks'],artwork )
 
+#changeInfo(lst, pos, element)
 # Funciones para creacion de datos
 
 # =============================================================================
@@ -186,11 +187,12 @@ def id_nation(catalog, ids):
     """
     retorna la nacion de un artista. O(n)
     """
+    artist="Unknown"
     for i in lt.iterator(catalog['artists_BeginDate']):
         if int(i['ConstituentID'])==int(ids):
             artist = i["Nationality"]
-            return artist
-    return None
+    return artist
+
 
 def artist_artworks(catalog, artist):
     """
@@ -271,6 +273,11 @@ def compareNationality(artist_id, artist):
         return 0
     return -1
 
+def compareNationality2(nation1, nation2):
+    if lt.size(nation1["artworks"]) < lt.size(nation2["artworks"]):
+        return -1
+    return 0
+
 # =============================================================================
 # def compareArtists__ConstituentID(artist1,artist2):
 #     if artist1["ConstituentID"]<=artist2["ConstituentID"]:
@@ -297,6 +304,13 @@ def sortArtists_BeginDate(catalog):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
 
+def sortNationality(catalog):
+    sub_list = catalog["nationality"].copy()
+    start_time = time.process_time()
+    sorted_list= mer.sort(sub_list, compareNationality2)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list
 # =============================================================================
 # def sortArtists_ConstituentID(catalog):
 #     sub_list = catalog["artists_ConstituentID"].copy()

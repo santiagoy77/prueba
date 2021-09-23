@@ -74,6 +74,8 @@ def sortArtists_BeginDate(catalog):
 def sortArtworks_DateAcquired(catalog):
     return model.sortArtworks_DateAcquired(catalog)
 
+def sortNationality(catalog):
+    return model.sortNationality(catalog)
 # Funciones de consulta sobre el catálogo
 
 def rangoArtists(catalog, anio1, anio2):
