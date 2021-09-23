@@ -158,21 +158,23 @@ def getNacion(lista):
     obras=lista["artworks"]  
     artistas=lista["artists"]
     retorno = {}  
-    naciones=lt.newList("ARRAY_LIST")
-    c=0    
-    for i in range(lt.size(obras)+1):
+    naciones=lt.newList("ARRAY_LIST")    
+    for i in range(lt.size(obras)):
         llave = lt.getElement(obras, i)
         dateacquired = llave["dateacquired"]
         name = llave["name"]
         medium = llave["medium"]
         dimensions = llave["dimensions"]
         artista=llave["constituentid"]
-        na=lt.newList()
+        na=lt.newList("ARRAY_LIST")
+        agregar = {"name" : name,"artistas":artista, "dateacquired" : dateacquired, 
+                       "medium" : medium, "dimensions" : dimensions}
         for i in range(lt.size(artistas)):
             
             llave2=lt.getElement(artistas,i)
             id=llave2['ConstituentID']
             nacion=llave2["Nacion"]
+<<<<<<< HEAD
             if (id in artista):
                     lt.addLast(na,nacion)
             if (id in artista) and (lt.isPresent(naciones,nacion) ==0) :
@@ -189,15 +191,32 @@ def getNacion(lista):
                 lt.addLast(retorno[lt.getElement(naciones,i)], agregar)         
     print(retorno.keys())
     print(naciones)                          
+=======
+            if (id in artista) and (lt.isPresent(naciones,nacion)==0) and (lt.isPresent(na,nacion)==0) :
+                lt.addLast(na,nacion)
+            
+                lt.addLast(naciones,nacion)
+                retorno[nacion]=lt.newList("ARRAY_LIST")  
+                lt.addLast(retorno[nacion], agregar)
+            elif (id in artista) and (lt.isPresent(na,nacion)==0):  
+                lt.addLast(na,nacion)    
+                lt.addLast(retorno[nacion], agregar)                       
+                              
+>>>>>>> origin/master
     total=lt.newList("ARRAY_LIST")           
     for i in range(lt.size(naciones)):
         pais=lt.getElement(naciones,i)
         
         num=lt.size(retorno[pais])
+        
         new={"pais":pais,"numero de obras":num}
         lt.addLast(total,new)
-    retorn=sa.sort(total,sortnacion)    
-    return lt.subList(retorn,1,10), getPrimeros(lt.getElement(retorn,1)), getUltimos(lt.getElement(retorn,1))              
+    retorn=sa.sort(total,sortnacion)
+    pos=lt.getElement(retorn,1)["pais"]
+    re1=getPrimeros(retorno[pos])
+    re2=getUltimos(retorno[pos]) 
+ 
+    return lt.subList(retorn,1,10),re1,re2             
 
 
 def obrasCronologicoacq(lista,inicio,final,metodo,sizesublista): 
