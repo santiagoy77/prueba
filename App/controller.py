@@ -61,7 +61,7 @@ def loadArtwork(catalog):
   cada uno de ellos, se crea en la lista de artistas, a dicho artista y una
   referencia a la obra que se está procesando.
   """
-  artworks_file = f"{cf.data_dir}/MoMA/Artworks-utf8-small.csv"
+  artworks_file = f"{cf.data_dir}/MoMA/Artworks-utf8-10pct.csv"
   input_file = csv.DictReader(open(artworks_file, encoding='utf-8'))
   for artwork in input_file:
     model.addArtwork(catalog, artwork)
@@ -94,7 +94,7 @@ def getArtworksByArtist(catalog, artistname):
   return model.getArtist(catalog, artistname)
 
 def transportar_obras(departamento, catalog):
-  
+
   return model.transportar_obras(departamento, catalog)
 
 # Funciones de consulta sobre el catálogo
