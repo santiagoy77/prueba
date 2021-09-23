@@ -118,6 +118,6 @@ while True:
             print("\nDimensiones: " + obra['Dimensions'])
             print("\n")
     
-    elif int(inputs[0]) == 6:
+    elif int(inputs[0]) == 7:
         pass 
 
