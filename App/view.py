@@ -84,6 +84,40 @@ while True:
         loadData(catalog)
         print('Artistas cargados: ' + str(lt.size(catalog['Artist'])))
         print('Obras cargados: ' + str(lt.size(catalog['Art'])))
-        print('Ultimos 3 artistas: ') #+ str(lt.size(catalog[''])))
-        print('Ultimas 3 obras ' ) #str(lt.size(catalog[''])))
+        #print('Ultimos 3 artistas: ') #+ str(lt.size(catalog[''])))
+        #print('Ultimas 3 obras ' ) #str(lt.size(catalog[''])))
         
+    elif int(inputs[0]) == 2:
+        print("Ingrese año inicial: ")
+        inicial= int(input())
+        print("Ingrese año final: ")
+        final= int(input())
+        print ("La cantidad de artistas en dicho rango son: " + str(controller.conteo_artistas(catalog['Artist'], inicial, final)))
+        print ("\nLos tres primeros artistas son: \n")
+        primeros= controller.primeros_tres(catalog['Artist'], inicial, final)
+        for i in lt.iterator(primeros):
+            print(i['DisplayName'],i['BeginDate'], i['Nationality'], i['Gender'])
+        print ("\nLos tres últimos artistas son: \n")
+        ultimos= controller.ultimos_tres(catalog['Artist'], inicial, final)
+        for i in lt.iterator(ultimos):
+            print(i['DisplayName'],i['BeginDate'], i['Nationality'], i['Gender'])
+    
+    elif int(inputs[0]) == 4:
+        print("Ingrese nombre del artista: ")
+        nombre_artista= str(input())
+        lista_respuesta= controller.get_obras(catalog, nombre_artista)
+        print("El total de obras de " + nombre_artista + " es: " + str(lt.getElement(lista_respuesta, 1)))
+        print("El total de técnicas utilizadas por " + nombre_artista + " fue: " + str(lt.getElement(lista_respuesta, 2)))
+        print("La técnica más utilizada por " + nombre_artista + " fue: " + str(lt.getElement(lista_respuesta, 3)))
+        lista_obras= lt.getElement(lista_respuesta, 4)
+        for obra in lt.iterator(lista_obras):
+            print("------------------------------------------------")
+            print("\nTítulo: " + obra['Title'])
+            print("\nAño de la obra: " + obra['Date'])
+            print("\nTécnica: " + obra['Medium'])
+            print("\nDimensiones: " + obra['Dimensions'])
+            print("\n")
+    
+    elif int(inputs[0]) == 6:
+        pass 
+
