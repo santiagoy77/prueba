@@ -428,7 +428,7 @@ def getArtist(catalog, artistname):
   Devuelve una lista con el número de obras de un artista, un diccionario con las técnicas utilizadas y el número de veces fueron utilizadas,
   la técnica que fue más utilizada y una lista que contiene una muestra de tres obras con la técnica más utilizada.
   """
-
+  y= None
   for x in lt.iterator(catalog["artists"]):
     if artistname == x["DisplayName"]:
       y= x["Artworks"]
