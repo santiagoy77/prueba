@@ -25,7 +25,7 @@ import sys
 from os import X_OK
 import config as cf
 import controller
-import model
+import time
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from prettytable import PrettyTable
@@ -152,13 +152,15 @@ while True:
         
     elif int(inputs[0]) == 2:
 
+        start_time = time.process_time()
+
         printSortOptions()
         option = input("Seleccione una opción para continuar\n")
         
         initial_year = input("Digite el año inicial:\n")
         end_year = input("Digite el año final:\n")
 
-        time, sorted_artists = sortArtistsByBeginDate(catalog, option, initial_year, end_year)
+        time_ps, sorted_artists = sortArtistsByBeginDate(catalog, option, initial_year, end_year)
         size = lt.size(sorted_artists)
 
         first_three = lt.subList(sorted_artists, 1, 3)
@@ -188,9 +190,11 @@ while True:
             req2.add_row([ide, name, born, nation, gender, bio, wiki, ulan])
         print(f"{req2}\n\n")
         
-        
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time) * 1000
+        print(elapsed_time_mseg)
 
-        print(f"Algorithm {algo_sel[int(option)]} took: {time} ms.")
+        # print(f"Algorithm {algo_sel[int(option)]} took: {time} ms.")
 
 
     elif int(inputs[0]) == 3:
@@ -203,8 +207,9 @@ while True:
 
         initial_date = input("Digite el año, mes y día inicial en el formato AAAA-MM-DD:\n")
         end_date = input("Digite el año, mes y día final en el formato AAAA-MM-DD:\n")
+        start_time = time.process_time()
 
-        time, sorted_artworks, size_artists, purchase = sortArtworksByDate(catalog, option, initial_date, end_date)
+        time_ps, sorted_artworks, size_artists, purchase = sortArtworksByDate(catalog, option, initial_date, end_date)
         size = lt.size(sorted_artworks)
 
         first_three = lt.subList(sorted_artworks, 1, 3)
@@ -233,6 +238,10 @@ while True:
             url = artwork["URL"]
             req3.add_row([ide, title, names, medium, dimensions, date, acquired, url])
         print(req3)
+
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time) * 1000
+        print(elapsed_time_mseg)
         # print(f"Tiempo del algoritmo {algo_sel[int(option)]} es {time} milisegundos.")
     elif int(inputs[0]) == 4:
 
@@ -257,6 +266,7 @@ while True:
             print("===========================================================================================================================")
 
     elif int(inputs[0]) == 5:
+        start_time = time.process_time()
 
         nation_count = countNationalities(catalog)
         top_nation = max(nation_count.items(), key=lambda x: x[1])
@@ -295,6 +305,11 @@ while True:
             url = artwork["URL"]
             req42.add_row([ide, title, names, medium, dimensions, date, acquired, url])
         print(req42)
+
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time) * 1000
+        print(elapsed_time_mseg)
+
 
     elif int(inputs[0]) == 6:
         departamento= input("Digite el departamento del cual desea transportar TODAS sus obras: ")
@@ -340,7 +355,8 @@ while True:
             if(x == 6):
                 break
     elif int(inputs[0]) == 7:
-        
+
+        start_time = time.process_time()
         years = input("Digite el año inicial y final de las obras que quiere en su exposición en el formato 'YYYY-YYYY':\n")
         area = input("Digite el área disponible para sugerirle una exposición (en m^2):\n")
         selected_artworks, counter, area_sum = selectArtworks(catalog, years, area)
@@ -370,6 +386,9 @@ while True:
             url = artwork["URL"]
         req6.add_row([ide, title, names, medium, dimensions, date, department, estimated_area, classification, url])
         print(req6)
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time) * 1000
+        print(elapsed_time_mseg)
         # Table
 
     else:
