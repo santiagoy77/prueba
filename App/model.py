@@ -118,6 +118,25 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
                     ret = False
     return ret
 
+
+def cmpArtistByBeginDate(artist1, artist2):
+    """
+    Devuelve verdadero (True) si el 'BeginDate' de artist1 es menor que el de artist2
+    Args:
+    artist1: informacion de la primera obra que incluye su valor 'DateAcquired'
+    artist2: informacion de la segunda obra que incluye su valor 'DateAcquired'
+    """
+    f1 = int(artist1["BeginDate"])
+    f2 = int(artist2["BeginDate"])
+    ret = None 
+
+    if f1 < f2:
+        ret = True
+    else:
+        ret = False
+
+    return ret
+
 # Funciones de ordenamiento
 
 def date_filter(catalog, initial_date , final_date):
@@ -138,9 +157,9 @@ def date_filter(catalog, initial_date , final_date):
     return sub_list1
 
 
-def sort_adq_date(catalog, algo_type , initial_date , final_date):
+def sort_adquisitions_date(catalog, algo_type , initial_date , final_date):
 
-    sub_list = date_filter(catalog, initial_date , final_date)
+    sub_list = filter_adquisitions(catalog, initial_date , final_date)
 
     start_time = time.process_time()
     if algo_type == 1:
@@ -156,3 +175,134 @@ def sort_adq_date(catalog, algo_type , initial_date , final_date):
     elapsed_time_mseg = (stop_time - start_time)*1000
     
     return elapsed_time_mseg, sorted_list
+
+def filter_adquisitions(catalog , initial_date , final_date):
+    original_list = catalog['artworks']
+    new_list = lt.newList()
+    i = 1
+    for i in range(1 , lt.size(original_list)+1):
+        artwork = lt.getElement(original_list , i)
+        artwork_date_acquired = (artwork["DateAcquired"].split("-"))
+        artwork_date_acquired_2 = []
+        
+        if (len(artwork_date_acquired[0]) != 0) and (len(artwork_date_acquired[1]) != 0 and (len(artwork_date_acquired[2]) != 0)):
+            artwork_date_acquired_2.append(int(artwork_date_acquired[0]))
+            artwork_date_acquired_2.append(int(artwork_date_acquired[1]))
+            artwork_date_acquired_2.append(int(artwork_date_acquired[2]))
+        
+        elif (len(artwork_date_acquired[0]) != 0) and (len(artwork_date_acquired[1]) != 0):
+            artwork_date_acquired_2.append(int(artwork_date_acquired[0]))
+            artwork_date_acquired_2.append(int(artwork_date_acquired[1]))
+        
+        elif len(artwork_date_acquired[0]) != 0:
+            artwork_date_acquired_2.append(int(artwork_date_acquired[0]))
+        
+        elif len(artwork_date_acquired[0]) == 0:
+            artwork_date_acquired_2.append(0)
+
+        var1 = date_comparison(artwork_date_acquired_2 , initial_date)
+        var2 = date_comparison(artwork_date_acquired_2 , final_date)
+
+        if (var1 == 1) and (var2 == 0):
+            lt.addLast(new_list , artwork)
+    
+    return new_list
+
+def sort_artist_date(catalog, algo_type , initial_year , final_year):
+
+    sub_list = filter_artists(catalog , initial_year , final_year)
+    sub_list = sub_list.copy()
+
+    start_time = time.process_time()
+    if algo_type == 1:
+        sorted_list = ins.sort(sub_list, cmpArtistByBeginDate)
+    elif algo_type == 2:
+        sorted_list = sa.sort(sub_list, cmpArtistByBeginDate)
+    elif algo_type == 3:
+        sorted_list = mer.sort(sub_list, cmpArtistByBeginDate)
+    elif algo_type == 4:
+        sorted_list = qu.sort(sub_list , cmpArtistByBeginDate)
+
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    
+    return elapsed_time_mseg, sorted_list
+
+
+def filter_artists(catalog , initial_year , final_year):
+    original_list = catalog["artists"]
+    new_list = lt.newList()
+    i = 1
+    for i in range(1 , lt.size(original_list)+1):
+        artist = lt.getElement(original_list , i)
+        artist_begin_date = int(artist["BeginDate"])
+        if (artist_begin_date >= initial_year) and (artist_begin_date <= final_year):
+            lt.addLast(new_list , artist)
+    
+    return new_list
+
+def purchase_artworks(catalog , initial_date , final_date):
+    filtered_list = filter_adquisitions(catalog , initial_date , final_date)
+    counter = 0
+    for i in range(1 , lt.size(filtered_list)+1):
+        artist = lt.getElement(filtered_list , i)
+        credit_line = artist["CreditLine"]
+        if credit_line == "Purchase":
+            counter += 1
+    
+    return counter
+
+
+
+
+def date_comparison(date1, date2):
+    """
+    Recibe dos fechas en formato list y las compara, retorna 0 si la primera es menor y 1 si es mayor.
+    """
+    ret_value = None
+    if len(date1) < len(date2):
+        ret_value = 0
+    elif len(date1) > len(date2):
+        ret_value = 1
+    elif len(date1) == 0 and len(date2) == 0:
+        ret_value = 1
+    elif len(date1) == 1 and len(date2) == 1:
+        if date1[0] < date2[0]:
+            ret_value = 0
+        elif date1[0] > date2[0]:
+            ret_value = 1
+        else:
+            ret_value = 1
+    elif len(date1) == 2 and len(date2) == 2:
+        if date1[0] < date2[0]:
+            ret_value = 0
+        elif date1[0] > date2[0]:
+            ret_value = 1
+        elif date1[0] == date2[0]:
+            if date1[1] < date2[1]:
+                ret_value = 0
+            elif date1[1] > date2[1]:
+                ret_value = 1
+            elif date1[1] == date2[1]:
+                ret_value = 1
+    elif len(date1) == 3 and len(date2) == 3:
+        if date1[0] < date2[0]:
+            ret_value = 0
+        elif date1[0] > date2[0]:
+            ret_value = 1
+        elif date1[0] == date2[0]:
+            if date1[1] < date2[1]:
+                ret_value = 0
+            elif date1[1] > date2[1]:
+                ret_value = 1
+            elif date1[1] == date2[1]:
+                if date1[2] < date2[2]:
+                    ret_value = 0
+                elif date1[2] > date2[2]:
+                    ret_value = 1
+                elif date1[2] == date2[2]:
+                    ret_value = 1
+        
+    return ret_value
+    
+    

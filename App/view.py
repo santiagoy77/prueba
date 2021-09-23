@@ -62,9 +62,10 @@ def loadData(catalog):
 
 catalog = None
 
-def printSortResults(ord_artworks, sample=10): 
+def printSortResults_artworks(ord_artworks, purchased , sample=3): 
     size = lt.size(ord_artworks)
     if size > sample:
+        print("El numero de obras compradas dentro del rango seleccionado es: " + purchased)
         print("Las primeros ", sample, " obras de arte son:") 
         i=1
         while i <= sample:
@@ -72,9 +73,38 @@ def printSortResults(ord_artworks, sample=10):
             print('Titulo: ' + artwork["Title"] + ' Fecha: ' +
                   artwork["Date"] + ' Medio: ' + artwork["Medium"] +  'Dimensiones' + artwork["Dimensions"]) 
             i+=1
+        print("Las ultimas 3 obras de arte son: ")
+        i = lt.size(ord_artworks) - 2
+        while i <= lt.size(ord_artworks):
+            artwork = lt.getElement(ord_artworks,i) 
+            print('Titulo: ' + artwork["Title"] + ' Fecha: ' +
+                  artwork["Date"] + ' Medio: ' + artwork["Medium"] +  'Dimensiones' + artwork["Dimensions"])  
+            i+=1
     else:
         print(size)
         print("El tamaño de la muestra excede el número de obras de arte.")
+
+
+def printSortResults_artists(ord_artists, sample=3): 
+    size = lt.size(ord_artists)
+    if size > sample:
+        print("Las primeros ", sample, " artistas son:") 
+        i=1
+        while i <= sample:
+            artist = lt.getElement(ord_artists,i)
+            print('Nombre: ' + artist["DisplayName"] + ' Fecha de Nacimiento: ' +
+                  artist["BeginDate"] + ' Año de Fallecimiento: ' + artist["EndDate"] +  ' Nacionalidad: ' + artist["Nationality"] +  ' Género: ' + artist["Gender"]) 
+            i+=1
+        print("Los ultimos 3 artistas son: ")
+        i = lt.size(ord_artists) - 2
+        while i <= lt.size(ord_artists):
+            artist = lt.getElement(ord_artists,i) 
+            print('Nombre: ' + artist["DisplayName"] + ' Fecha de Nacimiento: ' +
+                  artist["BeginDate"] + ' Año de Fallecimiento: ' + artist["EndDate"] +  ' Nacionalidad: ' + artist["Nationality"] +  ' Género: ' + artist["Gender"]) 
+            i+=1
+    else:
+        print(size)
+        print("El tamaño de la muestra excede el número de artistas.")
 
 """
 Menu principal
@@ -94,15 +124,40 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
         print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
 
-    elif int(inputs[0]) == 3:
-        initial_date = tuple(input("Indique la fecha inicial en formato (AAAA-MM-DD): ").split("-"))
-        final_date = tuple(input("Indique la fecha final en formato (AAAA-MM-DD): ").split("-"))
+    elif int(inputs[0]) == 2:
+        initial_year = int(input("Ingrese el año incial: "))
+        final_year = int(input("Ingrese el año final: "))
         algo_type = int(input("1- Insetion, 2 - Shell, 3 - Merge , 4 - Quick Sorts"))
-        result = controller.sort_adq_date(catalog, algo_type , initial_date , final_date)
+        result = controller.sort_artist_date(catalog , algo_type , initial_year , final_year)
+
         print("Para la muestra de", "1" , " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
-        printSortResults(result[1])
+        printSortResults_artists(result[1])
+
+    elif int(inputs[0]) == 3:
+        print("Ingrese los valores de fecha inicial: ")
+        initial_year1 = int(input("Ingrese el año de la fecha inicial: "))
+        initial_month1 = int(input("Ingrese el mes de la fecha inicial: "))
+        initial_day1 = int(input("Ingrese el dia de la fecha inicial: "))
+        print("Ingrese los valores de fecha final: ")
+        initial_year2 = int(input("Ingrese el año de la fecha final: "))
+        initial_month2 = int(input("Ingrese el mes de la fecha final: "))
+        initial_day2 = int(input("Ingrese el dia de la fecha final: "))
+
+        initial_date = [initial_year1 , initial_month1 , initial_day1]
+        final_date = [initial_year2 , initial_month2 , initial_day2]
+
+        algo_type = int(input("1- Insetion, 2 - Shell, 3 - Merge , 4 - Quick Sorts"))
+
+        purchased = controller.purchase_artworks(catalog , initial_date , final_date)
+
+        result = controller.sort_adquisitions_date(catalog, algo_type , initial_date , final_date)
+        print("Para la muestra de", "1" , " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        printSortResults_artworks(result[1] , purchased)
+
 
     else:
         sys.exit(0)
 sys.exit(0)
+ 
