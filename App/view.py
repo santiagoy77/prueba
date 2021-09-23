@@ -141,9 +141,9 @@ def printReq3():
 #     print('La técnica que más usó es: ',lt.getElement(mediums_,pos_most_used),'.')
 # =============================================================================
 def printReq4(catalog):
-    print("======================== Req No. 3 Inputs ========================")
+    print("======================== Req No. 4 Inputs ========================")
     print("Ranking de paises por su numero de obras en el MoMa ")
-    print("======================== Req No. 3 Respuesta ========================")
+    print("======================== Req No. 4 Respuesta ========================")
     print("Top 10 paises en el MoMa son:")
     answ = PrettyTable(['Nacionalidad','Obras'])
     for i in [0,-1,-2,-3,-4,-5,-6,-7,-8,-9]:
@@ -167,7 +167,7 @@ def printReq4(catalog):
                       lt.getElement(mejor["artworks"],i)['Classification'],
                       lt.getElement(mejor["artworks"],i)['URL']])
     answ._max_width = {'ID':20,'Titulo':40,"Nombre del artista":20,"Medium":20,
-                    "Fecha":20,"Dimensiones":40,"Departamento":40,"Clasificacion":20,"URL":40}
+                    "Fecha":20,"Dimensiones":20,"Departamento":20,"Clasificacion":20,"URL":40}
     print(answ)
 def printReq5():
     print("Este requerimiento aún no se ha implementado.")
