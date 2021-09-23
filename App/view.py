@@ -87,6 +87,9 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def calculateArea(artist):
+    return controller.area(artist)
+
 def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
     """
     Ordena los artistas en el rango de fechas dispuesto
@@ -202,13 +205,35 @@ while True:
         initial_date = input("Digite el año, mes y día inicial en el formato AAAA-MM-DD:\n")
         end_date = input("Digite el año, mes y día final en el formato AAAA-MM-DD:\n")
 
-        time, sorted_artworks = sortArtworksByDate(catalog, option, initial_date, end_date)
+        time, sorted_artworks, size_artists, purchase = sortArtworksByDate(catalog, option, initial_date, end_date)
         size = lt.size(sorted_artworks)
+
+        first_three = lt.subList(sorted_artworks, 1, 3)
+        last_three = lt.subList(sorted_artworks, lt.size(sorted_artworks) - 3, 3)
+        new_artworks = lt.newList()
+        for element in lt.iterator(first_three):
+            lt.addLast(new_artworks, element)
+        for element in lt.iterator(last_three):
+            lt.addLast(new_artworks, element)
 
         print("===================== Req No. 2 Inputs =====================\n")
         print(f"Artworks acquired between {initial_date} and {end_date}")
-        print(f"With {0} different artists and purchased {0} of them")
+        print(f"With {size_artists} different artists and purchased {purchase} of them")
         print("The first and last 3 artists in the range are....")
+
+        req3 = PrettyTable()
+        req3.field_names = ["ObjectID", "Title", "ArtistsNames", "Medium", "Dimensions", "Date", "DateAcquired", "URL"]
+        for artwork in lt.iterator(new_artworks):
+            ide = artwork["ObjectID"]
+            title = artwork["Title"]
+            names = artwork["ArtistsNames"]
+            medium = artwork["Medium"]
+            dimensions = artwork["Dimensions"]
+            date = artwork["Date"]
+            acquired = artwork["DateAcquired"]
+            url = artwork["URL"]
+            req3.add_row([ide, title, names, medium, dimensions, date, acquired, url])
+        print(req3)
         # print(f"Tiempo del algoritmo {algo_sel[int(option)]} es {time} milisegundos.")
     elif int(inputs[0]) == 4:
         pass
@@ -216,17 +241,42 @@ while True:
     elif int(inputs[0]) == 5:
 
         nation_count = countNationalities(catalog)
+        top_nation = max(nation_count.items(), key=lambda x: x[1])
+        top_name = top_nation[0]
+        top_count = top_nation[1]
         nation_artwork = showNationWork(catalog, nation_count)
 
         print("===================== Req No. 4 Inputs =====================")
         print(f"Ranking countries by their number of artworks in the MoMA...")
         print("\n===================== Req No. 4 Answer =====================")
         print("The TOP 10 Countries in the MoMA are:")
-        # Table of top
         print("========================================")
-        print("The TOP nationality in the museum is: {} with {} unique pieces")
-        print("The first and last 3 objects in the {} artwork list are:")
-        # Table of works
+
+        req41 = PrettyTable()
+        req41.field_names = ["Nationality", "Artworks"]
+        for k, v in nation_count.items():
+            nation = k
+            count = v
+            req41.add_row([nation, count])
+        print(req41)
+
+        req42 = PrettyTable()
+
+        print(f"The TOP nationality in the museum is: {top_name} with {top_count} unique pieces")
+        
+        req42.field_names = ["ObjectID", "Title", "ArtistsNames", "Medium", "Dimensions", "Date", "DateAcquired", "URL"]
+
+        for artwork in lt.iterator(nation_artwork):
+            ide = artwork["ObjectID"]
+            title = artwork["Title"]
+            names = artwork["ArtistsNames"]
+            medium = artwork["Medium"]
+            dimensions = artwork["Dimensions"]
+            date = artwork["Date"]
+            acquired = artwork["DateAcquired"]
+            url = artwork["URL"]
+            req42.add_row([ide, title, names, medium, dimensions, date, acquired, url])
+        print(req42)
 
     elif int(inputs[0]) == 6:
         pass
@@ -234,17 +284,33 @@ while True:
         
         years = input("Digite el año inicial y final de las obras que quiere en su exposición en el formato 'YYYY-YYYY':\n")
         area = input("Digite el área disponible para sugerirle una exposición (en m^2):\n")
-        selected_artworks = selectArtworks(catalog, years, area)
+        selected_artworks, counter, area_sum = selectArtworks(catalog, years, area)
 
         print("===================== Req No. 6 (BONUS) Inputs =====================")
         print("Searching artworks between 1995 to 2001")
         print(f"With an available area of: {area} m^2")
         print("\n===================== Req No. 6 (BONUS) Answer =====================")
         print(f"The MoMA is going to exhibit pieces from {years.split(':')[0]} to {years.split(':')[0]}")
-        print(f"There are {0} possible items in an available area of: {area} m^2")
-        print(f"The possible exhibit has {0} items")
-        print(f"Filling {0} m^2 of the {area} m^2 available\n")
-        print("The first and last 3 objects in the {} artwork list are:")
+        print(f"There are {counter} possible items in an available area of: {area} m^2")
+        print(f"The possible exhibit has {lt.size(selected_artworks)} items")
+        print(f"Filling {area_sum} m^2 of the {area} m^2 available\n")
+        print("The first and last 3 objects in the artwork list are:")
+
+        req6 = PrettyTable()
+        req6.field_names = ["ObjectID", "Title", "ArtistsNames", "Medium", "Dimensions", "Date", "Department", "Est. Area", "Classification", "URL"]
+        for artwork in lt.iterator(selected_artworks):
+            ide = artwork["ObjectID"]
+            title = artwork["Title"]
+            names = artwork["ArtistsNames"]
+            medium = artwork["Medium"]
+            dimensions = artwork["Dimensions"]
+            date = artwork["Date"]
+            department = artwork["Department"]
+            estimated_area = artwork["Est. Area"]
+            classification = artwork["Classification"]
+            url = artwork["URL"]
+        req6.add_row([ide, title, names, medium, dimensions, date, department, estimated_area, classification, url])
+        print(req6)
         # Table
 
     else:

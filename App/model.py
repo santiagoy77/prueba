@@ -224,13 +224,31 @@ def selectArtworks(catalog, years, area):
   area_sum = 0
   proposed_works = lt.newList("ARRAY_LIST")
   iter_artworks = lt.iterator(catalog["artworks"])
+  counter = 0
   for artwork in iter_artworks:
+
+    ids = artwork["ConstituentID"].strip("[]").split()
+    disc_ids = normalToStandardList(ids)
+    iter_ids = lt.iterator(disc_ids)
+    names = lt.newList()
+    for ide in iter_ids:
+      ide = ide.strip(",")
+      name = searchID(catalog, ide)
+      lt.addLast(names, name)
+    iter_names = lt.iterator(names)
+    str_names = ""
+    for name in iter_names:
+      str_names += f", {name}"
+    str_names = str_names.strip(", ")
+    artwork["ArtistsNames"] = str_names
+
     work_date = artwork["Date"].strip("()-c. ")
     try:
       work_date = abs(int(work_date))
     except:
       continue
     if work_date in range(begin_year, end_year + 1):
+      counter += 1
       diameter = artwork["Diameter (cm)"].strip()
       width = artwork["Width (cm)"].strip()
       height = artwork["Height (cm)"].strip()
@@ -238,10 +256,11 @@ def selectArtworks(catalog, years, area):
         work_area = calculateArea(width=width, height=height)
       elif diameter != "":
         work_area = calculateArea(diameter=diameter)
+      artwork["Est. Area"] = work_area
       if work_area + area_sum <= final_area:
         area_sum += work_area
         lt.addLast(proposed_works, artwork)
-  return proposed_works
+  return proposed_works, counter, area_sum
 
 
 
@@ -315,7 +334,23 @@ def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   sorted_entries = algorithm.sort(catalog["artworks"], cmpArtworkByDateAcquired)
   stop_time = time.process_time()
   elapsed_time_mseg = (stop_time - start_time) * 1000
-  return elapsed_time_mseg, sorted_entries
+  total_artists = lt.newList(cmpfunction=cmpArtistsByNationality)
+  purchase = 0
+  for artwork in lt.iterator(sorted_entries):
+    credit = artwork["CreditLine"].strip("()[]-c.")
+    if credit == 'Purchase':
+      purchase += 1
+    ides = artwork["ConstituentID"].strip("()c. ").split()
+    holder_ides = lt.newList()
+    for element in ides:
+      lt.addLast(holder_ides, element)
+    ides = holder_ides
+    for ide in lt.iterator(ides):
+      pos = lt.isPresent(total_artists, ide)
+      if pos == 0:
+        lt.addLast(total_artists, ide)
+  total_artists = lt.size(total_artists)
+  return elapsed_time_mseg, sorted_entries, total_artists, purchase
 
   
 # Funciones auxiliares
@@ -353,6 +388,22 @@ def filterArtworksByDate(catalog, initial_date, end_date):
 
   deleted_elements = 0
   for ix, artwork in enumerate(iter_artworks):
+
+    ids = artwork["ConstituentID"].strip("[]").split()
+    disc_ids = normalToStandardList(ids)
+    iter_ids = lt.iterator(disc_ids)
+    names = lt.newList()
+    for ide in iter_ids:
+      ide = ide.strip(",")
+      name = searchID(catalog, ide)
+      lt.addLast(names, name)
+    iter_names = lt.iterator(names)
+    str_names = ""
+    for name in iter_names:
+      str_names += f", {name}"
+    str_names = str_names.strip(", ")
+    artwork["ArtistsNames"] = str_names
+
     if artwork["DateAcquired"] == '':
       lt.addLast(pos_to_delete, ix - deleted_elements)
       deleted_elements += 1
