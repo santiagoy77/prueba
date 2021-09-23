@@ -24,7 +24,8 @@ import config as cf
 import model
 import csv
 import datetime
-
+from DISClib.ADT import list as lt
+from DISClib.Algorithms.Sorting import shellsort as sa
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -69,7 +70,7 @@ def loadArtists(catalog):
   """
   Carga los datos de los artistas del archivo y los agrega a la lista de artistas
   """
-  artists_info_file = f"{cf.data_dir}/MoMA/Artists-utf8-small.csv"
+  artists_info_file = f"{cf.data_dir}/MoMA/Artists-utf8-50pct.csv"
   input_file = csv.DictReader(open(artists_info_file, encoding='utf-8'))
   for artist_info in input_file:
     model.addArtistInfo(catalog, artist_info)
@@ -87,6 +88,9 @@ def sortArtworksByDate(catalog, implementation, initial_date, end_date):
   Ordena las obras en el rango de fechas dispuesto
   """
   return model.sortArtworksByDate(catalog, implementation, initial_date, end_date)
-  
+
+def getArtworksByArtist(catalog, artistname):
+
+  return model.getArtist(catalog, artistname)
 
 # Funciones de consulta sobre el catálogo

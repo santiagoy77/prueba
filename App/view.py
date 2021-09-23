@@ -23,12 +23,11 @@
 import copy
 import sys
 from os import X_OK
-
 import config as cf
 import controller
-
+import model
 from DISClib.ADT import list as lt
-
+from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 
@@ -47,7 +46,9 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- Listar cronológicamente los artistas por un rango de años")
     print("3- Listar cronológicamente las adquisiciones")
-    print("4- Salir del programa")
+    print("4- Clasificar las obras de un artista por técnica")
+    print("5- Calcular costo de transportar obras de un departamento")
+    print("6- Salir del programa")
 
 def printListOptions():
     print("Seleccione la implementación de las listas del catálogo")
@@ -147,5 +148,78 @@ while True:
         print(f"Hay {size} obras en este rango.")
         print(f"Tiempo del algoritmo {algo_sel[int(option)]} es {time} milisegundos.")
 
+    elif int(inputs[0]) == 4:
+
+        artistname= input("Digite el nombre del artista a examinar: ")
+        respuestas= controller.getArtworksByArtist(catalog, artistname)
+        print("El número de obras del artista es de: ", lt.getElement(respuestas, 1))
+        print()
+        print("Las técnicas utilizadas son: ")
+        estilos= lt.getElement(respuestas, 2)
+        for x in estilos:
+            print(x, ":", estilos[x], end="\n")
+        print()
+        print("La técnica más utilizada fue: ", lt.getElement(respuestas, 3))
+        print()
+        print("Una muestra de tres obras con la técnica más utilizada: ")
+        print()
+        lista_obras= lt.getElement(respuestas, 4)
+        for x in lt.iterator(lista_obras):
+            print("Título:", x["Title"],"| Fecha de la obra:", x["Date"], "| Medio:", x["Medium"], "| Dimensiones:", x["Dimensions"], end= "\n")
+
+    elif int(inputs[0]) == 5:
+
+        departamento= input("Digite el departamento del cual desea transportar TODAS sus obras: ")
+        obras_dept= lt.newList(datastructure="ARRAY_LIST")
+        for x in lt.iterator(catalog["artworks"]):
+            if(x["Department"] == departamento):
+                lt.addLast(obras_dept, x)
+        total_obras= lt.size(obras_dept)
+        lista= lt.newList(datastructure= "ARRAY_LIST")
+        precio_total= 0
+        obras_caras= lt.newList(datastructure="ARRAY_LIST")
+        obras_viejas= lt.newList(datastructure= "ARRAY_LIST")
+        for x in lt.iterator(obras_dept):
+            precio= 0
+            peso= 0
+            if(x["Circumference (cm)"] != '') and (x["Circumference (cm)"] != '0.0'):
+                lt.addLast(lista, x["Circumference (cm)"])
+
+            if(x["Depth (cm)"] != '') and (x["Depth (cm)"] != '0.0'):
+                lt.addLast(lista, x["Depth (cm)"])
+
+            if(x["Diameter (cm)"] != '') and (x["Diameter (cm)"] != '0.0'):
+                lt.addLast(lista, x["Diameter (cm)"])
+
+            if(x["Height (cm)"] != '') and (x["Height (cm)"] != '0.0'):
+                lt.addLast(lista, x["Height (cm)"])
+
+            if(x["Length (cm)"] != '') and (x["Length (cm)"] != '0.0'):
+                lt.addLast(lista, x["Length (cm)"])
+
+            if(x["Width (cm)"] != '') and (x["Width (cm)"] != '0.0'):
+                lt.addLast(lista, x["Width (cm)"])
+
+            if(x["Weight (kg)"] != '') and (x["Weight (kg)"] != '0.0'):
+                peso= x["Weight (kg)"]
+
+            n= lt.size(lista)
+
+            if(n == 3):
+                precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) * float(lt.getElement(lista, 3)) + peso)/1000000)*72
+            elif(n == 2):
+                precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) + peso)/10000)*72
+            elif(n == 0) or (n==1):
+                precio= 48
+
+            x["prize"]= precio
+
+            while n > 0:
+                lt.deleteElement(lista, n)
+                n-=1
+            precio_total += precio
+        obras_caras= sa.sort(obras_dept, model.cmpPrize)
+        obras_viejas= sa.sort(obras_dept, model.cmpDate)
+        print(obras_viejas)
     else:
         sys.exit(0)

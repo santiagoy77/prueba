@@ -30,7 +30,6 @@ import time
 from datetime import datetime
 import config as cf
 
-
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import insertionsort as insertion
 from DISClib.Algorithms.Sorting import mergesort as merge
@@ -175,7 +174,16 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     return 1
   return 0
 
+def cmpPrize(obra1, obra2):
+  if(obra1["prize"] > obra2["prize"]):
+    return 1
+  return 0
 # Funciones de ordenamiento
+
+def cmpDate(obra1, obra2):
+  if(obra1["Date"] > obra2["Date"]):
+    return 1
+  return 0
 
 def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
   """
@@ -258,6 +266,43 @@ def filterArtworksByDate(catalog, initial_date, end_date):
   for pos in lt.iterator(pos_to_delete):
     lt.deleteElement(catalog['artworks'], pos)
 
+def getArtist(catalog, artistname):
+  """
+  Devuelve una lista con el número de obras de un artista, un diccionario con las técnicas utilizadas y el número de veces fueron utilizadas,
+  la técnica que fue más utilizada y una lista que contiene una muestra de tres obras con la técnica más utilizada.
+  """
+
+  for x in lt.iterator(catalog["artists"]):
+    if artistname == x["DisplayName"]:
+      y= x["Artworks"]
+
+  n_obras= len(y["elements"])
+  diccionario= {}
+
+  for x in y["elements"]:      
+    diccionario[x["Classification"]]= 0
+
+  for x in y["elements"]:        
+    diccionario[x["Classification"]]+=1
+
+  max_key = max(diccionario, key= diccionario.get)    
+  obras_mas_utilizadas= lt.newList(datastructure='SINGLE_LINKED')
+  n=0
+  muestra= 0
+
+  while (n < n_obras) and (muestra < 3):
+    if(y["elements"][n]["Classification"] == max_key):
+      lt.addLast(obras_mas_utilizadas, y["elements"][n])
+      muestra +=1
+    n+=1
+
+  respuestas= lt.newList(datastructure="ARRAY_LIST")
+  lt.addLast(respuestas, n_obras)
+  lt.addLast(respuestas, diccionario)
+  lt.addLast(respuestas, max_key)
+  lt.addLast(respuestas, obras_mas_utilizadas)
+
+  return respuestas
 # def createDateRange(first_date, second_date):
 #   """
 #   Given two datetime objects, it returns a list with all the dates in between
