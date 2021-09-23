@@ -44,7 +44,6 @@ def printMenu():
     print("6- Transportarcobras de un departamento ")
     print("7- Proponer una nueva exposición en el museo")
     print("0- Salir")
-    
 
 catalog = None
 
@@ -117,7 +116,10 @@ while True:
             print("\nTécnica: " + obra['Medium'])
             print("\nDimensiones: " + obra['Dimensions'])
             print("\n")
-    
-    elif int(inputs[0]) == 7:
-        pass 
+    """
+    elif int(inputs[0]) == 6:
+        print("Ingrese nombre del departamento: ")
+        nombre_departamento= str(input())
+        lista_respuesta_departamento= controller.get_info_transporte(catalog['Art'], nombre_departamento)
+"""
 

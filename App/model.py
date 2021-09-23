@@ -50,10 +50,9 @@ def newCatalog(estructuraDatos):
     catalog = {'Art': None,
                'Artist': None}
 
-    catalog['Art'] = lt.newList()
-    catalog['Artist'] = lt.newList()
+    catalog['Art'] = lt.newList(estructuraDatos)
+    catalog['Artist'] = lt.newList(estructuraDatos)
  
-
     return catalog
 
 def get_primeros(lista_global, inicial, final):
@@ -139,6 +138,8 @@ def conteo_tecnicas_obras(obras):
     nombre_tecnica= ""
     cantidad_tecnica= 0
     primera= True
+    tam_obras_ordenadas= lt.size(obras_ordenadas)
+    cambio= False
     for obra in lt.iterator(obras_ordenadas):
         #solo para la primera la iteración
         if primera== True:
@@ -149,11 +150,15 @@ def conteo_tecnicas_obras(obras):
             if str(obra['Medium'])== nombre_tecnica:
                cantidad_tecnica+=1
             else: 
+                cambio= True
                 dict_tecnica={"Nombre": nombre_tecnica, "Count": cantidad_tecnica}
                 lt.addLast(conteo_tecnicas, dict_tecnica)
                 #se reinicia, cambia la tecnica
                 nombre_tecnica=str(obra['Medium'])
                 cantidad_tecnica=1
+    if tam_obras_ordenadas==1 or cambio== False:
+        dict_tecnica={"Nombre": nombre_tecnica, "Count": cantidad_tecnica}
+        lt.addLast(conteo_tecnicas, dict_tecnica)
     return conteo_tecnicas
 
 def ordenar_obrasxtecnica(obra1, obra2):
@@ -177,6 +182,54 @@ def buscar_obrasxartista(artworks, id):
                 lt.addLast(obras, obras_recorridas)
                 break
     return obras
+
+def get_transporte(arte, nombre_departamento):
+    lista_respuestas= lt.newList()
+    obras_departamento= buscar_obrasxdepartamento(arte, nombre_departamento)
+    totalobras= lt.size(obras_departamento)
+    estimado_precio= get_estimado_precio(obras_departamento)
+    estimado_peso= get_estimado_peso(obras_departamento)
+    mas_antiguas= get_primerosobras(obras_departamento)
+    lt.addLast(lista_respuestas, totalobras)
+    lt.addLast(lista_respuestas, estimado_precio)
+    lt.addLast(lista_respuestas, estimado_peso)
+    lt.addLast(lista_respuestas, mas_antiguas)
+    
+def buscar_obrasxdepartamento(arte, departamento):
+    obras_dep= lt.newList()
+    for obras_recorridas in lt.iterator(arte):
+        if departamento == obras_recorridas["Department"]:
+            lt.addLast(obras_dep, obras_recorridas)
+            break
+    return obras_dep
+
+def get_estimado_precio(obras_dep):
+    precio_total=0
+    precio_x_kg= 35
+    precio_x_defecto= 48
+    for obras_x_dep in lt.iterator(obras_dep):
+        if obras_x_dep["Weight (kg)"] == "":
+            precio_total+=precio_x_defecto
+        else:
+            precio_total+=precio_x_kg*(float(obras_x_dep["Weight (kg)"]))
+    return precio_total
+
+def get_estimado_peso(obras_dep):
+    peso_total= 0
+    for obras_x_dep in lt.iterator(obras_dep):
+        peso_total+=(float(obras_x_dep["Weight (kg)"]))
+    return peso_total
+    
+def get_primerosobras(lista):
+    lista_ordenada= sortObrasxfecha(lista)
+    lista_primeros= lt.subList(lista_ordenada, 1, 5)
+    return lista_primeros
+
+def ordenar_fecha(obra1, obra2):
+    return (int(obra1['Date']) < int(obra2['Date']))
+
+def sortObrasxfecha(lista):
+    return sa.sort(lista, ordenar_fecha)
 
 # Construccion de modelos
 

@@ -51,7 +51,7 @@ def loadData(catalog):
 
 def loadArt(catalog):
    
-    artworksfile = cf.data_dir +  'Artworks-utf8-large.csv'
+    artworksfile = cf.data_dir +  'Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(artworksfile , encoding='utf-8'))
     for artwork in input_file:
         model.addArt(catalog, artwork)
@@ -59,11 +59,11 @@ def loadArt(catalog):
 
 def loadArtist(catalog):
  
-    artistsfile = cf.data_dir + 'Artists-utf8-large.csv'
+    artistsfile = cf.data_dir + 'Artists-utf8-small.csv'
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     contador= 0
     for artist in input_file:
-    
+        """
         if contador>=50:
             break
         else: 
@@ -72,7 +72,7 @@ def loadArtist(catalog):
         """
         model.addArtist(catalog, artist)
         contador+=1
-        """
+
 def conteo_artistas(artistas, inicial, final):
     return model.get_conteo(artistas, inicial, final)
 
@@ -85,6 +85,8 @@ def ultimos_tres(artistas, inicial, final):
 def get_obras(catalog, nombre_artista):
     return model.get_obrasxtecnica(catalog, nombre_artista)
 
+def get_info_transporte(arte, nombre_departamento):
+    return model.get_transporte(arte, nombre_departamento)
 
 
 
