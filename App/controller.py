@@ -90,3 +90,21 @@ def sortArtworksByDate(catalog, implementation, initial_date, end_date):
   
 
 # Funciones de consulta sobre el catálogo
+
+def countNationalities(catalog):
+  """
+  Cuenta el número de obras por la nacionalidad de los artistas
+  """
+  return model.countNationalities(catalog)
+
+def showNationWork(catalog, nation_count):
+    """
+    Retorna la información de la nación con un mayor número de obras
+    """
+    return model.showNationWork(catalog, nation_count)
+
+def selectArtworks(catalog, years, area):
+  """
+  Selecciona unas obras de arte entre los años pasados por parámetro hasta que se llene el área disponible
+  """
+  return model.selectArtworks(catalog, years, area)

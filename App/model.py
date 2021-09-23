@@ -25,11 +25,12 @@
  """
 
 
+from DISClib.DataStructures.arraylist import newList
 import copy
 import time
 from datetime import datetime
 import config as cf
-
+from math import pi
 
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import insertionsort as insertion
@@ -87,7 +88,7 @@ def addArtwork(catalog, artwork):
     # Se adiciona la obra a la lista de obras
     lt.addLast(catalog['artworks'], artwork)
     # Se obtienen los artistas de la obra
-    artists_ids = artwork['ConstituentID'].split(",")
+    artists_ids = artwork['ConstituentID'].strip("[]").split(",")
     # Cada artista, se crea en la lista de artistas del catálogo, y se
     # crea una obraa en la lista de dicho artista (apuntador a la obra)
     for artist_id in artists_ids:
@@ -146,12 +147,115 @@ def newArtist(artist_id):
 
 # Funciones de consulta
 
+def countNationalities(catalog):
+  """
+  Cuenta el número de obras por la nacionalidad de los artistas
+  """
+  counter = {}
+  iter_artworks = lt.iterator(catalog["artworks"])
+  for artwork in iter_artworks:
+    nationalities = lt.newList(cmpfunction=cmpArtistsByNationality)
+    ids = artwork["ConstituentID"].strip("[]").split()
+    disc_ids = lt.iterator(normalToStandardList(ids))
+    for ide in disc_ids:
+      artist_pos = lt.isPresent(catalog["artists"], ide)
+      artist_obj = lt.getElement(catalog["artists"], artist_pos)
+      nation = artist_obj["Nationality"]
+      if nation.strip() == "":
+        continue
+      check = lt.isPresent(nationalities, nation)
+      if check == 0:
+        lt.addLast(nationalities, nation)
+
+    iter_nationalities = lt.iterator(nationalities)
+    for nationality in iter_nationalities:
+      if nationality not in counter.keys():
+        counter[nationality] = 1
+      else:
+        counter[nationality] += 1
+
+  sorted_count = {k: v for k, v in sorted(counter.items(), key=lambda item: item[1], reverse=True)[:10]}
+  return sorted_count
+
+def showNationWork(catalog, nation_count):
+    """
+    Retorna la información de la nación con un mayor número de obras
+    """
+    nation = list(nation_count.keys())[0]
+    count = nation_count[nation]
+    nation_art = lt.newList("ARRAY_LIST")
+    iter_artworks = lt.iterator(catalog["artworks"])
+    artworks_pos = lt.newList()
+    for ix, artwork in enumerate(iter_artworks):
+      ids = artwork["ConstituentID"].strip("[]").split()
+      disc_ids = normalToStandardList(ids)
+      iter_ids = lt.iterator(disc_ids)
+      names = lt.newList()
+      for ide in iter_ids:
+        ide = ide.strip(",")
+        name = searchID(catalog, ide)
+        lt.addLast(names, name)
+      iter_names = lt.iterator(names)
+      str_names = ""
+      for name in iter_names:
+        str_names += f", {name}"
+      str_names = str_names.strip(", ")
+      artwork["ArtistsNames"] = str_names
+      pos = ix + 1
+      lt.addLast(artworks_pos, pos)
+
+    objs = lt.newList("ARRAY_LIST")
+    first_three = lt.iterator(lt.subList(artworks_pos, 1, 3))
+    last_three = lt.iterator(lt.subList(artworks_pos, lt.size(artworks_pos) - 3, 3))
+    for pos in first_three:
+      lt.addLast(objs, lt.getElement(catalog["artworks"], pos))
+    for pos in last_three:
+      lt.addLast(objs, lt.getElement(catalog["artworks"], pos))
+
+    return objs
+
+def selectArtworks(catalog, years, area):
+  """
+  Selecciona unas obras de arte entre los años pasados por parámetro hasta que se llene el área disponible
+  """
+  begin_year, end_year = [int(year) for year in years.split("-")]
+  final_area = int(area)
+
+  area_sum = 0
+  proposed_works = lt.newList("ARRAY_LIST")
+  iter_artworks = lt.iterator(catalog["artworks"])
+  for artwork in iter_artworks:
+    work_date = artwork["Date"].strip("()-c. ")
+    try:
+      work_date = abs(int(work_date))
+    except:
+      continue
+    if work_date in range(begin_year, end_year + 1):
+      diameter = artwork["Diameter (cm)"].strip()
+      width = artwork["Width (cm)"].strip()
+      height = artwork["Height (cm)"].strip()
+      if diameter == "" and width != "" and height != "":
+        work_area = calculateArea(width=width, height=height)
+      elif diameter != "":
+        work_area = calculateArea(diameter=diameter)
+      if work_area + area_sum <= final_area:
+        area_sum += work_area
+        lt.addLast(proposed_works, artwork)
+  return proposed_works
+
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compareartists(artist_id, artist):
   if (artist_id in artist['ConstituentID']):
     return 0
   return -1
+
+def compareartworks(artwork1, artwork2):
+  if artwork1 is artwork2:
+    return 1
+  return 0
 
 def cmpArtistsByBeginDate(artist1, artist2):
   """
@@ -160,7 +264,11 @@ def cmpArtistsByBeginDate(artist1, artist2):
     artist1: informacion de la primera obra que incluye su valor 'BeginDate'
     artist2: informacion de la segunda obra que incluye su valor 'BeginDate'
   """
-  if artist1['BeginDate'] < artist2['BeginDate']:
+  if artist1['BeginDate'] == None:
+    artist1['BeginDate'] = 0
+  if artist2['BeginDate'] == None:
+    artist2['BeginDate'] = 0
+  if int(artist1['BeginDate']) < int(artist2['BeginDate']):
     return 1
   return 0
 
@@ -175,16 +283,24 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     return 1
   return 0
 
+def cmpArtistsByNationality(artist1, artist2):
+  """
+  Verdadero si las nacionalidades son iguales.
+  """
+  if artist1 == artist2:
+    return 1
+  return 0
+
 # Funciones de ordenamiento
 
 def sortArtistsByBeginDate(catalog, implementation, initial_date, end_date):
   """
   Ordena los artistas en el rango de fechas dispuesto
   """
-  filterArtistsByBeginDate(catalog, initial_date, end_date)
+  new_artists = filterArtistsByBeginDate(catalog, initial_date, end_date)
   algorithm = sort_algo[int(implementation)]
   start_time = time.process_time()
-  sorted_entries = algorithm.sort(catalog["artists"], cmpArtistsByBeginDate)
+  sorted_entries = algorithm.sort(new_artists, cmpArtistsByBeginDate)
   stop_time = time.process_time()
   elapsed_time_mseg = round((stop_time - start_time) * 1000, 3)
   return elapsed_time_mseg, sorted_entries
@@ -200,6 +316,7 @@ def sortArtworksByDate(catalog, implementation, initial_year, end_year):
   stop_time = time.process_time()
   elapsed_time_mseg = (stop_time - start_time) * 1000
   return elapsed_time_mseg, sorted_entries
+
   
 # Funciones auxiliares
 
@@ -208,31 +325,21 @@ def filterArtistsByBeginDate(catalog, initial_date, end_date):
   Filtra los artistas que no se encuentren en el rango de años deseado
   (NO ESTÁ TERMINADA. FUNCIÓN ACTUALMENTE DEFECTUOSA)
   """
-  iter_artists = enumerate(lt.iterator(catalog["artists"]))
+  iter_artists = lt.iterator(catalog["artists"])
 
   initial_date = datetime.strptime(initial_date, "%Y")
   end_date = datetime.strptime(end_date, "%Y")
   pos_to_delete = lt.newList()
+  iter_artists = lt.iterator(catalog["artists"])
+  new_artists = lt.newList()
+  for artist in iter_artists:
+    if artist["BeginDate"] == None or artist["BeginDate"] == "0":
+      continue
+    artist_date = datetime.strptime(artist["BeginDate"].strip(), "%Y")
+    if initial_date <= artist_date <= end_date:
+      lt.addLast(new_artists, artist)
+  return new_artists
 
-  deleted_elements = 0
-  for ix, artist in iter_artists:
-    if type(artist["BeginDate"]) == None:
-      print(f"TEMP: {type(artist['BeginDate'])}")
-      lt.addLast(pos_to_delete, ix - deleted_elements)
-      deleted_elements += 1
-      continue
-    elif artist["BeginDate"] == 0 or artist["BeginDate"] == "0":
-      lt.addLast(pos_to_delete, ix - deleted_elements)
-      deleted_elements += 1
-      continue
-    else:
-      date = datetime.strptime(artist["BeginDate"], "%Y")
-      if initial_date > date or end_date < date:
-        lt.addLast(pos_to_delete, ix - deleted_elements)
-        deleted_elements += 1
-  
-  for pos in lt.iterator(pos_to_delete):
-    lt.deleteElement(catalog['artists'], pos)
 
 def filterArtworksByDate(catalog, initial_date, end_date):
   """
@@ -258,8 +365,43 @@ def filterArtworksByDate(catalog, initial_date, end_date):
   for pos in lt.iterator(pos_to_delete):
     lt.deleteElement(catalog['artworks'], pos)
 
-# def createDateRange(first_date, second_date):
-#   """
-#   Given two datetime objects, it returns a list with all the dates in between
-#   """
-#   for 
+def normalToStandardList(normal_lst, implementation="ARRAY_LIST", cmpfunc=None):
+  """
+  Transforms a Python list into a DISClib list
+  """
+  new_list = lt.newList(implementation, cmpfunc)
+  for element in normal_lst:
+    lt.addLast(new_list, element)
+  return new_list
+
+def dictToStandardList(dictionary, feature="keys", implementation="ARRAY_FUNCTION", cmpfunc=None):
+  """
+  Transforms a feature of a dictionary into a DISClib list
+  """
+  dict_list = lt.newList(implementation, cmpfunc)
+  if feature == "keys":
+    normal_list = list(dictionary.keys())
+  elif feature == "values":
+    normal_list = list(dictionary.valus())
+  for element in normal_list:
+    lt.addLast(dict_list, element)
+  return dict_list
+
+def searchID(catalog, artist_id):
+  """
+  Devuelve el nombre del artista que tiene ese ID asignado
+  """
+  pos = lt.isPresent(catalog["artists"], artist_id)
+  name = lt.getElement(catalog["artists"], pos)["DisplayName"]
+  if pos != 0:
+    return name
+  return ""
+
+def calculateArea(diameter="", width="", height=""):
+  """
+  Cálculo del área de una obra
+  """
+  if diameter == "":
+    return float(width) * float(height)
+  else:
+    return 2 * pi * (float(diameter) / 2) ** 2
