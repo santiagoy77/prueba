@@ -303,8 +303,62 @@ def getArtist(catalog, artistname):
   lt.addLast(respuestas, obras_mas_utilizadas)
 
   return respuestas
-# def createDateRange(first_date, second_date):
-#   """
-#   Given two datetime objects, it returns a list with all the dates in between
-#   """
-#   for 
+
+def transportar_obras(departamento, catalog):
+
+  obras_dept= lt.newList(datastructure="ARRAY_LIST")
+  obras_dept2= lt.newList(datastructure="ARRAY_LIST")
+  for x in lt.iterator(catalog["artworks"]):
+    if(x["Department"] == departamento):
+      lt.addLast(obras_dept, x)
+      lt.addLast(obras_dept2, x)
+  total_obras= lt.size(obras_dept)
+  lista= lt.newList(datastructure= "ARRAY_LIST")
+  precio_total= 0
+  obras_caras= lt.newList(datastructure="ARRAY_LIST")
+  obras_viejas= lt.newList(datastructure= "ARRAY_LIST")
+  peso_total= 0
+  diccionario= {}
+  for x in lt.iterator(obras_dept):
+    precio= 0
+    peso= 0
+    if(x["Circumference (cm)"] != '') and (x["Circumference (cm)"] != '0.0'):
+      lt.addLast(lista, x["Circumference (cm)   "])
+    if(x["Depth (cm)"] != '') and (x["Depth (cm)"] != '0.0'):
+      lt.addLast(lista, x["Depth (cm)"])
+    if(x["Diameter (cm)"] != '') and (x["Diameter (cm)"] != '0.0'):
+      lt.addLast(lista, x["Diameter (cm)"])
+    if(x["Height (cm)"] != '') and (x["Height (cm)"] != '0.0'):
+      lt.addLast(lista, x["Height (cm)"])
+    if(x["Length (cm)"] != '') and (x["Length (cm)"] != '0.0'):
+      lt.addLast(lista, x["Length (cm)"])
+    if(x["Width (cm)"] != '') and (x["Width (cm)"] != '0.0'):
+      lt.addLast(lista, x["Width (cm)"])
+    if(x["Weight (kg)"] != '') and (x["Weight (kg)"] != '0.0'):
+      peso= x["Weight (kg)"]
+    n= lt.size(lista)
+
+    if(n == 3):
+      precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) * float(lt.getElement(lista, 3)) + peso)/1000000)*72
+    elif(n == 2):
+      precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) + peso)/10000)*72
+    elif(n == 0) or (n==1):
+      precio= 48
+
+    diccionario[x["Title"]]= x["Date"]
+    x["prize"]= precio
+
+    while n > 0:
+      lt.deleteElement(lista, n)
+      n-=1
+    precio_total += precio
+    peso_total += peso
+  obras_caras= shell.sort(obras_dept, cmpPrize)
+  obras_viejas= shell.sort(obras_dept2, cmpDate)
+  respuesta= lt.newList(datastructure="ARRAY_LIST")
+  lt.addLast(respuesta, total_obras)
+  lt.addLast(respuesta, precio_total)
+  lt.addLast(respuesta, peso_total)
+  lt.addLast(respuesta, obras_viejas)
+  lt.addLast(respuesta, obras_caras)
+  return respuesta

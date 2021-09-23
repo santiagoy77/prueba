@@ -28,6 +28,7 @@ import controller
 import model
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from prettytable import PrettyTable
 assert cf
 
 
@@ -170,56 +171,46 @@ while True:
     elif int(inputs[0]) == 5:
 
         departamento= input("Digite el departamento del cual desea transportar TODAS sus obras: ")
-        obras_dept= lt.newList(datastructure="ARRAY_LIST")
-        for x in lt.iterator(catalog["artworks"]):
-            if(x["Department"] == departamento):
-                lt.addLast(obras_dept, x)
-        total_obras= lt.size(obras_dept)
-        lista= lt.newList(datastructure= "ARRAY_LIST")
-        precio_total= 0
-        obras_caras= lt.newList(datastructure="ARRAY_LIST")
-        obras_viejas= lt.newList(datastructure= "ARRAY_LIST")
-        for x in lt.iterator(obras_dept):
-            precio= 0
-            peso= 0
-            if(x["Circumference (cm)"] != '') and (x["Circumference (cm)"] != '0.0'):
-                lt.addLast(lista, x["Circumference (cm)"])
-
-            if(x["Depth (cm)"] != '') and (x["Depth (cm)"] != '0.0'):
-                lt.addLast(lista, x["Depth (cm)"])
-
-            if(x["Diameter (cm)"] != '') and (x["Diameter (cm)"] != '0.0'):
-                lt.addLast(lista, x["Diameter (cm)"])
-
-            if(x["Height (cm)"] != '') and (x["Height (cm)"] != '0.0'):
-                lt.addLast(lista, x["Height (cm)"])
-
-            if(x["Length (cm)"] != '') and (x["Length (cm)"] != '0.0'):
-                lt.addLast(lista, x["Length (cm)"])
-
-            if(x["Width (cm)"] != '') and (x["Width (cm)"] != '0.0'):
-                lt.addLast(lista, x["Width (cm)"])
-
-            if(x["Weight (kg)"] != '') and (x["Weight (kg)"] != '0.0'):
-                peso= x["Weight (kg)"]
-
-            n= lt.size(lista)
-
-            if(n == 3):
-                precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) * float(lt.getElement(lista, 3)) + peso)/1000000)*72
-            elif(n == 2):
-                precio= ((float(lt.getElement(lista, 1)) * float(lt.getElement(lista, 2)) + peso)/10000)*72
-            elif(n == 0) or (n==1):
-                precio= 48
-
-            x["prize"]= precio
-
-            while n > 0:
-                lt.deleteElement(lista, n)
-                n-=1
-            precio_total += precio
-        obras_caras= sa.sort(obras_dept, model.cmpPrize)
-        obras_viejas= sa.sort(obras_dept, model.cmpDate)
-        print(obras_viejas)
+        respuestas= controller.transportar_obras(departamento, catalog)
+        print("===================== Req No. 5 Inputs =====================\n")
+        print(f"Estimate all the cost to transport all artifacts in {departamento} Moma's Department")
+        print("\n===================== Req No. 5 Answer =====================")
+        print(f"The MoMa is going to transport {lt.getElement(respuestas, 1)} artifacts from the {departamento}")
+        print(f"Estimated cargo weight (kg): {lt.getElement(respuestas, 3)}")
+        print(f"Estimated cargo cost: {lt.getElement(respuestas, 2)}")
+        x= 1
+        print("Top 5 most expensive cargo: ")
+        for artworks in lt.iterator(lt.getElement(respuestas, 5)):
+            print("===========================================================")
+            print(f"ObjectID: ", artworks["ObjectID"])
+            print(f"Title: ", artworks["Title"])
+            print(f"Artists ConstituentID: ", artworks["ConstituentID"])
+            print(f"Medium: ", artworks["Medium"])
+            print(f"Date: ", artworks["Date"])
+            print(f"Dimensions: ", artworks["Dimensions"])
+            print(f"Classification: ", artworks["Classification"])
+            print(f"Transportation Cost (USD): ", artworks["prize"])
+            print(f"URL: ", artworks["URL"])
+            print("===========================================================")
+            x+=1
+            if(x == 6):
+                break
+        x= 1
+        print("Top 5 oldest items to transport: ")
+        for artworks in lt.iterator(lt.getElement(respuestas, 4)):
+            print("===========================================================")
+            print(f"ObjectID: ", artworks["ObjectID"])
+            print(f"Title: ", artworks["Title"])
+            print(f"Artists ConstituentID: ", artworks["ConstituentID"])
+            print(f"Medium: ", artworks["Medium"])
+            print(f"Date: ", artworks["Date"])
+            print(f"Dimensions: ", artworks["Dimensions"])
+            print(f"Classification: ", artworks["Classification"])
+            print(f"Transportation Cost (USD): ", artworks["prize"])
+            print(f"URL: ", artworks["URL"])
+            print("===========================================================")
+            x+=1
+            if(x == 6):
+                break
     else:
         sys.exit(0)

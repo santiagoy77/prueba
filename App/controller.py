@@ -93,4 +93,8 @@ def getArtworksByArtist(catalog, artistname):
 
   return model.getArtist(catalog, artistname)
 
+def transportar_obras(departamento, catalog):
+  
+  return model.transportar_obras(departamento, catalog)
+
 # Funciones de consulta sobre el catálogo
