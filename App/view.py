@@ -186,7 +186,7 @@ if __name__ == "__main__":
                 
             else:
                 print("Opción errónea, vuelva a elegir.\n")
-        except ValueError:
-            print("Ingrese una opción válida.\n")
+        except Exception as exp:
+            print("ERR:", exp)
             traceback.print_exc()
     sys.exit(0)
