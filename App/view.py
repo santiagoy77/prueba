@@ -181,8 +181,7 @@ if __name__ == "__main__":
 
         elif int(inputs) == 0:
             working = False
-            print("\nGracias por utilizar el programa")
-            
+            print("\nGracias por utilizar el programa") 
         else:
             print("Opción errónea, vuelva a elegir.\n")
     sys.exit(0)
