@@ -62,21 +62,21 @@ def print_menu():
 
 def loadData1(control):
     """
-    Solicita al controlador que cargue los datos en el modelo
+    Solicita al controlador que cargue los datos en el modelo de los goles.
     """
     Num_goleadores = controller.load_data(control)[0]
     return Num_goleadores
 
 def loadData2(control):
     """
-    Solicita al controlador que cargue los datos en el modelo
+    Solicita al controlador que cargue los datos en el modelo, la carga de los partidos.
     """
     Partidos = controller.load_data(control)[1]
     return Partidos
 
 def loadData3(control):
     """
-    Solicita al controlador que cargue los datos en el modelo
+    Solicita al controlador que cargue los datos en el modelo, la carga de los penales.
     """
     Penales = controller.load_data(control)[2]
     return Penales
