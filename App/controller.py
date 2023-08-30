@@ -38,6 +38,12 @@ def new_controller():
     #TODO: Llamar la función del modelo que crea las estructuras de datos
     pass
 
+    control = {
+        'model': None
+    }
+    control['model'] = model.new_data_structs_match()
+    return control
+
 
 # Funciones para la carga de datos
 
@@ -46,6 +52,12 @@ def load_data(control, filename):
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
+    partidos = control['model']
+    date, home_team, away_team, home_score, away_score, tournament, city, country, neutral, winner = ()
+  
+    goleadores = loadGoleadores(partidos)
+    penales = loadPenales(partidos)
+    return partidos, date, goleadores, penales
     pass
 
 

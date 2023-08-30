@@ -26,6 +26,7 @@
 
 
 import config as cf
+import csv
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
@@ -49,6 +50,10 @@ def new_data_structs_match():
     Inicializa las estructuras de datos del modelo. Las crea de
     manera vacía para posteriormente almacenar la información.
     """
+      # creando y configurando el ADT list para almacenar los partidos
+    partidos = lt.newList("ARRAY_LIST")
+    
+ # creando y configurando los atributos que componen un partido 
     partidos = {'date': None,
                'home_team': None,
                'away_team': None,
@@ -57,8 +62,11 @@ def new_data_structs_match():
                'tournament': None,
                'city': None,
                'country': None,
-               'neutral': None,}
-
+               'neutral': None,
+               'winner': None}
+    
+      # creando y configurando el ADT list para almacenar los datos que componen los diferentes partidos
+      
     partidos['date'] = lt.newList('ARRAY_LIST')
     partidos['home_team'] = lt.newList('ARRAY_LIST')
     partidos['away_team'] = lt.newList('ARRAY_LIST')
@@ -68,49 +76,34 @@ def new_data_structs_match():
     partidos['city'] = lt.newList('ARRAY_LIST')
     partidos['country'] = lt.newList('ARRAY_LIST')
     partidos['neutral'] = lt.newList('ARRAY_LIST')
+    partidos['winner'] = lt.newList('ARRAY_LIST')
     
     return partidos
 
-def new_data_structs_goals():
-    """
-    Inicializa las estructuras de datos del modelo. Las crea de
-    manera vacía para posteriormente almacenar la información.
-    """
-    goals = {'date': None,
-               'home_team': None,
-               'away_team': None,
-               'home_score': None,
-               'away_score': None,
-               'tournament': None,
-               'city': None,
-               'country': None,
-               'neutral': None,}
+def new_load_data(nombre_carpeta,nombre_archivo):
 
-    goals['date'] = lt.newList('ARRAY_LIST')
-    goals['home_team'] = lt.newList('ARRAY_LIST')
-    goals['away_team'] = lt.newList('ARRAY_LIST')
-    goals['home_score'] = lt.newList('ARRAY_LIST')
-    goals['away_score'] = lt.newList('ARRAY_LIST')
-    goals['tournament'] = lt.newList('ARRAY_LIST')
-    goals['city'] = lt.newList('ARRAY_LIST')
-    goals['country'] = lt.newList('ARRAY_LIST')
-    goals['neutral'] = lt.newList('ARRAY_LIST')
-    
-    return goals
+    try:
+        # concatenando el nombre del archivo con las carpetas de datos
+        carpeta = cf.file_path(cf.data_dir, nombre_archivo, nombre_carpeta)
+        
+        print("Archivo ubicado en:", carpeta)
 
-def new_data_structure_shootouts():
-    
-    goalscorers = {'date': None,
-               'home_team': None,
-               'away_team': None,
-               'winner': None,}
-    goalscorers['date'] = lt.newList('ARRAY_LIST')
-    goalscorers['home_team'] = lt.newList('ARRAY_LIST')
-    goalscorers['away_team'] = lt.newList('ARRAY_LIST')
-    goalscorers['winner'] = lt.newList('ARRAY_LIST')
-    
-    return goalscorers
-    
+        # abriendo el archivo CSV
+        partidos_file = open(carpeta, "r", encoding="utf-8")
+        # leyendo el archivo CSV
+        registrar_partido = csv.DictReader(partidos_file, delimiter=",")
+        # iterando sobre los registros del archivo CSV
+        for partido in registrar_partido:
+            # agregando el registro al ADT list
+            partidos = new_data_structs_match(partidos, partido)
+        # cerrando el archivo CSV
+        partidos_file.close()
+        # retornando la lista de partidos
+        return partidos
+    except Exception as e:
+        print(e)
+        raise Exception
+
 # Funciones para agregar informacion al modelo
 
 def add_data(data_structs, data):
@@ -118,7 +111,32 @@ def add_data(data_structs, data):
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    pass
+    
+
+def add_date(partidos, date):
+    # Se adiciona la fecha del partido
+    lt.addLast(partidos['date'], date)
+    return partidos
+
+
+def add_team(partidos, home_team, away_team):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+    lt.addFirst(partidos['home_team'], home_team)
+    lt.addFirst(partidos['away_team'], away_team)
+    return partidos
+
+def add_goles_equipo(partidos, home_score, away_score):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+    lt.addFirst(partidos['home_score'], home_score)
+    lt.addFirst(partidos['away_score'], away_score)
+    return partidos
+
 
 
 # Funciones para creacion de datos
