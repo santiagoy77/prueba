@@ -59,16 +59,11 @@ def new_data_structs_match():
     catalog['partidos'] = lt.newList()
     catalog['goles'] = lt.newList()
     catalog['penales'] = lt.newList()
-    
-    #TODO 4.5 Modificar el uso del TAD lista (p.30.) 
 
     return catalog
     
       # creando y configurando el ADT list para almacenar los datos que componen los diferentes partidos
   
-
-
-
 # Funciones para agregar informacion al modelo
 
 def add_goleadores(catalog, goleador):
@@ -79,24 +74,23 @@ def add_goleadores(catalog, goleador):
    
     return catalog
 
-
-def add_team(partidos, home_team, away_team):
+def add_team(catalog, partidos):
     """
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    lt.addFirst(partidos['home_team'], home_team)
-    lt.addFirst(partidos['away_team'], away_team)
-    return partidos
+    lt.addFirst(catalog['partidos'], partidos)
+    
+    return catalog
 
-def add_goles_equipo(partidos, home_score, away_score):
+def add_penales(catalog, penales):
     """
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    lt.addFirst(partidos['home_score'], home_score)
-    lt.addFirst(partidos['away_score'], away_score)
-    return partidos
+    lt.addFirst(catalog['penales'], penales)
+    
+    return catalog
 
 
 
@@ -128,6 +122,21 @@ def goleadoresSize(catalog):
     goles=catalog['goles']
     return lt.size(goles)
 
+def partidosSize(catalog):
+    """
+    Retorna el tamaño de la lista de datos
+    """
+    #TODO: Crear la función para obtener el tamaño de una lista
+    partidos=catalog['partidos']
+    return lt.size(partidos)
+
+def penalesSize(catalog):
+    """
+    Retorna el tamaño de la lista de datos
+    """
+    #TODO: Crear la función para obtener el tamaño de una lista
+    penales=catalog['penales']
+    return lt.size(penales)
 
 def req_1(data_structs):
     """

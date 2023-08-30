@@ -72,8 +72,6 @@ def loadGoleadores(catalog):
         model.add_goleadores(catalog, goal)
     return model.goleadoresSize(catalog)
 
-
-
 # Funciones de ordenamiento
 
 def sort(control):
