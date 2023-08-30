@@ -60,10 +60,8 @@ def new_data_structs():
                'neutral': None,}
 
     partidos['date'] = lt.newList('ARRAY_LIST')
-    partidos['home_team'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=compareauthors)
-    partidos['away_team'] = lt.newList('SINGLE_LINKED',
-                                 cmpfunction=comparetagnames)
+    partidos['home_team'] = lt.newList('ARRAY_LIST')
+    partidos['away_team'] = lt.newList('ARRAY_LIST')
     partidos['home_score'] = lt.newList('ARRAY_LIST')
     partidos['away_score'] = lt.newList('ARRAY_LIST')
     partidos['tournament'] = lt.newList('ARRAY_LIST')
