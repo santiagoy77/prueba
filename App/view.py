@@ -26,8 +26,9 @@ import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
-assert cf
 from tabulate import tabulate
+
+assert cf
 import traceback
 
 """
@@ -42,8 +43,9 @@ def new_controller():
     """
         Se crea una instancia del controlador
     """
+    control =  controller.new_controller()
     #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    pass
+    return control
 
 
 def print_menu():
@@ -65,8 +67,8 @@ def load_data(control):
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    pass
-
+    result = controller.load_data(control) 
+    return result
 
 def print_data(control, id):
     """
@@ -77,7 +79,7 @@ def print_data(control, id):
 
 def print_req_1(control):
     """
-        Función que imprime la solución del Requerimiento 1 en consola
+        Función que imprime la soluci1ón del Requerimiento 1 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 1
     pass
@@ -154,7 +156,12 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = load_data(control)
+            rt , gl , sh = controller.load_data(control)
+            print('Results cargados: ' + str(rt))
+            print('Goalscorers cargados: ' + str(gl))
+            print('Shootouts cargados: ' + str(sh))
+
+            print("Primeras 3 Filas...")
         elif int(inputs) == 2:
             print_req_1(control)
 
