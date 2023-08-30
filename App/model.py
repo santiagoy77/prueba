@@ -70,7 +70,6 @@ def add_goleadores(catalog, goleador):
    
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['goles'], goleador)
-    # Se obtienen los autores del libro
    
     return catalog
 
@@ -91,9 +90,6 @@ def add_penales(catalog, penales):
     lt.addFirst(catalog['penales'], penales)
     
     return catalog
-
-
-
 # Funciones para creacion de datos
 
 def new_data(id, info):

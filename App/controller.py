@@ -56,7 +56,9 @@ def load_data(control):
     file_name_result='results-utf8-small.csv'
     file_name_shootouts='shootouts-utf8-small.csv'
     Num_goals=loadGoleadores(catalog)
-    return Num_goals
+    partidos=loadPartidos(catalog)
+    penales=loadPenales(catalog)
+    return Num_goals,partidos,penales
     
         # abriendo el archivo CSV
     
@@ -72,6 +74,29 @@ def loadGoleadores(catalog):
         model.add_goleadores(catalog, goal)
     return model.goleadoresSize(catalog)
 
+def loadPartidos(catalog):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    filename_partidos = cf.data_dir + 'results-utf8-small.csv'
+    input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
+    for partidos in input_file:
+        model.add_team(catalog, partidos)
+    return model.partidosSize(catalog)
+
+def loadPenales(catalog):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    filename_penales = cf.data_dir + 'shootouts-utf8-small.csv'
+    input_file = csv.DictReader(open(filename_penales, encoding='utf-8'))
+    for penal in input_file:
+        model.add_penales(catalog, penal)
+    return model.penalesSize(catalog)
 # Funciones de ordenamiento
 
 def sort(control):

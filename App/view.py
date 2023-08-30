@@ -60,12 +60,26 @@ def print_menu():
     print("0- Salir")
 
 
-def loadData(control):
+def loadData1(control):
     """
     Solicita al controlador que cargue los datos en el modelo
     """
-    Num_goleadores = controller.load_data(control)
+    Num_goleadores = controller.load_data(control)[0]
     return Num_goleadores
+
+def loadData2(control):
+    """
+    Solicita al controlador que cargue los datos en el modelo
+    """
+    Partidos = controller.load_data(control)[1]
+    return Partidos
+
+def loadData3(control):
+    """
+    Solicita al controlador que cargue los datos en el modelo
+    """
+    Penales = controller.load_data(control)[2]
+    return Penales
 
 
 def print_data(control, id):
@@ -154,13 +168,12 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = loadData(control)
+            data = loadData1(control),loadData2(control),loadData3(control)
             print('se han cargandos los siguientes datos: ')
-            print(data,'goleadores')
+            print(data,'goleadores,resultados de partidos y penales.')
         elif int(inputs) == 2:
             print_req_1(control)
             
-
         elif int(inputs) == 3:
             print_req_2(control)
 
