@@ -49,10 +49,22 @@ def new_data_structs():
     Inicializa las estructuras de datos del modelo. Las crea de
     manera vacía para posteriormente almacenar la información.
     """
-    #TODO: Inicializar las estructuras de datos
-    pass
+    partidos = {'date': None,
+               'home_team': None,
+               'away_team,': None,
+               'home_score': None,
+               'away_score': None,
+               'tournament': None,
+               'city': None,
+               'country': None,
+               'neutral': None,}
 
-
+    catalog['date'] = lt.newList('ARRAY_LIST')
+    catalog['authors'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=compareauthors)
+    catalog['tags'] = lt.newList('SINGLE_LINKED',
+                                 cmpfunction=comparetagnames)
+    catalog['book_tags'] = lt.newList('ARRAY_LIST')
 # Funciones para agregar informacion al modelo
 
 def add_data(data_structs, data):
