@@ -51,72 +51,33 @@ def new_data_structs_match():
     manera vacía para posteriormente almacenar la información.
     """
       # creando y configurando el ADT list para almacenar los partidos
-    partidos = lt.newList("ARRAY_LIST")
-    
  # creando y configurando los atributos que componen un partido 
-    partidos = {'date': None,
-               'home_team': None,
-               'away_team': None,
-               'home_score': None,
-               'away_score': None,
-               'tournament': None,
-               'city': None,
-               'country': None,
-               'neutral': None,
-               'winner': None}
+    catalog = {'partidos': None,
+               'goles': None,
+               'penales': None}
+
+    catalog['partidos'] = lt.newList()
+    catalog['goles'] = lt.newList()
+    catalog['penales'] = lt.newList()
+    
+    #TODO 4.5 Modificar el uso del TAD lista (p.30.) 
+
+    return catalog
     
       # creando y configurando el ADT list para almacenar los datos que componen los diferentes partidos
-      
-    partidos['date'] = lt.newList('ARRAY_LIST')
-    partidos['home_team'] = lt.newList('ARRAY_LIST')
-    partidos['away_team'] = lt.newList('ARRAY_LIST')
-    partidos['home_score'] = lt.newList('ARRAY_LIST')
-    partidos['away_score'] = lt.newList('ARRAY_LIST')
-    partidos['tournament'] = lt.newList('ARRAY_LIST')
-    partidos['city'] = lt.newList('ARRAY_LIST')
-    partidos['country'] = lt.newList('ARRAY_LIST')
-    partidos['neutral'] = lt.newList('ARRAY_LIST')
-    partidos['winner'] = lt.newList('ARRAY_LIST')
-    
-    return partidos
+  
 
-def new_load_data(nombre_carpeta,nombre_archivo):
 
-    try:
-        # concatenando el nombre del archivo con las carpetas de datos
-        carpeta = cf.file_path(cf.data_dir, nombre_archivo, nombre_carpeta)
-        
-        print("Archivo ubicado en:", carpeta)
-
-        # abriendo el archivo CSV
-        partidos_file = open(carpeta, "r", encoding="utf-8")
-        # leyendo el archivo CSV
-        registrar_partido = csv.DictReader(partidos_file, delimiter=",")
-        # iterando sobre los registros del archivo CSV
-        for partido in registrar_partido:
-            # agregando el registro al ADT list
-            partidos = new_data_structs_match(partidos, partido)
-        # cerrando el archivo CSV
-        partidos_file.close()
-        # retornando la lista de partidos
-        return partidos
-    except Exception as e:
-        print(e)
-        raise Exception
 
 # Funciones para agregar informacion al modelo
 
-def add_data(data_structs, data):
-    """
-    Función para agregar nuevos elementos a la lista
-    """
-    #TODO: Crear la función para agregar elementos a una lista
-    
-
-def add_date(partidos, date):
-    # Se adiciona la fecha del partido
-    lt.addLast(partidos['date'], date)
-    return partidos
+def add_goleadores(catalog, goleador):
+   
+    # Se adiciona el libro a la lista de libros
+    lt.addLast(catalog['goles'], goleador)
+    # Se obtienen los autores del libro
+   
+    return catalog
 
 
 def add_team(partidos, home_team, away_team):
@@ -159,12 +120,13 @@ def get_data(data_structs, id):
     pass
 
 
-def data_size(data_structs):
+def goleadoresSize(catalog):
     """
     Retorna el tamaño de la lista de datos
     """
     #TODO: Crear la función para obtener el tamaño de una lista
-    pass
+    goles=catalog['goles']
+    return lt.size(goles)
 
 
 def req_1(data_structs):

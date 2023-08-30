@@ -36,8 +36,6 @@ def new_controller():
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
-
     control = {
         'model': None
     }
@@ -47,18 +45,33 @@ def new_controller():
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control):
     """
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    partidos = control['model']
-    date, home_team, away_team, home_score, away_score, tournament, city, country, neutral, winner = ()
-  
-    goleadores = loadGoleadores(partidos)
-    penales = loadPenales(partidos)
-    return partidos, date, goleadores, penales
-    pass
+    catalog = control['model']
+    #filename_goals='goalscorers-utf8-'+opcion+'.csv' -> opcion
+    filename_goals='goalscorers-utf8-small.csv'
+    file_name_result='results-utf8-small.csv'
+    file_name_shootouts='shootouts-utf8-small.csv'
+    Num_goals=loadGoleadores(catalog)
+    return Num_goals
+    
+        # abriendo el archivo CSV
+    
+def loadGoleadores(catalog):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    filename_goals = cf.data_dir + 'goalscorers-utf8-small.csv'
+    input_file = csv.DictReader(open(filename_goals, encoding='utf-8'))
+    for goal in input_file:
+        model.add_goleadores(catalog, goal)
+    return model.goleadoresSize(catalog)
+
 
 
 # Funciones de ordenamiento

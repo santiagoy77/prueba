@@ -27,7 +27,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 assert cf
-from tabulate import tabulate
+#from tabulate import tabulate
 import traceback
 
 """
@@ -38,12 +38,12 @@ operación solicitada
 """
 
 
-def new_controller():
+def newController():
     """
-        Se crea una instancia del controlador
+    Se crea una instancia del controlador
     """
-    #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    pass
+    control = controller.new_controller()
+    return control
 
 
 def print_menu():
@@ -60,12 +60,12 @@ def print_menu():
     print("0- Salir")
 
 
-def load_data(control):
+def loadData(control):
     """
-    Carga los datos
+    Solicita al controlador que cargue los datos en el modelo
     """
-    #TODO: Realizar la carga de datos
-    pass
+    Num_goleadores = controller.load_data(control)
+    return Num_goleadores
 
 
 def print_data(control, id):
@@ -140,7 +140,7 @@ def print_req_8(control):
 
 
 # Se crea el controlador asociado a la vista
-control = new_controller()
+control = newController()
 
 # main del reto
 if __name__ == "__main__":
@@ -154,9 +154,12 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = load_data(control)
+            data = loadData(control)
+            print('se han cargandos los siguientes datos: ')
+            print(data,'goleadores')
         elif int(inputs) == 2:
             print_req_1(control)
+            
 
         elif int(inputs) == 3:
             print_req_2(control)
