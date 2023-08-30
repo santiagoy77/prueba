@@ -170,7 +170,9 @@ if __name__ == "__main__":
             print("Cargando información de los archivos ....\n")
             data = loadData1(control),loadData2(control),loadData3(control)
             print('se han cargandos los siguientes datos: ')
-            print(data,'goleadores,resultados de partidos y penales.')
+            print(data[0],'goleadores')
+            print(data[1],'resultados de partidos ')
+            print(data[2],'penales.')
         elif int(inputs) == 2:
             print_req_1(control)
             
