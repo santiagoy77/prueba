@@ -44,7 +44,7 @@ dos listas, una para los videos, otra para las categorias de los mismos.
 # Construccion de modelos
 
 
-def new_data_structs():
+def new_data_structs_match():
     """
     Inicializa las estructuras de datos del modelo. Las crea de
     manera vacía para posteriormente almacenar la información.
@@ -70,6 +70,46 @@ def new_data_structs():
     partidos['neutral'] = lt.newList('ARRAY_LIST')
     
     return partidos
+
+def new_data_structs_goals():
+    """
+    Inicializa las estructuras de datos del modelo. Las crea de
+    manera vacía para posteriormente almacenar la información.
+    """
+    goals = {'date': None,
+               'home_team': None,
+               'away_team': None,
+               'home_score': None,
+               'away_score': None,
+               'tournament': None,
+               'city': None,
+               'country': None,
+               'neutral': None,}
+
+    goals['date'] = lt.newList('ARRAY_LIST')
+    goals['home_team'] = lt.newList('ARRAY_LIST')
+    goals['away_team'] = lt.newList('ARRAY_LIST')
+    goals['home_score'] = lt.newList('ARRAY_LIST')
+    goals['away_score'] = lt.newList('ARRAY_LIST')
+    goals['tournament'] = lt.newList('ARRAY_LIST')
+    goals['city'] = lt.newList('ARRAY_LIST')
+    goals['country'] = lt.newList('ARRAY_LIST')
+    goals['neutral'] = lt.newList('ARRAY_LIST')
+    
+    return goals
+
+def new_data_structure_shootouts():
+    
+    goalscorers = {'date': None,
+               'home_team': None,
+               'away_team': None,
+               'winner': None,}
+    goalscorers['date'] = lt.newList('ARRAY_LIST')
+    goalscorers['home_team'] = lt.newList('ARRAY_LIST')
+    goalscorers['away_team'] = lt.newList('ARRAY_LIST')
+    goalscorers['winner'] = lt.newList('ARRAY_LIST')
+    
+    return goalscorers
     
 # Funciones para agregar informacion al modelo
 
