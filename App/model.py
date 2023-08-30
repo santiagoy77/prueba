@@ -51,7 +51,7 @@ def new_data_structs():
     """
     partidos = {'date': None,
                'home_team': None,
-               'away_team,': None,
+               'away_team': None,
                'home_score': None,
                'away_score': None,
                'tournament': None,
@@ -59,12 +59,20 @@ def new_data_structs():
                'country': None,
                'neutral': None,}
 
-    catalog['date'] = lt.newList('ARRAY_LIST')
-    catalog['authors'] = lt.newList('SINGLE_LINKED',
+    partidos['date'] = lt.newList('ARRAY_LIST')
+    partidos['home_team'] = lt.newList('SINGLE_LINKED',
                                     cmpfunction=compareauthors)
-    catalog['tags'] = lt.newList('SINGLE_LINKED',
+    partidos['away_team'] = lt.newList('SINGLE_LINKED',
                                  cmpfunction=comparetagnames)
-    catalog['book_tags'] = lt.newList('ARRAY_LIST')
+    partidos['home_score'] = lt.newList('ARRAY_LIST')
+    partidos['away_score'] = lt.newList('ARRAY_LIST')
+    partidos['tournament'] = lt.newList('ARRAY_LIST')
+    partidos['city'] = lt.newList('ARRAY_LIST')
+    partidos['country'] = lt.newList('ARRAY_LIST')
+    partidos['neutral'] = lt.newList('ARRAY_LIST')
+    
+    return partidos
+    
 # Funciones para agregar informacion al modelo
 
 def add_data(data_structs, data):
