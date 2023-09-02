@@ -38,8 +38,8 @@ from DISClib.Algorithms.Sorting import quicksort as quk
 assert cf
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá
-dos listas, una para los videos, otra para las categorias de los mismos.
+Se define la estructura de un catálogo de partidos. El catálogo tendrá
+tres listas, una para los partidos, otra para los goleagores y otra para los penaltis.
 """
 
 # Construccion de modelos
@@ -68,7 +68,7 @@ def new_data_structs_match():
 
 def add_goleadores(catalog, goleador):
    
-    # Se adiciona el libro a la lista de libros
+    # Se adiciona el goleador a la lista de goleadores
     lt.addLast(catalog['goles'], goleador)
    
     return catalog
