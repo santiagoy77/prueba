@@ -65,6 +65,7 @@ def loadData1(control):
     Solicita al controlador que cargue los datos en el modelo de los goles.
     """
     Num_goleadores = controller.load_data(control)[0]
+   
     return Num_goleadores
 
 def loadData2(control):
@@ -168,7 +169,7 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = loadData1(control),loadData2(control),loadData3(control)
+            data = loadData1(control, ),loadData2(control),loadData3(control)
             print('se han cargandos los siguientes datos: ')
             print(data[0],'goleadores')
             print(data[1],'resultados de partidos ')
