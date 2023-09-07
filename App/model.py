@@ -65,33 +65,18 @@ def new_data_structs():
 
 # Funciones para agregar informacion al modelo
 
-def add_dataR(data_structs, data):
+def add_dataR(data_structs, data , posci):
     """
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos
-    lt.addLast(data_structs["results"],data)
+    lt.addLast(data_structs[posci],data)
     return data_structs
 # Funciones para creacion de datos
 
-def add_dataG(data_structs, data):
-    """
-    Función para agregar nuevos elementos a la lista
-    """
-    #TODO: Crear la función para agregar elementos
-    lt.addLast(data_structs["goalscorers"],data)
-    return data_structs
 
-def add_dataS(data_structs, data):
-    """
-    Función para agregar nuevos elementos a la lista
-    """
-    #TODO: Crear la función para agregar elementos
-    lt.addLast(data_structs["shootouts"],data)
-    return data_structs
-
-def primero(data_structs):
-    sublista = lt.subList(data_structs ,0,3)
+def sublista(data_structs, pos_i , num):
+    sublista = lt.subList(data_structs ,pos_i,num)
     return sublista
 
 def new_data(id, info):
@@ -186,7 +171,7 @@ def req_8(data_structs):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def dtosSize(data_structs):
-    return lt.size(data_structs["results"])
+    return lt.size(data_structs)
 
 def compare(data_1, data_2):
     """

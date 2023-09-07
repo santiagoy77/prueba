@@ -54,41 +54,28 @@ def load_data(control):
     filenameS = "football/shootouts-utf8-small.csv"
     #TODO: Realizar la carga de datos
     dtos = control["model"]
-    resultss  = loadResults(dtos,filenameR)
-    resultss1  = loadgoalscorers(dtos,filenameG)
-    resultss2  = loadshootouts(dtos,filenameS)
+    resultss  = loaddata(dtos,filenameR, "results")
+    resultss1  = loaddata(dtos,filenameG , "goalscorers")
+    resultss2  = loaddata(dtos , filenameS , "shootouts"  )
+    sort(resultss)
     return resultss , resultss1 , resultss2
 
 # Funciones de ordenamiento
 
-
-
-def loadResults(dtos , filename):
-    results_file  = cf.data_dir + filename
-    input_file = csv.DictReader(open(results_file , encoding='utf-8'))
+def loaddata(dtos , filename, poci):
+    file = cf.data_dir + filename
+    input_file = csv.DictReader(open(file , encoding='utf-8'))
     for date in input_file:
-        model.add_dataR(dtos,date)   
-      
-    return model.dtosSize(dtos)
+        model.add_dataR(dtos,date,poci)
+    return dtos[poci]
 
-def loadgoalscorers(dtos , filename):
-    results_file  = cf.data_dir + filename
-    input_file = csv.DictReader(open(results_file , encoding='utf-8'))
-    for date in input_file:
-        model.add_dataG(dtos,date)   
-    return model.dtosSize(dtos)
-
-def loadshootouts(dtos , filename):
-    results_file  = cf.data_dir + filename
-    input_file = csv.DictReader(open(results_file , encoding='utf-8'))
-    for date in input_file:
-        model.add_dataS(dtos,date)   
-    return model.dtosSize(dtos)
-
+def sizedtos(dtos):
+    r1 , r2, r3, = load_data(dtos)
+    return model.dtosSize(r1), model.dtosSize(r2) , model.dtosSize(r3)
 
 def primeros(dtos):
-    sublista = model.primero(dtos)
-    return sublista
+    r1 , r2, r3, = load_data(dtos)     
+    return model.sublista(r1, 1 , 3) , model.sublista(r2, 1 , 3) , model.sublista(r3, 1 , 3)
 
 def sort(control):
     """
