@@ -24,7 +24,7 @@ import config as cf
 import model
 import time
 import csv
-
+csv.field_size_limit(2147483647)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -36,20 +36,46 @@ def new_controller():
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
-
+    control = {
+        "model" : None
+    }
+    control["model"] = model.new_data_structs()
+    return control
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control):
+    
     """
     Carga los datos del reto
     """
-    # TODO: Realizar la carga de datos
-    pass
-
+    filenameR = "football/results-utf8-small.csv"
+    filenameG = "football/goalscorers-utf8-small.csv"
+    filenameS = "football/shootouts-utf8-small.csv"
+    #TODO: Realizar la carga de datos
+    dtos = control["model"]
+    resultss  = loaddata(dtos,filenameR, "results")
+    resultss1  = loaddata(dtos,filenameG , "goalscorers")
+    resultss2  = loaddata(dtos , filenameS , "shootouts"  )
+    sort(resultss)
+    return resultss , resultss1 , resultss2
 
 # Funciones de ordenamiento
+
+def loaddata(dtos , filename, poci):
+    file = cf.data_dir + filename
+    input_file = csv.DictReader(open(file , encoding='utf-8'))
+    for date in input_file:
+        model.add_dataR(dtos,date,poci)
+    return dtos[poci]
+
+def sizedtos(dtos):
+    r1 , r2, r3, = load_data(dtos)
+    return model.dtosSize(r1), model.dtosSize(r2) , model.dtosSize(r3)
+
+def primeros(dtos):
+    r1 , r2, r3, = load_data(dtos)     
+    return model.sublista(r1, 1 , 3) , model.sublista(r2, 1 , 3) , model.sublista(r3, 1 , 3)
 
 def sort(control):
     """

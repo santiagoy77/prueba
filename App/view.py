@@ -26,9 +26,13 @@ import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
-assert cf
 from tabulate import tabulate
+
+assert cf
 import traceback
+
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 """
 La vista se encarga de la interacción con el usuario
@@ -42,8 +46,9 @@ def new_controller():
     """
         Se crea una instancia del controlador
     """
+    control =  controller.new_controller()
     #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    pass
+    return control
 
 
 def print_menu():
@@ -65,8 +70,8 @@ def load_data(control):
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    pass
-
+    result = controller.load_data(control) 
+    return result
 
 def print_data(control, id):
     """
@@ -77,12 +82,47 @@ def print_data(control, id):
 
 def print_req_1(control):
     """
-        Función que imprime la solución del Requerimiento 1 en consola
+        Función que imprime la soluci1ón del Requerimiento 1 en consola
+        Imprime los 3 primeros y los 3 ultimos cargados de los 3 archivos .
+
+        control: la estrcutura de datos a cargar.
     """
+    
     # TODO: Imprimir el resultado del requerimiento 1
-    pass
+    rt , gl , sh = controller.sizedtos(control)
+    l1, l2,l3 = controller.primeros(control)
+    print(('Match results count: ' + str(rt)).center(130))
+    print(('Goal scorers count: ' + str(gl)).center(130))
+    print(('Shootouts-penalty definition count: ' + str(sh)).center(130))
+    print("".center(130,"-"))
+    print("".center(130,"="))
+    print("FIFA RECORDS REPORT".center(130,"="))
+    print("".center(130,"="))
 
+    print("Print results for the first 3 and 3 last records on file.\n".center(130))
+    
+    print("".center(130,"-"))
+    print("MATCH RESULTS".center(130,"-"))
+    print("".center(130,"-"))
+    print("         Total match results: " +str(rt))
+    print("Results struct has more than 6 records...")
+    print(tabulate(l1["elements"] , headers = "keys" , tablefmt='grid'))
+    
+    print("".center(130,"-"))
+    print("GOAL SCORERS".center(130,"-"))
+    print("".center(130,"-"))
+    print("         Total goal scorers: " +str(gl))
+    print("Results struct has more than 6 records...")
+    print(tabulate(l2["elements"], headers = "keys" , tablefmt='grid'))
+    
+    print("".center(130,"-"))
+    print("SHOOTOUTS".center(130,"-"))
+    print("".center(130,"-"))
+    print("         Total shootouts: " +str(sh))
+    print("Results struct has more than 6 records...")
+    print(tabulate(l3["elements"], headers = "keys" , tablefmt='grid'))
 
+    
 def print_req_2(control):
     """
         Función que imprime la solución del Requerimiento 2 en consola
@@ -153,8 +193,10 @@ if __name__ == "__main__":
         print_menu()
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
-            print("Cargando información de los archivos ....\n")
-            data = load_data(control)
+            print("".center(130,"-"))
+            print("Cargando información de los archivos ....".center(130))
+            print("".center(130,"-"))
+            print(print_req_1(control))
         elif int(inputs) == 2:
             print_req_1(control)
 

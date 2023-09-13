@@ -50,20 +50,34 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    pass
+    
+    dtos = {
+        "results": None,
+        "goalscorers" : None,
+        "shootouts" : None
+            }
+    dtos["results"] = lt.newList('ARRAY_LIST')
+    dtos["goalscorers"] = lt.newList('ARRAY_LIST')
+    dtos["shootouts"] = lt.newList('ARRAY_LIST')
+
+    return dtos
 
 
 # Funciones para agregar informacion al modelo
 
-def add_data(data_structs, data):
+def add_dataR(data_structs, data , posci):
     """
     Función para agregar nuevos elementos a la lista
     """
-    #TODO: Crear la función para agregar elementos a una lista
-    pass
-
-
+    #TODO: Crear la función para agregar elementos
+    lt.addLast(data_structs[posci],data)
+    return data_structs
 # Funciones para creacion de datos
+
+
+def sublista(data_structs, pos_i , num):
+    sublista = lt.subList(data_structs ,pos_i,num)
+    return sublista
 
 def new_data(id, info):
     """
@@ -156,6 +170,8 @@ def req_8(data_structs):
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def dtosSize(data_structs):
+    return lt.size(data_structs)
 
 def compare(data_1, data_2):
     """
