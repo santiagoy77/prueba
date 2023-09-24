@@ -22,9 +22,18 @@
 
 import config as cf
 import model
-import time
 import csv
+import time
+from datetime import datetime
 
+import DISClib as lib
+
+from DISClib.ADT import list as lt 
+from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import quicksort as qs
+
+
+csv.field_size_limit(2147483647)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -36,74 +45,84 @@ def new_controller():
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    control = {
-        'model': None
-    }
-    control['model'] = model.new_data_structs_match()
+    
+    control = {'model': None }
+     
+    control['model'] = model.new_data_structs_match() # type: ignore
+    
     return control
-
-
+    
 # Funciones para la carga de datos
 
-def load_data(control):
+def load_data(control, tamaño):
     """
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    catalog = control['model']
-    #filename_goals='goalscorers-utf8-'+opcion+'.csv' -> opcion
-    filename_goals='goalscorers-utf8-small.csv'
-    file_name_result='results-utf8-small.csv'
-    file_name_shootouts='shootouts-utf8-small.csv'
-    Num_goals=loadGoleadores(catalog)
-    partidos=loadPartidos(catalog)
-    penales=loadPenales(catalog)
-    return Num_goals,partidos,penales
+    catalogo = control['model']
+    
+    partidos = load_partidos(catalogo, tamaño)
+    goles = load_goles(catalogo, tamaño)
+    penales = load_penales(catalogo, tamaño)
+    
+    sortpartidos(catalogo)
+    
+    return goles,partidos,penales
     
         # abriendo el archivo CSV
+        
+def load_partidos(catalogo, tamaño):
+    """ 
     
-def loadGoleadores(catalog):
     """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
+    
+    filename_partidos = cf.data_dir + 'results-utf8-' + tamaño + '.csv'
+    input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
+    for result in input_file:
+        model.add_partido(catalogo, result)
+        
+    return model.partidos_size(catalogo)
+    
+def load_goles(catalogo, tamaño):
     """
-    filename_goals = cf.data_dir + 'goalscorers-utf8-small.csv'
+    Carga el total de goles anotados y los jugadores que marcaron gol. Se toma
+    la informacion de las 3 primeras y 3 ultimas anotaciones ordenadas por la fecha
+    del encuentro, minuto en qué se anotó y el nombre del jugador.
+    Cada anotación se compone de:
+    - 
+    -
+    -
+    -
+    -
+    -
+    -
+    cada anotación, se crea en la lista de goles.
+    """
+    filename_goals = cf.data_dir + 'goalscorers-utf8-' + tamaño + '.csv'
     input_file = csv.DictReader(open(filename_goals, encoding='utf-8'))
     for goal in input_file:
-        model.add_goleadores(catalog, goal)
-    return model.goleadoresSize(catalog)
+        model.add_goleadores(catalogo, goal)
+    return model.goleadores_size(catalogo)
 
-def loadPartidos(catalog):
-    """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
-    """
-    filename_partidos = cf.data_dir + 'results-utf8-small.csv'
-    input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
-    for partidos in input_file:
-        model.add_team(catalog, partidos)
-    return model.partidosSize(catalog)
 
-def loadPenales(catalog):
+def load_penales(catalogo, tamaño):
     """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
+    Carga los penales del archivo, por cada penal se toman 
     """
-    filename_penales = cf.data_dir + 'shootouts-utf8-small.csv'
+    filename_penales = cf.data_dir + 'shootouts-utf8-'+ tamaño + '.csv'
     input_file = csv.DictReader(open(filename_penales, encoding='utf-8'))
     for penal in input_file:
-        model.add_penales(catalog, penal)
-    return model.penalesSize(catalog)
+        model.add_penales(catalogo, penal)
+    return model.penales_size(catalogo)
+
 # Funciones de ordenamiento
 
-def sort(control):
+def sortpartidos(catalogo):
     """
     Ordena los datos del modelo
     """
     #TODO: Llamar la función del modelo para ordenar los datos
+    model.sortpartidos(catalogo)
     pass
 
 
