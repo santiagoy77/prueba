@@ -23,7 +23,7 @@
 import config as cf
 import sys
 import controller
-
+from tabulate import tabulate
 
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
@@ -39,6 +39,8 @@ assert cf
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
 
+# numero de elementos para imprimir registros
+NTH = 3
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -61,23 +63,23 @@ def print_menu_usuario():
     """
     Menú de selección de usuario
     """
-    
-    print("Bienvenido!")
-    print("Estás a un paso de adentrarte a la historia de las competiciones organizadas por la FIFA.")
-    print("Para gozar de una mejor experiencia, por favor indica tú tipo de usuario:")
+    print("-------------------\n")
+    print("Bienvenido! \n")
+    print("Estás a un paso de adentrarte a la historia de las competiciones organizadas por la FIFA. \n")
+    print("Para gozar de una mejor experiencia, por favor indica tú tipo de usuario: \n")
     
     print ("1- Soy Estudiante")
-    print ("2- Soy parte del Equípo Docente")
+    print ("2- Soy parte del Equípo Docente \n")
     
 def print_menu_Estudiante(): 
     
     """
     Menú de Estudiante
     """
+    print("-------------------\n")
+    print("Bienvenido Colega \n")
     
-    print("Bienvenido Colega")
-    
-    print("1- Cargar la información de las competiciones")
+    print("1- Carga la información de las competiciones")
     
     print("2- Análisis de los ultimos partidos de algún equipo")
     print("3- Análisis de los primeros goles anotados por un jugador")
@@ -88,7 +90,7 @@ def print_menu_Estudiante():
     print("8- Análisis de los mejores goleadores de los torneos")
     print("9- Análisis del desempeño historico entre selecciones")
     
-    print("0- Salir")    
+    print("0- Salir \n")    
     
 def print_menu_Docente(): 
     
@@ -96,7 +98,7 @@ def print_menu_Docente():
     Menú del equípo docente
     """
     
-    print("Bienvenid@(s) Daniel, Miguel y/o Alejandra ")    
+    print("Bienvenid@(s) Daniel, Miguel y/o Alejandra \n ")    
     
     print("1- Cargar la información de las competiciones")
     
@@ -109,10 +111,11 @@ def print_menu_Docente():
     print("8- Análisis de los mejores goleadores de los torneos")
     print("9- Análisis del desempeño historico entre selecciones")
     
-    print("0- Salir")
+    print("0- Salir \n")
+    print("-------------------\n")
 
 
-def loadData1(control, tamaño):
+def loadData1(tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo de los goles.
     """
@@ -120,27 +123,76 @@ def loadData1(control, tamaño):
    
     return results
 
-def loadData2(control,tamaño):
+def loadData2(tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo, la carga de los partidos.
     """
     goalscorers = controller.load_data(control, tamaño)[1]
     return goalscorers
 
-def loadData3(control,tamaño):
+def loadData3(tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo, la carga de los penales.
     """
     shootouts = controller.load_data(control, tamaño)[2]
     return shootouts
 
+def print_partidos_ordenados(partido, N=NTH):
+    # Crear una lista de listas para los datos de la tabla
+    partidos_ordenados = controller.sortpartidos(partido)
+    headers = ["date", "home_team", "away_team", "home_score", 
+               "away_score", "tournament", "city", "country"]      
+    data = [[partido["date"], partido["home_team"], partido["away_team"],
+             partido["home_score"],partido["away_score"], partido["tournament"], 
+             partido["city"], partido["country"], partido["neutral"]] for partido in partidos_ordenados[:N]]
+        
+    print(tabulate(data, headers, tablefmt="grid"))
 
-def print_data(control, id):
+def print_data(lista, N = NTH):
     """
         Función que imprime un dato dado su ID
     """
-    #TODO: Realizar la función para imprimir un elemento
-    pass
+    headers = ["date", "home_team", "away_team", "home_score", "away_score", "tournament", "city", "country"]
+    size = controller.partidos_size(lista)
+    iterator = lt.iterator(lista)
+    partidos_ordenados = controller.sortpartidos(lista)
+    
+    if size <= N*2:
+        print(size)
+        for partido in iterator:
+            
+                table =[[partido["date"], partido["home_team"], partido["away_team"],
+                partido["home_score"],partido["away_score"], partido["tournament"], 
+                partido["city"], partido["country"]] for partido in partidos_ordenados]
+                
+                print(tabulate(table, headers = 'firstrow', tablefmt='github', showindex=True))
+    else:
+        print(N)
+        i = 1
+        while i <= N:
+            
+            partido = lt.getElement(lista, i)
+            
+            table=[[partido["date"], partido["home_team"], partido["away_team"],
+            partido["home_score"],partido["away_score"], partido["tournament"], 
+            partido["city"], partido["country"]] for partido in partidos_ordenados]
+                
+            print(tabulate(table, headers = 'firstrow', tablefmt='github', showindex=True))
+            i += 1 
+                   
+        print("Los", N, "últimos libros ordenados son:")
+        i = size - N + 1
+        
+        while i <= size:
+            partido = lt.getElement(lista, i)
+            
+            table=[[partido["date"], partido["home_team"], partido["away_team"],
+                  partido["home_score"],partido["away_score"], partido["tournament"], 
+                  partido["city"], partido["country"]] for partido in partidos_ordenados]
+            
+            print(tabulate(table, headers = 'firstrow', tablefmt='github', showindex=True))
+            i += 1
+
 
 def print_req_1(control):
     """
@@ -243,21 +295,28 @@ if __name__ == "__main__":
     while working:
         
         print_menu_usuario()
-        inputs = input('Seleccione una opción para continuar\n')
+        print("-------------------\n")
+        inputs = input('Seleccione una opción para continuar\n' + "\n"+"-------------------\n")
         
         if int(inputs) == 1:
             
             print_menu_Estudiante()
-            inputs = input('Seleccione una opción para continuar\n')
-             
+            print("-------------------\n")
+            inputs = input('Seleccione una opción para continuar\n' + "\n"+"-------------------\n")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
             if int(inputs) == 1:
                 print("Cargando información de los archivos ....\n")
-                data = loadData1(control, tamaño= 'small'),loadData2(control,tamaño='small'), loadData3(control, tamaño ='small')
-                print('se han cargandos los siguientes datos: ')
+                print("-------------------\n")
+                data, data2, data3 = loadData1(tamaño = 'small'),loadData2(tamaño='small'), loadData3(tamaño ='small')
+                print('se han cargandos los siguientes datos: \n ')
+                print("-------------------\n")
                 
-                print(data[0],'Resultados de los partidos.')
-                print(data[1],'Goleadores.')
-                print(data[2],'Goles anotados desde el punto de penal.')
+                headers = ["Tipo", "Total"]
+                table=[("Partidos",data), ("Goleadores", data2), ("Goles de penal",data3)]
+                print(tabulate(table, headers, tablefmt="simple"))
+                print("\n")
+                print("-------------------\n")
+                print_partidos_ordenados(control,5)
                 
             elif int(inputs) == 2:
                 print_req_1(control)
@@ -304,7 +363,7 @@ if __name__ == "__main__":
                 tamaño = input('Seleccione una opción para continuar\n')
                 tamaño_escogido = escoger_tamaño(tamaño)
                 print("Cargando información de los archivos ....\n")
-                data = loadData1(control,tamaño_escogido),loadData2(control, tamaño_escogido),loadData3(control,tamaño_escogido)
+                data = loadData1(tamaño_escogido),loadData2(tamaño_escogido),loadData3(tamaño_escogido)
                 print('se han cargandos los siguientes datos: ')
                 print(data[0],'Resultados de los partidos.')
                 print(data[1],'Goleadores.')

@@ -26,6 +26,8 @@
 
 
 import config as cf
+import datetime
+import random
 
 import DISClib as DLIB
 from DISClib.ADT import list as lt
@@ -61,25 +63,10 @@ def new_data_structs_match():
     catalogo = {'partidos': None,
                 'goleadores': None,
                 'penales': None,
-                'date': None,
-                'home_team': None,
-                'away_team': None,
-                'home_score': None,
-                'away_score': None,
-                'tournment': None,
-                'city': None,
-                'country': None,
-                'neutral': None,
-                'own_goal': None,
-                'penalty': None,
-                'team': None,
-                'scorer': None,
-                'minute': None,
-                'winner': None,
                 }
 
     catalogo['partidos'] = lt.newList(
-        'ARRAY_LIST', cmpfunction=compare_partidos)
+        'ARRAY_LIST', cmpfunction=partido_sort_criteria)
     catalogo['goleadores'] = lt.newList(
         'ARRAY_LIST', cmpfunction=compare_goleadores)
     catalogo['penales'] = lt.newList(
@@ -100,7 +87,7 @@ def add_partido(catalogo, partido):
                     partido['home_score'], partido['away_score'], partido['tournament'],
                     partido['city'], partido['country'], partido['neutral'])
 
-    lt.addLast(catalogo['partidos'], partido)
+    lt.addLast(catalogo['partidos'], p)
 
     return catalogo
 
@@ -115,7 +102,7 @@ def add_goleadores(catalogo, goleador):
                      goleador['team'], goleador['scorer'], goleador['minute'],
                      goleador['own_goal'], goleador['penalty'])
 
-    lt.addLast(catalogo['goleadores'], goleador)
+    lt.addLast(catalogo['goleadores'], g)
 
     return catalogo
 
@@ -129,7 +116,7 @@ def add_penales(catalogo, penales):
     pe = new_penales(penales['date'], penales['home_team'], penales['away_team'],
                      penales['winner'])
 
-    lt.addLast(catalogo['penales'], penales)
+    lt.addLast(catalogo['penales'], pe)
 
     return catalogo
 
@@ -140,8 +127,8 @@ def new_partido(date, home_team, away_team, home_score, away_score, tournament, 
     """
     Crea una nueva estructura para modelar los datos
     """
-    partido = {'date': "", "home_team": "", 'away_team': "", 'home_score': 0, 'away_score': 0,
-               'tournament': "", 'city': "", 'country': "", 'neutral': None}
+    partido = {'date': "", 'home_team': "", 'away_team': "", 'home_score': 0, 'away_score': 0,
+               'tournament': "", 'city': "", 'country': "", 'neutral': ""}
 
     partido['date'] = date
     partido['home_team'] = home_team
@@ -155,14 +142,13 @@ def new_partido(date, home_team, away_team, home_score, away_score, tournament, 
 
     return partido
 
-    pass
 
 
 def new_goleador(date, home_team, away_team, team, scorer, minute, own_goal, penalty):
     """
     Crea una nueva estructura para modelar los datos
     """
-    goleador = {'date': "", "home_team": "", 'away_team': "", 'team': "",
+    goleador = {'date': "", 'home_team': "", 'away_team': "", 'team': "",
                 'scorer': "", 'minute': 0, 'own_goal': None, 'penalty': None}
 
     goleador['date'] = date
@@ -176,14 +162,11 @@ def new_goleador(date, home_team, away_team, team, scorer, minute, own_goal, pen
 
     return goleador
 
-    pass
-
-
 def new_penales(date, home_team, away_team, winner):
     """
     Crea una nueva estructura para modelar los datos
     """
-    penales = {'date': "", "home_team": "", 'away_team': "", 'winner': ""}
+    penales = {'date': "", 'home_team': "", 'away_team': "", 'winner': ""}
 
     penales['date'] = date
     penales['home_team'] = home_team
@@ -191,8 +174,6 @@ def new_penales(date, home_team, away_team, winner):
     penales['winner'] = winner
     
     return penales
-
-    pass
 
 
 # Funciones de consulta
@@ -221,7 +202,20 @@ def get_4(data_structs, id):
     """
     pass
 
-
+def total_goles_penal(catalogo, gol):
+    
+    goles_de_penal = catalogo['goleadores']
+    contador = 0
+    
+    pos = lt.isPresent(goles_de_penal, gol)
+    
+    if pos > 0:
+        gol_de_penal = lt.getElement(goles_de_penal, pos)
+        if gol_de_penal is not None:
+            for g in lt.iterator(catalogo["goleadores"]):
+                if gol_de_penal["penalty"] == g["penalty"]:
+                    contador += 1
+    return contador
 
 def partidos_size(catalogo):
     """
@@ -319,21 +313,29 @@ def compare_date(date1, date2):
     """
     Función encargada de comparar dos datos
     """
-    if (date1.float == date2.lower()):
+    date1 = datetime.datetime.strptime(date1["date"], "%Y-%m-%d")
+    date2 = datetime.datetime.strptime(date2["date"], "%Y-%m-%d")   
+     
+    if (date1 == date2):
         return 0
-    elif (date1.lower() > date2.lower()):
+    elif (date1 > date2):
         return 1
+    
     return -1
-
-    pass
 
 
 def compare_score(home_score_1, away_score_1, home_score_2, away_score_2):
-
-    return
+    
+    if home_score_1 < home_score_2:
+            return True
+    elif home_score_1 == home_score_2:
+             return away_score_1 < away_score_2
+    return False
 
 
 def compare_minuto_gol(minute1, minute2):
+    
+    
 
     return
 
@@ -344,11 +346,6 @@ def compare_nombre_goleador(nombre1, nombre2):
 
 
 # Funciones de comparación para el ordenamiento
-
-
-def compare_partidos(partido1, partido2):
-
-    return 
 
 
 def compare_goleadores(goleador1_, goleador2):
@@ -374,16 +371,31 @@ def sort_criteria(data_1, data_2):
    
     pass
 
+def partido_sort_criteria(partido1, partido2):
+    
+    date1 = datetime.datetime.strptime(partido1["date"], "%Y-%m-%d")
+    date2 = datetime.datetime.strptime(partido2["date"], "%Y-%m-%d")
+    
+    if date1 < date2:
+        return True
+    elif date1 == date2:
+        if partido1["home_score"] < partido2["home_score"]:
+            return True
+        elif partido1["home_score"] == partido2["home_score"]:
+            return (partido1["away_score"] < partido2["away_score"])
+    return False
+
 # Funciones de ordenamiento
 
 def sortpartidos(catalogo):
     """
     Función encargada de ordenar la lista con los datos
     """
-
-    merg.sort(catalogo['partidos'], compare_partidos)
-
-    pass
+    partidos = catalogo["partidos"]
+    lista_ordenada = merg.sort(partidos, partido_sort_criteria)
+    catalogo["partidos"] = lista_ordenada
+    
+    return lista_ordenada
 
 
 def sortgoleadores(catalogo):

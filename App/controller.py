@@ -28,7 +28,7 @@ from datetime import datetime
 
 import DISClib as lib
 
-from DISClib.ADT import list as lt 
+from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import quicksort as qs
 
@@ -38,21 +38,19 @@ csv.field_size_limit(2147483647)
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
-
-
 def new_controller():
     """
     Crea una instancia del modelo
     """
-    #TODO: Llamar la función del modelo que crea las estructuras de datos
-    
-    control = {'model': None }
-     
-    control['model'] = model.new_data_structs_match() # type: ignore
-    
+    # TODO: Llamar la función del modelo que crea las estructuras de datos
+
+    control = {'model': None} 
+    control['model'] = model.new_data_structs_match() 
+
     return control
-    
+
 # Funciones para la carga de datos
+
 
 def load_data(control, tamaño):
     """
@@ -60,70 +58,132 @@ def load_data(control, tamaño):
     """
     # TODO: Realizar la carga de datos
     catalogo = control['model']
-    
+
     partidos = load_partidos(catalogo, tamaño)
     goles = load_goles(catalogo, tamaño)
     penales = load_penales(catalogo, tamaño)
-    
-    sortpartidos(catalogo)
-    
-    return goles,partidos,penales
-    
-        # abriendo el archivo CSV
-        
+
+    return partidos, goles, penales
+
+    # abriendo el archivo CSV
+
+
 def load_partidos(catalogo, tamaño):
     """ 
+    Carga el total de partidos jugados en las diferentes competiciones. Se toma
+    la informacion de los 3 primeros y 3 ultimos partidos ordenados por la fecha
+    del encuentro y el marcador final del partidos.
+    Cada partido se compone de:
     
+    - Fecha del partido
+    - Equipo local.
+    - Equipo visitante.
+    - Marcador final.
+    - Liga a la que está asociado el encuentro.
+    - País y ciudad en el que se desarrolló el encuentro.
+
+    cada PÀRTIDO, se crea en la lista de partidos.
+   
     """
-    
-    filename_partidos = cf.data_dir + 'results-utf8-' + tamaño + '.csv'
-    input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
-    for result in input_file:
-        model.add_partido(catalogo, result)
+    if tamaño == "a":
+        tamaño = "large"
         
-    return model.partidos_size(catalogo)
+        filename_partidos = cf.data_dir + 'results-utf8-' + tamaño + '.csv'
+        input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))      
+        for result in input_file:
+            model.add_partido(catalogo, result) 
+        
+    elif tamaño == "b":
+        tamaño = "small"
+        
+        filename_partidos = cf.data_dir + 'results-utf8-' + tamaño + '.csv'
+        input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
+        for result in input_file:
+            model.add_partido(catalogo, result) 
     
+    elif tamaño == "small":
+        
+        tamaño = "small"   
+        filename_partidos = cf.data_dir + 'results-utf8-' + tamaño + '.csv'
+        input_file = csv.DictReader(open(filename_partidos, encoding='utf-8'))
+        for result in input_file:
+            model.add_partido(catalogo, result)   
+    else:
+        raise Exception       
+
+    return model.partidos_size(catalogo)
+
+
 def load_goles(catalogo, tamaño):
     """
     Carga el total de goles anotados y los jugadores que marcaron gol. Se toma
     la informacion de las 3 primeras y 3 ultimas anotaciones ordenadas por la fecha
     del encuentro, minuto en qué se anotó y el nombre del jugador.
     Cada anotación se compone de:
-    - 
-    -
-    -
-    -
-    -
-    -
-    -
+    
+    - Fecha del partido
+    - Equipo local.
+    - Equipo visitante.
+    - Nombre del jugador que marcó el gol.
+    - Equipo al que pertenece el jugador.
+    - Minuto en que se marcó el gol.
+    - Si el gol fue hecho desde el punto penal.
+    - Si el gol fue producto de un autogol.
+
     cada anotación, se crea en la lista de goles.
     """
-    filename_goals = cf.data_dir + 'goalscorers-utf8-' + tamaño + '.csv'
-    input_file = csv.DictReader(open(filename_goals, encoding='utf-8'))
-    for goal in input_file:
-        model.add_goleadores(catalogo, goal)
+    if tamaño == "a":
+        tamaño = "large"
+    elif tamaño == "b":
+        tamaño = "small"
+    else:
+        
+        filename_goals = cf.data_dir + 'goalscorers-utf8-' + tamaño + '.csv'
+        input_file = csv.DictReader(open(filename_goals, encoding='utf-8'))
+        for goal in input_file:
+            model.add_goleadores(catalogo, goal)
+            
     return model.goleadores_size(catalogo)
 
 
 def load_penales(catalogo, tamaño):
     """
-    Carga los penales del archivo, por cada penal se toman 
+    Carga el total de penales convertidos en las diferentes competiciones. Se toma
+    la informacion de las 3 primeras y 3 ultimas tandas de penal ordenadas por la fecha
+    del encuentro y los nombres de los equipos involucrados.
+    
+    Cada tanda de penales se compone de:
+    
+    - Fecha del partido
+    - Equipo local.
+    - Equipo visitante.
+    - Equipo ganador.
+
+    cada tanda de penales, se crea en la lista de penales. 
     """
-    filename_penales = cf.data_dir + 'shootouts-utf8-'+ tamaño + '.csv'
-    input_file = csv.DictReader(open(filename_penales, encoding='utf-8'))
-    for penal in input_file:
-        model.add_penales(catalogo, penal)
+    if tamaño == "a":
+        tamaño = "large"
+    elif tamaño == "b":
+        tamaño = "small"
+    else:
+        filename_penales = cf.data_dir + 'shootouts-utf8-' + tamaño + '.csv'
+        input_file = csv.DictReader(open(filename_penales, encoding='utf-8'))
+        for penal in input_file:
+            model.add_penales(catalogo, penal)
+
     return model.penales_size(catalogo)
 
 # Funciones de ordenamiento
 
-def sortpartidos(catalogo):
+
+def sortpartidos(control):
     """
     Ordena los datos del modelo
     """
-    #TODO: Llamar la función del modelo para ordenar los datos
-    model.sortpartidos(catalogo)
-    pass
+  
+    partidos_ordenados = model.sortpartidos(control['model'])
+    
+    return partidos_ordenados
 
 
 # Funciones de consulta sobre el catálogo
@@ -132,7 +192,7 @@ def get_data(control, id):
     """
     Retorna un dato por su ID.
     """
-    #TODO: Llamar la función del modelo para obtener un dato
+    # TODO: Llamar la función del modelo para obtener un dato
     pass
 
 
@@ -175,6 +235,7 @@ def req_5(control):
     # TODO: Modificar el requerimiento 5
     pass
 
+
 def req_6(control):
     """
     Retorna el resultado del requerimiento 6
@@ -198,6 +259,30 @@ def req_8(control):
     # TODO: Modificar el requerimiento 8
     pass
 
+def goles_de_penal(control, gol):
+    """
+    Retorna los libros que fueron etiquetados con el tag
+    """
+    return model.total_goles_penal(control["model"], gol)
+
+def partidos_size(control):
+    """
+    Retorna el número de partidos
+    """
+    return model.partidos_size(control["model"])
+
+
+def goleadores_size(control):
+    """
+    Retorna el número de goleadores
+    """
+    return model.goleadores_size(control["model"])
+
+def penales_size(control):
+    """
+    Retorna el número de penales
+    """
+    return model.penales_size(control["model"])
 
 # Funciones para medir tiempos de ejecucion
 
