@@ -402,12 +402,34 @@ def req_6(data_structs):
     pass
 
 
-def req_7(data_structs):
+def req_7(data_structs, fecha_ini, fecha_fin, top_jugador):
     """
     Función que soluciona el requerimiento 7
     """
     # TODO: Realizar el requerimiento 7
-    pass
+    
+    result=data_structs['official_results']
+    
+    pos_inicial=b_binaria_fecha_incio(result,fecha_ini)
+    pos_fin=b_binaria_fecha_final(result,fecha_fin)
+    
+    if pos_inicial < pos_fin or pos_inicial == -1 or pos_fin == pos_fin:
+        return None,None,None,None,None,None
+    
+    fecha_ini=datetime.datetime.strptime()
+    torneos=lt.newList(datastructure='ARRAY_LIST')
+    
+    num_partidos = 0
+    num_goles = 0
+    num_penales = 0
+    num_autogoles = 0
+    
+    return 0
+    
+    #tabulate(agrgar)
+    
+    
+    
 
 
 def req_8(data_structs):
@@ -456,6 +478,18 @@ def compare_nombre_goleador(nombre1, nombre2):
 
     return
 
+#req7
+def comparar_name(team1,team2):
+    t1 = team1.lower()
+    t2 = team2['name'].lower()
+
+    if t1 > t2:
+        return 1
+    elif t1 < t2:
+        return -1
+    else:
+        return 0
+
 
 # Funciones de comparación para el ordenamiento
 
@@ -483,7 +517,7 @@ def sort_criteria(data_1, data_2):
    
     pass
 
-def  (partido1, partido2):
+def partido_sort_criteria(partido1, partido2):
     
     date1 = datetime.datetime.strptime(partido1["date"], "%Y-%m-%d")
     date2 = datetime.datetime.strptime(partido2["date"], "%Y-%m-%d")

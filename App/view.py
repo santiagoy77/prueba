@@ -115,7 +115,7 @@ def print_menu_Docente():
     print("-------------------\n")
 
 
-def loadData1(tamaño):
+def loadData1(control,tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo de los goles.
     """
@@ -123,14 +123,14 @@ def loadData1(tamaño):
    
     return results
 
-def loadData2(tamaño):
+def loadData2(control,tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo, la carga de los partidos.
     """
     goalscorers = controller.load_data(control, tamaño)[1]
     return goalscorers
 
-def loadData3(tamaño):
+def loadData3(control,tamaño):
     """
     Solicita al controlador que cargue los datos en el modelo, la carga de los penales.
     """
@@ -307,7 +307,7 @@ if __name__ == "__main__":
             if int(inputs) == 1:
                 print("Cargando información de los archivos ....\n")
                 print("-------------------\n")
-                data, data2, data3 = loadData1(tamaño = 'small'),loadData2(tamaño='small'), loadData3(tamaño ='small')
+                data, data2, data3 = loadData1(control,tamaño = 'small'),loadData2(control,tamaño='small'), loadData3(control,tamaño ='small')
                 print('se han cargandos los siguientes datos: \n ')
                 print("-------------------\n")
                 
