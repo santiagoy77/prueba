@@ -39,6 +39,7 @@ from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import mergesort as merg
 from DISClib.Algorithms.Sorting import quicksort as quk
+from datetime import timedelta
 
 assert cf
 
@@ -240,6 +241,117 @@ def penales_size(catalogo):
     penales = catalogo['penales']
     return lt.size(penales)
 
+#para el requerimiento 7
+def b_binaria_fecha_incio(data_structs, start):
+    
+    """Busqueda binaria para encontrar una fecha de inicio"""
+    
+    min = 1
+    max = lt.size(data_structs)
+
+    primero = (lt.firstElement(data_structs))['date']
+    ultimo = (lt.lastElement(data_structs))['date']
+    
+    if start > primero:
+        return -1
+
+    #Confirmar que la fecha está en la lista en una posición de la mitad.
+    if start >= ultimo:
+
+        #Buscar un día antes para evitar errores al no encontrar la fecha mínima que coincide
+        prev = start - timedelta(days=1)
+
+        i = lt.size(data_structs)
+        #Busqueda binaria
+        while min <= max:
+            mitad = (min + max) // 2
+            team = lt.getElement(data_structs, min)
+            mitad_date = team['date']
+            if mitad_date == prev:
+                i = mitad
+                pass
+            elif  mitad_date > prev:
+                low = mitad + 1
+            else:
+                high = mitad - 1
+            
+            if min == max:
+                i = mitad
+            i = mitad
+                
+        encontro = False
+        #Iterar hacia atrás para encontrar la primera fecha que coincide
+        while not encontro:
+            result = lt.getElement(data_structs, i)
+            date = result['date']
+            if date >= start:
+                #Se encuentra la fecha
+                return i
+            else:
+                #Se sigue iterando
+                i -= 1
+
+            if i <= 0:
+                return -1
+    else:
+        #Retornar posición de la fecha más antigua
+        return lt.size(data_structs)
+    
+def b_binaria_fecha_final(data_structs, fin):
+    
+    """Busqueda binaria para encontrar una fecha de inicio"""
+    
+    min = 1
+    max = lt.size(data_structs)
+
+    primero = (lt.firstElement(data_structs))['date']
+    ultimo = (lt.lastElement(data_structs))['date']
+    
+    if fin < primero:
+        return -1
+
+    #Confirmar que la fecha está en la lista en una posición de la mitad.
+    if fin <= ultimo:
+
+        #Buscar un día despues para evitar errores al no encontrar la fecha mínima que coincide
+        sig = fin + timedelta(days=1)
+
+        i = 1
+        #Busqueda binaria
+        while min <= max:
+            mitad = (min + max) // 2
+            team = lt.getElement(data_structs, min)
+            mitad_date = team['date']
+            if mitad_date == sig:
+                i = mitad
+                pass
+            elif  mitad_date > sig:
+                low = mitad + 1
+            else:
+                high = mitad - 1
+            
+            if min == max:
+                i = mitad
+            i = mitad
+                
+        encontro = False
+        #Iterar hacia adelante para encontrar la primera fecha que coincide
+        while not encontro:
+            if i > 0 and i < lt.size(data_structs):
+
+                date = (lt.getElement(data_structs, i))['date']
+                if date <= fin:
+
+                    return i
+                else:
+                    i += 1
+            else:
+                return 1
+    else:
+        return 1
+    
+
+
 # Implementación de requerimientos
 
 def req_1(data_structs):
@@ -371,7 +483,7 @@ def sort_criteria(data_1, data_2):
    
     pass
 
-def partido_sort_criteria(partido1, partido2):
+def  (partido1, partido2):
     
     date1 = datetime.datetime.strptime(partido1["date"], "%Y-%m-%d")
     date2 = datetime.datetime.strptime(partido2["date"], "%Y-%m-%d")
