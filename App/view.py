@@ -150,7 +150,7 @@ def print_partidos_ordenados(partido, N=NTH):
 
 def print_data(lista, N = NTH):
     """
-        Función que imprime un dato dado su ID
+        Función que imprime un dato dado su ID.
     """
     headers = ["date", "home_team", "away_team", "home_score", "away_score", "tournament", "city", "country"]
     size = controller.partidos_size(lista)
