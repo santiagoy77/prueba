@@ -406,7 +406,7 @@ def req_7(data_structs, fecha_ini, fecha_fin, top_jugador):
     """
     Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 7
+    # TODO: Realizar el requerimiento 7...
     
     result=data_structs['official_results']
     
