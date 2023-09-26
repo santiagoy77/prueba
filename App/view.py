@@ -246,8 +246,8 @@ def print_req_7(control):
     """
         Función que imprime la solución del Requerimiento 7 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    result=controller.req_7(control,fecha_ini,fecha_fin,jugador_top)
+    print(result)
 
 
 def print_req_8(control):
@@ -340,6 +340,8 @@ if __name__ == "__main__":
                 
             elif int(inputs) == 9:
                 print_req_8(control)
+            
+            
                 
             elif int(inputs) == 0: 
                 working = False

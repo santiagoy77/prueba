@@ -249,7 +249,11 @@ def req_7(control):
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    pass
+    tiempo1=get_time()
+    result= model.req_7(control['model'],fecha_ini,fecha_fin,top_jugador)
+    tiempo2=get_time()
+    time_fin=delta_time(tiempo1,tiempo2)
+    return time_fin,result
 
 
 def req_8(control):

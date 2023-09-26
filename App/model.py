@@ -378,12 +378,52 @@ def req_3(data_structs):
     pass
 
 
-def req_4(data_structs):
-    """
-    Función que soluciona el requerimiento 4
-    """
-    # TODO: Realizar el requerimiento 4
-    pass
+def req_4(data_structure, n_torneo, fecha_ini, fecha_fin):
+    """Partidos relacionados con un torneo durante un periodo específico"""
+
+    
+    lista_partidos = data_structure["model"]["partidos"]
+    lista_penales = data_structure["model"]["penales"]
+    #partidos y penales general
+    list_fin_partidos = lt.newList("ARRAY_LIST")
+    list_fin_penales = lt.newList("ARRAY_LIST")
+    #paises y ciudades de los encuentros
+    lt_ciudad = lt.newList("ARRAY_LIST")
+    lt_paises = lt.newList("ARRAY_LIST")
+
+    for date in lt.iterator(lista_partidos):
+        fecha_part = date["date"]
+        
+        if fecha_part <= fecha_fin and fecha_part >= fecha_ini and date["tournament"] == n_torneo:
+            date["winner"] = "unknown"
+            lt.addLast(list_fin_partidos, date)
+
+    for date in lt.iterator(lista_penales):
+        fecha_penal = date["date"]
+        
+        if fecha_penal <= fecha_fin and fecha_penal >= fecha_ini:
+            lt.addLast(list_fin_penales, date)
+
+    penales = 0
+    for i in lt.iterator(list_fin_penales):
+        for dato_part in lt.iterator(list_fin_partidos):
+            if i["home_team"] == dato_part["home_team"] and i["away_team"] == dato_part["away_team"]:
+                penales += 1
+                dato_part["winner"] = i["winner"]
+
+    for i in lt.iterator(list_fin_partidos):
+        ciudad_dato = i["city"]
+        pais_dato = i["country"]
+        if not lt.isPresent(lt_ciudad, ciudad_dato):
+            lt.addLast(lt_ciudad, ciudad_dato)
+        if not lt.isPresent(lt_paises, pais_dato):
+            lt.addLast(lt_paises, pais_dato)
+
+    num_ciudades = lt.size(lt_ciudad)
+    num_paises = lt.size(lt_paises)
+    total_matches = lt.size(list_fin_partidos)
+
+    return list_fin_partidos, num_ciudades, num_paises, total_matches, penales
 
 
 def req_5(data_structs):
@@ -406,9 +446,11 @@ def req_7(data_structs, fecha_ini, fecha_fin, top_jugador):
     """
     Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 7
+    # TODO: Realizar el requerimiento 7...
+    fecha_i = datetime.datetime.strptime(fecha_ini, "%Y-%m-%d")
+    fecha_L = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d") 
     
-    result=data_structs['official_results']
+    result=data_structs['partidos']
     
     pos_inicial=b_binaria_fecha_incio(result,fecha_ini)
     pos_fin=b_binaria_fecha_final(result,fecha_fin)
@@ -416,15 +458,20 @@ def req_7(data_structs, fecha_ini, fecha_fin, top_jugador):
     if pos_inicial < pos_fin or pos_inicial == -1 or pos_fin == pos_fin:
         return None,None,None,None,None,None
     
-    fecha_ini=datetime.datetime.strptime()
-    torneos=lt.newList(datastructure='ARRAY_LIST')
+    torneosP=lt.newList(datastructure='ARRAY_LIST')
     
-    num_partidos = 0
+    total_partidos = 0
     num_goles = 0
     num_penales = 0
     num_autogoles = 0
     
-    return 0
+    for partido in lt.iterator(data_structs['partidos']):
+        if partido['date'] <= fecha_i and partido['date'] >= fecha_L and partido['tournament'] != "Friendly":
+            lt.addLast(torneosP, partido)
+    
+    print(torneosP)
+    
+            
     
     #tabulate(agrgar)
     
