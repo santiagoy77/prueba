@@ -446,9 +446,7 @@ def req_7(data_structs, fecha_ini, fecha_fin, top_jugador):
     """
     Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 7...
-    fecha_i = datetime.datetime.strptime(fecha_ini, "%Y-%m-%d")
-    fecha_L = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d") 
+    # TODO: Realizar el requerimiento 7
     
     result=data_structs['partidos']
     
