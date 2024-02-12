@@ -24,6 +24,7 @@ import config as cf
 import model
 import time
 import csv
+import os
 
 
 """
@@ -41,13 +42,52 @@ def new_controller():
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control, jobs_size, skills_size, employment_types_size, multilocations_size):
     """
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    pass
+    jobs_size = load_jobs(control, jobs_path)
+    skills_size = load_skills(control, skills_size_path)
+    employment_types_size = load_employment(control, employment_types_path)
+    multilocations_size = load_multilocations(control, multilocations_path)
+    return jobs_size, skills_size, employment_types_size, multilocations_size
 
+def load_jobs(control, filename):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, filename)
+    jobs_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(jobs_file, delimeter=';')
+    for job in input_file:
+        model.add_job(data_structs, job)
+    return model.job_size(data_structs)
+
+def load_skills(control, filename):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, filename)
+    skills_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(skills_file, delimeter=';')
+    for skill in input_file:
+        model.add_skill(data_structs, skill)
+    return model.skill_size(data_structs)
+
+def load_employment_types(control, filename):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, filename)
+    employment_types_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(employment_types_file, delimeter=';')
+    for employment_type in input_file:
+        model.add_employment_type(data_structs, employment_type)
+    return model.employment_type_size(data_structs)
+
+def load_multilocations(control, filename):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, filename)
+    multilocations_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(multilocations_file, delimeter=';')
+    for multilocation in input_file:
+        model.add_multilocation(data_structs, multilocation)
+    return model.multilocation_size(data_structs)
 
 # Funciones de ordenamiento
 

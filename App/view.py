@@ -49,31 +49,73 @@ def new_controller():
 def print_menu():
     print("Bienvenido")
     print("1- Cargar información")
-    print("2- Ejecutar Requerimiento 1")
-    print("3- Ejecutar Requerimiento 2")
-    print("4- Ejecutar Requerimiento 3")
-    print("5- Ejecutar Requerimiento 4")
-    print("6- Ejecutar Requerimiento 5")
-    print("7- Ejecutar Requerimiento 6")
-    print("8- Ejecutar Requerimiento 7")
-    print("9- Ejecutar Requerimiento 8")
+    print("2- Listar las últimas N ofertas de trabajo según su país y nivel de experticia")
+    print("3- Listar las últimas N ofertas de trabajo por empresa y ciudad")
+    print("4- Consultar las ofertas que publicó una empresa durante un periodo especifico de tiempo")
+    print("5- Consultar las ofertas que se publicaron en un país durante un periodo de tiempo")
+    print("6- Consultar las ofertas que se publicaron en una ciudad durante un periodo de tiempo")
+    print("7- Clasificar las N ciudades con mayor número de ofertas de trabajo por experticia entre un rango de fechas")
+    print("8- Clasificar los N países con mayor número de ofertas de trabajo por divisa")
+    print("9- Identificación de los países con mayor y menor ofertas de trabajo en un rango de fechas")
     print("0- Salir")
 
 
-def load_data(control):
+def load_data(control, size):
     """
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    pass
+    jobs_size, skills_size, employment_types_size, multilocations_size = \
+    controller.load_data(control,
+                        jobs_path=size + '-jobs.csv',
+                        skills_path=size + '-skills.csv',
+                        employment_types_path=size + 'employment_types.csv',
+                        multilocations_path=size + '-multilocations.csv')
+    return jobs_size, skills_size, employment_types_size, multilocations_size
 
 
-def print_data(control, id):
+def print_jobs(control, pos, id):
     """
         Función que imprime un dato dado su ID
     """
     #TODO: Realizar la función para imprimir un elemento
-    pass
+    jobs = controller.load_jobs(control, pos, id)
+    headers = {'Fecha de publicación': [],
+               'Título de la oferta': [],
+               'Empresa que publica': [],
+               'Nivel experticia': [],
+               'País de la oferta': [],
+               'Ciudad de la oferta': []}
+    for job in lt.iterator(jobs):
+        headers['Fecha de publicación'.append(job['published_at'])]
+        headers['Título de la oferta'.append(job['title'])]
+        headers['Empresa que publica'.append(job['company_name'])]
+        headers['Nivel experticia'.append(job['experience_level'])]
+        headers['País de la oferta'.append(job['country_code'])]
+        headers['Ciudad de la oferta'.append(job['city'])]
+
+    print(tabulate(headers, headers='keys'))
+    
+def print_jobs(control, pos, id):
+    """
+        Función que imprime un dato dado su ID
+    """
+    #TODO: Realizar la función para imprimir un elemento
+    jobs = controller.load_jobs(control, pos, id)
+    headers = {'Fecha de publicación': [],
+               'Título de la oferta': [],
+               'Empresa que publica': [],
+               'Nivel experticia': [],
+               'País de la oferta': [],
+               'Ciudad de la oferta': []}
+    for job in lt.iterator(jobs):
+        headers['Fecha de publicación'.append(job['published_at'])]
+        headers['Título de la oferta'.append(job['title'])]
+        headers['Empresa que publica'.append(job['company_name'])]
+        headers['Nivel experticia'.append(job['experience_level'])]
+        headers['País de la oferta'.append(job['country_code'])]
+        headers['Ciudad de la oferta'.append(job['city'])]
+
 
 def print_req_1(control):
     """
