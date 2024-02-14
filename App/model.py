@@ -51,32 +51,146 @@ def new_data_structs():
     """
     #TODO: Inicializar las estructuras de datos
     data_structs = {'jobs': None,
-                    'skills':None,
-                    'employment_types':None,
-                    'multilocations':None}
+                    'skills': None,
+                    'employment_types': None,
+                    'multilocations': None}
     
-    pass
+    data_structs['jobs'] = lt.newList('SINGLE_LINKED')
+    data_structs['skills'] = lt.newList('SINGLE_LINKED')
+    data_structs['employment_types'] = lt.newList('SINGLE_LINKED')
+    data_structs['multilocations'] = lt.newList('SINGLE_LINKED')
 
+    return data_structs
 
 # Funciones para agregar informacion al modelo
 
-def add_data(data_structs, data):
+def add_job(data_structs, job):
     """
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    pass
+    j = new_job(job['title'], job['street'], job['city'], job['country_code'], job['address_text'], job['marker_icon'],
+                job['workplace_type'], job['company_name'], job['company_url'], job['company_size'], job['experience_level'],
+                job['published_at'], job['remote_interview'], job['open_to_hire_ukrainians'], job['id'], job['display_offer'])
+    lt.addLast(data_structs['jobs'], j)
+    return data_structs
 
+def add_skill(data_structs, skill):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+    s = new_skill(skill['field'], skill['level'], skill['job_title'])
+    lt.addLast(data_structs['skills'], s)
+    return data_structs
+
+def add_employment_type(data_structs, employment_type):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+    et = new_employment_type(employment_type['type'], employment_type['job_title'], employment_type['currency'],
+                            employment_type['min_salary'], employment_type['max_salary'])
+    lt.addLast(data_structs['employments_types'], et)
+    return data_structs
+
+def add_multilocation(data_structs, multilocation):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+    m = new_employment_type(multilocation['location'], multilocation['city'], multilocation['job_title'])
+    lt.addLast(data_structs['multilocations'], m)
+    return data_structs
 
 # Funciones para creacion de datos
 
-def new_data(id, info):
+def new_job(title,street,city,country_code,address_text,marker_icon,workplace_type,company_name,company_url,company_size,
+            experience_level,published_at,remote_interview,open_to_hire_ukrainians,id,display_offer):
     """
     Crea una nueva estructura para modelar los datos
     """
     #TODO: Crear la función para estructurar los datos
-    pass
+    job = {'title': '',
+           'street': '',
+           'city': '',
+           'country_code': '',
+           'address_text': '',
+           'marker_icon': '',
+           'workplace_type': '',
+           'company_name': '',
+           'company_url': '',
+           'company_size': '',
+           'experience_level': '',
+           'published_at': '',
+           'remote_interview': '',
+           'open_to_hire_ukrainians': '',
+           'id': '',
+           'display_offer': ''}
+    
+    job['title'] = title
+    job['street'] = street
+    job['city'] = city
+    job['country_code'] = country_code
+    job['address_text'] = address_text
+    job['marker_icon'] = marker_icon
+    job['workplace_type'] = workplace_type
+    job['company_name'] = company_name
+    job['company_url'] = company_url
+    job['company_size'] = company_size
+    job['experience_level'] = experience_level
+    job['published_at'] = published_at
+    job['remote_interview'] = remote_interview
+    job['open_to_hire_ukrainians'] = open_to_hire_ukrainians
+    job['id'] = id
+    job['display_offer'] = display_offer
+    return job
 
+def new_skill(field, level, title):
+    """
+    Crea una nueva estructura para modelar los datos
+    """
+    #TODO: Crear la función para estructurar los datos
+    skill = {'field': '',
+             'level': '',
+             'title': ''}
+    
+    skill['field'] = field
+    skill['level'] = level
+    skill['title'] = title
+    return skill
+
+def new_employment_type(type, title, currency, min_salary, max_salary):
+    """
+    Crea una nueva estructura para modelar los datos
+    """
+    #TODO: Crear la función para estructurar los datos
+    employment_type = {'type': '',
+                       'title': '',
+                       'currency': '',
+                       'min_salary': '',
+                       'max_salary': ''}
+    
+    employment_type['type'] = type
+    employment_type['title'] = title
+    employment_type['currency'] = currency
+    employment_type['min_salary'] = min_salary
+    employment_type['max_salary'] = max_salary  
+    return employment_type
+
+def new_multilocation(location, city, title):
+    """
+    Crea una nueva estructura para modelar los datos
+    """
+    #TODO: Crear la función para estructurar los datos
+    multilocation = {'location': '',
+                     'city': '',
+                     'title': ''}
+    
+    multilocation['location'] = location
+    multilocation['city'] = city
+    multilocation['title'] = title
+    return multilocation
 
 # Funciones de consulta
 
@@ -87,22 +201,12 @@ def get_data(data_structs, id):
     #TODO: Crear la función para obtener un dato de una lista
     pass
 
-
 def data_size(data_structs):
     """
     Retorna el tamaño de la lista de datos
     """
     #TODO: Crear la función para obtener el tamaño de una lista
     pass
-
-
-def req_1(data_structs):
-    """
-    Función que soluciona el requerimiento 1
-    """
-    # TODO: Realizar el requerimiento 1
-    pass
-
 
 def req_2(data_structs):
     """

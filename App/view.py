@@ -43,7 +43,8 @@ def new_controller():
         Se crea una instancia del controlador
     """
     #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    pass
+    control = controller.new_controller()
+    return control
 
 
 def print_menu():
@@ -65,12 +66,12 @@ def load_data(control, size):
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    jobs_size, skills_size, employment_types_size, multilocations_size = \
+    jobs_size, skills_size, employment_types_size, multilocations_size = (
     controller.load_data(control,
-                        jobs_path=size + '-jobs.csv',
-                        skills_path=size + '-skills.csv',
-                        employment_types_path=size + 'employment_types.csv',
-                        multilocations_path=size + '-multilocations.csv')
+                        size + '-jobs.csv',
+                        size + '-skills.csv',
+                        size + '-employment_types.csv',
+                        size + '-multilocations.csv'))
     return jobs_size, skills_size, employment_types_size, multilocations_size
 
 
@@ -80,50 +81,95 @@ def print_jobs(control, pos, id):
     """
     #TODO: Realizar la función para imprimir un elemento
     jobs = controller.load_jobs(control, pos, id)
-    headers = {'Fecha de publicación': [],
-               'Título de la oferta': [],
-               'Empresa que publica': [],
-               'Nivel experticia': [],
-               'País de la oferta': [],
-               'Ciudad de la oferta': []}
+    headers = {'Título de la oferta': [],
+               'Calle': [],
+               'Ciudad': [],
+               'Código de país': [],
+               'Texto de dirección': [],
+               'Marker icon': [],
+               'Tipo de lugar de trabajo': [],
+               'Nombre de compañía': [],
+               'URL de compañía': [],
+               'Tamaño de compañía': [],
+               'Nivel de experiencia': [],
+               'Publicación': [],
+               'Entrevista remota': [],
+               'Abierto a contratar ucranianos': [],
+               'Id': [],
+               'Oferta lanzada': []}
     for job in lt.iterator(jobs):
-        headers['Fecha de publicación'.append(job['published_at'])]
         headers['Título de la oferta'.append(job['title'])]
-        headers['Empresa que publica'.append(job['company_name'])]
-        headers['Nivel experticia'.append(job['experience_level'])]
-        headers['País de la oferta'.append(job['country_code'])]
-        headers['Ciudad de la oferta'.append(job['city'])]
+        headers['Calle'.append(job['street'])]
+        headers['Ciudad'.append(job['city'])]
+        headers['Código de país'.append(job['country_code'])]
+        headers['Texto de dirección'.append(job['address_text'])]
+        headers['Marker icon'.append(job['marker_icon'])]
+        headers['Tipo de lugar de trabajo'.append(job['workplace_type'])]
+        headers['Nombre de compañía'.append(job['company_name'])]
+        headers['URL de compañía'.append(job['company_url'])]
+        headers['Tamaño de compañía'.append(job['company_size'])]
+        headers['Nivel de experiencia'.append(job['experience_level'])]
+        headers['Publicación'.append(job['published_at'])]
+        headers['Entrevista remota'.append(job['remote_interview'])]
+        headers['Abierto a contratar ucranianos'.append(job['open_to_hire_ukrainians'])]
+        headers['Id'.append(job['id'])]
+        headers['Oferta lanzada'.append(job['display_offer'])]
 
     print(tabulate(headers, headers='keys'))
-    
-def print_jobs(control, pos, id):
+
+def print_skills(control, pos, id):
     """
         Función que imprime un dato dado su ID
     """
     #TODO: Realizar la función para imprimir un elemento
-    jobs = controller.load_jobs(control, pos, id)
-    headers = {'Fecha de publicación': [],
-               'Título de la oferta': [],
-               'Empresa que publica': [],
+    skills = controller.load_skills(control, pos, id)
+    headers = {'Campo': [],
                'Nivel experticia': [],
-               'País de la oferta': [],
-               'Ciudad de la oferta': []}
-    for job in lt.iterator(jobs):
-        headers['Fecha de publicación'.append(job['published_at'])]
-        headers['Título de la oferta'.append(job['title'])]
-        headers['Empresa que publica'.append(job['company_name'])]
-        headers['Nivel experticia'.append(job['experience_level'])]
-        headers['País de la oferta'.append(job['country_code'])]
-        headers['Ciudad de la oferta'.append(job['city'])]
+               'Título de la oferta': []}
+    for skill in lt.iterator(skills):
+        headers['Campo'.append(skill['field'])]
+        headers['Nivel experticia'.append(skill['level'])]
+        headers['Empresa que publica'.append(skill['title'])]
 
+    print(tabulate(headers, headers='keys'))
 
-def print_req_1(control):
+def print_employments_types(control, pos, id):
     """
-        Función que imprime la solución del Requerimiento 1 en consola
+        Función que imprime un dato dado su ID
     """
-    # TODO: Imprimir el resultado del requerimiento 1
-    pass
+    #TODO: Realizar la función para imprimir un elemento
+    employments_types = controller.load_employments_types(control, pos, id)
+    headers = {'Tipo de empleo': [],
+               'Título de la oferta': [],
+               'Divisa': [],
+               'Salario mínimo': [],
+               'Salario máximo': []}
+    for employment_type in lt.iterator(employments_types):
+        headers['Tipo de empleo'.append(employment_type['type'])]
+        headers['Título de la oferta'.append(employment_type['title'])]
+        headers['Divisa'.append(employment_type['currency'])]
+        headers['Salario mínimo'.append(employment_type['min_salary'])]
+        headers['Salario máximo'.append(employment_type['max_salary'])]
 
+    print(tabulate(headers, headers='keys'))
+
+def print_multilocations(control, pos, id):
+    """
+        Función que imprime un dato dado su ID
+    """
+    #TODO: Realizar la función para imprimir un elemento
+    multilocations = controller.load_multilocationss(control, pos, id)
+    headers = {'Tipo de empleo': [],
+               'Título de la oferta': [],
+               'Divisa': [],
+               'Salario mínimo': [],
+               'Salario máximo': []}
+    for multilocation in lt.iterator(multilocations):
+        headers['Tipo de empleo'.append(multilocation['location'])]
+        headers['Título de la oferta'.append(multilocation['city'])]
+        headers['Divisa'.append(multilocation['title'])]
+
+    print(tabulate(headers, headers='keys'))
 
 def print_req_2(control):
     """
@@ -196,7 +242,8 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = load_data(control)
+            size = input('Tamaño del archivo CSV: ')
+            data = load_data(control, size)
         elif int(inputs) == 2:
             print_req_1(control)
 
