@@ -32,7 +32,7 @@ This repository is part of the data structure and algorithms (#EDA) teaching fra
 
 The students edit this section to add their names, Uniandes emails, and specify which project functionality of the project they will implement.
 
-1. Student 1 **Req 3** Marica Clara Aponte, <mc.aponte2@uniandes.edu.co>,
+1. Student 1 **Req 3** Maria Clara Aponte, <mc.aponte2@uniandes.edu.co>,
 1. Student 2 **Req 5**Antonio Munoz Arcieri <a.munoz112@uniandes.edu.co>, 202321082
 1. Student 3 **Req 4**Alejandro Benavides, <a.benavidesr@uniandes.edu.co>, 202320519
 [Back to top](#challenge-template)
