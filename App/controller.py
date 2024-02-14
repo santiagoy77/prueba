@@ -36,7 +36,11 @@ def new_controller():
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
+    control = {
+        'model': None
+    }
+    control['model'] = model.newCatalog()
+    return control
 
 
 # Funciones para la carga de datos
@@ -46,7 +50,11 @@ def load_data(control, filename):
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    pass
+    jobsfile = cf.data.dir + 'small-jobs.csv'
+    fecha_publicacion, titulo, nombre_empresa,nivel,pais,ciudad = loadJobs(jobsfile)
+    sortJobs(jobsfile)
+    return fecha_publicacion, titulo, nombre_empresa,nivel,pais,ciudad
+
 
 
 # Funciones de ordenamiento
