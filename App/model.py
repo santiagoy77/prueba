@@ -50,7 +50,7 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    pass
+    
 
 
 # Funciones para agregar informacion al modelo
