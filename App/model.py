@@ -48,17 +48,38 @@ def new_data_structs():
     """
     Inicializa las estructuras de datos del modelo. Las crea de
     manera vacía para posteriormente almacenar la información.
-    """
+    title;street;city;country_code;address_text;marker_icon;workplace_type;
+    company_name;company_url;company_size;experience_level;published_at;remote_interview;
+    open_to_hire_ukrainians;id;display_offer
+
+    """ 
+    catalog = {'published_at':None,
+               'title': None,
+               'company_name': None,
+               'experience_level': None, 
+               'country_code':None,
+               'city':None}
+    
+    
+    catalog['published_at'] = lt.newList('ARRAY_LIST')
+    catalog['title'] = lt.newList('SINGLE_LINKED')
+    catalog['company_name'] = lt.newList('SINGLE_LINKED')
+    catalog['experience_level'] = lt.newList('ARRAY_LIST')
+    catalog['country_code'] = lt.newList('SINGLE_LINKED')
+    catalog['city'] = lt.newList('ARRAY_LIST')
+    
     #TODO: Inicializar las estructuras de datos
     
 
 
 # Funciones para agregar informacion al modelo
 
-def add_data(data_structs, data):
+def add_published(catalog, date):
     """
     Función para agregar nuevos elementos a la lista
     """
+    lt.addLast(catalog['published_at'],date)
+    dates =     
     #TODO: Crear la función para agregar elementos a una lista
     pass
 
