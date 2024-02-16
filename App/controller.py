@@ -36,7 +36,6 @@ def new_controller():
     """
     Crea una instancia del modelo
     """
-    #TODO: Llamar la función del modelo que crea las estructuras de datos
     control = {'model': None}
     control['model'] = model.new_data_structs()
     return control
@@ -44,49 +43,49 @@ def new_controller():
 
 # Funciones para la carga de datos
 
-def load_data(control, jobs_size, skills_size, employments_types_size, multilocations_size):
+def load_data(control, jobs_path, skills_path, employments_types_path, multilocations_path):
     """
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    jobs_size = load_jobs(control, jobs_size)
-    skills_size = load_skills(control, skills_size)
-    employments_types_size = load_employments_types(control, employments_types_size)
-    multilocations_size = load_multilocations(control, multilocations_size)
+    jobs_size = load_jobs(control, jobs_path)
+    skills_size = load_skills(control, skills_path)
+    employments_types_size = load_employments_types(control, employments_types_path)
+    multilocations_size = load_multilocations(control, multilocations_path)
     return jobs_size, skills_size, employments_types_size, multilocations_size
 
-def load_jobs(control, filename):
+def load_jobs(control, jobs_path):
     data_structs = control['model']
-    path = os.path.join(cf.data_dir, filename)
+    path = os.path.join(cf.data_dir, jobs_path)
     jobs_file = open(path, 'r', encoding='utf-8')
-    input_file = csv.DictReader(jobs_file)
+    input_file = csv.DictReader(jobs_file, delimiter=';')
     for job in input_file:
         model.add_job(data_structs, job)
     return model.job_size(data_structs)
 
-def load_skills(control, filename):
+def load_skills(control, skills_path):
     data_structs = control['model']
-    path = os.path.join(cf.data_dir, filename)
+    path = os.path.join(cf.data_dir, skills_path)
     skills_file = open(path, 'r', encoding='utf-8')
-    input_file = csv.DictReader(skills_file)
+    input_file = csv.DictReader(skills_file, delimiter=';')
     for skill in input_file:
         model.add_skill(data_structs, skill)
     return model.skill_size(data_structs)
 
-def load_employments_types(control, filename):
+def load_employments_types(control, employments_types_path):
     data_structs = control['model']
-    path = os.path.join(cf.data_dir, filename)
+    path = os.path.join(cf.data_dir, employments_types_path)
     employment_types_file = open(path, 'r', encoding='utf-8')
-    input_file = csv.DictReader(employment_types_file)
+    input_file = csv.DictReader(employment_types_file, delimiter=';')
     for employment_type in input_file:
         model.add_employment_type(data_structs, employment_type)
     return model.employment_type_size(data_structs)
 
-def load_multilocations(control, filename):
+def load_multilocations(control, multilocations_size):
     data_structs = control['model']
-    path = os.path.join(cf.data_dir, filename)
+    path = os.path.join(cf.data_dir, multilocations_size)
     multilocations_file = open(path, 'r', encoding='utf-8')
-    input_file = csv.DictReader(multilocations_file)
+    input_file = csv.DictReader(multilocations_file, delimiter=';')
     for multilocation in input_file:
         model.add_multilocation(data_structs, multilocation)
     return model.multilocation_size(data_structs)
