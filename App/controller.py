@@ -47,11 +47,30 @@ def new_controller():
 
 def load_data(control, filename):
     """
-    Carga los datos del reto
+    Carglos datos del reto
     """
-    # TODO: Realizar la carga de datos
-    pass
+    skills = load_skills(control['model'])
+    jobs = load_jobs(control["model"])
+    
 
+def load_skills(catalog):
+    booksfile = cf.data_dir + "small-skills.csv"
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for skill in input_file:
+        model.add_skills(catalog,skill)
+   
+    return model.data_size(catalog["skills"])
+    
+def load_jobs(catalog):
+    booksfile = cf.data_dir + "small-jobs.csv"
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for job in input_file:
+        model.add_jobs(catalog,job)
+    
+    model.sort(catalog)
+    return model.data_size(catalog['jobs'])
+def load_locations(catalog):
+    pass
 
 # Funciones de ordenamiento
 

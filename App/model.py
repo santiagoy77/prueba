@@ -35,7 +35,7 @@ from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import mergesort as merg
 from DISClib.Algorithms.Sorting import quicksort as quk
 assert cf
-
+from datetime import datetime
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá
 dos listas, una para los videos, otra para las categorias de los mismos.
@@ -53,37 +53,40 @@ def new_data_structs():
     open_to_hire_ukrainians;id;display_offer
 
     """ 
-    catalog = {'published_at':None,
-               'title': None,
-               'company_name': None,
-               'experience_level': None, 
-               'country_code':None,
-               'city':None}
+    catalog = {'skills':None,
+               'multi-locations': None,
+               'jobs': None,
+               'employment-types':None
+              }
     
     
-    catalog['published_at'] = lt.newList('ARRAY_LIST')
-    catalog['title'] = lt.newList('SINGLE_LINKED')
-    catalog['company_name'] = lt.newList('SINGLE_LINKED')
-    catalog['experience_level'] = lt.newList('ARRAY_LIST')
-    catalog['country_code'] = lt.newList('SINGLE_LINKED')
-    catalog['city'] = lt.newList('ARRAY_LIST')
-    
+    catalog['skills'] = lt.newList('ARRAY_LIST')
+    catalog['multi-locations'] = lt.newList('SINGLE_LINKED')
+    catalog['jobs'] = lt.newList('SINGLE_LINKED')
+    catalog['employment-types'] = lt.newList('ARRAY_LIST')
     #TODO: Inicializar las estructuras de datos
     
 
 
 # Funciones para agregar informacion al modelo
 
-def add_published(catalog, date):
+def add_skills(catalog, skills):
     """
     Función para agregar nuevos elementos a la lista
     """
-    lt.addLast(catalog['published_at'],date)
-    dates =     
-    #TODO: Crear la función para agregar elementos a una lista
-    pass
-
-
+    lt.addLast(catalog['skills'], skills)
+    
+def add_jobs(catalog, job):
+    
+    date = job['published_at']
+    job['published_at'] = datetime.strptime(date,'%Y-%m-%dT%H:%M:%S.%fZ')
+    lt.addLast(catalog['jobs'], job)
+    
+def add_locations(catalog, location):
+    lt.addLast(catalog,location)
+    
+def employment_types(catalog,emptype): 
+    lt.addLast(catalog, emptype)
 # Funciones para creacion de datos
 
 def new_data(id, info):
@@ -104,12 +107,12 @@ def get_data(data_structs, id):
     pass
 
 
-def data_size(data_structs):
+def data_size(lst):
     """
     Retorna el tamaño de la lista de datos
     """
     #TODO: Crear la función para obtener el tamaño de una lista
-    pass
+    return lt.size(lst)
 
 
 def req_1(data_structs):
@@ -199,7 +202,7 @@ def sort_criteria(data_1, data_2):
         _type_: _description_
     """
     #TODO: Crear función comparadora para ordenar
-    pass
+    return data_1["published_at"] > data_2["published_at"]
 
 
 def sort(data_structs):
@@ -207,4 +210,4 @@ def sort(data_structs):
     Función encargada de ordenar la lista con los datos
     """
     #TODO: Crear función de ordenamiento
-    pass
+    return sa.sort(data_structs["jobs"], sort_criteria)
