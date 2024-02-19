@@ -45,7 +45,7 @@ def new_controller():
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control):
     """
     Carglos datos del reto
     """
