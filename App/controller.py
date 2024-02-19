@@ -51,7 +51,9 @@ def load_data(control, filename):
     """
     skills = load_skills(control['model'])
     jobs = load_jobs(control["model"])
-    
+    locations = load_locations(control['model'])
+    employments = load_employment_type(control['model'])
+    return (skills, jobs, locations, employments)
 
 def load_skills(catalog):
     booksfile = cf.data_dir + "small-skills.csv"
@@ -69,9 +71,20 @@ def load_jobs(catalog):
     
     model.sort(catalog)
     return model.data_size(catalog['jobs'])
-def load_locations(catalog):
-    pass
 
+def load_locations(catalog):
+    booksfile = cf.data_dir + "small-multilocations.csv"
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for multilocation in input_file:
+        model.add_locations(catalog, multilocation)
+    return model.data_size(catalog['multi-locations'])
+
+def load_employment_type(catalog):
+    booksfile = cf.data_dir + "small-employments_types.csv"
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for employment in input_file:
+        model.add_employment_types(catalog, employment)
+    return model.data_size(catalog['employment-types'])
 # Funciones de ordenamiento
 
 def sort(control):

@@ -61,8 +61,8 @@ def new_data_structs():
     
     
     catalog['skills'] = lt.newList('ARRAY_LIST')
-    catalog['multi-locations'] = lt.newList('SINGLE_LINKED')
-    catalog['jobs'] = lt.newList('SINGLE_LINKED')
+    catalog['multi-locations'] = lt.newList('ARRAY_LIST')
+    catalog['jobs'] = lt.newList('ARRAY_LIST')
     catalog['employment-types'] = lt.newList('ARRAY_LIST')
     #TODO: Inicializar las estructuras de datos
     
@@ -85,7 +85,7 @@ def add_jobs(catalog, job):
 def add_locations(catalog, location):
     lt.addLast(catalog,location)
     
-def employment_types(catalog,emptype): 
+def add_employment_types(catalog,emptype): 
     lt.addLast(catalog, emptype)
 # Funciones para creacion de datos
 
