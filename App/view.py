@@ -29,6 +29,7 @@ from DISClib.ADT import queue as qu
 assert cf
 from tabulate import tabulate 
 import traceback
+import threading
 
 """
 La vista se encarga de la interacción con el usuario
@@ -147,6 +148,10 @@ control = new_controller()
 
 # main del reto
 if __name__ == "__main__":
+    threading.stack_size(67108864*2)
+    sys.setrecursionlimit(default_limit*1000000)
+    thread = threading.Thread(target=menu_cycle)
+    thread.start()
     """
     Menu principal
     """
