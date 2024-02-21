@@ -27,7 +27,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 assert cf
-
+from tabulate import tabulate 
 import traceback
 
 """
@@ -157,12 +157,14 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
+            """poner parametro de archivo"""
             data = load_data(control)
             print('Skills cargados:',data[0])
             print('Ubicaciones cargadas:',data[2])
             print('Tipos de empleo cargados:',data[3])
             print('Trabajos cargados:',data[1])
-            
+            print(tabulate(data['jobs'],headers='keys',tablefmt='grid'))
+        
         elif int(inputs) == 2:
             print_req_1(control)
 
