@@ -26,8 +26,9 @@ import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
+
 assert cf
-from tabulate import tabulate 
+#from tabulate import tabulate 
 import traceback
 import threading
 
@@ -146,15 +147,20 @@ def print_req_8(control):
 # Se crea el controlador asociado a la vista
 control = new_controller()
 
+default_limit = 1000
+
 # main del reto
 if __name__ == "__main__":
     threading.stack_size(67108864*2)
     sys.setrecursionlimit(default_limit*1000000)
     thread = threading.Thread(target=menu_cycle)
     thread.start()
+    
+def menu_cycle():
     """
     Menu principal
     """
+    
     working = True
     #ciclo del menu
     while working:
