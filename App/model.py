@@ -123,12 +123,14 @@ def req_1(catalog, n, pais, expert):
     """
     ofertas = catalog['jobs']
     filtro = lt.newList('ARRAY_LIST')
+    total_ofertas=0
     for oferta in lt.iterator(ofertas):
-        if n>=lt.size(filtro):
-            return filtro
-        else:
-            if oferta['country_code'] ==pais and oferta['experience_level']==expert:
-                lt.addLast(filtro, oferta)
+        if oferta['country_code'] ==pais and oferta['experience_level']==expert:
+            lt.addLast(filtro, oferta)
+            total_ofertas+=1
+            if total_ofertas>=n:
+                return filtro
+    
     
     
 
