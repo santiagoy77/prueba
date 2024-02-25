@@ -83,7 +83,8 @@ def print_req_1(control):
         Función que imprime la solución del Requerimiento 1 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 1
-    pass
+    
+    print(controller.req_1(control))
 
 
 def print_req_2(control):
@@ -163,7 +164,7 @@ if __name__ == "__main__":
             print('Ubicaciones cargadas:',data[2])
             print('Tipos de empleo cargados:',data[3])
             print('Trabajos cargados:',data[1])
-            print(tabulate(data['jobs'],headers='keys',tablefmt='grid'))
+            
         
         elif int(inputs) == 2:
             print_req_1(control)

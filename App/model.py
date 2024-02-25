@@ -76,6 +76,7 @@ def add_skills(catalog, skills):
     """
     lt.addLast(catalog['skills'], skills)
     
+    
 def add_jobs(catalog, job):
     
     date = job['published_at']
@@ -115,12 +116,21 @@ def data_size(lst):
     return lt.size(lst)
 
 
-def req_1(data_structs):
+def req_1(catalog, n, pais, expert):
+    # TODO: Realizar el requerimiento 1
     """
     Función que soluciona el requerimiento 1
     """
-    # TODO: Realizar el requerimiento 1
-    pass
+    ofertas = catalog['jobs']
+    filtro = lt.newList()
+    for oferta in lt.iterator(ofertas):
+        if n>=lt.size(filtro):
+            return filtro
+        else:
+            if oferta['country_code'] ==pais and oferta['experience_level']==expert:
+                lt.addFirst(filtro, oferta)
+    
+    
 
 
 def req_2(data_structs):
@@ -210,4 +220,4 @@ def sort(data_structs):
     Función encargada de ordenar la lista con los datos
     """
     #TODO: Crear función de ordenamiento
-    return sa.sort(data_structs["jobs"], sort_criteria)
+    return merg.sort(data_structs["jobs"], sort_criteria)
