@@ -84,7 +84,9 @@ def print_req_1(control):
     """
     # TODO: Imprimir el resultado del requerimiento 1
     
-    print(controller.req_1(control))
+    catalog = controller.req_1(control)
+    print(catalog['elements'])
+
 
 
 def print_req_2(control):

@@ -122,13 +122,13 @@ def req_1(catalog, n, pais, expert):
     Función que soluciona el requerimiento 1
     """
     ofertas = catalog['jobs']
-    filtro = lt.newList()
+    filtro = lt.newList('ARRAY_LIST')
     for oferta in lt.iterator(ofertas):
         if n>=lt.size(filtro):
             return filtro
         else:
             if oferta['country_code'] ==pais and oferta['experience_level']==expert:
-                lt.addFirst(filtro, oferta)
+                lt.addLast(filtro, oferta)
     
     
 
