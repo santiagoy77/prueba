@@ -102,7 +102,8 @@ def print_req_3(control):
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    pass
+    catalog = controller.req_1(control)
+    print(catalog['elements'])
 
 
 def print_req_4(control):
