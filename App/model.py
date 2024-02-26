@@ -95,6 +95,7 @@ def new_data(id, info):
     Crea una nueva estructura para modelar los datos
     """
     #TODO: Crear la función para estructurar los datos
+    
     pass
 
 
