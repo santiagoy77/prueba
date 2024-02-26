@@ -101,7 +101,7 @@ def print_req_2(control):
     
     catalog = controller.req_2(control)
     ofertas = catalog['elements']
-    encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
+    encabezados = ['published_at','title','company_name','experience_level','country_code','city']
     print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
     
 

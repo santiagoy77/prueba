@@ -154,12 +154,30 @@ def req_2(catalog, n, empresa, ciudad):
 
 
 
-def req_3(data_structs):
+def req_3(catalog, empresa, f_inicio, f_fin):
     """
     Función que soluciona el requerimiento 3
     """
-    # TODO: Realizar el requerimiento 3
-    pass
+    ofertas = catalog['jobs']
+    ofertas_rango = lt.newList('ARRAY_LIST')
+    of_junior = 0
+    of_mid = 0
+    of_senior = 0
+    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d").date()
+    f_fin = datetime.strptime(f_fin, "%Y-%m-%d").date()
+    for oferta in lt.iterator(ofertas):
+        if oferta["company_name"] == empresa:
+            fecha = oferta["published_at"]
+            fecha = fecha[0:9]
+            fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+            if (f_inicio <= fecha) and (fecha <= f_fin):
+                lt.addLast(ofertas_rango, oferta)
+    return ofertas_rango
+                
+            
+    
+    
+    
 
 
 def req_4(data_structs):
