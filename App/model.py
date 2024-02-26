@@ -95,7 +95,7 @@ def new_data(id, info):
     Crea una nueva estructura para modelar los datos
     """
     #TODO: Crear la función para estructurar los datos
-    pass
+    
 
 
 # Funciones de consulta
@@ -172,7 +172,15 @@ def req_3(catalog, empresa, f_inicio, f_fin):
             fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
             if (f_inicio <= fecha) and (fecha <= f_fin):
                 lt.addLast(ofertas_rango, oferta)
-    return ofertas_rango
+                experiencia = oferta["experience_level"]
+                if experiencia.lower() == "junior":
+                    of_junior +=1
+                elif experiencia.lower() == "mid":
+                    of_mid +=1
+                elif experiencia.lower()== "senior":
+                    of_senior +=1
+    of_total = of_junior + of_mid + of_senior
+    return of_total, of_junior, of_mid, of_senior, ofertas_rango
                 
             
     
@@ -180,12 +188,12 @@ def req_3(catalog, empresa, f_inicio, f_fin):
     
 
 
-def req_4(data_structs):
+def req_4(catalog, pais, f_inicio, f_final):
     """
     Función que soluciona el requerimiento 4
     """
-    # TODO: Realizar el requerimiento 4
-    pass
+    
+    
 
 
 def req_5(data_structs):
