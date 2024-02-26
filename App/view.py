@@ -88,8 +88,8 @@ def print_req_1(control):
     
     catalog = controller.req_1(control)
     ofertas = catalog['elements']
-    encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
-    print(tabulate(ofertas, encabezados, tablefmt='grid'))
+    encabezados = {'published_at':'published_at','title':'title','company_name':'company_name','experience_level':'experience_level','contry_code':'contry_code','city':'city'}
+    print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
 
 
 
@@ -102,7 +102,7 @@ def print_req_2(control):
     catalog = controller.req_2(control)
     ofertas = catalog['elements']
     encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
-    print(tabulate(ofertas, encabezados, tablefmt='grid'))
+    print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
     
 
 
@@ -161,12 +161,12 @@ default_limit = 1000
 
 # main del reto
 if __name__ == "__main__":
-    threading.stack_size(67108864*2)
+    #threading.stack_size(67108864*2)
     sys.setrecursionlimit(default_limit*1000000)
-    thread = threading.Thread(target=menu_cycle)
-    thread.start()
+    #thread = threading.Thread(target=menu_cycle)
+   # thread.start()
     
-def menu_cycle():
+
     """
     Menu principal
     """
