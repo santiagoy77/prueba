@@ -130,17 +130,28 @@ def req_1(catalog, n, pais, expert):
             total_ofertas+=1
             if total_ofertas>=n:
                 return filtro
-    
+    return filtro 
     
     
 
 
-def req_2(data_structs):
+def req_2(catalog, n, empresa, ciudad):
     """
     Función que soluciona el requerimiento 2
     """
     # TODO: Realizar el requerimiento 2
-    pass
+    ofertas = catalog['jobs']
+    filtro = lt.newList('ARRAY_LIST')
+    total_ofertas=0
+    for oferta in lt.iterator(ofertas):
+        if oferta['city'] ==ciudad and oferta['company_name']==empresa:
+            lt.addLast(filtro, oferta)
+            total_ofertas+=1
+            if total_ofertas>=n:
+                return filtro
+    return filtro
+    
+
 
 
 def req_3(data_structs):

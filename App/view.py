@@ -87,7 +87,9 @@ def print_req_1(control):
     # TODO: Imprimir el resultado del requerimiento 1
     
     catalog = controller.req_1(control)
-    print(catalog['elements'])
+    ofertas = catalog['elements']
+    encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
+    print(tabulate(ofertas, encabezados, tablefmt='grid'))
 
 
 
@@ -96,7 +98,12 @@ def print_req_2(control):
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    pass
+    
+    catalog = controller.req_2(control)
+    ofertas = catalog['elements']
+    encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
+    print(tabulate(ofertas, encabezados, tablefmt='grid'))
+    
 
 
 def print_req_3(control):
