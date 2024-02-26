@@ -80,13 +80,13 @@ def print_data(control, id):
     #TODO: Realizar la función para imprimir un elemento
     pass
 
-def print_req_1(control):
+def print_req_1(control, pais, exp, n):
     """
         Función que imprime la solución del Requerimiento 1 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 1
     
-    catalog = controller.req_1(control)
+    catalog = controller.req_1(control, n, pais, exp)
     ofertas = catalog['elements']
     encabezados = {'published_at':'published_at','title':'title','company_name':'company_name','experience_level':'experience_level','contry_code':'contry_code','city':'city'}
     print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
@@ -102,7 +102,8 @@ def print_req_2(control):
     catalog = controller.req_2(control)
     ofertas = catalog['elements']
     encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
-    print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
+    #print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
+    print(ofertas)
     
 
 
@@ -187,7 +188,10 @@ if __name__ == "__main__":
             
         
         elif int(inputs) == 2:
-            print_req_1(control)
+            pais = input('inserte el codigo del pais: ')
+            exp = input('que nivel de experiencia busca?(junior,mid,senior): ')
+            n = int(input('ingrese la cantidad de ofertas que desea ver: '))
+            print_req_1(control, pais, exp, n)
 
         elif int(inputs) == 3:
             print_req_2(control)

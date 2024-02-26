@@ -105,7 +105,7 @@ def get_data(control, id):
     pass
 
 
-def req_1(control):
+def req_1(control,n,pais,exp):
     """
     Retorna el resultado del requerimiento 1
     """
@@ -118,7 +118,7 @@ def req_2(control):
     Retorna el resultado del requerimiento 2
     """
     # TODO: Modificar el requerimiento 2
-    pass
+    return model.req_2(control['model'],10,'IntelligINTS','Rijad')
 
 
 def req_3(control):
