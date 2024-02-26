@@ -149,16 +149,17 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
     # TODO: Realizar el requerimiento 3
     ofertas = catalog['jobs']
     final  = lt.newList('ARRAY_LIST')
-    fecha_in = datetime.strptime(fecha_in,'%Y-%m-%d')
-    fecha_fin = datetime.strptime(fecha_fin,'%Y-%m-%d')
+    fecha_in = datetime.strptime(fecha_in,'%Y-%m-%d').date()
+    fecha_fin = datetime.strptime(fecha_fin,'%Y-%m-%d').date()
 
     for oferta in lt.iterator(ofertas):
         if empresa == oferta['company_name']:
             date = oferta['published_at']
-            fecha = datetime.strptime(date,'%Y-%m-%d')
+            date = date[0:7]
+            fecha = datetime.strptime(date,'%Y-%m-%d').date()
             if fecha<=fecha_fin and fecha>=fecha_in:
                 lt.addLast(final,oferta)
-    return ofertas 
+    return final 
 
 
 def req_4(data_structs):

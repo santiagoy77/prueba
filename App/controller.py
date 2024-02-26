@@ -126,7 +126,7 @@ def req_3(control):
     Retorna el resultado del requerimiento 3
     """
     # TODO: Modificar el requerimiento 3
-    return model.req_3(control['model'],'Bitfinex','2022-04-14','2023-04-14')
+    return model.req_3(control['model'],'Bitfinex','2020-04-14','2023-04-14')
     
 
 
