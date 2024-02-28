@@ -110,7 +110,10 @@ def req_1(control,n,pais,exp):
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
-    return model.req_1(control['model'],10,'PL','junior')
+    lista = model.req_1(control['model'],10,'PL','junior')
+    size = model.data_size(lista)
+    
+    return size, lista
 
 
 def req_2(control):

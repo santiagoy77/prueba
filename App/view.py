@@ -86,9 +86,12 @@ def print_req_1(control, pais, exp, n):
     """
     # TODO: Imprimir el resultado del requerimiento 1
     
-    catalog = controller.req_1(control, n, pais, exp)
+    tup = controller.req_1(control, n, pais, exp)
+    size = tup[0]
+    catalog = tup[1]
     ofertas = catalog['elements']
     encabezados = {'published_at':'published_at','title':'title','company_name':'company_name','experience_level':'experience_level','contry_code':'contry_code','city':'city'}
+    print('La cantidad de ofertas que cumplen el requerimiento',exp,'son:',size)
     print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
 
 
