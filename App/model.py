@@ -136,7 +136,7 @@ def req_1(catalog, n, pais, expert):
     filtro_2 = lt.newList('ARRAY_LIST')
     for o in lt.iterator(filtro):
         datos = {'title':o['title'],'company_name':o['company_name'],'experience_level':o['experience_level'],
-                 'country_code':o['contry_code'],'city':o['city'],'company_size':o['company_size'],
+                 'country_code':o['country_code'],'city':o['city'],'company_size':o['company_size'],
                  'workplace_type':o['workplace_type'], 'open_to_hire_ukrainians':o['open_to_hire_ukrainians']}
         lt.addLast(filtro_2,datos)
     return filtro 
@@ -162,7 +162,7 @@ def req_2(catalog, n, empresa, ciudad):
             
     filtro_2 = lt.newList('ARRAY_LIST')
     for o in lt.iterator(filtro):
-        datos = {'published_at':o['published_at'],'country_code':o['contry_code'],'city':o['city'],
+        datos = {'published_at':o['published_at'],'country_code':o['country_code'],'city':o['city'],
                  'company_name':o['company_name'],'title':o['title'], 'experience_level':o['experience_level'],
                  'remote_interview':o['remote_interview'],'workplace_type':o['workplace_type']}
         lt.addLast(filtro_2,datos)    
