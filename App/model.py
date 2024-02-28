@@ -267,7 +267,6 @@ def req_8(data_structs):
     # TODO: Realizar el requerimiento 8
     pass
 
-
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def compare(data_1, data_2):
@@ -293,6 +292,40 @@ def sort_criteria(data_1, data_2):
     #TODO: Crear función comparadora para ordenar
     pass
 
+def cmp_ofertas_by_empresa_y_fecha (oferta1, oferta2):
+    """
+    Devuelve verdadero (True) si la empresa de la oferta1 es menor que en la
+    oferta2, en caso de que sean iguales se analiza la fecha de publicación de la oferta
+    laboral, de lo contrario devuelva falso (False).
+    Args:
+    oferta1: información de la primera oferta laboral que incluye
+    "company_name" y "published_at"
+    oferta1: información de la segunda oferta laboral que incluye
+    "company_name" y "published_at"
+    | """
+    #Comparar el nombre de la empresa
+    if oferta1["company_name"] < oferta2["company_name"]:
+        return True
+    elif oferta1["company_name"] > oferta2["company_name"]:
+        return False
+    else:
+        #Comparar fecha de publicacion
+        fecha_oferta1 = oferta1["published_at"]
+        fecha_oferta2 = oferta2["published_at"]
+
+        #Extraer los items de la fecha
+        fecha_oferta1_items = fecha_oferta1.split(" ")
+        fecha_oferta2_items = fecha_oferta2.split(" ")
+
+        #Comparar año, mes, dia, hora y minuto 
+        for i in range(len(fecha_oferta1_items)):
+            if fecha_oferta1_items[i] < fecha_oferta2_items[i]:
+                return True 
+            elif fecha_oferta1_items[i] > fecha_oferta2_items[i]:
+                return False
+        #Si las fechas son iguales
+        return False
+    
 
 def sort(data_structs):
     """
