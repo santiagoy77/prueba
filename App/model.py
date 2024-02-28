@@ -158,6 +158,8 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
             fecha = datetime.strftime(date,'%Y-%m-%d')
             if fecha<=fecha_fin and fecha>=fecha_in:
                 lt.addLast(final,oferta)
+            elif fecha<fecha_in:
+                return final
     return final 
 
 

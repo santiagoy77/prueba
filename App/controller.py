@@ -121,12 +121,29 @@ def req_2(control):
     pass
 
 
-def req_3(control):
+def req_3(control,size,fecha_in,fecha_fin):
     """
     Retorna el resultado del requerimiento 3
+    Número total de ofertas.
+• Número total de ofertas con experticia junior.
+• Número total de ofertas con experticia mid.
+• Número total de ofertas con experticia senior
     """
     # TODO: Modificar el requerimiento 3
-    return model.req_3(control['model'],'Bitfinex','2020-04-14','2023-04-14')
+    lista = model.req_3(control['model'],'Bitfinex','2020-04-14','2023-04-14')
+    size = model.data_size(lista)
+    junior = 0
+    mid = 0
+    senior = 0 
+    for oferta in model.lt.iterator(lista):
+        if oferta['experience_level']=='junior':
+            junior +=1
+        elif oferta['experience_level']=='mid':
+            mid +=1
+        elif oferta['experience_level']=='senior':
+            senior +=1
+            
+    return size, junior, mid, senior
     
 
 
