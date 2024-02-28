@@ -158,8 +158,19 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
             if fecha<=fecha_fin and fecha>=fecha_in:
                 lt.addLast(final,oferta)
             elif fecha<fecha_in:
-                return final
-    return final 
+                break
+            
+    filtro_2 = lt.newList('ARRAY_LIST')
+    for o in lt.iterator(final):
+        datos = {'published_at':o['published_at'],'title':o['title'],'experience_level':o['experience_level'],
+                 'city':o['city'],'country_code':o['country_code'],'company_size':o['company_size'], 
+                 'workplace_type':o['workplace_type'],'open_to_hire_ukrainians':o['open_to_hire_ukrainians']}
+        lt.addLast(filtro_2,datos)    
+    
+    ins.sort(filtro_2, sort_criteria_req3)
+    print(filtro_2)
+            
+    return filtro_2 
 
 
 def req_4(data_structs):
@@ -234,3 +245,7 @@ def sort(data_structs):
     """
     #TODO: Crear función de ordenamiento
     return merg.sort(data_structs["jobs"], sort_criteria)
+
+def sort_criteria_req3(data_1,data_2):
+    if data_1['published_at']==data_2['published_at']:
+        return data_1['contry_code'] < data_2['country_code']

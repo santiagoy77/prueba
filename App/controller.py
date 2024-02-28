@@ -142,7 +142,7 @@ def req_3(control,empresa,fecha_in,fecha_fin):
             mid +=1
         elif oferta['experience_level']=='senior':
             senior +=1
-            
+        
     return size, junior, mid, senior
     
 
