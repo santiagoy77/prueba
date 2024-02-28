@@ -102,10 +102,10 @@ def print_req_3(control):
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    size = int(input('Escriba el tamaño maximo de ofertas que desea'))
+    empresa = input('Escriba el nombre de la empresa que desea')
     fecha_in= input('Escriba la fecha inicial (mas reciente):')
     fecha_fin=input('Escriba la fecha final (mas antigua):')
-    return  controller.req_3(control,size,fecha_in,fecha_fin)
+    return  controller.req_3(control,empresa,fecha_in,fecha_fin)
     
 
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
 
         elif int(inputs) == 4:
             tup = print_req_3(control)
-            print('El tamaño de la lista con estos requerimientos es de:',tup[0])
+            print('La cantidad de ofertas total con estos requerimientos es de:',tup[0])
             print('La cantidad de ofertas "junior" es',tup[1])
             print('La cantidad de ofertas "mid" es',tup[2])
             print('La cantidad de ofertas "senior" es',tup[3])

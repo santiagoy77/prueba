@@ -149,8 +149,7 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
     # TODO: Realizar el requerimiento 3
     ofertas = catalog['jobs']
     final  = lt.newList('ARRAY_LIST')
-    #fecha_in = datetime.strptime(fecha_in,'%Y-%m-%d')
-    #fecha_fin = datetime.strptime(fecha_fin,'%Y-%m-%d')
+   
 
     for oferta in lt.iterator(ofertas):
         if empresa == oferta['company_name']:

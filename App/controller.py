@@ -121,7 +121,7 @@ def req_2(control):
     pass
 
 
-def req_3(control,size,fecha_in,fecha_fin):
+def req_3(control,empresa,fecha_in,fecha_fin):
     """
     Retorna el resultado del requerimiento 3
     Número total de ofertas.
