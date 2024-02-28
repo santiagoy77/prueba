@@ -80,33 +80,35 @@ def print_data(control, id):
     #TODO: Realizar la función para imprimir un elemento
     pass
 
-def print_req_1(control, pais, exp, n):
+def print_req_1(control):
     """
         Función que imprime la solución del Requerimiento 1 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 1
-    
+    pais = input('Inserte el codigo del pais: ')
+    exp = input('Que nivel de experiencia busca?(junior,mid,senior): ')
+    n = int(input('Ingrese la cantidad de ofertas que desea ver: '))
     tup = controller.req_1(control, n, pais, exp)
-    size = tup[0]
     catalog = tup[1]
     ofertas = catalog['elements']
     
-    print(tabulate(ofertas, headers='keys', tablefmt='grid'))
+   # print(tabulate(ofertas, headers='keys'))
+    print(ofertas)
+    return tup
 
 
-
-def print_req_2(control, n , empresa, city):
+def print_req_2(control):
     """
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    
+    city = input('Inserte el nombre de la ciudad: ')
+    empresa = input('Ingrese el nombre de la empresa: ')
+    n = int(input('Ingrese la cantidad de ofertas que desea ver: '))    
     tup = controller.req_2(control, n , empresa, city)
     catalog = tup[1]
     ofertas = catalog['elements']
-    encabezados = ['published_at','title','company_name','experience_level','contry_code','city']
-    #print(tabulate(ofertas, headers=encabezados, tablefmt='grid'))
-    print(ofertas)
+    print(tabulate(ofertas, headers='keys', ))
     
 
 
@@ -192,16 +194,14 @@ if __name__ == "__main__":
             
         
         elif int(inputs) == 2:
-            pais = input('Inserte el codigo del pais: ')
-            exp = input('Que nivel de experiencia busca?(junior,mid,senior): ')
-            n = int(input('Ingrese la cantidad de ofertas que desea ver: '))
-            print_req_1(control, pais, exp, n)
 
+            tup = print_req_1(control)
+            print('La cantidad de ofertas segun el nivel de experiencia que escogio: ',tup[0])
+            
         elif int(inputs) == 3:
-            city = input('Inserte el nombre de la ciudad: ')
-            empresa = input('Ingrese el nombre de la empresa: ')
-            n = int(input('Ingrese la cantidad de ofertas que desea ver: '))
-            print_req_2(control, n , empresa, city)
+
+            tup = print_req_2(control)
+            print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
 
         elif int(inputs) == 4:
             print_req_3(control)
