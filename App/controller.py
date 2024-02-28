@@ -183,6 +183,22 @@ def req_8(control):
     # TODO: Modificar el requerimiento 8
     pass
 
+def seleccion_array_o_linked(control):
+    
+    print("Seleccione la lista deseada:")
+    print("1. ARRAY_LIST")
+    print("2. LINKED_LIST")
+    option = input("Escoge una opcion:")
+    if option == "1":
+        model.seleccion_array_o_linked = model.ARRAY_LIST
+    elif option == "2":
+        model.seleccion_array_o_linked = model.LINKED_LIST
+    else:
+        print("Opcion Incorreta")
+    
+    
+    
+    
 
 # Funciones para medir tiempos de ejecucion
 

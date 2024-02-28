@@ -177,6 +177,7 @@ def new_multilocation(location, city, title):
 
 # Funciones de consulta
 
+
 def get_data(data_structs, id):
     """
     Retorna un dato a partir de su ID
@@ -325,7 +326,26 @@ def cmp_ofertas_by_empresa_y_fecha (oferta1, oferta2):
                 return False
         #Si las fechas son iguales
         return False
+
+def seleccion_array_o_linked(answer):
+    if answer=="1":
+        answer=lt.newList("ARRAY_LIST")
+        add_employment_type(answer)
+        add_job(answer)
+        add_multilocation(answer)
+        add_skill(answer)        
+    elif answer=="2":
+        answer==lt.newList("LINKED_LIST")
+        add_employment_type(answer)
+        add_job(answer)
+        add_multilocation(answer)
+        add_skill(answer) 
+    return answer
+        
     
+def sublist(lista,inicio,numero):
+    lista = lt.subList(lista,inicio,numero)
+    return lista    
 
 def sort(data_structs):
     """

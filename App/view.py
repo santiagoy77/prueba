@@ -155,6 +155,8 @@ def print_req_8(control):
     pass
 
 
+
+
 # Se crea el controlador asociado a la vista
 control = new_controller()
 
