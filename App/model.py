@@ -121,15 +121,7 @@ def req_1(catalog, n, pais, expert):
     # TODO: Realizar el requerimiento 1
     """
     Función que soluciona el requerimiento 1
-    o Fecha de publicación de la oferta
-o Título de la oferta
-o Nombre de la empresa de la oferta
-o Nivel de experticia de la oferta (es el mismo del filtro)
-o País de la empresa de la oferta
-o Ciudad de la empresa de la oferta
-o Tamaño de la empresa de la oferta
-o Tipo de ubicación de trabajo (remote, partialy_remote, office)
-o Disponible a contratar ucranianos (Verdadero o Falso)
+
     """
     ofertas = catalog['jobs']
     filtro = lt.newList('ARRAY_LIST')
@@ -139,7 +131,8 @@ o Disponible a contratar ucranianos (Verdadero o Falso)
             lt.addLast(filtro, oferta)
             total_ofertas+=1
             if total_ofertas>=n:
-                return filtro
+                break
+            
     filtro_2 = lt.newList('ARRAY_LIST')
     for o in lt.iterator(filtro):
         datos = {'title':o['title'],'company_name':o['company_name'],'experience_level':o['experience_level'],
@@ -154,6 +147,7 @@ o Disponible a contratar ucranianos (Verdadero o Falso)
 def req_2(catalog, n, empresa, ciudad):
     """
     Función que soluciona el requerimiento 2
+
     """
     # TODO: Realizar el requerimiento 2
     ofertas = catalog['jobs']
@@ -164,7 +158,14 @@ def req_2(catalog, n, empresa, ciudad):
             lt.addLast(filtro, oferta)
             total_ofertas+=1
             if total_ofertas>=n:
-                return filtro
+                break
+    filtro_2 = lt.newList('ARRAY_LIST')
+    for o in lt.iterator(filtro):
+        datos = {'published_at':o['published_at'],'country_code':o['contry_code'],'city':o['city'],'company_name':o['company_name'],'title':o['title'],
+                 'experience_level':o['experience_level'],'remote_interview':o['remote_interview'],
+                 'workplace_type':o['workplace_type']}
+        lt.addLast(filtro_2,datos)    
+    
     return filtro
     
 
