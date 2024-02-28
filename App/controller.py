@@ -47,7 +47,6 @@ def load_data(control, jobs_path, skills_path, employments_types_path, multiloca
     """
     Carga los datos del reto
     """
-    # TODO: Realizar la carga de datos
     jobs_size = load_jobs(control, jobs_path)
     skills_size = load_skills(control, skills_path)
     employments_types_size = load_employments_types(control, employments_types_path)
@@ -108,6 +107,18 @@ def get_data(control, id):
     """
     #TODO: Llamar la función del modelo para obtener un dato
     pass
+
+def select_list():
+    print("Seleccione la lista deseada:")
+    print("1. ARRAY_LIST")
+    print("2. LINKED_LIST")
+    option = input("Escoge una opcion:")
+    if option == "1":
+        model.selected.list = model.ARRAY_LIST
+    elif option == "2":
+        model.select_list = model.LINKED_LIST
+    else:
+        print("Opcion Incorreta")
 
 
 def req_1(control):
