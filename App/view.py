@@ -28,7 +28,7 @@ from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 
 assert cf
-from tabulate import tabulate 
+#from tabulate import tabulate 
 import traceback
 import threading
 
@@ -118,7 +118,10 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    
+    total_ofertas, total_empresas, catalogo = controller.req_4(control)
+    print(f"El total de ofertas es: {total_ofertas}")
+    print(f"El total de empresas son: {total_empresas}")
+    print(catalogo)
 
 
 def print_req_5(control):
