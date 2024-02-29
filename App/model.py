@@ -211,7 +211,7 @@ def req_4(catalog, pais, f_inicio, f_fin):
                 if empresa not in empresas:
                     lt.addLast(empresas, empresa)
                     
-    return len(ofertas_rango-1), len(empresas), ,ofertas_rango
+    return len(ofertas_rango), len(empresas), ofertas_rango
     
 
 
