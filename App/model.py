@@ -163,13 +163,13 @@ def req_3(catalog, empresa, f_inicio, f_fin):
     of_junior = 0
     of_mid = 0
     of_senior = 0
-    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d").date()
-    f_fin = datetime.strptime(f_fin, "%Y-%m-%d").date()
+    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d")
+    f_fin = datetime.strptime(f_fin, "%Y-%m-%d")
     for oferta in lt.iterator(ofertas):
         if oferta["company_name"] == empresa:
             fecha = oferta["published_at"]
             fecha = fecha[0:9]
-            fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+            fecha = datetime.strptime(fecha, "%Y-%m-%d")
             if (f_inicio <= fecha) and (fecha <= f_fin):
                 lt.addLast(ofertas_rango, oferta)
                 experiencia = oferta["experience_level"]
@@ -188,11 +188,30 @@ def req_3(catalog, empresa, f_inicio, f_fin):
     
 
 
-def req_4(catalog, pais, f_inicio, f_final):
+def req_4(catalog, pais, f_inicio, f_fin):
     """
     Función que soluciona el requerimiento 4
     """
-    
+    ofertas = catalog['jobs']
+    ofertas_rango = lt.newList('ARRAY_LIST')
+    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d")
+    f_fin = datetime.strptime(f_fin, "%Y-%m-%d")
+    empresas = lt.newList('ARRAY_LIST')
+    for oferta in lt.iterator(ofertas):
+        if pais == oferta['country_code']:
+            empresa = oferta["company_name"]
+            
+            fecha = oferta['published_at']
+            fecha = fecha[0:9]
+            fecha = datetime.strftime(fecha,'%Y-%m-%d')
+            if (f_inicio <= fecha) and (fecha <= f_fin):
+                lt.addLast(ofertas_rango, oferta)
+                empresa = oferta["company_name"]
+                ciudad = oferta["city"]
+                if empresa not in empresas:
+                    lt.addLast(empresas, empresa)
+                    
+    return len(ofertas_rango-1), len(empresas), ,ofertas_rango
     
 
 
