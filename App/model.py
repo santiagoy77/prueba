@@ -167,7 +167,7 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
                  'workplace_type':o['workplace_type'],'open_to_hire_ukrainians':o['open_to_hire_ukrainians']}
         lt.addLast(filtro_2,datos)    
     
-    ins.sort(filtro_2, sort_criteria_req3)
+    ins.sort(filtro_2['elements'], sort_criteria_req3)
     print(filtro_2)
             
     return filtro_2 
