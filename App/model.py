@@ -189,21 +189,43 @@ def req_5(data_structs):
     pass
 
 
-def req_6(data_structs):
+
+
+
+def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
+    """
+    Función que soluciona el requerimiento 7
+    """
+    # TODO: Realizar el requerimiento 
+    catalog = data_structs['jobs']
+    ciudades = lt.newList('ARRAY_LIST')
+    ofertas = lt.newList('ARRAY_LIST')
+    if pais != None:
+        cant_ciudades = 0
+        
+        for oferta in lt.iterator(catalog):
+            if lt.size(ciudades)<n:
+                if pais == oferta['country_code'] and experience == oferta['experience_level']:
+                    date = oferta['published_at']
+                    fecha = datetime.strftime(date,'%Y-%m-%d')
+                    if fecha<=fecha_fin and fecha>=fecha_in:
+                        present = lt.isPresent(ciudades,oferta['city'])
+                        if present==False:
+                            lt.addLast(ciudades,oferta['city'])
+                            lt.addLast(ofertas,oferta)
+                         
+                        lt.addLast(ofertas,oferta)
+            else: 
+                break
+        return ofertas
+
+def req_7(data_structs):
     """
     Función que soluciona el requerimiento 6
     """
     # TODO: Realizar el requerimiento 6
+    
     pass
-
-
-def req_7(data_structs):
-    """
-    Función que soluciona el requerimiento 7
-    """
-    # TODO: Realizar el requerimiento 7
-    pass
-
 
 def req_8(data_structs):
     """

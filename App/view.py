@@ -130,7 +130,8 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    ofertas = controller.req_6(control)
+    return ofertas
 
 
 def print_req_7(control):
