@@ -167,7 +167,7 @@ def req_6(control):
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    return model.req_6(control['model'],20,'PL','junior','2020-04-14','2023-04-14')
+    return model.req_6(control['model'],20,None,'junior','2020-04-14','2023-04-14')
 
 
 def req_7(control):
