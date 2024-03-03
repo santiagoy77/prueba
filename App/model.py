@@ -44,7 +44,7 @@ dos listas, una para los videos, otra para las categorias de los mismos.
 # Construccion de modelos
 
 
-def new_data_structs():
+def new_data_structs(tipo):
     """
     Inicializa las estructuras de datos del modelo. Las crea de
     manera vacía para posteriormente almacenar la información.
@@ -53,6 +53,9 @@ def new_data_structs():
     open_to_hire_ukrainians;id;display_offer
 
     """ 
+    if tipo == None:
+        tipo = 'ARRAY_LIST'
+        
     catalog = {'skills':None,
                'multi-locations': None,
                'jobs': None,
@@ -60,10 +63,10 @@ def new_data_structs():
               }
     
     
-    catalog['skills'] = lt.newList('ARRAY_LIST')
-    catalog['multi-locations'] = lt.newList('ARRAY_LIST')
-    catalog['jobs'] = lt.newList('ARRAY_LIST')
-    catalog['employment-types'] = lt.newList('ARRAY_LIST')
+    catalog['skills'] = lt.newList(tipo)
+    catalog['multi-locations'] = lt.newList(tipo)
+    catalog['jobs'] = lt.newList(tipo)
+    catalog['employment-types'] = lt.newList(tipo)
     #TODO: Inicializar las estructuras de datos
     return catalog
 
@@ -197,7 +200,7 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
                  'workplace_type':o['workplace_type'],'open_to_hire_ukrainians':o['open_to_hire_ukrainians']}
         lt.addLast(filtro_2,datos)    
     
-    ins.sort(filtro_2['elements'], sort_criteria_req3)
+    ins.sort(filtro_2, sort_criteria_req3)
     print(filtro_2)
             
     return filtro_2 
@@ -236,17 +239,19 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
         for oferta in lt.iterator(catalog):
             if lt.size(ciudades)<n:
                 if pais == oferta['country_code'] and experience == oferta['experience_level']:
+                    print('0')
                     date = oferta['published_at']
                     fecha = datetime.strftime(date,'%Y-%m-%d')
                     if fecha<=fecha_fin and fecha>=fecha_in:
+                        print('1')
                         present = lt.isPresent(ciudades,oferta['city'])
                         if present==False:
+                            print('2')
                             lt.addLast(ciudades,oferta['city'])
-                            lt.addLast(ofertas,oferta)
-                         
-                        lt.addLast(ofertas,oferta)
+                            lt.addLast(ofertas,oferta)     
             else: 
-                break
+                return ofertas 
+                
     else:
         
         for oferta in lt.iterator(catalog):
@@ -257,12 +262,10 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
                         present = lt.isPresent(ciudades,oferta['city'])
                         if present==False:
                             lt.addLast(ciudades,oferta['city'])
-                            lt.addLast(ofertas,oferta)
-                         
-                        lt.addLast(ofertas,oferta)
-             
-                
-    return ofertas
+                            lt.addLast(ofertas,oferta)       
+            else:
+                return ofertas                                
+    
 
 def req_7(data_structs):
     """
@@ -315,4 +318,6 @@ def sort(data_structs):
 
 def sort_criteria_req3(data_1,data_2):
     if data_1['published_at']==data_2['published_at']:
-        return data_1['contry_code'] < data_2['country_code']
+        return data_1['country_code'] < data_2['country_code']
+    else:
+        return data_1["published_at"] > data_2["published_at"]

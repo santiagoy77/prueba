@@ -45,7 +45,7 @@ def new_controller():
         Se crea una instancia del controlador
     """
     #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    control = controller.new_controller()
+    control = controller.new_controller(tipo)
     return control
 
 
@@ -60,6 +60,8 @@ def print_menu():
     print("7- Ejecutar Requerimiento 6")
     print("8- Ejecutar Requerimiento 7")
     print("9- Ejecutar Requerimiento 8")
+    print("10- Escoger entre Array-List y Single-Linked")
+    print("11- Escoger Tamaño")
     print("0- Salir")
 
 
@@ -68,7 +70,7 @@ def load_data(control):
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    return controller.load_data(control)
+    return controller.load_data(control,size_archivo)
     
     
 
@@ -146,8 +148,8 @@ def print_req_6(control):
     """
     # TODO: Imprimir el resultado del requerimiento 6
     ofertas = controller.req_6(control)
-    print('_______')
-    return ofertas
+   
+    return print(ofertas)
 
 
 def print_req_7(control):
@@ -167,6 +169,8 @@ def print_req_8(control):
 
 
 # Se crea el controlador asociado a la vista
+tipo = None
+size_archivo = 3
 control = new_controller()
 
 default_limit = 1000
@@ -205,7 +209,7 @@ if __name__ == "__main__":
             
         elif int(inputs) == 3:
 
-            tup = tup = print_req_2(control)
+            tup = print_req_2(control)
             print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
       
             
@@ -231,7 +235,17 @@ if __name__ == "__main__":
 
         elif int(inputs) == 9:
             print_req_8(control)
-
+        
+        elif int(inputs) == 10:
+            lista = int(input('Ingrese el tipo de lista que desea (1 para Array y 2 para encadenada):'))
+            if lista == 1:
+                tipo = 'ARRAY_LIST'
+            elif lista == 2:
+                tipo = 'SINGLE_LINKED'
+            
+        elif int(inputs) == 11:
+            size_archivo = int(input('Escoga el Tamaño:\n1.10%\n2.20%\n3.small%\n4.80%\n5.100%\nOpcion: '))
+            
         elif int(inputs) == 0:
             working = False
             print("\nGracias por utilizar el programa") 
