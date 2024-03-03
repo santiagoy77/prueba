@@ -117,8 +117,11 @@ def print_req_3(control):
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    catalog = controller.req_3(control)
-    print(catalog['elements'])
+    empresa = input('Escriba el nombre de la empresa que desea')
+    fecha_in= input('Escriba la fecha inicial (mas reciente):')
+    fecha_fin=input('Escriba la fecha final (mas antigua):')
+    return  controller.req_3(control,empresa,fecha_in,fecha_fin)
+    
 
 
 def print_req_4(control):
@@ -142,7 +145,9 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    ofertas = controller.req_6(control)
+    print('_______')
+    return ofertas
 
 
 def print_req_7(control):
@@ -200,12 +205,18 @@ if __name__ == "__main__":
             
         elif int(inputs) == 3:
 
-            tup = print_req_2(control)
+            tup = tup = print_req_2(control)
             print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
+      
+            
 
         elif int(inputs) == 4:
-            print_req_3(control)
-
+            tup = print_req_3(control)
+            print('La cantidad de ofertas total con estos requerimientos es de:',tup[0])
+            print('La cantidad de ofertas "junior" es',tup[1])
+            print('La cantidad de ofertas "mid" es',tup[2])
+            print('La cantidad de ofertas "senior" es',tup[3])
+            
         elif int(inputs) == 5:
             print_req_4(control)
 

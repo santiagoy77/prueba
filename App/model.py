@@ -179,8 +179,7 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
     # TODO: Realizar el requerimiento 3
     ofertas = catalog['jobs']
     final  = lt.newList('ARRAY_LIST')
-    #fecha_in = datetime.strptime(fecha_in,'%Y-%m-%d')
-    #fecha_fin = datetime.strptime(fecha_fin,'%Y-%m-%d')
+   
 
     for oferta in lt.iterator(ofertas):
         if empresa == oferta['company_name']:
@@ -188,7 +187,20 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
             fecha = datetime.strftime(date,'%Y-%m-%d')
             if fecha<=fecha_fin and fecha>=fecha_in:
                 lt.addLast(final,oferta)
-    return final 
+            elif fecha<fecha_in:
+                break
+            
+    filtro_2 = lt.newList('ARRAY_LIST')
+    for o in lt.iterator(final):
+        datos = {'published_at':o['published_at'],'title':o['title'],'experience_level':o['experience_level'],
+                 'city':o['city'],'country_code':o['country_code'],'company_size':o['company_size'], 
+                 'workplace_type':o['workplace_type'],'open_to_hire_ukrainians':o['open_to_hire_ukrainians']}
+        lt.addLast(filtro_2,datos)    
+    
+    ins.sort(filtro_2['elements'], sort_criteria_req3)
+    print(filtro_2)
+            
+    return filtro_2 
 
 
 def req_4(data_structs):
@@ -207,21 +219,58 @@ def req_5(data_structs):
     pass
 
 
-def req_6(data_structs):
+
+
+
+def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
+    """
+    Función que soluciona el requerimiento 7
+    """
+    # TODO: Realizar el requerimiento 
+    catalog = data_structs['jobs']
+    ciudades = lt.newList('ARRAY_LIST')
+    ofertas = lt.newList('ARRAY_LIST')
+    cant_ciudades = 0
+    if pais != None:
+        
+        for oferta in lt.iterator(catalog):
+            if lt.size(ciudades)<n:
+                if pais == oferta['country_code'] and experience == oferta['experience_level']:
+                    date = oferta['published_at']
+                    fecha = datetime.strftime(date,'%Y-%m-%d')
+                    if fecha<=fecha_fin and fecha>=fecha_in:
+                        present = lt.isPresent(ciudades,oferta['city'])
+                        if present==False:
+                            lt.addLast(ciudades,oferta['city'])
+                            lt.addLast(ofertas,oferta)
+                         
+                        lt.addLast(ofertas,oferta)
+            else: 
+                break
+    else:
+        
+        for oferta in lt.iterator(catalog):
+            date = oferta['published_at']
+            fecha = datetime.strftime(date,'%Y-%m-%d')
+            if cant_ciudades<n:
+                if  experience == oferta['experience_level'] and fecha<=fecha_fin and fecha>=fecha_in:
+                        present = lt.isPresent(ciudades,oferta['city'])
+                        if present==False:
+                            lt.addLast(ciudades,oferta['city'])
+                            lt.addLast(ofertas,oferta)
+                         
+                        lt.addLast(ofertas,oferta)
+             
+                
+    return ofertas
+
+def req_7(data_structs):
     """
     Función que soluciona el requerimiento 6
     """
     # TODO: Realizar el requerimiento 6
+    
     pass
-
-
-def req_7(data_structs):
-    """
-    Función que soluciona el requerimiento 7
-    """
-    # TODO: Realizar el requerimiento 7
-    pass
-
 
 def req_8(data_structs):
     """
@@ -263,3 +312,7 @@ def sort(data_structs):
     """
     #TODO: Crear función de ordenamiento
     return merg.sort(data_structs["jobs"], sort_criteria)
+
+def sort_criteria_req3(data_1,data_2):
+    if data_1['published_at']==data_2['published_at']:
+        return data_1['contry_code'] < data_2['country_code']
