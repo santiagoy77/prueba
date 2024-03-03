@@ -131,6 +131,7 @@ def print_req_6(control):
     """
     # TODO: Imprimir el resultado del requerimiento 6
     ofertas = controller.req_6(control)
+    print('_______')
     return ofertas
 
 

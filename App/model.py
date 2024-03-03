@@ -200,6 +200,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     catalog = data_structs['jobs']
     ciudades = lt.newList('ARRAY_LIST')
     ofertas = lt.newList('ARRAY_LIST')
+    cant_ciudades = 0
     if pais != None:
         
         for oferta in lt.iterator(catalog):
@@ -221,7 +222,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
         for oferta in lt.iterator(catalog):
             date = oferta['published_at']
             fecha = datetime.strftime(date,'%Y-%m-%d')
-            if lt.size(ciudades)<n:
+            if cant_ciudades<n:
                 if  experience == oferta['experience_level'] and fecha<=fecha_fin and fecha>=fecha_in:
                         present = lt.isPresent(ciudades,oferta['city'])
                         if present==False:
@@ -229,9 +230,9 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
                             lt.addLast(ofertas,oferta)
                          
                         lt.addLast(ofertas,oferta)
-            else: 
-                break
-        return ofertas
+             
+                
+    return ofertas
 
 def req_7(data_structs):
     """
