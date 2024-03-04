@@ -121,7 +121,7 @@ def req_1(control,n,pais,exp):
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
-    lista = model.req_1(control['model'],10,'PL','junior')
+    lista = model.req_1(control['model'],20,'PL','junior')
     size = model.data_size(lista)
     
     return size, lista
@@ -188,11 +188,10 @@ def req_6(control):
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    ofertas = model.req_6(control['model'],2,None,'junior','2020-04-14','2023-04-14')
-    ciudades = ofertas[1]
-    catalog = ofertas[0]
+    ofertas = model.req_6(control['model'],20,'PL','junior','2020-04-14','2023-04-14')
+ 
     
-    return catalog
+    return ofertas
 
 
 

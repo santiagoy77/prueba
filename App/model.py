@@ -234,12 +234,11 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     ciudades = lt.newList('ARRAY_LIST')
     ofertas = lt.newList('ARRAY_LIST')
     empresas = lt.newList('ARRAY_LIST')
-    cant_ciudades = 0
     city = {}
     cant_empresas = 0
     sal_promedio = 0
-    if pais != None:
-        
+#filtrar con pais
+    if pais != None: 
         for oferta in lt.iterator(catalog):
          
             if pais == oferta['country_code'] and experience == oferta['experience_level']:
@@ -250,40 +249,61 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
                     if oferta['city'] not in city:
                         city[oferta['city']] = 1
                         lt.addLast(ofertas,oferta)     
-                        cant_ciudades+=1
                         
-                    elif present ==True:
+                    elif oferta['city']  in city:
                         lt.addLast(ofertas,oferta)
                         city[oferta['city']] += 1
 
-                   
-                        
-          
-                
+#filtrar sin pais        
     else:
-        
         for oferta in lt.iterator(catalog):
             date = oferta['published_at']
             fecha = datetime.strftime(date,'%Y-%m-%d')
             if  experience == oferta['experience_level'] and fecha<=fecha_fin and fecha>=fecha_in:
-                    present = lt.isPresent(ciudades,oferta['city'])
                     
-                    if present==False and cant_ciudades<n:
-                        lt.addLast(ciudades,oferta['city'])
-                        lt.addLast(ofertas,oferta)       
-                        cant_ciudades+=1
-                    elif present ==True:
+                    if oferta['city'] not in city:
+                        city[oferta['city']] = 1
+                        lt.addLast(ofertas,oferta)     
+                        
+                    elif oferta['city']  in city:
                         lt.addLast(ofertas,oferta)
+                        city[oferta['city']] += 1
     
+      
+       
+# sort a ciudades
+    for ciudad in city.keys():
+        lt.addLast(ciudades,{'city':ciudad,'count':city[ciudad]})     
+           
+    merg.sort(ciudades,sort_criteria_req6)
+    lista_de_n_cities = lt.newList('ARRAY_LIST')
+    for ciudad in lt.iterator(ciudades):
+        if lt.size(lista_de_n_cities)<n:
+            lt.addLast(lista_de_n_cities,ciudad['city'])
+        else:
+            break
+    cant_ciudades = lt.size(lista_de_n_cities)
+    mayor = lt.firstElement(ciudades)
+    sub = lt.subList(ciudades,0,n+1)
+    menor = lt.lastElement(sub)
     
+#lista filtrada con las ciudades
+    filtro = lt.newList('ARRAY_LIST')
     for oferta in lt.iterator(ofertas):
+        present = lt.isPresent(lista_de_n_cities,oferta['city'])
+        if present>0:
+            lt.addLast(filtro,oferta)
+    total_ofertas = lt.size(filtro)
+
+#contar empresas    
+    for oferta in lt.iterator(filtro):
         present_empresa = lt.isPresent(empresas,oferta['company_name'])
-        if present_empresa==False:
+        if present_empresa!=0:
             lt.addLast(empresas,oferta['company_name']) 
             cant_empresas +=1
-       
-            
-    return ofertas, cant_ciudades, cant_empresas                                
+          
+    print(total_ofertas, cant_ciudades, cant_empresas, mayor, menor)  
+    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                
     
 
 def req_7(data_structs):
@@ -340,3 +360,7 @@ def sort_criteria_req3(data_1,data_2):
         return data_1['country_code'] < data_2['country_code']
     else:
         return data_1["published_at"] > data_2["published_at"]
+
+
+def sort_criteria_req6(data_1,data_2):
+    return data_1['count']>data_2['count']

@@ -154,7 +154,7 @@ def print_req_6(control):
     ofertas = controller.req_6(control)
     
    
-    return print(ofertas)
+    return 
 
 
 def print_req_7(control):
