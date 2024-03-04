@@ -278,7 +278,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     for ciudad in city.keys():
         lt.addLast(ciudades,{'city':ciudad,'count':city[ciudad]})     
            
-    merg.sort(ciudades,sort_criteria_req6)
+    merg.sort(ciudades,sort_criteria_req6y7)
     lista_de_n_cities = lt.newList('ARRAY_LIST')
     for ciudad in lt.iterator(ciudades):
         if lt.size(lista_de_n_cities)<n:
@@ -308,6 +308,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
           
     
     #promedio salario
+    """
     if pais!=None:
         for oferta in lt.iterator(emptypes):
             present_id = lt.isPresent(id_list,oferta['id'])
@@ -315,10 +316,15 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
                 sal_promedio+= int(oferta['salary_from'])
                 div_salario +=1
 
-    promedio = sal_promedio/div_salario
-    
+    promedio = sal_promedio//div_salario
+
     print(promedio)
-    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio                                 
+    """
+    #devolver catalogo ciudades
+    catalogo_ciudades = lt.newList('ARRAY_LIST')
+    for ciudad in lt.iterator(sub):
+        lt.addLast(catalogo_ciudades,{'city':ciudad['ciudad'],'ofertas':ciudad['count']})
+    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                 
     
 
 def req_7(data_structs):
@@ -377,5 +383,6 @@ def sort_criteria_req3(data_1,data_2):
         return data_1["published_at"] > data_2["published_at"]
 
 
-def sort_criteria_req6(data_1,data_2):
+def sort_criteria_req6y7(data_1,data_2):
     return data_1['count']>data_2['count']
+

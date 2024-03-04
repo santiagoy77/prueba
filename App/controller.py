@@ -192,8 +192,11 @@ def req_6(control,n,pais,exp,fecha_in,fecha_fin):
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
+    start_time = get_time()
     ofertas = model.req_6(control['model'],20,'PL','junior','2020-04-14','2023-04-14')
- 
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
     
     return ofertas
 
