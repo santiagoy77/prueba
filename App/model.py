@@ -246,7 +246,7 @@ def req_7(catalog, n, f_inicial, f_final):
 
     ofertas_rango = lt.newList('ARRAY_LIST')
     ofertas_paises = {}
-    for oferta in ofertas_jobs:
+    for oferta in lt.iterator(ofertas_jobs):
         if ((ofertas_jobs['published_at'] >= f_inicio) and (ofertas_jobs['published_at'] <= f_fin)):
             lt.addLast(ofertas_rango, oferta)
             pais_oferta = oferta['country_code']
@@ -254,14 +254,16 @@ def req_7(catalog, n, f_inicial, f_final):
                ofertas_paises[pais_oferta] = 1
             else:
                 ofertas_paises[pais_oferta] += 1
-            
-    paises_ordenados = sorted(ofertas_paises.items(), key = lambda item: item[1], reverse=True)
-    top_n = list(paises_ordenados[:n])
+    paises_organizados = lt.newList('ARRAY_LIST')  
+    for pais in paises.keys():
+        lt.addLast(paises_organizados, {'pais': pais,'cuenta': ciudades[pais]})
+    merg.sort(paises_organizados, sort_criteriareq6y7)
+    
     pais_mayor = top_n[0]
     cuenta_pais_mayor = pais_oferta[pais_mayor]
             
     ofertas_n_paises = lt.newList()
-    for oferta in ofertas_rango:
+    for oferta in lt.iterator(ofertas_rango):
         if oferta['country_code'] in top_n:
             lt.addLast(ofertas_n_paises, oferta)
     
@@ -280,6 +282,8 @@ def req_7(catalog, n, f_inicial, f_final):
     cuenta_ciudad_mayor = ciudades[ciudad_mayor]
     
     
+    for ofertas in lt.iterator(ofertas_n_paises['id']):
+        
     return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor),
 
 
