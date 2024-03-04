@@ -94,11 +94,8 @@ def load_locations(catalog,arc):
     return model.data_size(catalog['multi-locations'])
 
 def load_employment_type(catalog,arc):
-    if arc == 'small' or arc == 'large':
-        booksfile = cf.data_dir + str(arc+"-employments_types.csv")
-    else:
-        booksfile = cf.data_dir + str(arc+"employments_types.csv")
-
+   
+    booksfile = cf.data_dir + str(arc+"-employments_types.csv")
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for employment in input_file:
         model.add_employment_types(catalog, employment)
