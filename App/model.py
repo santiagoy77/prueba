@@ -167,9 +167,9 @@ def req_3(catalog, empresa, f_inicio, f_fin):
     f_fin = datetime.strptime(f_fin, "%Y-%m-%d")
     for oferta in lt.iterator(ofertas):
         if oferta["company_name"] == empresa:
-            fecha = oferta["published_at"]
-            fecha = fecha[0:9]
-            fecha = datetime.strptime(fecha, "%Y-%m-%d")
+            fecha = oferta['published_at']
+            fecha = datetime.strftime(fecha,'%Y-%m-%d')
+            fecha = datetime.strptime(fecha,'%Y-%m-%d')
             if (f_inicio <= fecha) and (fecha <= f_fin):
                 lt.addLast(ofertas_rango, oferta)
                 experiencia = oferta["experience_level"]
@@ -194,16 +194,17 @@ def req_4(catalog, pais, f_inicio, f_fin):
     """
     ofertas = catalog['jobs']
     ofertas_rango = lt.newList('ARRAY_LIST')
-    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d")
-    f_fin = datetime.strptime(f_fin, "%Y-%m-%d")
     empresas = lt.newList('ARRAY_LIST')
+    f_inicio = datetime.strptime(f_inicio,'%Y-%m-%d')
+    f_fin = datetime.strptime(f_fin,'%Y-%m-%d')
+    
     for oferta in lt.iterator(ofertas):
         if pais == oferta['country_code']:
             empresa = oferta["company_name"]
             
-            fecha = oferta['published_at']
-            fecha = fecha[0:9]
-            fecha = datetime.strftime(fecha,'%Y-%m-%d')
+            fecha_oferta = oferta['published_at']
+            fecha_string = datetime.strftime(fecha_oferta,'%Y-%m-%d')
+            fecha = datetime.strptime(fecha_string,'%Y-%m-%d')
             if (f_inicio <= fecha) and (fecha <= f_fin):
                 lt.addLast(ofertas_rango, oferta)
                 empresa = oferta["company_name"]
@@ -211,11 +212,11 @@ def req_4(catalog, pais, f_inicio, f_fin):
                 if empresa not in empresas:
                     lt.addLast(empresas, empresa)
                     
-    return len(ofertas_rango), len(empresas), ofertas_rango
+    return lt.size(ofertas_rango), lt.size(empresas), ofertas_rango
     
 
 
-def req_5(data_structs):
+def req_5():
     """
     Función que soluciona el requerimiento 5
     """
@@ -231,12 +232,55 @@ def req_6(data_structs):
     pass
 
 
-def req_7(data_structs):
+def req_7(catalog, n, f_inicial, f_final):
     """
     Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 7
-    pass
+
+    ofertas_jobs = catalog["jobs"]
+    ofertas_skills = catalog["skills"]
+    
+
+    f_inicio = datetime.strptime(f_inicio,'%Y-%m-%d')
+    f_fin = datetime.strptime(f_fin,'%Y-%m-%d')
+
+    ofertas_rango = lt.newList('ARRAY_LIST')
+    ofertas_paises = {}
+    for oferta in ofertas_jobs:
+        if ((ofertas_jobs['published_at'] >= f_inicio) and (ofertas_jobs['published_at'] <= f_fin)):
+            lt.addLast(ofertas_rango, oferta)
+            pais_oferta = oferta['country_code']
+            if pais_oferta not in ofertas_paises:
+               ofertas_paises[pais_oferta] = 1
+            else:
+                ofertas_paises[pais_oferta] += 1
+            
+    paises_ordenados = sorted(ofertas_paises.items(), key = lambda item: item[1], reverse=True)
+    top_n = list(paises_ordenados[:n])
+    pais_mayor = top_n[0]
+    cuenta_pais_mayor = pais_oferta[pais_mayor]
+            
+    ofertas_n_paises = lt.newList()
+    for oferta in ofertas_rango:
+        if oferta['country_code'] in top_n:
+            lt.addLast(ofertas_n_paises, oferta)
+    
+    
+    total_ofertas = lt.size(ofertas_n_paises)
+    ciudades = {}
+    for oferta in ofertas_n_paises:
+        if oferta['city'] not in ciudades:
+            ciudades[oferta['city']] = 1
+        else:
+            ciudades[oferta['city']] +=1
+    numero_ciudades = len(ciudades)
+    
+    ciudades_ordenadas = sorted(ciudades.items(), key = lambda item: item[1], reverse=True)
+    ciudad_mayor = ciudades_ordenadas[0]
+    cuenta_ciudad_mayor = ciudades[ciudad_mayor]
+    
+    
+    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor),
 
 
 def req_8(data_structs):
@@ -254,7 +298,7 @@ def compare(data_1, data_2):
     Función encargada de comparar dos datos
     """
     #TODO: Crear función comparadora de la lista
-    pass
+    
 
 # Funciones de ordenamiento
 
