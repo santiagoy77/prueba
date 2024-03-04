@@ -298,11 +298,14 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
 #contar empresas    
     for oferta in lt.iterator(filtro):
         present_empresa = lt.isPresent(empresas,oferta['company_name'])
-        if present_empresa!=0:
+        if present_empresa==0:
             lt.addLast(empresas,oferta['company_name']) 
             cant_empresas +=1
           
     print(total_ofertas, cant_ciudades, cant_empresas, mayor, menor)  
+    
+    #promedio salario
+    
     return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                
     
 

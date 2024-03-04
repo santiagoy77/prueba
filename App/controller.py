@@ -50,15 +50,15 @@ def load_data(control,size_archivo):
     Carglos datos del reto
     """
     if size_archivo == 1:
-        arc = "10-por-"
+        arc = "10-por"
     elif size_archivo ==2:
-        arc = "20-por-"
+        arc = "20-por"
     elif size_archivo ==3:
-        arc = "small-"
+        arc = "small"
     elif size_archivo == 4: 
-        arc= "80-"
+        arc= "80-por"
     elif size_archivo == 5:
-        arc = "large-"
+        arc = "large"
         
     skills = load_skills(control['model'],arc)
     jobs = load_jobs(control["model"],arc)
@@ -67,7 +67,7 @@ def load_data(control,size_archivo):
     return (skills, jobs, locations, employments)
 
 def load_skills(catalog,arc):
-    booksfile = cf.data_dir + str(arc+"skills.csv")
+    booksfile = cf.data_dir + str(arc+"-skills.csv")
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for skill in input_file:
         model.add_skills(catalog,skill)
@@ -75,7 +75,7 @@ def load_skills(catalog,arc):
     return model.data_size(catalog["skills"])
     
 def load_jobs(catalog,arc):
-    booksfile = cf.data_dir + str(arc+"jobs.csv")
+    booksfile = cf.data_dir + str(arc+"-jobs.csv")
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for job in input_file:
         model.add_jobs(catalog,job)
@@ -84,14 +84,20 @@ def load_jobs(catalog,arc):
     return model.data_size(catalog['jobs'])
 
 def load_locations(catalog,arc):
-    booksfile = cf.data_dir + str(arc+"multilocations.csv")
+        
+    booksfile = cf.data_dir + str(arc+"-multilocations.csv")
+        
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for multilocation in input_file:
         model.add_locations(catalog, multilocation)
     return model.data_size(catalog['multi-locations'])
 
 def load_employment_type(catalog,arc):
-    booksfile = cf.data_dir + "small-employments_types.csv"
+    if arc == 'small' or arc == 'large':
+        booksfile = cf.data_dir + str(arc+"-employments_types.csv")
+    else:
+        booksfile = cf.data_dir + str(arc+"employments_types.csv")
+
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for employment in input_file:
         model.add_employment_types(catalog, employment)
