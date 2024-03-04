@@ -38,6 +38,8 @@ operación solicitada
 """
 
 
+control = None
+
 def new_controller():
     """
         Se crea una instancia del controlador
@@ -70,9 +72,6 @@ def load_data(control, size):
     return jobs_size, skills_size, employments_types_size, multilocations_size
 
 def print_jobs(control, pos, id):
-    """
-        Función que imprime un dato dado su ID
-    """
     jobs = control['model']['jobs']
     jobs_sublist = lt.subList(jobs, pos, id)
     headers = {'Fecha de publicación': [],
@@ -107,13 +106,40 @@ def print_req_2(control):
     pass
 
 
-def print_req_3(control):
+def print_req_3(control, nombre_empresa, fecha_inicial, fecha_final):
     """
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    pass
+    tupla_listado_ofertas = controller.req_3(control, nombre_empresa, fecha_inicial, fecha_final)
+    print(f'El número total de ofertas es {tupla_listado_ofertas[0]}.\n')
+    print(f'El número total de ofertas con experticia junior es {tupla_listado_ofertas[3]}.\n')
+    print(f'El número total de ofertas con experticia mid es {tupla_listado_ofertas[2]}.\n')
+    print(f'El número total de ofertas con experticia senior es {tupla_listado_ofertas[1]}.\n')
 
+    headers = {'Fecha de publicación': [],
+               'Título de la oferta': [],
+               'Nombre de la empresa que publica': [],
+               'Nivel de experticia de la oferta': [],
+               'Ciudad de la oferta': [],
+               'País de la oferta': [],
+               'Tamaño de la empresa de la oferta': [],
+               'Tipo de lugar de trabajo de la oferta': [],
+               'Disponible a contratar ucranianos (Verdadero o Falso)': [],
+               }
+    
+    for oferta in lt.iterator(tupla_listado_ofertas[4]):
+        headers['Fecha de publicación'].append(oferta['published_at'])
+        headers['Título de la oferta'].append(oferta['title'])
+        headers['Nombre de la empresa que publica'].append(oferta['company_name'])
+        headers['Nivel de experticia de la oferta'].append(oferta['experience_level'])
+        headers['Ciudad de la oferta'].append(oferta['city'])
+        headers['País de la oferta'].append(oferta['country_code'])
+        headers['Tamaño de la empresa de la oferta'].append(oferta['company_size'])
+        headers['Tipo de lugar de trabajo de la oferta'].append(oferta['workplace_type'])
+        headers['Disponible a contratar ucranianos (Verdadero o Falso)'].append(oferta['open_to_hire_ukrainians'])
+
+    print(tabulate(headers, headers='keys'))
 
 def print_req_4(control):
     """
@@ -186,7 +212,10 @@ if __name__ == "__main__":
             print_req_2(control)
 
         elif int(inputs) == 4:
-            print_req_3(control)
+            nombre_empresa = input('Nombre de la empresa: ')
+            fecha_inicial = input('Fecha inicial: ')
+            fecha_final = input('Fecha final: ')
+            print_req_3(control, nombre_empresa, fecha_inicial, fecha_final)
 
         elif int(inputs) == 5:
             print_req_4(control)

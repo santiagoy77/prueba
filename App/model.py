@@ -54,20 +54,21 @@ def new_data_structs():
                     'employments_types': None,
                     'multilocations': None}
     
-    data_structs['jobs'] = lt.newList()
-    data_structs['skills'] = lt.newList()
-    data_structs['employments_types'] = lt.newList()
-    data_structs['multilocations'] = lt.newList()
+    data_structs['jobs'] = lt.newList('ARRAY_LIST')
+    data_structs['skills'] = lt.newList('ARRAY_LIST')
+    data_structs['employments_types'] = lt.newList('ARRAY_LIST')
+    data_structs['multilocations'] = lt.newList('ARRAY_LIST')
     return data_structs
 
-# Funciones para agregar informacion al modelo
 
+# Funciones para agregar informacion al modelo
 def add_job(data_structs, job):
     """
     Función para agregar nuevos elementos job a la lista jobs
     """
     lt.addLast(data_structs['jobs'], job)
     return data_structs
+
 
 def add_skill(data_structs, skill):
     """
@@ -76,12 +77,14 @@ def add_skill(data_structs, skill):
     lt.addLast(data_structs['skills'], skill)
     return data_structs
 
+
 def add_employment_type(data_structs, employment_type):
     """
     Función para agregar nuevos elementos employment_type a la lista employments_types
     """
     lt.addLast(data_structs['employments_types'], employment_type)
     return data_structs
+
 
 def add_multilocation(data_structs, multilocation):
     """
@@ -90,8 +93,8 @@ def add_multilocation(data_structs, multilocation):
     lt.addLast(data_structs['multilocations'], multilocation)
     return data_structs
 
-# Funciones para creacion de datos
 
+# Funciones para creacion de datos
 def new_job(title,street,city,country_code,address_text,marker_icon,workplace_type,company_name,company_url,company_size,
             experience_level,published_at,remote_interview,open_to_hire_ukrainians,id,display_offer):
     """
@@ -221,13 +224,35 @@ def req_2(data_structs):
     pass
 
 
-def req_3(data_structs):
+def req_3(data_structs, nombre_empresa, fecha_inicial, fecha_final):
     """
     Función que soluciona el requerimiento 3
     """
-    # TODO: Realizar el requerimiento 3
-    pass
+    contador_general = 0
+    contador_senior = 0
+    contador_mid = 0
+    contador_junior = 0
+    listado_ofertas = lt.newList('ARRAY_LIST')
 
+    for oferta in lt.iterator(data_structs['jobs']):
+        if nombre_empresa == oferta['company_name']:
+            oferta_valida = cmp_fechas(fecha_inicial, oferta, fecha_final)
+            if oferta_valida != None:
+                
+                contador_general += 1
+
+                if 'senior' == oferta_valida['experience_level']:
+                    contador_senior += 1
+
+                elif 'mid' == oferta_valida['experience_level']:
+                    contador_mid += 1
+
+                else:
+                    contador_junior += 1
+                lt.addLast(listado_ofertas, oferta_valida)
+
+    sa.sort(listado_ofertas, cmd_fecha_y_pais)
+    return contador_general, contador_senior, contador_mid, contador_junior, listado_ofertas
 
 def req_4(data_structs):
     """
@@ -293,6 +318,19 @@ def sort_criteria(data_1, data_2):
     #TODO: Crear función comparadora para ordenar
     pass
 
+def cmp_fechas(fecha_inicial, oferta, fecha_final):
+    if fecha_inicial[0:10] <= oferta['published_at'][0:10] <= fecha_final[0:10]:
+        return oferta
+
+def cmp_fechas_sa(fecha_1, fecha_2):
+    if fecha_1[0:10] < fecha_2[0:10]:
+        return fecha_1
+
+def cmd_fecha_y_pais(oferta_1, oferta_2):
+    if oferta_1['published_at'][0:10] < oferta_2['published_at'][0:10]:
+        if oferta_1['country_code'] < oferta_2['country_code']:
+            return oferta_1
+
 def cmp_ofertas_by_empresa_y_fecha (oferta1, oferta2):
     """
     Devuelve verdadero (True) si la empresa de la oferta1 es menor que en la
@@ -335,17 +373,16 @@ def seleccion_array_o_linked(answer):
         add_multilocation(answer)
         add_skill(answer)        
     elif answer=="2":
-        answer==lt.newList("LINKED_LIST")
+        answer==lt.newList("SINGLE_LINKED")
         add_employment_type(answer)
         add_job(answer)
         add_multilocation(answer)
         add_skill(answer) 
     return answer
         
-    
-def sublist(lista,inicio,numero):
-    lista = lt.subList(lista,inicio,numero)
-    return lista    
+def sublist(lst, pos, num):
+    new_sublist = lt.subList(lst, pos, num)
+    return new_sublist
 
 def sort(data_structs):
     """

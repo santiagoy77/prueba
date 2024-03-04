@@ -42,7 +42,6 @@ def new_controller():
 
 
 # Funciones para la carga de datos
-
 def load_data(control, jobs_path, skills_path, employments_types_path, multilocations_path):
     """
     Carga los datos del reto
@@ -124,12 +123,14 @@ def req_2(control):
     pass
 
 
-def req_3(control):
+def req_3(control, nombre_empresa, fecha_inicial, fecha_final):
     """
     Retorna el resultado del requerimiento 3
     """
     # TODO: Modificar el requerimiento 3
-    pass
+    data_structs = control['model']
+    tupla_listado_ofertas = model.req_3(data_structs, nombre_empresa, fecha_inicial, fecha_final)
+    return tupla_listado_ofertas
 
 
 def req_4(control):
@@ -138,7 +139,6 @@ def req_4(control):
     """
     # TODO: Modificar el requerimiento 4
     pass
-
 
 def req_5(control):
     """
