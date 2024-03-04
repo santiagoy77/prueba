@@ -149,10 +149,13 @@ def print_req_6(control):
     # TODO: Imprimir el resultado del requerimiento 6
     exp = input('Que nivel de experiencia busca?(junior,mid,senior): ')
     n = int(input('Ingrese la cantidad de ofertas que desea ver: '))
+    pais = input('Ingrese el codigo del pais, si no desea un pais anote 0: ')
     fecha_in= input('Escriba la fecha inicial (mas reciente): ')
     fecha_fin=input('Escriba la fecha final (mas antigua): ')
-    ofertas = controller.req_6(control)
-    
+    if pais == '0':
+        pais = None
+    ofertas = controller.req_6(control,n,pais, exp, fecha_in,fecha_fin)
+        
    
     return 
 

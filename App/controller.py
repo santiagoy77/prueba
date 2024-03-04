@@ -79,6 +79,7 @@ def load_jobs(catalog,arc):
     input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
     for job in input_file:
         model.add_jobs(catalog,job)
+        
     
     model.sort(catalog)
     return model.data_size(catalog['jobs'])
@@ -189,7 +190,7 @@ def req_5(control):
     # TODO: Modificar el requerimiento 5
     pass
 
-def req_6(control):
+def req_6(control,n,pais,exp,fecha_in,fecha_fin):
     """
     Retorna el resultado del requerimiento 6
     """

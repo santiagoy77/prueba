@@ -231,12 +231,15 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     """
     # TODO: Realizar el requerimiento 
     catalog = data_structs['jobs']
+    emptypes = data_structs['employment-types']
     ciudades = lt.newList('ARRAY_LIST')
     ofertas = lt.newList('ARRAY_LIST')
     empresas = lt.newList('ARRAY_LIST')
+    id_list = lt.newList('ARRAY_LIST')
     city = {}
     cant_empresas = 0
     sal_promedio = 0
+    pos = 0
 #filtrar con pais
     if pais != None: 
         for oferta in lt.iterator(catalog):
@@ -295,17 +298,20 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
             lt.addLast(filtro,oferta)
     total_ofertas = lt.size(filtro)
 
-#contar empresas    
+#contar empresas y sacar id  
     for oferta in lt.iterator(filtro):
         present_empresa = lt.isPresent(empresas,oferta['company_name'])
         if present_empresa==0:
             lt.addLast(empresas,oferta['company_name']) 
             cant_empresas +=1
+        lt.addLast(id_list,oferta['id'])
           
-    print(total_ofertas, cant_ciudades, cant_empresas, mayor, menor)  
     
     #promedio salario
-    
+        for oferta in lt.iterator(emptypes):
+            present_id = lt.isPresent(id_list,oferta[1])
+            if present_id>0:
+                oferta[3]
     return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                
     
 
