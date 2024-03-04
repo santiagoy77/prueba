@@ -239,7 +239,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     city = {}
     cant_empresas = 0
     sal_promedio = 0
-    pos = 0
+    div_salario = 0
 #filtrar con pais
     if pais != None: 
         for oferta in lt.iterator(catalog):
@@ -308,11 +308,17 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
           
     
     #promedio salario
+    if pais!=None:
         for oferta in lt.iterator(emptypes):
-            present_id = lt.isPresent(id_list,oferta[1])
-            if present_id>0:
-                oferta[3]
-    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                
+            present_id = lt.isPresent(id_list,oferta['id'])
+            if present_id>0 and oferta['salary_from']!='':
+                sal_promedio+= int(oferta['salary_from'])
+                div_salario +=1
+
+    promedio = sal_promedio/div_salario
+    
+    print(promedio)
+    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio                                 
     
 
 def req_7(data_structs):
