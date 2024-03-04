@@ -188,12 +188,13 @@ def req_6(control):
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    ofertas = model.req_6(control['model'],20,'PL','junior','2020-04-14','2023-04-14')
-    catalog = ofertas['elements']
-    empresas = 0
-    for oferta in catalog:
-        pass
-    return ofertas
+    ofertas = model.req_6(control['model'],2,None,'junior','2020-04-14','2023-04-14')
+    ciudades = ofertas[1]
+    catalog = ofertas[0]
+    
+    return catalog
+
+
 
 
 def req_7(control):

@@ -233,38 +233,57 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     catalog = data_structs['jobs']
     ciudades = lt.newList('ARRAY_LIST')
     ofertas = lt.newList('ARRAY_LIST')
+    empresas = lt.newList('ARRAY_LIST')
     cant_ciudades = 0
+    city = {}
+    cant_empresas = 0
+    sal_promedio = 0
     if pais != None:
         
         for oferta in lt.iterator(catalog):
-            if lt.size(ciudades)<n:
-                if pais == oferta['country_code'] and experience == oferta['experience_level']:
-                    print('0')
-                    date = oferta['published_at']
-                    fecha = datetime.strftime(date,'%Y-%m-%d')
-                    if fecha<=fecha_fin and fecha>=fecha_in:
-                        print('1')
-                        present = lt.isPresent(ciudades,oferta['city'])
-                        if present==False:
-                            print('2')
-                            lt.addLast(ciudades,oferta['city'])
-                            lt.addLast(ofertas,oferta)     
-            else: 
-                return ofertas 
+         
+            if pais == oferta['country_code'] and experience == oferta['experience_level']:
+                date = oferta['published_at']
+                fecha = datetime.strftime(date,'%Y-%m-%d')
+                if fecha<=fecha_fin and fecha>=fecha_in:
+                 
+                    if oferta['city'] not in city:
+                        city[oferta['city']] = 1
+                        lt.addLast(ofertas,oferta)     
+                        cant_ciudades+=1
+                        
+                    elif present ==True:
+                        lt.addLast(ofertas,oferta)
+                        city[oferta['city']] += 1
+
+                   
+                        
+          
                 
     else:
         
         for oferta in lt.iterator(catalog):
             date = oferta['published_at']
             fecha = datetime.strftime(date,'%Y-%m-%d')
-            if cant_ciudades<n:
-                if  experience == oferta['experience_level'] and fecha<=fecha_fin and fecha>=fecha_in:
-                        present = lt.isPresent(ciudades,oferta['city'])
-                        if present==False:
-                            lt.addLast(ciudades,oferta['city'])
-                            lt.addLast(ofertas,oferta)       
-            else:
-                return ofertas                                
+            if  experience == oferta['experience_level'] and fecha<=fecha_fin and fecha>=fecha_in:
+                    present = lt.isPresent(ciudades,oferta['city'])
+                    
+                    if present==False and cant_ciudades<n:
+                        lt.addLast(ciudades,oferta['city'])
+                        lt.addLast(ofertas,oferta)       
+                        cant_ciudades+=1
+                    elif present ==True:
+                        lt.addLast(ofertas,oferta)
+    
+    
+    for oferta in lt.iterator(ofertas):
+        present_empresa = lt.isPresent(empresas,oferta['company_name'])
+        if present_empresa==False:
+            lt.addLast(empresas,oferta['company_name']) 
+            cant_empresas +=1
+       
+            
+    return ofertas, cant_ciudades, cant_empresas                                
     
 
 def req_7(data_structs):

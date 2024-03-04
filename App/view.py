@@ -147,7 +147,12 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
+    exp = input('Que nivel de experiencia busca?(junior,mid,senior): ')
+    n = int(input('Ingrese la cantidad de ofertas que desea ver: '))
+    fecha_in= input('Escriba la fecha inicial (mas reciente): ')
+    fecha_fin=input('Escriba la fecha final (mas antigua): ')
     ofertas = controller.req_6(control)
+    
    
     return print(ofertas)
 
