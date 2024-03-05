@@ -110,8 +110,7 @@ def print_req_2(control):
     tup = controller.req_2(control, n , empresa, city)
     catalog = tup[1]
     ofertas = catalog['elements']
-    #print(tabulate(ofertas, headers='keys', ))
-    
+    return tup
 
 
 def print_req_3(control):
@@ -155,7 +154,18 @@ def print_req_6(control):
     if pais == '0':
         pais = None
     ofertas = controller.req_6(control,n,pais, exp, fecha_in,fecha_fin)
-        
+    cantidad_ciudades = ofertas[1]
+    empresas = ofertas[2]
+    total = ofertas[0]
+    promedio = ofertas[5]
+    mayor = ofertas[3]
+    menor = ofertas[4]
+    print('El total de ciudades que cumplen el requisito son:',cantidad_ciudades)
+    print('El total de empresas que cumplen el requisito son:',empresas)
+    print('El total de ofertas que cumplen el requisito son:',total)
+    print('El promedio del salario ofertado es:',promedio)
+    print('La ciudad con mayor cantidad de ofertas es:',mayor['city'],'con el total de ofertas:',mayor['count'])    
+    print('La ciudad con menor cantidad de ofertas es:',menor['city'],'con el total de ofertas:',menor['count'])    
    
     return 
 
@@ -218,7 +228,7 @@ if __name__ == "__main__":
         elif int(inputs) == 3:
 
             tup = print_req_2(control)
-            #print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
+            print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
       
             
 

@@ -318,13 +318,14 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
 
     promedio = sal_promedio//div_salario
 
-    print(promedio)
+    
     
     #devolver catalogo ciudades
     catalogo_ciudades = lt.newList('ARRAY_LIST')
-    for ciudad in lt.iterator(sub):
-        lt.addLast(catalogo_ciudades,{'city':ciudad['ciudad'],'ofertas':ciudad['count']})
-    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio                                 
+    #for ciudad in lt.iterator(sub):
+    #    lt.addLast(catalogo_ciudades,{'city':ciudad['city'],'ofertas':ciudad['count']})
+        
+    return (total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio)                                 
     
 
 def req_7(data_structs):

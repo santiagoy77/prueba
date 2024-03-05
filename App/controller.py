@@ -205,7 +205,7 @@ def req_6(control,n,pais,exp,fecha_in,fecha_fin):
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
-    
+
     return ofertas
 
 
