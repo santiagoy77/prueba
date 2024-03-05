@@ -376,7 +376,7 @@ def req_7(catalog, n, f_inicial, f_final):
     Función que soluciona el requerimiento 7
     """
 
-    ofertas_jobs = catalog["jobs"]
+    ofertas_jobs = catalog['jobs']
     ofertas_skills = catalog["skills"]
     
 
@@ -386,7 +386,10 @@ def req_7(catalog, n, f_inicial, f_final):
     ofertas_rango = lt.newList('ARRAY_LIST')
     ofertas_paises = {}
     for oferta in lt.iterator(ofertas_jobs):
-        if ((ofertas_jobs['published_at'] >= f_inicio) and (ofertas_jobs['published_at'] <= f_fin)):
+        fecha_oferta = oferta['published_at']
+        fecha_string = datetime.strftime(fecha_oferta,'%Y-%m-%d')
+        fecha = datetime.strptime(fecha_string,'%Y-%m-%d')
+        if (( fecha >= f_inicio) and (fecha <= f_fin)):
             lt.addLast(ofertas_rango, oferta)
             pais_oferta = oferta['country_code']
             if pais_oferta not in ofertas_paises:
@@ -395,7 +398,7 @@ def req_7(catalog, n, f_inicial, f_final):
                 ofertas_paises[pais_oferta] += 1
     paises_organizados = lt.newList('ARRAY_LIST')  
     for pais in ofertas_paises.keys():
-        lt.addLast(paises_organizados, {'pais': pais,'count': ciudades[pais]})
+        lt.addLast(paises_organizados, {'pais': pais,'count': ofertas_paises[pais]})
     merg.sort(paises_organizados, sort_criteria_req6y7)
     top_n = lt.newList('ARRAY_LIST')
     i= 0 

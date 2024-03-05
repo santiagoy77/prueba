@@ -185,8 +185,8 @@ def print_req_7(control):
     """
     # TODO: Imprimir el resultado del requerimiento 7
     n= int(input("Ingrese la cantidad de paises para la consulta"))
-    fecha_in= input("Ingrese la fecha inicial (más reciente)")
-    fecha_fin= input("Ingrese la fecha final (más antigua)")
+    fecha_in= input("Ingrese la fecha inicial (más antigua)")
+    fecha_fin= input("Ingrese la fecha final (más reciente)")
     total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor), senior, mid, junior = controller.req_7(control, n, fecha_in, fecha_fin )
     
     print = (f"El total de ofertas de empleo es {total_ofertas}")
