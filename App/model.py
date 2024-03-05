@@ -249,7 +249,7 @@ def req_7(catalog, n, f_inicial, f_final):
             else:
                 ofertas_paises[pais_oferta] += 1
     paises_organizados = lt.newList('ARRAY_LIST')  
-    for pais in paises.keys():
+    for pais in ofertas_paises.keys():
         lt.addLast(paises_organizados, {'pais': pais,'count': ciudades[pais]})
     merg.sort(paises_organizados, sort_criteria_req6)
     top_n = lt.newList('ARRAY_LIST')
