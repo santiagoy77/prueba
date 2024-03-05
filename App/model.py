@@ -436,20 +436,127 @@ def req_7(catalog, n, f_inicial, f_final):
     suma_nivel_mid = 0
     suma_nivel_senior = 0
     
+    total_ofertas_junior = 0
+    total_ofertas_mid = 0
+    total_ofertas_senior = 0
+    
+    empresas_junior = {}
+    empresas_mid = {}
+    empresas_senior = {}
     
     for oferta in lt.iterator(ofertas_n_paises):
         position = lt.isPresent(ofertas_skills, oferta['id'])
         elemento = lt.getElement(ofertas_skills, position)
 
         experiencia = oferta['experience_level']
+        empresa = oferta['company_name']
         
         if experiencia == 'senior':
             suma_nivel_senior += elemento['level']
-    
+            total_ofertas_senior+=1
+            habilidad = elemento['name']
+            if habilidad not in skills_senior.keys():
+                skills_senior[habilidad]= 1
+            else:
+                skills_senior[habilidad]+=1
             
+            if empresa not in empresas_senior.keys():
+                empresas_senior[empresa] = 1
+            else:
+                empresas_senior[empresa] +=1
+                  
+        elif experiencia == 'mid':
+            suma_nivel_mid += elemento['level']
+            total_ofertas_mid +=1
+            habilidad = elemento['name']
+            if habilidad not in skills_mid.keys():
+                skills_mid[habilidad]= 1
+            else:
+                skills_mid[habilidad]+=1 
+                
+            if empresa not in empresas_mid.keys():
+                empresas_mid[empresa] = 1
+            else:
+                empresas_mid[empresa] +=1
+                
+        elif experiencia == 'junior':
+            suma_nivel_junior += elemento['level']
+            total_ofertas_junior += 1
+            habilidad = elemento['name']
+            if habilidad not in skills_junior.keys():
+                skills_junior[habilidad]= 1
+            else:
+                skills_junior[habilidad]+=1
             
+            if empresa not in empresas_junior.keys():
+                empresas_junior[empresa] = 1
+            else:
+                empresas_junior[empresa] +=1
     
-    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor)
+    promedio_junior = suma_nivel_junior//total_ofertas_junior
+    promedio_mid = suma_nivel_mid//total_ofertas_mid
+    promedio_senior = suma_nivel_senior//total_ofertas_senior
+    
+    #Requerimientos por experiencia
+    skills_senior_ordenadas = lt.newList('ARRAY_LIST')
+    for habilidad in skills_senior.keys():
+        lt.addLast(skills_senior_ordenadas, {'skill': habilidad,'count': skills_senior[habilidad]})
+    merg.sort(skills_senior_ordenadas, sort_criteria_req6y7)
+    
+    habilidades_diferentes_senior = lt.size(skills_senior_ordenadas)
+    habilidad_mas_senior = lt.firstElement(skills_senior_ordenadas)
+    habilidad_menos_senior = lt.lastElement(skills_senior_ordenadas)
+    
+    skills_mid_ordenadas = lt.newList('ARRAY_LIST')
+    for habilidad in skills_mid.keys():
+        lt.addLast(skills_mid_ordenadas, {'skill': habilidad,'count': skills_mid[habilidad]})
+    merg.sort(skills_mid_ordenadas, sort_criteria_req6y7)
+    
+    habilidades_diferentes_mid = lt.size(skills_mid_ordenadas)
+    habilidad_mas_mid = lt.firstElement(skills_mid_ordenadas)
+    habilidad_menos_mid = lt.lastElement(skills_mid_ordenadas)
+    
+    skills_junior_ordenadas = lt.newList('ARRAY_LIST')
+    for habilidad in skills_junior.keys():
+        lt.addLast(skills_junior_ordenadas, {'skill': habilidad,'count': skills_junior[habilidad]})
+    merg.sort(skills_junior_ordenadas, sort_criteria_req6y7)
+    
+    habilidades_diferentes_junior = lt.size(skills_mid_ordenadas)
+    habilidad_mas_junior = lt.firstElement(skills_mid_ordenadas)
+    habilidad_menos_junior = lt.lastElement(skills_mid_ordenadas)
+    
+    # empresas por experiencia
+    empresas_senior_ordenadas = lt.newList('ARRAY_LIST')
+    for empresa in empresas_senior.keys():
+        lt.addLast(empresas_senior_ordenadas, {'empresa': empresa,'count': empresas_senior[empresa]})
+    merg.sort(empresas_senior_ordenadas, sort_criteria_req6y7)
+    
+    empresas_diferentes_senior = lt.size(empresas_senior_ordenadas)
+    empresa_mas_senior = lt.firstElement(empresas_senior_ordenadas)
+    empresa_menos_senior = lt.lastElement(empresas_senior_ordenadas)
+    
+    empresas_mid_ordenadas = lt.newList('ARRAY_LIST')
+    for empresa in empresas_mid.keys():
+        lt.addLast(empresas_mid_ordenadas, {'empresa': empresa,'count': empresas_mid[empresa]})
+    merg.sort(empresas_mid_ordenadas, sort_criteria_req6y7)
+    
+    empresas_diferentes_mid = lt.size(empresas_mid_ordenadas)
+    empresa_mas_mid = lt.firstElement(empresas_mid_ordenadas)
+    empresa_menos_mid = lt.lastElement(empresas_mid_ordenadas)
+
+    empresas_junior_ordenadas = lt.newList('ARRAY_LIST')
+    for empresa in empresas_junior.keys():
+        lt.addLast(empresas_junior_ordenadas, {'empresa': empresa,'count': empresas_junior[empresa]})
+    merg.sort(empresas_junior_ordenadas, sort_criteria_req6y7)
+    
+    empresas_diferentes_junior = lt.size(empresas_junior_ordenadas)
+    empresa_mas_junior = lt.firstElement(empresas_junior_ordenadas)
+    empresa_menos_junior = lt.lastElement(empresas_junior_ordenadas)
+    
+    senior = (habilidades_diferentes_senior, habilidad_mas_senior, habilidad_menos_senior, promedio_senior, empresas_diferentes_senior, empresa_mas_senior, empresa_menos_senior)
+    mid = (habilidades_diferentes_mid, habilidad_mas_mid, habilidad_menos_mid, promedio_mid, empresas_diferentes_mid, empresa_mas_mid, empresa_menos_mid)
+    junior = (habilidades_diferentes_junior, habilidad_mas_junior, habilidad_menos_junior, promedio_junior, empresas_diferentes_junior, empresa_mas_junior, empresa_menos_junior)
+    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor), senior, mid, junior
 
 def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
     """
@@ -468,13 +575,23 @@ def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
     paises = {}
     ciudades = {}
     divisas_l = {}
+    salario_rango = 0
+    salario_fijo = 0
+    salario_vacio = 0
     cant_empresas = 0
     sal_promedio = 0
     div_salario = 0
-#filtrar con pais
+    
+#filtrar con pais y salarios con rangos, vacios y fijos
     for oferta in lt.iterator(emptypes):
         if oferta['salary_from']!='':
             lt.addLast(id_list,oferta['id'])
+            if oferta['salary_from']!=oferta['salary_to']:
+                salario_rango +=1
+            elif oferta['salary_from']==oferta['salary_to']:
+                salario_fijo +=1
+        else:
+            salario_vacio +=1
     set_list = set(id_list['elements'])
     for oferta in lt.iterator(catalog):
          
@@ -491,6 +608,8 @@ def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
                 elif oferta['country_code'] in paises:
                     lt.addLast(ofertas,oferta)
                     paises[oferta['country_code']] += 1
+                
+                
                 
                 
     #buscar cantidad empresas
@@ -510,7 +629,9 @@ def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
     for oferta in lt.iterator(emptypes):
         if oferta['id'] in set_filtro and oferta['currency_salary'] not in divisas_l:
             divisas_l['tipo'] = oferta['currency_salary']
-    return cant_empresas, ofertas, paises, ciudades, divisas_l
+            
+
+    return cant_empresas, ofertas, paises, ciudades, divisas_l, salario_rango, salario_fijo, salario_vacio
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
