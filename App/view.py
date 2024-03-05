@@ -121,11 +121,14 @@ def print_req_4(control):
     country = input("Escriba el codigo de país: ")
     f_inicio = input("La fecha inicial del periodo a consultar (con formato 'año-mes-dia'):")
     f_fin = input("La fecha final del periodo a consultar (con formato 'año-mes-dia'):")
-    total_ofertas, total_empresas, catalogo = controller.req_4(control, country, f_inicio, f_fin)
+    total_ofertas, total_empresas, total_ciudades, ciudad_mayor, ciudad_menor, catalogo = controller.req_4(control, country, f_inicio, f_fin)
     print(f"El total de ofertas es: {total_ofertas}")
     print(f"El total de empresas son: {total_empresas}")
-    encabezados = ['published_at','title','experience_level', 'company_name', 'city', 'workplace_type', 'open_to_hire_ukrainians']
-    print(tabulate(catalogo[:5], headers=encabezados, tablefmt='pretty'))
+    print(f"El total de ciudades son: {total_ciudades}")
+    print(f"La ciudad con mayor numero de ofertas es {ciudad_mayor[0]} con un total de {ciudad_mayor[1]}")
+    print(f"La ciudad con menor numero de ofertas es {ciudad_menor[0]} con un total de {ciudad_menor[1]}")
+    encabezados = {'published_at','title','experience_level', 'company_name', 'city', 'workplace_type', 'remote','open_to_hire_ukrainians'}
+    print(tabulate(list(catalogo)[0:5], headers=encabezados, tablefmt='grid'))
 
 
 def print_req_5(control):
