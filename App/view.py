@@ -152,7 +152,8 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor) = controller.req_7(control, n, f_inicio, f_fin)
+    
 
 
 def print_req_8(control):

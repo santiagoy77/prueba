@@ -230,11 +230,7 @@ def req_4(catalog, pais, f_inicio, f_fin):
     cuenta_ciudad_mayor = mayor['count']
     menor = lt.lastElement(ciudades_ordenadas)
     ciudad_menor = menor['ciudad']
-    cuenta_ciudad_menor = menor['count']
-    
-    
-                
-                    
+    cuenta_ciudad_menor = menor['count']                
     return lt.size(ofertas_rango), lt.size(empresas), lt.size(ciudades_ordenadas), (ciudad_mayor, cuenta_ciudad_mayor),(ciudad_menor,cuenta_ciudad_menor),ofertas_rango
     
 
@@ -333,7 +329,7 @@ def req_7(catalog, n, f_inicial, f_final):
             
             
     
-    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor),
+    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor)
 
 
 def req_8(data_structs):
