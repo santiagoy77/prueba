@@ -154,36 +154,10 @@ def req_2(catalog, n, empresa, ciudad):
 
 
 
-def req_3(catalog, empresa, f_inicio, f_fin):
+def req_3(catalog):
     """
     Función que soluciona el requerimiento 3
     """
-    ofertas = catalog['jobs']
-    ofertas_rango = lt.newList('ARRAY_LIST')
-    of_junior = 0
-    of_mid = 0
-    of_senior = 0
-    f_inicio = datetime.strptime(f_inicio, "%Y-%m-%d")
-    f_fin = datetime.strptime(f_fin, "%Y-%m-%d")
-    for oferta in lt.iterator(ofertas):
-        if oferta["company_name"] == empresa:
-            fecha = oferta['published_at']
-            fecha = datetime.strftime(fecha,'%Y-%m-%d')
-            fecha = datetime.strptime(fecha,'%Y-%m-%d')
-            if (f_inicio <= fecha) and (fecha <= f_fin):
-                lt.addLast(ofertas_rango, oferta)
-                experiencia = oferta["experience_level"]
-                if experiencia.lower() == "junior":
-                    of_junior +=1
-                elif experiencia.lower() == "mid":
-                    of_mid +=1
-                elif experiencia.lower()== "senior":
-                    of_senior +=1
-    of_total = of_junior + of_mid + of_senior
-    return of_total, of_junior, of_mid, of_senior, ofertas_rango
-                
-            
-    
     
     
 
@@ -235,12 +209,13 @@ def req_4(catalog, pais, f_inicio, f_fin):
     
 
 
-def req_5():
+def req_5(data_structs):
     """
     Función que soluciona el requerimiento 5
     """
     # TODO: Realizar el requerimiento 5
     pass
+
 
 
 def req_6(data_structs):
