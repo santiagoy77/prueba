@@ -24,6 +24,7 @@ import config as cf
 import model
 import time
 import csv
+import os
 
 
 """
@@ -35,19 +36,57 @@ def new_controller():
     """
     Crea una instancia del modelo
     """
-    #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
+    control = {'model': None}
+    control['model'] = model.new_data_structs()
+    return control
 
 
 # Funciones para la carga de datos
-
-def load_data(control, filename):
+def load_data(control, jobs_path, skills_path, employments_types_path, multilocations_path):
     """
     Carga los datos del reto
     """
-    # TODO: Realizar la carga de datos
-    pass
+    jobs_size = load_jobs(control, jobs_path)
+    skills_size = load_skills(control, skills_path)
+    employments_types_size = load_employments_types(control, employments_types_path)
+    multilocations_size = load_multilocations(control, multilocations_path)
+    return jobs_size, skills_size, employments_types_size, multilocations_size
 
+def load_jobs(control, jobs_path):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, jobs_path)
+    jobs_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(jobs_file, delimiter=';')
+    for job in input_file:
+        model.add_job(data_structs, job)
+    return model.job_size(data_structs)
+
+def load_skills(control, skills_path):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, skills_path)
+    skills_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(skills_file, delimiter=';')
+    for skill in input_file:
+        model.add_skill(data_structs, skill)
+    return model.skill_size(data_structs)
+
+def load_employments_types(control, employments_types_path):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, employments_types_path)
+    employment_types_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(employment_types_file, delimiter=';')
+    for employment_type in input_file:
+        model.add_employment_type(data_structs, employment_type)
+    return model.employment_type_size(data_structs)
+
+def load_multilocations(control, multilocations_size):
+    data_structs = control['model']
+    path = os.path.join(cf.data_dir, multilocations_size)
+    multilocations_file = open(path, 'r', encoding='utf-8')
+    input_file = csv.DictReader(multilocations_file, delimiter=';')
+    for multilocation in input_file:
+        model.add_multilocation(data_structs, multilocation)
+    return model.multilocation_size(data_structs)
 
 # Funciones de ordenamiento
 
@@ -68,7 +107,6 @@ def get_data(control, id):
     #TODO: Llamar la función del modelo para obtener un dato
     pass
 
-
 def req_1(control):
     """
     Retorna el resultado del requerimiento 1
@@ -85,12 +123,14 @@ def req_2(control):
     pass
 
 
-def req_3(control):
+def req_3(control, nombre_empresa, fecha_inicial, fecha_final):
     """
     Retorna el resultado del requerimiento 3
     """
     # TODO: Modificar el requerimiento 3
-    pass
+    data_structs = control['model']
+    tupla_listado_ofertas = model.req_3(data_structs, nombre_empresa, fecha_inicial, fecha_final)
+    return tupla_listado_ofertas
 
 
 def req_4(control):
@@ -99,7 +139,6 @@ def req_4(control):
     """
     # TODO: Modificar el requerimiento 4
     pass
-
 
 def req_5(control):
     """
@@ -131,6 +170,22 @@ def req_8(control):
     # TODO: Modificar el requerimiento 8
     pass
 
+def seleccion_array_o_linked(control):
+    
+    print("Seleccione la lista deseada:")
+    print("1. ARRAY_LIST")
+    print("2. LINKED_LIST")
+    option = input("Escoge una opcion:")
+    if option == "1":
+        model.seleccion_array_o_linked = model.ARRAY_LIST
+    elif option == "2":
+        model.seleccion_array_o_linked = model.LINKED_LIST
+    else:
+        print("Opcion Incorreta")
+    
+    
+    
+    
 
 # Funciones para medir tiempos de ejecucion
 
