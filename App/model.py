@@ -335,13 +335,66 @@ def req_7(data_structs):
     
     pass
 
-def req_8(data_structs):
+def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
     """
     Función que soluciona el requerimiento 8
     """
     # TODO: Realizar el requerimiento 8
-    pass
-
+    
+    #Empresas que publicaron por lo menos una oferte
+    catalog = data_structs['jobs']
+    emptypes = data_structs['employment-types']
+    ciudades = lt.newList('ARRAY_LIST')
+    ofertas = lt.newList('ARRAY_LIST')
+    empresas = lt.newList('ARRAY_LIST')
+    id_list = lt.newList('ARRAY_LIST')
+    id_filtro = lt.newList('ARRAY_LIST')
+    paises = {}
+    ciudades = {}
+    divisas_l = {}
+    cant_empresas = 0
+    sal_promedio = 0
+    div_salario = 0
+#filtrar con pais
+    for oferta in lt.iterator(emptypes):
+        if oferta['salary_from']!='':
+            lt.addLast(id_list,oferta['id'])
+    set_list = set(id_list['elements'])
+    for oferta in lt.iterator(catalog):
+         
+        if experience == oferta['experience_level'] and oferta['id'] in set_list:
+            date = oferta['published_at']
+            fecha = datetime.strftime(date,'%Y-%m-%d')
+            if fecha<=fecha_fin and fecha>=fecha_in:
+                 
+                if oferta['country_code'] not in paises:
+                    paises[oferta['country_code']] = 1
+                    lt.addLast(ofertas,oferta)     
+                    
+                        
+                elif oferta['country_code'] in paises:
+                    lt.addLast(ofertas,oferta)
+                    paises[oferta['country_code']] += 1
+                
+                
+    #buscar cantidad empresas
+    for oferta in lt.iterator(ofertas):
+        present_empresa = lt.isPresent(empresas,oferta['company_name'])
+        if present_empresa==0:
+            lt.addLast(empresas,oferta['company_name']) 
+            cant_empresas +=1
+        if oferta['city'] not in ciudades.keys(): 
+            ciudades[oferta['city']] = 1
+        elif oferta['city']  in ciudades.keys(): 
+            ciudades[oferta['city']] += 1
+        lt.addLast(id_filtro, oferta['id'])              
+    
+    #numero de divisas
+    set_filtro = set(id_filtro['elements'])
+    for oferta in lt.iterator(emptypes):
+        if oferta['id'] in set_filtro and oferta['currency_salary'] not in divisas_l:
+            divisas_l['tipo'] = oferta['currency_salary']
+    return cant_empresas, ofertas, paises, ciudades, divisas_l
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
