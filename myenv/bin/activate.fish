@@ -29,7 +29,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV "/Users/alejandrobenavidesrubio/Documents/EDA2024-10/Reto1-G06/Reto1-G06-1/myenv"
+=======
+set -gx VIRTUAL_ENV "/Users/alejandrobenavidesrubio/Documents/EDA2024-10/Reto1-G06/Reto1-G06-4/myenv"
+>>>>>>> Est-3
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

@@ -206,12 +206,51 @@ def req_3(catalog, empresa, fecha_in, fecha_fin):
     return filtro_2 
 
 
-def req_4(data_structs):
+def req_4(catalog, pais, f_inicio, f_fin):
     """
     Función que soluciona el requerimiento 4
     """
-    # TODO: Realizar el requerimiento 4
-    pass
+    ofertas = catalog['jobs']
+    ofertas_rango = lt.newList('ARRAY_LIST')
+    empresas = lt.newList('ARRAY_LIST')
+    f_inicio = datetime.strptime(f_inicio,'%Y-%m-%d')
+    f_fin = datetime.strptime(f_fin,'%Y-%m-%d')
+    ciudades = {}
+    for oferta in lt.iterator(ofertas):
+        if pais == oferta['country_code']:
+            empresa = oferta["company_name"]
+            
+            fecha_oferta = oferta['published_at']
+            fecha_string = datetime.strftime(fecha_oferta,'%Y-%m-%d')
+            fecha = datetime.strptime(fecha_string,'%Y-%m-%d')
+            if (f_inicio <= fecha) and (fecha <= f_fin):
+                remote = oferta['workplace_type']
+                if 'remote' in remote:
+                    oferta['remote'] = remote
+                else:
+                    oferta['remote'] = False
+                lt.addLast(ofertas_rango, oferta)
+                empresa = oferta["company_name"]
+
+                if lt.isPresent(empresas, empresa) == 0:
+                    lt.addLast(empresas, empresa)
+                
+                if oferta['city'] not in ciudades:
+                    ciudades[oferta['city']] = 1
+                else:
+                    ciudades[oferta['city']] +=1
+    ciudades_ordenadas = lt.newList('ARRAY_LIST')
+    for city in ciudades.keys():
+        lt.addLast(ciudades_ordenadas, {'ciudad': city,'count': ciudades[city]})
+    merg.sort(ciudades_ordenadas, sort_criteria_req6y7)
+    mayor = lt.firstElement(ciudades_ordenadas)
+    ciudad_mayor = mayor["ciudad"]
+    cuenta_ciudad_mayor = mayor['count']
+    menor = lt.lastElement(ciudades_ordenadas)
+    ciudad_menor = menor['ciudad']
+    cuenta_ciudad_menor = menor['count']                
+    return lt.size(ofertas_rango), lt.size(empresas), lt.size(ciudades_ordenadas), (ciudad_mayor, cuenta_ciudad_mayor),(ciudad_menor,cuenta_ciudad_menor),ofertas_rango
+    
 
 
 def req_5(data_structs):
@@ -220,6 +259,7 @@ def req_5(data_structs):
     """
     # TODO: Realizar el requerimiento 5
     pass
+
 
 
 
@@ -328,13 +368,88 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     return (total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio)                                 
     
 
-def req_7(data_structs):
+
+
+
+def req_7(catalog, n, f_inicial, f_final):
     """
-    Función que soluciona el requerimiento 6
+    Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 6
+
+    ofertas_jobs = catalog["jobs"]
+    ofertas_skills = catalog["skills"]
     
-    pass
+
+    f_inicio = datetime.strptime(f_inicial,'%Y-%m-%d')
+    f_fin = datetime.strptime(f_final,'%Y-%m-%d')
+
+    ofertas_rango = lt.newList('ARRAY_LIST')
+    ofertas_paises = {}
+    for oferta in lt.iterator(ofertas_jobs):
+        if ((ofertas_jobs['published_at'] >= f_inicio) and (ofertas_jobs['published_at'] <= f_fin)):
+            lt.addLast(ofertas_rango, oferta)
+            pais_oferta = oferta['country_code']
+            if pais_oferta not in ofertas_paises:
+               ofertas_paises[pais_oferta] = 1
+            else:
+                ofertas_paises[pais_oferta] += 1
+    paises_organizados = lt.newList('ARRAY_LIST')  
+    for pais in ofertas_paises.keys():
+        lt.addLast(paises_organizados, {'pais': pais,'count': ciudades[pais]})
+    merg.sort(paises_organizados, sort_criteria_req6y7)
+    top_n = lt.newList('ARRAY_LIST')
+    i= 0 
+    while lt.size(top_n) < n:
+        lt.addLast(top_n, paises_organizados[i]['pais'])
+        i+=1
+
+    pais_mayor = top_n[0]['pais']
+    cuenta_pais_mayor = pais_oferta[pais_mayor]
+    
+    ofertas_n_paises = lt.newList()
+    for oferta in lt.iterator(ofertas_rango):
+        if lt.isPresent(top_n, oferta['country_code']) == 0:
+            lt.addLast(ofertas_n_paises, oferta)
+    
+    total_ofertas = lt.size(ofertas_n_paises)
+# Criterios para retornar en ciudades
+    ciudades = {}
+    for oferta in ofertas_n_paises:
+        if oferta['city'] not in ciudades:
+            ciudades[oferta['city']] = 1
+        else:
+            ciudades[oferta['city']] +=1
+    
+    ciudades_ordenadas = lt.newList('ARRAY_LIST')
+    for city in ciudades.keys():
+        lt.addLast(ciudades_ordenadas, {'ciudad': city,'count': ciudades[city]})
+    merg.sort(ciudades_ordenadas, sort_criteria_req6y7)
+    numero_ciudades = lt.size(ciudades_ordenadas)
+    ciudad_mayor= ciudades_ordenadas[0]['ciudad']
+    cuenta_ciudad_mayor = ciudades_ordenadas[0]['count']
+#Encontrar los skills y organizarlos
+    skills_junior = {}
+    skills_mid = {}
+    skills_senior = {}
+    
+    suma_nivel_junior = 0
+    suma_nivel_mid = 0
+    suma_nivel_senior = 0
+    
+    
+    for oferta in lt.iterator(ofertas_n_paises):
+        position = lt.isPresent(ofertas_skills, oferta['id'])
+        elemento = lt.getElement(ofertas_skills, position)
+
+        experiencia = oferta['experience_level']
+        
+        if experiencia == 'senior':
+            suma_nivel_senior += elemento['level']
+    
+            
+            
+    
+    return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor)
 
 def req_8(data_structs, pais, experience, fecha_in, fecha_fin):
     """
@@ -404,7 +519,7 @@ def compare(data_1, data_2):
     Función encargada de comparar dos datos
     """
     #TODO: Crear función comparadora de la lista
-    pass
+    
 
 # Funciones de ordenamiento
 
@@ -423,7 +538,7 @@ def sort_criteria(data_1, data_2):
     return data_1["published_at"] > data_2["published_at"]
 
 
-def     sort(data_structs):
+def sort(data_structs):
     """
     Función encargada de ordenar la lista con los datos
     """
@@ -440,3 +555,13 @@ def sort_criteria_req3(data_1,data_2):
 def sort_criteria_req6y7(data_1,data_2):
     return data_1['count']>data_2['count']
 
+
+def sort_criteria_req3(data_1,data_2):
+    if data_1['published_at']==data_2['published_at']:
+        return data_1['country_code'] < data_2['country_code']
+    else:
+        return data_1["published_at"] > data_2["published_at"]
+
+
+def sort_criteria_req6y7(data_1,data_2):
+    return data_1['count']>data_2['count']

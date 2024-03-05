@@ -37,7 +37,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< HEAD
 VIRTUAL_ENV="/Users/alejandrobenavidesrubio/Documents/EDA2024-10/Reto1-G06/Reto1-G06-1/myenv"
+=======
+VIRTUAL_ENV="/Users/alejandrobenavidesrubio/Documents/EDA2024-10/Reto1-G06/Reto1-G06-4/myenv"
+>>>>>>> Est-3
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -180,12 +180,13 @@ def req_3(control,empresa,fecha_in,fecha_fin):
     
 
 
-def req_4(control):
+def req_4(control, country, f_inicio, f_fin):
     """
     Retorna el resultado del requerimiento 4
     """
     # TODO: Modificar el requerimiento 4
-    pass
+    
+    return model.req_4(control['model'], country, f_inicio, f_fin)
 
 
 def req_5(control):
@@ -211,12 +212,12 @@ def req_6(control,n,pais,exp,fecha_in,fecha_fin):
 
 
 
-def req_7(control):
+def req_7(control, n, f_inicio, f_fin):
     """
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    pass
+    return model.req_7(control['model'], n, f_inicio, f_fin)
 
 
 def req_8(control):
