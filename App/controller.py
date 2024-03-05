@@ -126,7 +126,7 @@ def req_1(control,n,pais,exp):
     """
     # TODO: Modificar el requerimiento 1
     start_time = get_time()
-    lista = model.req_1(control['model'],9999999,'PL','junior')
+    lista = model.req_1(control['model'],n,pais,exp)
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
@@ -141,7 +141,7 @@ def req_2(control, n , empresa, city):
     """
     # TODO: Modificar el requerimiento 2
     start_time = get_time()
-    lista = model.req_2(control['model'],9999999,'IntelligINTS','Rijad')
+    lista = model.req_2(control['model'],n , empresa, city)
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
@@ -160,7 +160,7 @@ def req_3(control,empresa,fecha_in,fecha_fin):
     """
     # TODO: Modificar el requerimiento 3
     start_time = get_time()
-    lista = model.req_3(control['model'],'Bitfinex','2000-04-14','2023-04-14')
+    lista = model.req_3(control['model'],empresa,fecha_in,fecha_fin)
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
@@ -201,7 +201,7 @@ def req_6(control,n,pais,exp,fecha_in,fecha_fin):
     """
     # TODO: Modificar el requerimiento 6
     start_time = get_time()
-    ofertas = model.req_6(control['model'],20,'PL','junior','2020-04-14','2023-04-14')
+    ofertas = model.req_6(control['model'],n,pais,exp,fecha_in,fecha_fin)
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
