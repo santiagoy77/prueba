@@ -129,14 +129,12 @@ def req_3(control):
     pass
 
 
-def req_4(control):
+def req_4(control, country, f_inicio, f_fin):
     """
     Retorna el resultado del requerimiento 4
     """
     # TODO: Modificar el requerimiento 4
-    country = input("Escriba el codigo de país: ")
-    f_inicio = input("La fecha inicial del periodo a consultar (con formato 'año-mes-dia'):")
-    f_fin = input("La fecha final del periodo a consultar (con formato 'año-mes-dia'):")
+    
     return model.req_4(control['model'], country, f_inicio, f_fin)
 
 

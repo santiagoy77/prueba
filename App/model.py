@@ -197,7 +197,7 @@ def req_4(catalog, pais, f_inicio, f_fin):
     empresas = lt.newList('ARRAY_LIST')
     f_inicio = datetime.strptime(f_inicio,'%Y-%m-%d')
     f_fin = datetime.strptime(f_fin,'%Y-%m-%d')
-    
+    ciudades = {}
     for oferta in lt.iterator(ofertas):
         if pais == oferta['country_code']:
             empresa = oferta["company_name"]
@@ -206,13 +206,37 @@ def req_4(catalog, pais, f_inicio, f_fin):
             fecha_string = datetime.strftime(fecha_oferta,'%Y-%m-%d')
             fecha = datetime.strptime(fecha_string,'%Y-%m-%d')
             if (f_inicio <= fecha) and (fecha <= f_fin):
+                remote = oferta['workplace_type']
+                if 'remote' in remote:
+                    oferta['remote'] = remote
+                else:
+                    oferta['remote'] = False
                 lt.addLast(ofertas_rango, oferta)
                 empresa = oferta["company_name"]
-                ciudad = oferta["city"]
-                if empresa not in empresas:
+
+                if lt.ispresent(empresas, empresa) == 0:
                     lt.addLast(empresas, empresa)
+                
+                if oferta['city'] not in ciudades:
+                    ciudades[oferta['city']] = 1
+                else:
+                    ciudades[oferta['city']] +=1
+    ciudades_ordenadas = lt.newList('ARRAY_LIST')
+    for city in ciudades.keys():
+        lt.addLast(ciudades_ordenadas, {'ciudad': city,'cuenta': ciudades[city]})
+    merg.sort(ciudades_ordenadas, sort_criteria_req6)
+    numero_ciudades = lt.size(ciudades_ordenadas)
+    mayor = lt.firstElement(ciudades_ordenadas)
+    ciudad_mayor = mayor["ciudad"]
+    cuenta_ciudad_mayor = mayor['cuenta']
+    menor = lt.lastElement(ciudades_ordenadas)
+    ciudad_menor = menor['ciudad']
+    cuenta_ciudad_menor = menor['cuenta']
+    
+    
+                
                     
-    return lt.size(ofertas_rango), lt.size(empresas), ofertas_rango
+    return lt.size(ofertas_rango), lt.size(empresas), lt.size(ciudades_ordenadas), (ciudad_mayor, cuenta_ciudad_mayor),(ciudad_menor,cuenta_ciudad_menor),ofertas_rango
     
 
 
@@ -241,8 +265,8 @@ def req_7(catalog, n, f_inicial, f_final):
     ofertas_skills = catalog["skills"]
     
 
-    f_inicio = datetime.strptime(f_inicio,'%Y-%m-%d')
-    f_fin = datetime.strptime(f_fin,'%Y-%m-%d')
+    f_inicio = datetime.strptime(f_inicial,'%Y-%m-%d')
+    f_fin = datetime.strptime(f_final,'%Y-%m-%d')
 
     ofertas_rango = lt.newList('ARRAY_LIST')
     ofertas_paises = {}
@@ -257,33 +281,49 @@ def req_7(catalog, n, f_inicial, f_final):
     paises_organizados = lt.newList('ARRAY_LIST')  
     for pais in paises.keys():
         lt.addLast(paises_organizados, {'pais': pais,'cuenta': ciudades[pais]})
-    merg.sort(paises_organizados, sort_criteriareq6y7)
-    
-    pais_mayor = top_n[0]
+    merg.sort(paises_organizados, sort_criteria_req6)
+    top_n = lt.newList('ARRAY_LIST')
+    i= 0 
+    while lt.size(top_n) < n:
+        lt.addLast(top_n, paises_organizados[i]['pais'])
+        i+=1
+
+    pais_mayor = top_n[0]['pais']
     cuenta_pais_mayor = pais_oferta[pais_mayor]
-            
+    
     ofertas_n_paises = lt.newList()
     for oferta in lt.iterator(ofertas_rango):
-        if oferta['country_code'] in top_n:
+        if lt.ispresent(top_n, oferta['country_code']) == 0:
             lt.addLast(ofertas_n_paises, oferta)
     
-    
     total_ofertas = lt.size(ofertas_n_paises)
+# Criterios para retornar en ciudades
     ciudades = {}
     for oferta in ofertas_n_paises:
         if oferta['city'] not in ciudades:
             ciudades[oferta['city']] = 1
         else:
             ciudades[oferta['city']] +=1
-    numero_ciudades = len(ciudades)
     
-    ciudades_ordenadas = sorted(ciudades.items(), key = lambda item: item[1], reverse=True)
-    ciudad_mayor = ciudades_ordenadas[0]
-    cuenta_ciudad_mayor = ciudades[ciudad_mayor]
+    ciudades_ordenadas = lt.newList('ARRAY_LIST')
+    for city in ciudades.keys():
+        lt.addLast(ciudades_ordenadas, {'ciudad': city,'cuenta': ciudades[city]})
+    merg.sort(ciudades_ordenadas, sort_criteria_req6)
+    numero_ciudades = lt.size(ciudades_ordenadas)
+    ciudad_mayor= ciudades_ordenadas[0]['ciudad']
+    cuenta_ciudad_mayor = ciudades_ordenadas[0]['cuenta']
+#Encontrar los skills y organizarlos
+    skills_junior = lt.newList('ARRAY_LIST')
+    skills_mid = lt.newList('ARRAY_LIST')
+    skills_senior = lt.newList('ARRAY_LIST')
+    for oferta in lt.iterator(ofertas_n_paises):
+        position = lt.isPresent(ofertas_skills, oferta['id'])
+        elemento = lt.getElement(ofertas_skills, position)
+        lt.addLast(skills, elemento)
     
+            
+            
     
-    for ofertas in lt.iterator(ofertas_n_paises['id']):
-        
     return total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor),
 
 
@@ -327,3 +367,6 @@ def sort(data_structs):
     """
     #TODO: Crear función de ordenamiento
     return merg.sort(data_structs["jobs"], sort_criteria)
+
+def sort_criteria_req6(data_1,data_2):
+    return data_1['count']>data_2['count']

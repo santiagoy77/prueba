@@ -118,8 +118,10 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    
-    total_ofertas, total_empresas, catalogo = controller.req_4(control)
+    country = input("Escriba el codigo de país: ")
+    f_inicio = input("La fecha inicial del periodo a consultar (con formato 'año-mes-dia'):")
+    f_fin = input("La fecha final del periodo a consultar (con formato 'año-mes-dia'):")
+    total_ofertas, total_empresas, catalogo = controller.req_4(control, country, f_inicio, f_fin)
     print(f"El total de ofertas es: {total_ofertas}")
     print(f"El total de empresas son: {total_empresas}")
     encabezados = ['published_at','title','experience_level', 'company_name', 'city', 'workplace_type', 'open_to_hire_ukrainians']
