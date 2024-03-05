@@ -28,7 +28,7 @@ from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 
 assert cf
-from tabulate import tabulate 
+#from tabulate import tabulate 
 import traceback
 import threading
 
@@ -139,8 +139,7 @@ def print_req_4(control):
     print(f"El total de ciudades son: {total_ciudades}")
     print(f"La ciudad con mayor numero de ofertas es {ciudad_mayor[0]} con un total de {ciudad_mayor[1]}")
     print(f"La ciudad con menor numero de ofertas es {ciudad_menor[0]} con un total de {ciudad_menor[1]}")
-    encabezados = {'published_at','title','experience_level', 'company_name', 'city', 'workplace_type', 'remote','open_to_hire_ukrainians'}
-    print(tabulate(list(catalogo)[0:5], headers=encabezados, tablefmt='grid'))
+    
 
 
 def print_req_5(control):
@@ -185,13 +184,48 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    n= input("Ingrese la cantidad de paises para la consulta")
+    n= int(input("Ingrese la cantidad de paises para la consulta"))
     fecha_in= input("Ingrese la fecha inicial (más reciente)")
     fecha_fin= input("Ingrese la fecha final (más antigua)")
     total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor), senior, mid, junior = controller.req_7(control, n, fecha_in, fecha_fin )
-    habilidades_diferentes_senior, habilidad_mas_senior, habilidad_menos_senior, promedio_senior, empresas_diferentes_senior, empresa_mas_senior, empresa_menos_senior = senior
-    habilidades_diferentes_mid, habilidad_mas_mid, habilidad_menos_mid, promedio_mid, empresas_diferentes_mid, empresa_mas_mid, empresa_menos_mid = mid
-    habilidades_diferentes_junior, habilidad_mas_junior, habilidad_menos_junior, promedio_junior, empresas_diferentes_junior, empresa_mas_junior, empresa_menos_junior = junior
+    
+    print = (f"El total de ofertas de empleo es {total_ofertas}")
+    print("Número de ciudades donde se ofertó en los países resultantes de la consulta es {}".format(numero_ciudades))
+    print("{0} es el pais con más ofertas y tiene {1}".format(pais_mayor, cuenta_pais_mayor))
+    print("{0} es la ciudad con más ofertas y tiene {1}".format(ciudad_mayor, cuenta_ciudad_mayor))
+    #Habilidades por nivel de experiencia
+    print("Para el nivel de experiencia senior")
+    print("""
+          La cantidad de habilidades diferentes son: {0}
+          La habilidad mas solicitada es {1} con {2} ofertas
+          La habilidad menos solicitada es {3} con {4} ofertas
+          El nivel minimo promedio es {5}
+          La cantidad de empresas que ofertaron es {6}
+          La empresa con más ofertas es {7} con {8} ofertas
+          La empresa con menos ofertas es {9} con {10} ofertas 
+          """.format(senior[0], senior[1]['skill'], senior[1]['count'], senior[2]['skill'], senior[2]['count'], senior[3], senior[4], senior[5]['empresa'], senior[5]['count'], senior[6]['empresa'], senior[6]['count']))
+    
+    print("Para el nivel de experiencia mid")
+    print("""
+          La cantidad de habilidades diferentes son: {0}
+          La habilidad mas solicitada es {1} con {2} ofertas
+          La habilidad menos solicitada es {3} con {4} ofertas
+          El nivel minimo promedio es {5}
+          La cantidad de empresas que ofertaron es {6}
+          La empresa con más ofertas es {7} con {8} ofertas
+          La empresa con menos ofertas es {9} con {10} ofertas 
+          """.format(mid[0], mid[1]['skill'], mid[1]['count'], mid[2]['skill'], mid[2]['count'], mid[3], mid[4], mid[5]['empresa'], mid[5]['count'], mid[6]['empresa'], mid[6]['count']))
+    
+    print("Para el nivel de experiencia senior")
+    print("""
+          La cantidad de habilidades diferentes son: {0}
+          La habilidad mas solicitada es {1} con {2} ofertas
+          La habilidad menos solicitada es {3} con {4} ofertas
+          El nivel minimo promedio es {5}
+          La cantidad de empresas que ofertaron es {6}
+          La empresa con más ofertas es {7} con {8} ofertas
+          La empresa con menos ofertas es {9} con {10} ofertas 
+          """.format(junior[0], junior[1]['skill'], junior[1]['count'], junior[2]['skill'], junior[2]['count'], junior[3], junior[4], junior[5]['empresa'], junior[5]['count'], junior[6]['empresa'], junior[6]['count']))
     
 
 def print_req_8(control):
