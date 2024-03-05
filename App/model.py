@@ -308,23 +308,23 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
           
     
     #promedio salario
-    """
+    id_set = set(id_list['elements'])
     if pais!=None:
         for oferta in lt.iterator(emptypes):
-            present_id = lt.isPresent(id_list,oferta['id'])
-            if present_id>0 and oferta['salary_from']!='':
+            #present_id = lt.isPresent(id_set,oferta['id'])
+            if oferta['id'] in id_set and oferta['salary_from']!='':
                 sal_promedio+= int(oferta['salary_from'])
                 div_salario +=1
 
     promedio = sal_promedio//div_salario
 
     print(promedio)
-    """
+    
     #devolver catalogo ciudades
     catalogo_ciudades = lt.newList('ARRAY_LIST')
     for ciudad in lt.iterator(sub):
         lt.addLast(catalogo_ciudades,{'city':ciudad['ciudad'],'ofertas':ciudad['count']})
-    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor                                 
+    return total_ofertas, cant_ciudades, cant_empresas, mayor, menor, promedio                                 
     
 
 def req_7(data_structs):
@@ -369,7 +369,7 @@ def sort_criteria(data_1, data_2):
     return data_1["published_at"] > data_2["published_at"]
 
 
-def sort(data_structs):
+def     sort(data_structs):
     """
     Función encargada de ordenar la lista con los datos
     """

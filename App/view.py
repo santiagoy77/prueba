@@ -95,7 +95,7 @@ def print_req_1(control):
     ofertas = catalog['elements']
     
    # print(tabulate(ofertas, headers='keys'))
-    print(ofertas)
+    #print(ofertas)
     return tup
 
 
@@ -110,7 +110,7 @@ def print_req_2(control):
     tup = controller.req_2(control, n , empresa, city)
     catalog = tup[1]
     ofertas = catalog['elements']
-    print(tabulate(ofertas, headers='keys', ))
+    #print(tabulate(ofertas, headers='keys', ))
     
 
 
@@ -218,7 +218,7 @@ if __name__ == "__main__":
         elif int(inputs) == 3:
 
             tup = print_req_2(control)
-            print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
+            #print('La cantidad de ofertas segun la ciudad y empresa que escogio: ',tup[0])
       
             
 

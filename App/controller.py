@@ -125,7 +125,11 @@ def req_1(control,n,pais,exp):
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
-    lista = model.req_1(control['model'],20,'PL','junior')
+    start_time = get_time()
+    lista = model.req_1(control['model'],9999999,'PL','junior')
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
     size = model.data_size(lista)
     
     return size, lista
@@ -136,7 +140,11 @@ def req_2(control, n , empresa, city):
     Retorna el resultado del requerimiento 2
     """
     # TODO: Modificar el requerimiento 2
-    lista = model.req_2(control['model'],10,'IntelligINTS','Rijad')
+    start_time = get_time()
+    lista = model.req_2(control['model'],9999999,'IntelligINTS','Rijad')
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
     size = model.data_size(lista)
 
     return size, lista 
@@ -152,7 +160,7 @@ def req_3(control,empresa,fecha_in,fecha_fin):
     """
     # TODO: Modificar el requerimiento 3
     start_time = get_time()
-    lista = model.req_3(control['model'],'Bitfinex','2010-04-14','2023-04-14')
+    lista = model.req_3(control['model'],'Bitfinex','2000-04-14','2023-04-14')
     end_time = get_time()
     deltaTime = delta_time(start_time, end_time)
     print(deltaTime,"[ms]")
