@@ -377,7 +377,7 @@ def req_7(catalog, n, f_inicial, f_final):
     """
 
     ofertas_jobs = catalog['jobs']
-    ofertas_skills = catalog["skills"]
+    ofertas_skills = catalog['skills']
     
 
     f_inicio = datetime.strptime(f_inicial,'%Y-%m-%d')
@@ -401,35 +401,36 @@ def req_7(catalog, n, f_inicial, f_final):
         lt.addLast(paises_organizados, {'pais': pais,'count': ofertas_paises[pais]})
     merg.sort(paises_organizados, sort_criteria_req6y7)
     top_n = lt.newList('ARRAY_LIST')
-    i= 0 
+    i= 1
     while lt.size(top_n) < n:
-        lt.addLast(top_n, paises_organizados[i]['pais'])
+        element = lt.getElement(paises_organizados, i)
+        lt.addLast(top_n, element['pais'])
         i+=1
-
-    pais_mayor = top_n[0]['pais']
-    cuenta_pais_mayor = pais_oferta[pais_mayor]
+    
+    pais_mayor = lt.firstElement(top_n)
+    cuenta_pais_mayor = ofertas_paises[pais_mayor]
+    
+    ciudades = {}
     
     ofertas_n_paises = lt.newList()
     for oferta in lt.iterator(ofertas_rango):
-        if lt.isPresent(top_n, oferta['country_code']) == 0:
+        if lt.isPresent(top_n, oferta['country_code']) != 0:
             lt.addLast(ofertas_n_paises, oferta)
-    
+            
+            if oferta['city'] not in ciudades.keys():
+                ciudades[oferta['city']] = 1
+            else:
+                ciudades[oferta['city']] +=1
     total_ofertas = lt.size(ofertas_n_paises)
 # Criterios para retornar en ciudades
-    ciudades = {}
-    for oferta in ofertas_n_paises:
-        if oferta['city'] not in ciudades:
-            ciudades[oferta['city']] = 1
-        else:
-            ciudades[oferta['city']] +=1
-    
     ciudades_ordenadas = lt.newList('ARRAY_LIST')
     for city in ciudades.keys():
         lt.addLast(ciudades_ordenadas, {'ciudad': city,'count': ciudades[city]})
     merg.sort(ciudades_ordenadas, sort_criteria_req6y7)
     numero_ciudades = lt.size(ciudades_ordenadas)
-    ciudad_mayor= ciudades_ordenadas[0]['ciudad']
-    cuenta_ciudad_mayor = ciudades_ordenadas[0]['count']
+    ciudad_mayor_datos= lt.firstElement(ciudades_ordenadas)
+    ciudad_mayor = ciudad_mayor_datos['ciudad']
+    cuenta_ciudad_mayor = ciudad_mayor_datos['count']
 #Encontrar los skills y organizarlos
     skills_junior = {}
     skills_mid = {}
@@ -447,8 +448,10 @@ def req_7(catalog, n, f_inicial, f_final):
     empresas_mid = {}
     empresas_senior = {}
     
+    skills_id = ofertas_skills['id']
     for oferta in lt.iterator(ofertas_n_paises):
-        position = lt.isPresent(ofertas_skills, oferta['id'])
+        id_oferta = oferta['id']
+        position = lt.isPresent(skills_id, id_oferta)
         elemento = lt.getElement(ofertas_skills, position)
 
         experiencia = oferta['experience_level']
