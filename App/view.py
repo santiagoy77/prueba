@@ -188,9 +188,11 @@ def print_req_7(control):
     n= input("Ingrese la cantidad de paises para la consulta")
     fecha_in= input("Ingrese la fecha inicial (más reciente)")
     fecha_fin= input("Ingrese la fecha final (más antigua)")
-    ofertas= controller.req_7(control, n, fecha_in, fecha_fin )
-    total_ofertas= 
-
+    total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor), senior, mid, junior = controller.req_7(control, n, fecha_in, fecha_fin )
+    habilidades_diferentes_senior, habilidad_mas_senior, habilidad_menos_senior, promedio_senior, empresas_diferentes_senior, empresa_mas_senior, empresa_menos_senior = senior
+    habilidades_diferentes_mid, habilidad_mas_mid, habilidad_menos_mid, promedio_mid, empresas_diferentes_mid, empresa_mas_mid, empresa_menos_mid = mid
+    habilidades_diferentes_junior, habilidad_mas_junior, habilidad_menos_junior, promedio_junior, empresas_diferentes_junior, empresa_mas_junior, empresa_menos_junior = junior
+    
 
 def print_req_8(control):
     """
