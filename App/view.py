@@ -189,44 +189,24 @@ def print_req_7(control):
     fecha_fin= input("Ingrese la fecha final (más reciente): ")
     total_ofertas, numero_ciudades, (pais_mayor, cuenta_pais_mayor), (ciudad_mayor, cuenta_ciudad_mayor), senior, mid, junior = controller.req_7(control, n, fecha_in, fecha_fin )
     
-    print = (f"El total de ofertas de empleo es {total_ofertas}")
-    print("Número de ciudades donde se ofertó en los países resultantes de la consulta es {}".format(numero_ciudades))
-    print("{0} es el pais con más ofertas y tiene {1}".format(pais_mayor, cuenta_pais_mayor))
-    print("{0} es la ciudad con más ofertas y tiene {1}".format(ciudad_mayor, cuenta_ciudad_mayor))
-    #Habilidades por nivel de experiencia
-    print("Para el nivel de experiencia senior")
-    print("""
-          La cantidad de habilidades diferentes son: {0}
-          La habilidad mas solicitada es {1} con {2} ofertas
-          La habilidad menos solicitada es {3} con {4} ofertas
-          El nivel minimo promedio es {5}
-          La cantidad de empresas que ofertaron es {6}
-          La empresa con más ofertas es {7} con {8} ofertas
-          La empresa con menos ofertas es {9} con {10} ofertas 
-          """.format(senior[0], senior[1]['skill'], senior[1]['count'], senior[2]['skill'], senior[2]['count'], senior[3], senior[4], senior[5]['empresa'], senior[5]['count'], senior[6]['empresa'], senior[6]['count']))
     
-    print("Para el nivel de experiencia mid")
-    print("""
-          La cantidad de habilidades diferentes son: {0}
-          La habilidad mas solicitada es {1} con {2} ofertas
-          La habilidad menos solicitada es {3} con {4} ofertas
-          El nivel minimo promedio es {5}
-          La cantidad de empresas que ofertaron es {6}
-          La empresa con más ofertas es {7} con {8} ofertas
-          La empresa con menos ofertas es {9} con {10} ofertas 
-          """.format(mid[0], mid[1]['skill'], mid[1]['count'], mid[2]['skill'], mid[2]['count'], mid[3], mid[4], mid[5]['empresa'], mid[5]['count'], mid[6]['empresa'], mid[6]['count']))
+    print(f"El total de ofertas de empleo es {total_ofertas}")
+    print(f"Número de ciudades donde se ofertó en los países resultantes de la consulta es {numero_ciudades}")
+    print(f"{pais_mayor} es el pais con más ofertas y tiene {cuenta_pais_mayor}")
+    print(f"{ciudad_mayor} es la ciudad con más ofertas y tiene {cuenta_ciudad_mayor}")
+
     
-    print("Para el nivel de experiencia senior")
-    print("""
-          La cantidad de habilidades diferentes son: {0}
-          La habilidad mas solicitada es {1} con {2} ofertas
-          La habilidad menos solicitada es {3} con {4} ofertas
-          El nivel minimo promedio es {5}
-          La cantidad de empresas que ofertaron es {6}
-          La empresa con más ofertas es {7} con {8} ofertas
-          La empresa con menos ofertas es {9} con {10} ofertas 
-          """.format(junior[0], junior[1]['skill'], junior[1]['count'], junior[2]['skill'], junior[2]['count'], junior[3], junior[4], junior[5]['empresa'], junior[5]['count'], junior[6]['empresa'], junior[6]['count']))
-    
+    for level, data in [('senior', senior), ('mid', mid), ('junior', junior)]:
+        print(f"Para el nivel de experiencia {level}:")
+        print(f"""
+        La cantidad de habilidades diferentes son: {data[0]}
+        La habilidad más solicitada es {data[1]['skill']} con {data[1]['count']} ofertas
+        La habilidad menos solicitada es {data[2]['skill']} con {data[2]['count']} ofertas
+        El nivel mínimo promedio es {data[3]}
+        La cantidad de empresas que ofertaron es {data[4]}
+        La empresa con más ofertas es {data[5]['empresa']} con {data[5]['count']} ofertas
+        La empresa con menos ofertas es {data[6]['empresa']} con {data[6]['count']} ofertas
+        """)
 
 def print_req_8(control):
     """

@@ -448,7 +448,11 @@ def req_7(catalog, n, f_inicial, f_final):
     empresas_mid = {}
     empresas_senior = {}
     
-    skills_id = ofertas_skills['id']
+    skills_id = lt.newList('ARRAY_LIST')
+    for skills in lt.iterator(ofertas_skills):
+        lt.addLast(skills_id, skills['id'])
+        
+    
     for oferta in lt.iterator(ofertas_n_paises):
         id_oferta = oferta['id']
         position = lt.isPresent(skills_id, id_oferta)
@@ -458,7 +462,7 @@ def req_7(catalog, n, f_inicial, f_final):
         empresa = oferta['company_name']
         
         if experiencia == 'senior':
-            suma_nivel_senior += elemento['level']
+            suma_nivel_senior += int(elemento['level'])
             total_ofertas_senior+=1
             habilidad = elemento['name']
             if habilidad not in skills_senior.keys():
@@ -472,7 +476,7 @@ def req_7(catalog, n, f_inicial, f_final):
                 empresas_senior[empresa] +=1
                   
         elif experiencia == 'mid':
-            suma_nivel_mid += elemento['level']
+            suma_nivel_mid += int(elemento['level'])
             total_ofertas_mid +=1
             habilidad = elemento['name']
             if habilidad not in skills_mid.keys():
@@ -486,7 +490,7 @@ def req_7(catalog, n, f_inicial, f_final):
                 empresas_mid[empresa] +=1
                 
         elif experiencia == 'junior':
-            suma_nivel_junior += elemento['level']
+            suma_nivel_junior += int(elemento['level'])
             total_ofertas_junior += 1
             habilidad = elemento['name']
             if habilidad not in skills_junior.keys():
