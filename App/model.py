@@ -248,8 +248,15 @@ def req_4(catalog, pais, f_inicio, f_fin):
     cuenta_ciudad_mayor = mayor['count']
     menor = lt.lastElement(ciudades_ordenadas)
     ciudad_menor = menor['ciudad']
-    cuenta_ciudad_menor = menor['count']                
-    return lt.size(ofertas_rango), lt.size(empresas), lt.size(ciudades_ordenadas), (ciudad_mayor, cuenta_ciudad_mayor),(ciudad_menor,cuenta_ciudad_menor),ofertas_rango
+    cuenta_ciudad_menor = menor['count']
+    
+    ofertas_rango_criterios = lt.newList('ARRAY_LIST')
+    for oferta in lt.iterator(ofertas_rango):
+        datos = {'published_at': oferta['published_at'],'title':oferta['title'], 'experience_level': oferta['experience_level'],'company_name': oferta['company_name'],
+                 'city': oferta['city'], 'workplace_type': oferta['workplace_type'],'remote': oferta['remote'],'open_to_hire_ukrainians': oferta['open_to_hire_ukrainians']}
+        lt.addLast(ofertas_rango_criterios, datos)  
+               
+    return lt.size(ofertas_rango), lt.size(empresas), lt.size(ciudades_ordenadas), (ciudad_mayor, cuenta_ciudad_mayor),(ciudad_menor,cuenta_ciudad_menor), ofertas_rango_criterios
     
 
 

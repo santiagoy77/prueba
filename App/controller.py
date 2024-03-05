@@ -185,9 +185,13 @@ def req_4(control, country, f_inicio, f_fin):
     Retorna el resultado del requerimiento 4
     """
     # TODO: Modificar el requerimiento 4
-    
-    return model.req_4(control['model'], country, f_inicio, f_fin)
-
+    start_time = get_time()
+    ofertas = model.req_4(control['model'], country, f_inicio, f_fin)
+    end_time = get_time()
+    deltaTime =delta_time(start_time,end_time)
+    print(deltaTime, "[ms]")
+    return ofertas
+   
 
 def req_5(control):
     """
@@ -217,9 +221,12 @@ def req_7(control, n, f_inicio, f_fin):
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    return model.req_7(control['model'], n, f_inicio, f_fin)
-
-
+    start_time = get_time()
+    ofertas = model.req_7(control['model'], n, f_inicio, f_fin)
+    end_time = get_time()
+    deltaTime =delta_time(start_time,end_time)
+    print(deltaTime, "[ms]")
+    return ofertas
 def req_8(control):
     """
     Retorna el resultado del requerimiento 8
