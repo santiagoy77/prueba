@@ -148,7 +148,10 @@ def print_req_5(control):
         Función que imprime la solución del Requerimiento 5 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 5
-    pass
+    ciudad= input("Escriba la ciudad que desea:  ")
+    fecha_in= input("Escriba la fecha inicial (más reciente):  ")
+    fecha_fin= input("Escriba la fecha final (más antigua):  ")
+    return controller.req_5(control, ciudad, fecha_in, fecha_fin)
 
 
 def print_req_6(control):
