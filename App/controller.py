@@ -112,12 +112,12 @@ def sort(control):
 
 # Funciones de consulta sobre el catálogo
 
-def get_data(control, id):
+def get_data(control):
     """
     Retorna un dato por su ID.
     """
     #TODO: Llamar la función del modelo para obtener un dato
-    pass
+    return model.get_data(control['model'])
 
 
 def req_1(control,n,pais,exp):

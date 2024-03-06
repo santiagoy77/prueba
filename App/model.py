@@ -104,12 +104,40 @@ def new_data(id, info):
 
 # Funciones de consulta
 
-def get_data(data_structs, id):
+def get_data(data_structs):
     """
     Retorna un dato a partir de su ID
+     Fecha de publicación.
+o Título de la oferta
+o Nombre de la empresa que publica
+o Nivel de experticia de la oferta
+o País de la oferta
+o Ciudad de la oferta
+
     """
+    pre_seis_ofertas = lt.newList('ARRAY_LIST')
+    seis_ofertas = lt.newList('ARRAY_LIST')
+    catalog = data_structs['jobs']
+     
+    fst = lt.firstElement(catalog)
+    snd = lt.getElement(catalog,2)
+    trd = lt.getElement(catalog,3)
+    lst = lt.lastElement(catalog)
+    lst1 = lt.getElement(catalog, -2)
+    lst2 = lt.getElement(catalog, -3)
+    lt.addLast(pre_seis_ofertas,fst)
+    lt.addLast(pre_seis_ofertas,snd)
+    lt.addLast(pre_seis_ofertas,trd)
+    lt.addLast(pre_seis_ofertas,lst)
+    lt.addLast(pre_seis_ofertas,lst1)
+    lt.addLast(pre_seis_ofertas,lst2)
+    for oferta in lt.iterator(pre_seis_ofertas):
+        datos = {'title':oferta['title'],'company_name':oferta['company_name'],'experience_level':oferta['experience_level'],
+                 'country_code':oferta['country_code'],'city':oferta['city']}
+        lt.addLast(seis_ofertas,datos)
     #TODO: Crear la función para obtener un dato de una lista
-    pass
+    print(datos)
+    return seis_ofertas
 
 
 def data_size(lst):
@@ -307,7 +335,6 @@ def req_5(catalog, city, fecha_in, fecha_fin):
 
 
 
-
 def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
     """
     Función que soluciona el requerimiento 7
@@ -370,7 +397,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
             break
     cant_ciudades = lt.size(lista_de_n_cities)
     mayor = lt.firstElement(ciudades)
-    sub = lt.subList(ciudades,0,n+1)
+    sub = lt.subList(ciudades,0,lt.size(lista_de_n_cities)+1)
     menor = lt.lastElement(sub)
     
 #lista filtrada con las ciudades
