@@ -104,12 +104,40 @@ def new_data(id, info):
 
 # Funciones de consulta
 
-def get_data(data_structs, id):
+def get_data(data_structs):
     """
     Retorna un dato a partir de su ID
+     Fecha de publicación.
+o Título de la oferta
+o Nombre de la empresa que publica
+o Nivel de experticia de la oferta
+o País de la oferta
+o Ciudad de la oferta
+
     """
+    pre_seis_ofertas = lt.newList('ARRAY_LIST')
+    seis_ofertas = lt.newList('ARRAY_LIST')
+    catalog = data_structs['jobs']
+     
+    fst = lt.firstElement(catalog)
+    snd = lt.getElement(catalog,2)
+    trd = lt.getElement(catalog,3)
+    lst = lt.lastElement(catalog)
+    lst1 = lt.getElement(catalog, -2)
+    lst2 = lt.getElement(catalog, -3)
+    lt.addLast(pre_seis_ofertas,fst)
+    lt.addLast(pre_seis_ofertas,snd)
+    lt.addLast(pre_seis_ofertas,trd)
+    lt.addLast(pre_seis_ofertas,lst)
+    lt.addLast(pre_seis_ofertas,lst1)
+    lt.addLast(pre_seis_ofertas,lst2)
+    for oferta in lt.iterator(pre_seis_ofertas):
+        datos = {'title':oferta['title'],'company_name':oferta['company_name'],'experience_level':oferta['experience_level'],
+                 'country_code':oferta['country_code'],'city':oferta['city']}
+        lt.addLast(seis_ofertas,datos)
     #TODO: Crear la función para obtener un dato de una lista
-    pass
+    print(datos)
+    return seis_ofertas
 
 
 def data_size(lst):
@@ -260,12 +288,47 @@ def req_4(catalog, pais, f_inicio, f_fin):
     
 
 
-def req_5(data_structs):
+def req_5(catalog, city, fecha_in, fecha_fin):
     """
     Función que soluciona el requerimiento 5
     """
     # TODO: Realizar el requerimiento 5
-    pass
+    ofertas = catalog['jobs']
+    ofertas_filtradas  = lt.newList('ARRAY_LIST')
+    empresas= lt.newList("ARRAY_LIST")
+    mayor_numero_empresas = {}
+    numero_empresas_ordenadas = lt.newList("ARRAY_LIST")
+ 
+    for oferta in lt.iterator(ofertas):
+        fecha= datetime.strftime(oferta["published_at"], "%Y-%m-%d")
+        if city == oferta['city'] and fecha<=fecha_fin and fecha>=fecha_in:
+            empresa = oferta["company_name"]
+            lt.addLast(ofertas_filtradas,oferta)
+            if empresa not in mayor_numero_empresas.keys():
+                mayor_numero_empresas[oferta["company_name"]] = 1
+            elif empresa in mayor_numero_empresas.keys(): 
+                mayor_numero_empresas[oferta["company_name"]] +=1
+    cantidad_ofertas= lt.size(ofertas_filtradas)        
+                    
+                    
+    for empresa in mayor_numero_empresas.keys():
+        lt.addLast(numero_empresas_ordenadas, {"empresa":empresa, "count":mayor_numero_empresas[empresa]})
+    merg.sort(numero_empresas_ordenadas, sort_criteria_req6)
+    cant_empresas= lt.size(numero_empresas_ordenadas)
+    mayor= lt.firstElement(numero_empresas_ordenadas)
+    menor= lt.lastElement(numero_empresas_ordenadas)
+    
+    ultima_respuesta = lt.newList('ARRAY_LIST')
+    for llave in lt.iterator(ultima_respuesta):
+        datos = {'published_at':llave['published_at'],'title': llave['title'], "company_name": llave["company_name"], 
+                   "workplace_type": llave["workplace_type"],'company_size': llave['company_size']} 
+                 
+        lt.addLast(ultima_respuesta,datos)    
+    
+    
+        
+                    
+    return (cantidad_ofertas, cant_empresas, mayor, menor, ultima_respuesta)
 
 
 
@@ -334,7 +397,7 @@ def req_6(data_structs, n, pais, experience, fecha_in, fecha_fin):
             break
     cant_ciudades = lt.size(lista_de_n_cities)
     mayor = lt.firstElement(ciudades)
-    sub = lt.subList(ciudades,0,n+1)
+    sub = lt.subList(ciudades,0,lt.size(lista_de_n_cities)+1)
     menor = lt.lastElement(sub)
     
 #lista filtrada con las ciudades

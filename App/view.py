@@ -26,7 +26,7 @@ import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
-
+from tabulate import tabulate
 assert cf
 #from tabulate import tabulate 
 import traceback
@@ -75,12 +75,14 @@ def load_data(control):
     
 
 
-def print_data(control, id):
+def print_data(control):
     """
         Función que imprime un dato dado su ID
     """
     #TODO: Realizar la función para imprimir un elemento
-    pass
+    catalog = controller.get_data(control)
+    print(tabulate(catalog['elements']))
+     
 
 def print_req_1(control):
     """
@@ -248,6 +250,7 @@ if __name__ == "__main__":
             print('Ubicaciones cargadas:',data[2])
             print('Tipos de empleo cargados:',data[3])
             print('Trabajos cargados:',data[1])
+            print_data(control)
             
         
         elif int(inputs) == 2:
