@@ -31,24 +31,75 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 
-def new_controller():
+def new_controller(tipo):
     """
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
+    control = {
+        'model': None
+    }
+    control['model'] = model.new_data_structs(tipo)
+    return control
 
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control,size_archivo):
     """
-    Carga los datos del reto
+    Carglos datos del reto
     """
-    # TODO: Realizar la carga de datos
-    pass
+    if size_archivo == 1:
+        arc = "10-por"
+    elif size_archivo ==2:
+        arc = "20-por"
+    elif size_archivo ==3:
+        arc = "small"
+    elif size_archivo == 4: 
+        arc= "80-por"
+    elif size_archivo == 5:
+        arc = "large"
+        
+    skills = load_skills(control['model'], arc)
+    jobs = load_jobs(control["model"], arc)
+    locations = load_locations(control['model'], arc)
+    employments = load_employment_type(control['model'], arc)
+    return (skills, jobs, locations, employments)
 
+def load_skills(catalog,arc):
+    booksfile = cf.data_dir + str(arc+"-skills.csv")
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for skill in input_file:
+        model.add_skills(catalog,skill)
+   
+    return model.data_size(catalog["skills"])
+    
+def load_jobs(catalog,arc):
+    booksfile = cf.data_dir + str(arc+"-jobs.csv")
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for job in input_file:
+        model.add_jobs(catalog,job)
+        
+    
+    model.sort(catalog)
+    return model.data_size(catalog['jobs'])
 
+def load_locations(catalog,arc):
+        
+    booksfile = cf.data_dir + str(arc+"-multilocations.csv")
+        
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for multilocation in input_file:
+        model.add_locations(catalog, multilocation)
+    return model.data_size(catalog['multi-locations'])
+
+def load_employment_type(catalog,arc):
+   
+    booksfile = cf.data_dir + str(arc+"-employments_types.csv")
+    input_file = csv.DictReader(open(booksfile, encoding="utf-8"),delimiter=";")
+    for employment in input_file:
+        model.add_employment_types(catalog, employment)
+    return model.data_size(catalog['employment-types'])
 # Funciones de ordenamiento
 
 def sort(control):
@@ -61,45 +112,86 @@ def sort(control):
 
 # Funciones de consulta sobre el catálogo
 
-def get_data(control, id):
+def get_data(control):
     """
     Retorna un dato por su ID.
     """
     #TODO: Llamar la función del modelo para obtener un dato
-    pass
+    return model.get_data(control['model'])
 
 
-def req_1(control):
+def req_1(control,n,pais,exp):
     """
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
-    pass
+    start_time = get_time()
+    lista = model.req_1(control['model'],n,pais,exp)
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
+    size = model.data_size(lista)
+    
+    return size, lista
 
 
-def req_2(control):
+def req_2(control, n , empresa, city):
     """
     Retorna el resultado del requerimiento 2
     """
     # TODO: Modificar el requerimiento 2
-    pass
+    start_time = get_time()
+    lista = model.req_2(control['model'],n , empresa, city)
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
+    size = model.data_size(lista)
+
+    return size, lista 
 
 
-def req_3(control):
+def req_3(control,empresa,fecha_in,fecha_fin):
     """
     Retorna el resultado del requerimiento 3
+    Número total de ofertas.
+• Número total de ofertas con experticia junior.
+• Número total de ofertas con experticia mid.
+• Número total de ofertas con experticia senior
     """
     # TODO: Modificar el requerimiento 3
-    pass
+    start_time = get_time()
+    lista = model.req_3(control['model'],empresa,fecha_in,fecha_fin)
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
+    size = model.data_size(lista)
+    junior = 0
+    mid = 0
+    senior = 0 
+    for oferta in model.lt.iterator(lista):
+        if oferta['experience_level']=='junior':
+            junior +=1
+        elif oferta['experience_level']=='mid':
+            mid +=1
+        elif oferta['experience_level']=='senior':
+            senior +=1
+        
+    return size, junior, mid, senior
+    
 
 
-def req_4(control):
+def req_4(control, country, f_inicio, f_fin):
     """
     Retorna el resultado del requerimiento 4
     """
     # TODO: Modificar el requerimiento 4
-    pass
-
+    start_time = get_time()
+    ofertas = model.req_4(control['model'], country, f_inicio, f_fin)
+    end_time = get_time()
+    deltaTime =delta_time(start_time,end_time)
+    print(deltaTime, "[ms]")
+    return ofertas
+   
 
 def req_5(control):
     """
@@ -108,22 +200,33 @@ def req_5(control):
     # TODO: Modificar el requerimiento 5
     pass
 
-def req_6(control):
+def req_6(control,n,pais,exp,fecha_in,fecha_fin):
     """
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    pass
+    start_time = get_time()
+    ofertas = model.req_6(control['model'],n,pais,exp,fecha_in,fecha_fin)
+    end_time = get_time()
+    deltaTime = delta_time(start_time, end_time)
+    print(deltaTime,"[ms]")
+
+    return ofertas
 
 
-def req_7(control):
+
+
+def req_7(control, n, f_inicio, f_fin):
     """
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    pass
-
-
+    start_time = get_time()
+    ofertas = model.req_7(control['model'], n, f_inicio, f_fin)
+    end_time = get_time()
+    deltaTime =delta_time(start_time,end_time)
+    print(deltaTime, "[ms]")
+    return ofertas
 def req_8(control):
     """
     Retorna el resultado del requerimiento 8
@@ -147,3 +250,4 @@ def delta_time(start, end):
     """
     elapsed = float(end - start)
     return elapsed
+

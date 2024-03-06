@@ -32,10 +32,9 @@ This repository is part of the data structure and algorithms (#EDA) teaching fra
 
 The students edit this section to add their names, Uniandes emails, and specify which project functionality of the project they will implement.
 
-1. Student No. 1 Name, Student No. 1 Uniandes Email, Student No. 1 owned functionality.
-1. Student No. 2 Name, Student No. 2 Uniandes Email, Student No. 2 owned functionality.
-1. Student No. 3 Name, Student No. 3 Uniandes Email, Student No. 3 owned functionality.
-
+1. Student 1 **Req 3** Maria Clara Aponte, <mc.aponte2@uniandes.edu.co>,
+1. Student 2 **Req 5**Antonio Munoz Arcieri <a.munoz112@uniandes.edu.co>, 202321082
+1. Student 3 **Req 4**Alejandro Benavides, <a.benavidesr@uniandes.edu.co>, 202320519
 [Back to top](#challenge-template)
 
 <!-- ABOUT THE PROJECT -->
@@ -54,7 +53,7 @@ The challenge template has four main parts:
 
 1. [DISClib](./DISClib) Root folder with the official course library. For more on its implementation visit the [DISClib Repository][disclib-url].
 1. [App](./App) Folder with the model-view-controller (MVC) Python scripts. In here the students implement their code to complete the challenge.
-1. [Data](./Data) Folder with CSV data files to load into the application. In here the students add the data files provided by the course staff to complete the challenge.
+1. [Data](./data) Folder with CSV data files to load into the application. In here the students add the data files provided by the course staff to complete the challenge.
 1. [Docs](./Docs) Folder with the reports, data table and other documentation. In here the students add their project report, data tables and other documentation to complement their code implementation.
 
 [Back to top](#challenge-template)
