@@ -28,7 +28,6 @@ from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 from tabulate import tabulate
 assert cf
-#from tabulate import tabulate 
 import traceback
 import threading
 
