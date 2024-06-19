@@ -91,11 +91,8 @@ def print_data_and_table (control):
         first_3 = lt.subList(activities, 1, 3)
         last_3 = lt.subList(activities, size - 2, 3)
         
-        print(f"Año: {year}")
-        print("Primeras 3 actividades económicas:")
-        printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(first_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
         
-        print("Últimas 3 actividades económicas:")
+        printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(first_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
         printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(last_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
 
 def print_data(control, id):
