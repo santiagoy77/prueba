@@ -51,8 +51,8 @@ def load_data(control):
     """
     # TODO: Realizar la carga de datos
     data_strucs = control['model']
-    Año = loadDatos(data_strucs)
-    return Año
+    years = loadDatos(data_strucs)
+    return years
 
 
 def loadDatos(data_strucs):

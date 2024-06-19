@@ -50,25 +50,7 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    data_structs = {'Año': None,
-                    'Código actividad económica':None,
-                    'Nombre actividad económica':None,
-                    'Código sector económico':None,
-                    'Nombre sector económico':None,
-                    'Código subsector económico':None,
-                    'Nombre subsector económico':None,
-                    'Costos y gastos nómina':None}
-    
-    data_structs['Año']= lt.newList('ARRAY_LIST')
-    data_structs['Código actividad económica']=lt.newList('ARRAY_LIST')
-    data_structs['Nombre actividad económica']=lt.newList('ARRAY_LIST')
-    data_structs['Código sector económico']=lt.newList('ARRAY_LIST')
-    data_structs['Nombre sector económico']=lt.newList('ARRAY_LIST')
-    data_structs['Código subsector económico']=lt.newList('ARRAY_LIST')
-    data_structs['Nombre subsector económico']=lt.newList('ARRAY_LIST')
-    data_structs['Costos y gastos nómina']=lt.newList('ARRAY_LIST')
-
-
+    data_structs = {'years': defaultdict(lt.newList)}  # Cambiar a defaultdict para agrupar por año
     return data_structs
 
 
@@ -79,14 +61,8 @@ def add_data(data_structs, data):
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    lt.addLast(data_structs['Año'], data)
-    lt.addLast(data_structs['Código actividad económica'],data)
-    lt.addLast(data_structs['Nombre actividad económica'],data)
-    lt.addLast(data_structs['Código sector económico'],data)
-    lt.addLast(data_structs['Nombre sector económico'],data)
-    lt.addLast(data_structs['Código subsector económico'],data)
-    lt.addLast(data_structs['Nombre subsector económico'],data)
-    lt.addLast(data_structs['Costos y gastos nómina'],data)
+    year = data['Año']
+    lt.addLast(data_structs['years'][year], data)
 
     return data_structs
 
@@ -116,7 +92,8 @@ def data_size(data_structs):
     Retorna el tamaño de la lista de datos
     """
     #TODO: Crear la función para obtener el tamaño de una lista
-    return lt.size(data_structs['Año'])
+    total_size = sum(lt.size(year_list) for year_list in data_structs['years'].values())
+    return total_size
 
 
 def req_1(data_structs):
