@@ -75,36 +75,15 @@ def printDataAsTable(data, headers):
     """
     Imprime los datos en formato de tabla
     """
-    table = tabulate(data, headers, tablefmt="grid")
+    table = tabulate(data, headers, tablefmt="grid", maxcolwidths=30)
     print(table)
-
 
 def print_data_and_table (control):
     datos = load_data(control)
- 
-    datos_por_ano = defaultdict(list)
-    for row in datos:
-        año = row['Año']
-        datos_por_ano[año].append(row)
-
-    columnas_requeridas = [
-    'Año', 'Código actividad económica', 'Nombre actividad económica',
-    'Código sector económico', 'Nombre sector económico', 'Código subsector económico',
-    'Nombre subsector económico', 'Total ingresos netos', 'Total costos y gastos',
-    'Total saldo a pagar', 'Total saldo a favor'
-    ] 
-    resultados_tabla = []
-
-    for ano in sorted(datos_por_ano.keys()):
-        actividades = datos_por_ano[ano]
-        primeras_3 = actividades[:3]
-        ultimas_3 = actividades[-3:]
-        for actividad in primeras_3:
-          resultados_tabla.append([actividad[col] for col in columnas_requeridas])
-        for actividad in ultimas_3:
-          resultados_tabla.append([actividad[col] for col in columnas_requeridas])
-    print(tabulate(resultados_tabla, headers=columnas_requeridas, tablefmt='grid'))      
-
+    tabla = [[data['Año'],data['Código actividad económica'],data['Nombre actividad económica'],data['Código sector económico'],data['Nombre sector económico'],data['Código subsector económico'],data['Nombre subsector económico'],data['Costos y gastos nómina']] for data in lt.iterator(control['model']['Año'])]
+    print("Datos Cargados: ")
+    printDataAsTable(tabla, ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
+    
 
 
 
