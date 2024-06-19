@@ -51,10 +51,24 @@ def new_data_structs():
     """
     #TODO: Inicializar las estructuras de datos
     data_structs = {'Año': None,
-                    'Código actividad económica':None}
+                    'Código actividad económica':None,
+                    'Nombre actividad económica':None,
+                    'Código sector económico':None,
+                    'Nombre sector económico':None,
+                    'Código subsector económico':None,
+                    'Nombre subsector económico':None,
+                    'Costos y gastos nómina':None}
     
     data_structs['Año']= lt.newList('ARRAY_LIST')
     data_structs['Código actividad económica']=lt.newList('ARRAY_LIST')
+    data_structs['Nombre actividad económica']=lt.newList('ARRAY_LIST')
+    data_structs['Código sector económico']=lt.newList('ARRAY_LIST')
+    data_structs['Nombre sector económico']=lt.newList('ARRAY_LIST')
+    data_structs['Código subsector económico']=lt.newList('ARRAY_LIST')
+    data_structs['Nombre subsector económico']=lt.newList('ARRAY_LIST')
+    data_structs['Costos y gastos nómina']=lt.newList('ARRAY_LIST')
+
+
     return data_structs
 
 
@@ -67,6 +81,13 @@ def add_data(data_structs, data):
     #TODO: Crear la función para agregar elementos a una lista
     lt.addLast(data_structs['Año'], data)
     lt.addLast(data_structs['Código actividad económica'],data)
+    lt.addLast(data_structs['Nombre actividad económica'])
+    lt.addLast(data_structs['Código sector económico'])
+    lt.addLast(data_structs['Nombre sector económico'])
+    lt.addLast(data_structs['Código subsector económico'])
+    lt.addLast(data_structs['Nombre subsector económico'])
+    lt.addLast(data_structs['Costos y gastos nómina'])
+
     return data_structs
 
 
