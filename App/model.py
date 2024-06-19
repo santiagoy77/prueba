@@ -81,12 +81,12 @@ def add_data(data_structs, data):
     #TODO: Crear la función para agregar elementos a una lista
     lt.addLast(data_structs['Año'], data)
     lt.addLast(data_structs['Código actividad económica'],data)
-    lt.addLast(data_structs['Nombre actividad económica'])
-    lt.addLast(data_structs['Código sector económico'])
-    lt.addLast(data_structs['Nombre sector económico'])
-    lt.addLast(data_structs['Código subsector económico'])
-    lt.addLast(data_structs['Nombre subsector económico'])
-    lt.addLast(data_structs['Costos y gastos nómina'])
+    lt.addLast(data_structs['Nombre actividad económica'],data)
+    lt.addLast(data_structs['Código sector económico'],data)
+    lt.addLast(data_structs['Nombre sector económico'],data)
+    lt.addLast(data_structs['Código subsector económico'],data)
+    lt.addLast(data_structs['Nombre subsector económico'],data)
+    lt.addLast(data_structs['Costos y gastos nómina'],data)
 
     return data_structs
 
