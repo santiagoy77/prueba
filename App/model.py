@@ -66,6 +66,7 @@ def add_data(data_structs, data):
     """
     #TODO: Crear la función para agregar elementos a una lista
     lt.addLast(data_structs['Año'], data)
+    lt.addLast(data_structs['Código actividad económica'],data)
     return data_structs
 
 

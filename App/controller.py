@@ -51,11 +51,11 @@ def load_data(control):
     """
     # TODO: Realizar la carga de datos
     data_strucs = control['model']
-    Año = loadAño(data_strucs)
+    Año = loadDatos(data_strucs)
     return Año
 
 
-def loadAño(data_strucs):
+def loadDatos(data_strucs):
     data_file = cf.data_dir + 'Salida_agregados_renta_juridicos_AG-small.csv'   
     input_file = csv.DictReader(open(data_file, encoding='utf-8'))
     

@@ -66,8 +66,8 @@ def load_data(control):
     Carga los datos
     """
     #TODO: Realizar la carga de datos
-    Año = controller.load_data(control)
-    return Año
+    datos = controller.load_data(control)
+    return datos
 
 
 def printDataAsTable(data, headers):
@@ -79,10 +79,10 @@ def printDataAsTable(data, headers):
 
 
 def print_data_and_table (control):
-    Año = load_data(control)
-    tabla = [[data['Año']] for data in lt.iterator(control['model']['Año'])]
+    datos = load_data(control)
+    tabla = [[data['Año'],data['Código actividad económica']] for data in lt.iterator(control['model']['datos'])]
     print("Datos Cargados: ")
-    printDataAsTable(tabla, ["Año"])
+    printDataAsTable(tabla, ["Año","Código actividad económica"])
 
 
 
