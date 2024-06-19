@@ -82,7 +82,11 @@ def print_data_and_table (control):
     datos = load_data(control)
     print("Datos Cargados: ")
     
-    for year, activities in control['model']['years'].items():
+    years = list(control['model']['years'].keys())
+    years.sort()  # Ordenar los años de menor a mayor
+    
+    for year in years:
+        activities = control['model']['years'][year]
         size = lt.size(activities)
         first_3 = lt.subList(activities, 1, 3)
         last_3 = lt.subList(activities, size - 2, 3)
@@ -93,7 +97,6 @@ def print_data_and_table (control):
         
         print("Últimas 3 actividades económicas:")
         printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(last_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
-
 
 def print_data(control, id):
     """
