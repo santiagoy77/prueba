@@ -39,7 +39,7 @@ def new_controller():
     control = {
         'model': None
     }
-    control['model'] = model.new_data_strucs()
+    control['model'] = model.new_data_structs()
     return control 
 
 
