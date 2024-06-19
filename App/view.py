@@ -82,8 +82,9 @@ def print_data_and_table (control):
     datos = load_data(control)
     print("Datos Cargados: ")
     
+    all_data = []
     years = list(control['model']['years'].keys())
-    years.sort()  # Ordenar los años de menor a mayor
+    years.sort() 
     
     for year in years:
         activities = control['model']['years'][year]
@@ -91,9 +92,14 @@ def print_data_and_table (control):
         first_3 = lt.subList(activities, 1, 3)
         last_3 = lt.subList(activities, size - 2, 3)
         
+        for data in lt.iterator(first_3):
+            all_data.append([data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']])
         
-        printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(first_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
-        printDataAsTable([[data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']] for data in lt.iterator(last_3)], ["Año","Código actividad económica","Nombre actividad económica","Código sector económico","Nombre sector económico","Código subsector económico","Nombre subsector económico","Costos y gastos nómina"])
+        for data in lt.iterator(last_3):
+            all_data.append([data['Año'], data['Código actividad económica'], data['Nombre actividad económica'], data['Código sector económico'], data['Nombre sector económico'], data['Código subsector económico'], data['Nombre subsector económico'], data['Costos y gastos nómina']])
+    
+    printDataAsTable(all_data, ["Año", "Código actividad económica", "Nombre actividad económica", "Código sector económico", "Nombre sector económico", "Código subsector económico", "Nombre subsector económico", "Costos y gastos nómina"])
+
 
 def print_data(control, id):
     """
