@@ -50,7 +50,12 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    pass
+    data_structs = {'Año': None,
+                    'Código actividad económica':None}
+    
+    data_structs['Año']= lt.newList('ARRAY_LIST')
+    data_structs['Código actividad económica']=lt.newList('ARRAY_LIST')
+    return data_structs
 
 
 # Funciones para agregar informacion al modelo
@@ -60,7 +65,8 @@ def add_data(data_structs, data):
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    pass
+    lt.addLast(data_structs['Año'], data)
+    return data_structs
 
 
 # Funciones para creacion de datos
@@ -88,7 +94,7 @@ def data_size(data_structs):
     Retorna el tamaño de la lista de datos
     """
     #TODO: Crear la función para obtener el tamaño de una lista
-    pass
+    return lt.size(data_structs['Año'])
 
 
 def req_1(data_structs):
