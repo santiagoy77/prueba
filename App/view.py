@@ -85,15 +85,15 @@ def print_data_and_table (control):
 
     # Iterar sobre los años en los datos
     for ano in lt.iterator(control['model']['Año']):
-        actividades = lt.iterator(ano['Actividades'])
-        total_actividades = lt.size(ano['Actividades'])
+        actividades = lt.iterator(ano['Año'])
+        total_actividades = lt.size(ano['Año'])
 
         # Obtener las primeras 3 actividades
-        primeras_3 = lt.subList(ano['Actividades'], 1, min(3, total_actividades))
+        primeras_3 = lt.subList(ano['Año'], 1, min(3, total_actividades))
         primeras_3 = lt.iterator(primeras_3)
 
         # Obtener las últimas 3 actividades
-        ultimas_3 = lt.subList(ano['Actividades'], max(1, total_actividades - 2), min(3, total_actividades))
+        ultimas_3 = lt.subList(ano['Año'], max(1, total_actividades - 2), min(3, total_actividades))
         ultimas_3 = lt.iterator(ultimas_3)
 
         # Añadir las primeras 3 actividades a la tabla
