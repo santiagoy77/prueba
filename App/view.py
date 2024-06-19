@@ -80,7 +80,7 @@ def printDataAsTable(data, headers):
 
 def print_data_and_table (control):
     Año = load_data(control)
-    tabla = [[data['Año']] for data in lt.iterator[control['model']['Año']]]
+    tabla = [[data['Año']] for data in lt.iterator(control['model']['Año'])]
     print("Datos Cargados: ")
     printDataAsTable(tabla, ["Año"])
 
